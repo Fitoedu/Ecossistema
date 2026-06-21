@@ -8,6 +8,8 @@ import {
   Badge,
   Stack,
   Icon,
+  SimpleGrid,
+  Image,
 } from '@chakra-ui/react'
 import { ColorModeButton } from '@/components/ui/color-mode'
 import { LuLeaf, LuBookOpen, LuFlaskConical } from 'react-icons/lu'
@@ -16,24 +18,23 @@ const features = [
   {
     icon: LuLeaf,
     title: 'Plantas Medicinais',
-    desc: 'Explore o catálogo completo de espécies com propriedades terapêuticas.',
+    desc: 'Explore um catálogo visual e didático com espécies e usos terapêuticos.',
   },
   {
     icon: LuBookOpen,
     title: 'Conteúdo Educativo',
-    desc: 'Artigos, vídeos e quizzes criados por especialistas em fitoterapia.',
+    desc: 'Artigos, vídeos e quizzes preparados para tornar o aprendizado mais claro.',
   },
   {
     icon: LuFlaskConical,
     title: 'Pesquisa Científica',
-    desc: 'Referências atualizadas de estudos clínicos e etnobotânicos.',
+    desc: 'Conteúdo guiado por referências atuais, com linguagem acessível e objetiva.',
   },
 ]
 
 export default function Home() {
   return (
     <Box minH="100vh" bg="bg" color="fg" fontFamily="body">
-      {/* ── Navbar ── */}
       <Flex
         as="header"
         px={{ base: 6, md: 12 }}
@@ -41,7 +42,7 @@ export default function Home() {
         align="center"
         justify="space-between"
         borderBottom="1px solid"
-        borderColor="surface"
+        borderColor="brand.100"
         backdropFilter="blur(8px)"
         position="sticky"
         top={0}
@@ -54,8 +55,8 @@ export default function Home() {
             fontWeight={800}
             fontSize="xl"
             bgGradient="to-r"
-            gradientFrom="brand.500"
-            gradientTo="brand.300"
+            gradientFrom="brand.600"
+            gradientTo="blue.500"
             bgClip="text"
           >
             FitoEdu
@@ -64,98 +65,127 @@ export default function Home() {
         <ColorModeButton />
       </Flex>
 
-      {/* ── Hero ── */}
-      <Flex
-        direction="column"
-        align="center"
-        justify="center"
-        textAlign="center"
-        px={6}
-        pt={{ base: 20, md: 28 }}
-        pb={{ base: 16, md: 20 }}
-        gap={6}
-      >
-        <Badge
-          colorPalette="green"
-          variant="surface"
-          px={4}
-          py={1}
-          borderRadius="full"
-          fontSize="sm"
-          fontWeight={600}
-          letterSpacing="0.05em"
+      <Box px={{ base: 6, md: 12 }} pt={{ base: 10, md: 16 }} pb={{ base: 10, md: 16 }}>
+        <Flex
+          direction={{ base: 'column', lg: 'row' }}
+          align="center"
+          justify="space-between"
+          gap={{ base: 8, lg: 12 }}
+          maxW="1200px"
+          mx="auto"
         >
-          🌱 Plataforma Educativa de Fitoterapia
-        </Badge>
+          <Box flex="1" textAlign={{ base: 'center', lg: 'start' }}>
+            <Badge
+              colorPalette="green"
+              variant="subtle"
+              px={4}
+              py={1}
+              borderRadius="full"
+              fontSize="sm"
+              fontWeight={600}
+              letterSpacing="0.05em"
+              mb={4}
+            >
+              🌱 Modelo visual adaptado à referência
+            </Badge>
 
-        <Heading
-          as="h1"
-          fontSize={{ base: '3xl', md: '5xl', lg: '6xl' }}
-          fontWeight={800}
-          lineHeight={1.1}
-          letterSpacing="-0.02em"
-          maxW="700px"
-        >
-          Aprenda com a{' '}
-          <Text
-            as="span"
-            bgGradient="to-r"
-            gradientFrom="brand.400"
-            gradientTo="brand.200"
-            bgClip="text"
-          >
-            natureza
-          </Text>
-          ,{' '}
-          <Text
-            as="span"
-            bgGradient="to-r"
-            gradientFrom="brand.600"
-            gradientTo="brand.400"
-            bgClip="text"
-          >
-            cresça
-          </Text>{' '}
-          com o conhecimento
-        </Heading>
+            <Heading
+              as="h1"
+              fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}
+              fontWeight={800}
+              lineHeight={1.1}
+              letterSpacing="-0.02em"
+              maxW="620px"
+              mb={4}
+            >
+              Aprenda com a{' '}
+              <Text as="span" color="brand.600">
+                natureza
+              </Text>
+              {' '}e transforme conhecimento em prática.
+            </Heading>
 
-        <Text
-          fontSize={{ base: 'md', md: 'lg' }}
-          color="fg"
-          opacity={0.7}
-          maxW="480px"
-          lineHeight={1.7}
-        >
-          Sua plataforma educativa sobre plantas medicinais — embasada em
-          ciência, acessível para todos.
-        </Text>
-      </Flex>
+            <Text
+              fontSize={{ base: 'md', md: 'lg' }}
+              color="muted"
+              maxW="560px"
+              lineHeight={1.7}
+              mb={6}
+            >
+              Uma experiência mais limpa, visual e acolhedora para explorar plantas medicinais com segurança, ciência e contexto cultural.
+            </Text>
 
-      {/* ── Cards de funcionalidades ── */}
-      <Flex
-        wrap="wrap"
-        justify="center"
+            <Flex justify={{ base: 'center', lg: 'flex-start' }} align="center" gap={3}>
+              <Box
+                px={4}
+                py={2}
+                borderRadius="full"
+                bg="brand.600"
+                color="white"
+                fontWeight={600}
+              >
+                Conteúdo guiado
+              </Box>
+              <Box
+                px={4}
+                py={2}
+                borderRadius="full"
+                bg="accent"
+                color="brand.900"
+                fontWeight={600}
+              >
+                Estilo moderno
+              </Box>
+            </Flex>
+          </Box>
+
+          <Box flex="1" maxW="520px" w="full">
+            <Box position="relative">
+              <Box
+                position="absolute"
+                inset="-8px"
+                borderRadius="3xl"
+                bgGradient="linear(to-br, brand.100, blue.100)"
+                filter="blur(16px)"
+                opacity={0.7}
+              />
+              <Image
+                src="/images/model.png"
+                alt="Referência visual do EducaFito"
+                w="full"
+                h="auto"
+                borderRadius="3xl"
+                border="1px solid"
+                borderColor="brand.100"
+                boxShadow="0 24px 80px rgba(15, 107, 61, 0.16)"
+                objectFit="cover"
+              />
+            </Box>
+          </Box>
+        </Flex>
+      </Box>
+
+      <SimpleGrid
+        columns={{ base: 1, md: 3 }}
         gap={6}
         px={{ base: 6, md: 12 }}
         pb={{ base: 16, md: 24 }}
-        maxW="1100px"
+        maxW="1200px"
         mx="auto"
       >
         {features.map((f) => (
           <Box
             key={f.title}
-            flex="1 1 280px"
-            maxW="340px"
             bg="surface"
             border="1px solid"
-            borderColor="brand.800"
+            borderColor="brand.100"
             borderRadius="2xl"
             p={7}
             transition="all 0.25s ease"
             _hover={{
               transform: 'translateY(-4px)',
-              boxShadow: '0 16px 40px rgba(16,185,129,0.15)',
-              borderColor: 'brand.500',
+              boxShadow: '0 16px 40px rgba(15, 107, 61, 0.12)',
+              borderColor: 'brand.300',
             }}
           >
             <Stack gap={4}>
@@ -163,7 +193,7 @@ export default function Home() {
                 w={12}
                 h={12}
                 borderRadius="xl"
-                bg="brand.500"
+                bgGradient="linear(to-br, brand.600, blue.500)"
                 align="center"
                 justify="center"
                 color="white"
@@ -173,13 +203,13 @@ export default function Home() {
               <Text fontWeight={700} fontSize="lg">
                 {f.title}
               </Text>
-              <Text opacity={0.7} fontSize="sm" lineHeight={1.6}>
+              <Text color="muted" fontSize="sm" lineHeight={1.6}>
                 {f.desc}
               </Text>
             </Stack>
           </Box>
         ))}
-      </Flex>
+      </SimpleGrid>
     </Box>
   )
 }
