@@ -8,6 +8,7 @@ import { LuBookOpen, LuHouse, LuPlay, LuUserRound } from 'react-icons/lu'
 const items = [
   { href: '/home', label: 'Início', icon: LuHouse },
   { href: '/conteudo', label: 'Conteúdo', icon: LuBookOpen },
+  { href: '/cartilha', label: 'Cartilha', icon: LuBookOpen },
   { href: '/midia', label: 'Mídia', icon: LuPlay },
   { href: '/perfil', label: 'Perfil', icon: LuUserRound },
 ]

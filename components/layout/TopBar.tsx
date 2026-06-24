@@ -17,12 +17,6 @@ export function TopBar({ title, description }: TopBarProps) {
       px={{ base: 6, md: 8, lg: 10 }}
       py={4}
       borderBottom="1px solid"
-      borderColor="brand.100"
-      bg="bg"
-      position="sticky"
-      top={0}
-      zIndex={10}
-      backdropFilter="blur(10px)"
     >
       <Box>
         <Heading as="h1" size="md">
