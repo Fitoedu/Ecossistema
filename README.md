@@ -364,8 +364,8 @@ import type { Usuario } from '@/types/usuario'
 ### TCC I — PWA Base *(prioridade imediata)*
 - [x] Splash Screen
 - [x] Página Home (esqueleto)
-- [ ] `layout.tsx` com Chakra Provider + metadados PWA
-- [ ] `AppShell` (TopBar + BottomNav mobile)
+- [x] `layout.tsx` com Chakra Provider + metadados PWA
+- [x] `AppShell` (TopBar + BottomNav mobile)
 - [ ] Módulo de Conteúdo (`/conteudo`)
 - [ ] Módulo de Mídia (`/midia`)
 - [ ] Página de Perfil básico
