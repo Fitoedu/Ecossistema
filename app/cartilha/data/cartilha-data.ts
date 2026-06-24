@@ -1,24 +1,3 @@
-/**
- * cartilha-data.ts
- * ─────────────────────────────────────────────────────────────────────────
- * Fonte única de verdade para o CONTEÚDO da Cartilha Interativa de
- * Fitossanidade (TCC 2 — EducaFito).
- *
- * PRINCÍPIO: Este arquivo só contém dados. Zero JSX, zero Chakra UI.
- * Os componentes de apresentação vivem em components/pages.tsx e apenas
- * LÊEM daqui — nunca escrevem.
- *
- * COMO ADICIONAR PÁGINAS:
- *   1. Acrescente um objeto ao array CARTILHA_PAGES.
- *   2. Escolha o `type` correto para que o componente de layout correto
- *      seja selecionado em pages.tsx.
- *   3. Preencha os campos do tipo escolhido.
- * ─────────────────────────────────────────────────────────────────────────
- */
-
-/* ══════════════════════════════════════════════════════
-   TIPOS BASE
-══════════════════════════════════════════════════════ */
 
 /** Variantes de callout/alerta disponíveis no design system */
 export type CalloutVariant = 'green' | 'yellow' | 'red'

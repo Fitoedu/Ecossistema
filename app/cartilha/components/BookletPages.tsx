@@ -17,11 +17,6 @@ import type {
   CalloutData,
 } from '../data/cartilha-data'
 
-/* ══════════════════════════════════════════════════════
-   SHARED PRESENTATIONAL ATOMS
-   Nenhum dado embutido — puramente visuais.
-══════════════════════════════════════════════════════ */
-
 function SectionBadge({ children }: { children: React.ReactNode }) {
   return (
     <Box
@@ -62,7 +57,6 @@ function LeadText({ children }: { children: React.ReactNode }) {
   )
 }
 
-/** Callout exportado — usado também em page.tsx se necessário */
 export function Callout({
   variant = 'green', icon, title, children, mt,
 }: {
@@ -138,7 +132,6 @@ function IconCardsGrid({ cards }: { cards: { emoji: string; label: string }[] })
   )
 }
 
-/** Renderiza uma lista de callouts com espaçamento correto */
 function CalloutList({ callouts, startMt = 0 }: { callouts: CalloutData[]; startMt?: number }) {
   return (
     <>
@@ -178,12 +171,6 @@ function LapbookHeader({ badge, title, subtitle }: { badge: string; title: strin
     </Box>
   )
 }
-
-/* ══════════════════════════════════════════════════════
-   LAYOUT COMPONENTS
-   Cada um é tipado pelo seu discriminante exclusivo.
-   Nenhuma string de conteúdo aqui — tudo vem de `data`.
-══════════════════════════════════════════════════════ */
 
 /* ── Capa ──────────────────────────────────────────── */
 export function PageCover({ data }: { data: PageCoverData }) {
@@ -300,7 +287,6 @@ export function PageContent({ data }: { data: PageContentData }) {
   )
 }
 
-/* ── Lapbook interativo (p03, p07) ──────────────────── */
 export function PageLapbook({ data }: { data: PageLapbookData }) {
   return (
     <Box>
@@ -590,7 +576,7 @@ export function PageQuiz({ data }: { data: PageQuizData }) {
 }
 
 /* ── Encerramento (p13) ─────────────────────────────── */
-export function PageClosing({ data }: { data: PageClosingData }) {
+export function PageClosing({ data }: { data: PageClosingData }) {         
   return (
     <Box textAlign="center">
       <SectionBadge>🎓 Encerramento</SectionBadge>
