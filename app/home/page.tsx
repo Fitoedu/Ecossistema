@@ -10,18 +10,17 @@ import {
   Image,
   Button,
 } from '@chakra-ui/react'
-import { ColorModeButton } from '@/components/ui/color-mode'
-import { LuLeaf, LuBookOpen, LuFlaskConical, LuScrollText } from 'react-icons/lu'   
+
 import Link from 'next/link'
 import type { IconType } from 'react-icons'
 import {
-  LuBookOpen,
-  LuGamepad2,
-  LuGraduationCap,
-  LuInfo,
-  LuNewspaper,
-  LuUserRound,
-  LuUsers,
+    LuBookOpen,
+    LuGamepad2,
+    LuInfo,
+    LuLeaf,
+    LuNewspaper,
+    LuUserRound,
+    LuUsers,
 } from 'react-icons/lu'
 
 type Feature = {
@@ -29,8 +28,8 @@ type Feature = {
   title: string
   desc: string
   href?: string
-  bg: string
-  iconBg: string
+  bg?: string
+  iconBg?: string
   darkText?: boolean
 }
 
@@ -39,8 +38,7 @@ const features: Feature[] = [
     icon: LuLeaf,
     title: 'Plantas Medicinais',
     desc: 'Explore um catálogo visual e didático com espécies e usos terapêuticos.',
-    href: '/plantas-medicinais', 
-
+    href: '/plantas-medicinais',
   },
   {
     icon: LuBookOpen,
