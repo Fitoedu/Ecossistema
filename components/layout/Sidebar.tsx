@@ -11,6 +11,8 @@ const items = [
   { href: '/cartilha', label: 'Cartilha', icon: BookOpen },
   { href: '/midia', label: 'Mídia', icon: Play },
   { href: '/perfil', label: 'Perfil', icon: UserRound },
+  { href: '/sobre', label: 'Sobre', icon: UserRound },
+  { href: '/jogos', label: 'Jogos', icon: UserRound },
 ]
 
 export function Sidebar() {

@@ -228,97 +228,97 @@ export default function Home() {
             </Flex>
           </Box>
         </Box>
-      </Flex>
-
-      <SimpleGrid
-        columns={{ base: 1, md: 2, lg: 3 }}
-        gap={4}
-        px={{ base: 4, md: 6, lg: 7 }}
-        pb={{ base: 6, md: 7 }}
-        maxW="1180px"
-        mx="auto"
-      >
-        {features.map((f) => {
-          const cardContent = (
-            <Stack gap={4}>
-              <Flex
-                w={10}
-                h={10}
-                borderRadius="md"
-                bg="brand.700"
-                align="center"
-                justify="center"
-                color="white"
-                boxShadow="0 8px 18px rgba(0,0,0,0.14)"
-              >
-                <Icon as={f.icon} boxSize={4.5} />
-              </Flex>
-              <Text fontWeight={800} fontSize="lg" color="fg">
-                {f.title}
-              </Text>
-              <Text color="muted" fontSize="sm" lineHeight={1.55} maxW="240px">
-                {f.desc}
-              </Text>
-              {f.href && (
-                <Text
-                  fontSize="xs"
-                  fontWeight={700}
-                  color="brand.500"
-                  letterSpacing="0.04em"
+        
+        <SimpleGrid
+          columns={{ base: 1, md: 2, lg: 3 }}
+          gap={4}
+          px={{ base: 4, md: 6, lg: 7 }}
+          pb={{ base: 6, md: 7 }}
+          maxW="1180px"
+          mx="auto"
+        >
+          {features.map((f) => {
+            const cardContent = (
+              <Stack gap={4}>
+                <Flex
+                  w={10}
+                  h={10}
+                  borderRadius="md"
+                  bg="brand.700"
+                  align="center"
+                  justify="center"
+                  color="white"
+                  boxShadow="0 8px 18px rgba(0,0,0,0.14)"
                 >
-                  Acessar cartilha →
+                  <Icon as={f.icon} boxSize={4.5} />
+                </Flex>
+                <Text fontWeight={800} fontSize="lg" color="fg">
+                  {f.title}
                 </Text>
-              )}
-            </Stack>
-          )
+                <Text color="muted" fontSize="sm" lineHeight={1.55} maxW="240px">
+                  {f.desc}
+                </Text>
+                {f.href && (
+                  <Text
+                    fontSize="xs"
+                    fontWeight={700}
+                    color="brand.500"
+                    letterSpacing="0.04em"
+                  >
+                    Acessar cartilha →
+                  </Text>
+                )}
+              </Stack>
+            )
 
-          return f.href ? (
-            <Link
-              key={f.title}
-              href={f.href}
-              style={{ textDecoration: 'none', flex: '1 1 280px', maxWidth: '340px', display: 'block' }}
-            >
+            return f.href ? (
+              <Link
+                key={f.title}
+                href={f.href}
+                style={{ textDecoration: 'none', flex: '1 1 280px', maxWidth: '340px', display: 'block' }}
+              >
+                <Box
+                  id={`feature-card-${f.title.toLowerCase().replace(/\s+/g, '-')}`}
+                  bg="brand.700"
+                  border="1px solid"
+                  borderColor="brand.800"
+                  borderRadius="2xl"
+                  p={7}
+                  transition="all 0.25s ease"
+                  h="100%"
+                  _hover={{
+                    transform: 'translateY(-4px)',
+                    boxShadow: '0 16px 40px rgba(16,185,129,0.25)',
+                    borderColor: 'brand.500',
+                  }}
+                >
+                  {cardContent}
+                </Box>
+              </Link>
+            ) : (
               <Box
+                key={f.title}
                 id={`feature-card-${f.title.toLowerCase().replace(/\s+/g, '-')}`}
+                flex="1 1 280px"
+                maxW="340px"
                 bg="brand.700"
                 border="1px solid"
                 borderColor="brand.800"
                 borderRadius="2xl"
                 p={7}
                 transition="all 0.25s ease"
-                h="100%"
                 _hover={{
                   transform: 'translateY(-4px)',
-                  boxShadow: '0 16px 40px rgba(16,185,129,0.25)',
+                  boxShadow: '0 16px 40px rgba(16,185,129,0.15)',
                   borderColor: 'brand.500',
                 }}
               >
                 {cardContent}
               </Box>
-            </Link>
-          ) : (
-            <Box
-              key={f.title}
-              id={`feature-card-${f.title.toLowerCase().replace(/\s+/g, '-')}`}
-              flex="1 1 280px"
-              maxW="340px"
-              bg="brand.700"
-              border="1px solid"
-              borderColor="brand.800"
-              borderRadius="2xl"
-              p={7}
-              transition="all 0.25s ease"
-              _hover={{
-                transform: 'translateY(-4px)',
-                boxShadow: '0 16px 40px rgba(16,185,129,0.15)',
-                borderColor: 'brand.500',
-              }}
-            >
-              {cardContent}
-            </Box>
-          )
-        })}
-      </SimpleGrid>
+            )
+          })}
+        </SimpleGrid>
+      </Flex>
     </Box>
   )
 }
