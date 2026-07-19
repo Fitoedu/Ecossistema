@@ -41,7 +41,7 @@ const semanticTokens = {
       _dark: { value: "#07120d" },
     },
     surface: {
-      default: { value: "#ffffff" },
+      default: { value: "#c8e6c9" },
       _dark: { value: "#12261b" },
     },
     fg: {

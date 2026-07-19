@@ -10,31 +10,30 @@ import {
   Image,
   Button,
 } from '@chakra-ui/react'
-import { ColorModeButton } from '@/components/ui/color-mode'
-import { LuLeaf, LuBookOpen, LuFlaskConical, LuScrollText } from 'react-icons/lu'
+import { Info, Leaf, BookOpen, FlaskConical, ScrollText, UserRound } from 'lucide-react'
 import Link from 'next/link'
 
 const features = [
   {
-    icon: LuLeaf,
+    icon: Leaf,
     title: 'Plantas Medicinais',
     desc: 'Explore o catálogo completo de espécies com propriedades terapêuticas.',
     href: null,
   },
   {
-    icon: LuBookOpen,
+    icon: BookOpen,
     title: 'Conteúdo Educativo',
     desc: 'Artigos, vídeos e quizzes criados por especialistas em fitoterapia.',
     href: null,
   },
   {
-    icon: LuFlaskConical,
+    icon: FlaskConical,
     title: 'Pesquisa Científica',
     desc: 'Referências atualizadas de estudos clínicos e etnobotânicos.',
     href: null,
   },
   {
-    icon: LuScrollText,
+    icon: ScrollText,
     title: 'Cartilha Interativa',
     desc: 'Aprenda sobre fitossanidade, pragas e casos reais do Amapá de forma interativa.',
     href: '/cartilha',
@@ -110,7 +109,7 @@ export default function Home() {
                 color="brand.600"
                 bg="whiteAlpha.700"
               >
-                <Icon as={LuUserRound} boxSize={4} />
+                <Icon as={UserRound} boxSize={4} />
               </Flex>
             </Link>
             <Link href="/conteudo" aria-label="Ajuda" style={{ textDecoration: 'none' }}>
@@ -125,7 +124,7 @@ export default function Home() {
                 color="brand.600"
                 bg="whiteAlpha.700"
               >
-                <Icon as={LuInfo} boxSize={4} />
+                <Icon as={Info} boxSize={4} />
               </Flex>
             </Link>
           </Flex>
@@ -246,7 +245,7 @@ export default function Home() {
                 w={10}
                 h={10}
                 borderRadius="md"
-                bg={f.iconBg}
+                bg="brand.700"
                 align="center"
                 justify="center"
                 color="white"
@@ -254,10 +253,10 @@ export default function Home() {
               >
                 <Icon as={f.icon} boxSize={4.5} />
               </Flex>
-              <Text fontWeight={800} fontSize="lg" color={f.darkText ? 'white' : 'fg'}>
+              <Text fontWeight={800} fontSize="lg" color="fg">
                 {f.title}
               </Text>
-              <Text color={f.darkText ? 'rgba(255,255,255,0.88)' : 'muted'} fontSize="sm" lineHeight={1.55} maxW="240px">
+              <Text color="muted" fontSize="sm" lineHeight={1.55} maxW="240px">
                 {f.desc}
               </Text>
               {f.href && (
@@ -281,7 +280,7 @@ export default function Home() {
             >
               <Box
                 id={`feature-card-${f.title.toLowerCase().replace(/\s+/g, '-')}`}
-                bg="surface"
+                bg="brand.700"
                 border="1px solid"
                 borderColor="brand.800"
                 borderRadius="2xl"
@@ -303,7 +302,7 @@ export default function Home() {
               id={`feature-card-${f.title.toLowerCase().replace(/\s+/g, '-')}`}
               flex="1 1 280px"
               maxW="340px"
-              bg="surface"
+              bg="brand.700"
               border="1px solid"
               borderColor="brand.800"
               borderRadius="2xl"
@@ -319,7 +318,7 @@ export default function Home() {
             </Box>
           )
         })}
-      </Flex>
+      </SimpleGrid>
     </Box>
   )
 }
