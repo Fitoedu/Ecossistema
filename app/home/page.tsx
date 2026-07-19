@@ -10,23 +10,33 @@ import {
   Icon,
 } from '@chakra-ui/react'
 import { ColorModeButton } from '@/components/ui/color-mode'
-import { LuLeaf, LuBookOpen, LuFlaskConical } from 'react-icons/lu'
+import { LuLeaf, LuBookOpen, LuFlaskConical, LuScrollText } from 'react-icons/lu'
+import Link from 'next/link'
 
 const features = [
   {
     icon: LuLeaf,
     title: 'Plantas Medicinais',
     desc: 'Explore o catálogo completo de espécies com propriedades terapêuticas.',
+    href: null,
   },
   {
     icon: LuBookOpen,
     title: 'Conteúdo Educativo',
     desc: 'Artigos, vídeos e quizzes criados por especialistas em fitoterapia.',
+    href: null,
   },
   {
     icon: LuFlaskConical,
     title: 'Pesquisa Científica',
     desc: 'Referências atualizadas de estudos clínicos e etnobotânicos.',
+    href: null,
+  },
+  {
+    icon: LuScrollText,
+    title: 'Cartilha Interativa',
+    desc: 'Aprenda sobre fitossanidade, pragas e casos reais do Amapá de forma interativa.',
+    href: '/cartilha',
   },
 ]
 
@@ -141,23 +151,8 @@ export default function Home() {
         maxW="1100px"
         mx="auto"
       >
-        {features.map((f) => (
-          <Box
-            key={f.title}
-            flex="1 1 280px"
-            maxW="340px"
-            bg="surface"
-            border="1px solid"
-            borderColor="brand.800"
-            borderRadius="2xl"
-            p={7}
-            transition="all 0.25s ease"
-            _hover={{
-              transform: 'translateY(-4px)',
-              boxShadow: '0 16px 40px rgba(16,185,129,0.15)',
-              borderColor: 'brand.500',
-            }}
-          >
+        {features.map((f) => {
+          const cardContent = (
             <Stack gap={4}>
               <Flex
                 w={12}
@@ -176,9 +171,65 @@ export default function Home() {
               <Text opacity={0.7} fontSize="sm" lineHeight={1.6}>
                 {f.desc}
               </Text>
+              {f.href && (
+                <Text
+                  fontSize="xs"
+                  fontWeight={700}
+                  color="brand.500"
+                  letterSpacing="0.04em"
+                >
+                  Acessar cartilha →
+                </Text>
+              )}
             </Stack>
-          </Box>
-        ))}
+          )
+
+          return f.href ? (
+            <Link
+              key={f.title}
+              href={f.href}
+              style={{ textDecoration: 'none', flex: '1 1 280px', maxWidth: '340px', display: 'block' }}
+            >
+              <Box
+                id={`feature-card-${f.title.toLowerCase().replace(/\s+/g, '-')}`}
+                bg="surface"
+                border="1px solid"
+                borderColor="brand.800"
+                borderRadius="2xl"
+                p={7}
+                transition="all 0.25s ease"
+                h="100%"
+                _hover={{
+                  transform: 'translateY(-4px)',
+                  boxShadow: '0 16px 40px rgba(16,185,129,0.25)',
+                  borderColor: 'brand.500',
+                }}
+              >
+                {cardContent}
+              </Box>
+            </Link>
+          ) : (
+            <Box
+              key={f.title}
+              id={`feature-card-${f.title.toLowerCase().replace(/\s+/g, '-')}`}
+              flex="1 1 280px"
+              maxW="340px"
+              bg="surface"
+              border="1px solid"
+              borderColor="brand.800"
+              borderRadius="2xl"
+              p={7}
+              transition="all 0.25s ease"
+              _hover={{
+                transform: 'translateY(-4px)',
+                boxShadow: '0 16px 40px rgba(16,185,129,0.15)',
+                borderColor: 'brand.500',
+              }}
+            >
+              {cardContent}
+            </Box>
+          )
+        })}
       </Flex>
     </Box>
   )
