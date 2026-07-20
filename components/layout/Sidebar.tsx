@@ -3,15 +3,16 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Box, Heading, Stack, Text } from '@chakra-ui/react'
-import { LuBookOpen, LuGamepad2, LuHouse, LuPlay, LuUserRound } from 'react-icons/lu'
+import { BookOpen, House, Play, UserRound } from 'lucide-react'
 
 const items = [
-  { href: '/home', label: 'Início', icon: LuHouse },
-  { href: '/conteudo', label: 'Conteúdo', icon: LuBookOpen },
-  { href: '/cartilha', label: 'Cartilha', icon: LuBookOpen },
-  { href: '/jogos', label: 'Jogos', icon: LuGamepad2 },
-  { href: '/midia', label: 'Mídia', icon: LuPlay },
-  { href: '/perfil', label: 'Perfil', icon: LuUserRound },
+  { href: '/home', label: 'Início', icon: House },
+  { href: '/conteudo', label: 'Conteúdo', icon: BookOpen },
+  { href: '/cartilha', label: 'Cartilha', icon: BookOpen },
+  { href: '/midia', label: 'Mídia', icon: Play },
+  { href: '/perfil', label: 'Perfil', icon: UserRound },
+  { href: '/sobre', label: 'Sobre', icon: UserRound },
+  { href: '/jogos', label: 'Jogos', icon: UserRound },
 ]
 
 export function Sidebar() {
@@ -46,7 +47,6 @@ export function Sidebar() {
             return (
               <Link key={href} href={href} passHref>
                 <Box
-                  as="a"
                   display="flex"
                   alignItems="center"
                   gap={3}
