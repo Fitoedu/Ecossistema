@@ -10,15 +10,35 @@ import {
   Image,
   Button,
 } from '@chakra-ui/react'
-import { Info, Leaf, BookOpen, FlaskConical, ScrollText, UserRound } from 'lucide-react'
+
 import Link from 'next/link'
+import type { IconType } from 'react-icons'
+import {
+    LuBookOpen,
+    LuGamepad2,
+    LuInfo,
+    LuLeaf,
+    LuNewspaper,
+    LuUserRound,
+    LuUsers,
+} from 'react-icons/lu'
+
+type Feature = {
+  icon: IconType
+  title: string
+  desc: string
+  href?: string
+  bg?: string
+  iconBg?: string
+  darkText?: boolean
+}
 
 const features = [
   {
     icon: Leaf,
     title: 'Plantas Medicinais',
-    desc: 'Explore o catálogo completo de espécies com propriedades terapêuticas.',
-    href: null,
+    desc: 'Explore um catálogo visual e didático com espécies e usos terapêuticos.',
+    href: '/plantas-medicinais',
   },
   {
     icon: BookOpen,

@@ -3,16 +3,15 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Box, Heading, Stack, Text } from '@chakra-ui/react'
-import { BookOpen, House, Play, UserRound } from 'lucide-react'
+import { LuBookOpen, LuGamepad2, LuHouse, LuPlay, LuUserRound } from 'react-icons/lu'
 
 const items = [
-  { href: '/home', label: 'Início', icon: House },
-  { href: '/conteudo', label: 'Conteúdo', icon: BookOpen },
-  { href: '/cartilha', label: 'Cartilha', icon: BookOpen },
-  { href: '/midia', label: 'Mídia', icon: Play },
-  { href: '/perfil', label: 'Perfil', icon: UserRound },
-  { href: '/sobre', label: 'Sobre', icon: UserRound },
-  { href: '/jogos', label: 'Jogos', icon: UserRound },
+  { href: '/home', label: 'Início', icon: LuHouse },
+  { href: '/conteudo', label: 'Conteúdo', icon: LuBookOpen },
+  { href: '/cartilha', label: 'Cartilha', icon: LuBookOpen },
+  { href: '/jogos', label: 'Jogos', icon: LuGamepad2 },
+  { href: '/midia', label: 'Mídia', icon: LuPlay },
+  { href: '/perfil', label: 'Perfil', icon: LuUserRound },
 ]
 
 export function Sidebar() {
