@@ -1,9 +1,10 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { Box, HStack, Text } from '@chakra-ui/react'
-import { AppShell } from '@/components/layout/AppShell' 
+import { Box } from '@chakra-ui/react'
+import { AppShell } from '@/components/layout/AppShell'
 import PageController from './components/PageController'
+import PageTransitionWrapper from './components/PageTransitionWrapper'
 import {
   PageCover,
   PageContent,
@@ -19,11 +20,9 @@ import {
 import {
   getPage,
   TOTAL_PAGES,
-  CARTILHA_PAGES,
   type CartilhaPageData,
 } from './data/cartilha-data'
 
-// Função para renderizar a página correta baseada no tipo
 function renderPage(page: CartilhaPageData) {
   switch (page.type) {
     case 'cover':   return <PageCover   data={page} />
@@ -39,23 +38,35 @@ function renderPage(page: CartilhaPageData) {
   }
 }
 
-// Componente principal da página da cartilha
 export default function CartilhaPage() {
   const [currentPage, setCurrentPage] = useState(0)
-  const [animKey, setAnimKey]         = useState(0)
+  const [animKey,     setAnimKey]     = useState(0)
+  const [direction,   setDirection]   = useState<'next' | 'prev'>('next')
 
   const goTo = useCallback(
-    (page: number) => {
-      const clamped = Math.max(0, Math.min(page, TOTAL_PAGES - 1))
+    (target: number) => {
+      const clamped = Math.max(0, Math.min(target, TOTAL_PAGES - 1))
+      setDirection(clamped >= currentPage ? 'next' : 'prev')
       setCurrentPage(clamped)
       setAnimKey(k => k + 1)
       window.scrollTo({ top: 0, behavior: 'smooth' })
     },
-    [],
+    [currentPage],
   )
 
-  const handlePrev = () => goTo(currentPage - 1)
-  const handleNext = () => goTo(currentPage + 1)
+  const handlePrev = useCallback(() => goTo(currentPage - 1), [currentPage, goTo])
+  const handleNext = useCallback(() => goTo(currentPage + 1), [currentPage, goTo])
+
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      const tag = (e.target as HTMLElement).tagName
+      if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return
+      if (e.key === 'ArrowLeft')  handlePrev()
+      if (e.key === 'ArrowRight') handleNext()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [handlePrev, handleNext])
 
   const page = getPage(currentPage)
 
@@ -64,38 +75,26 @@ export default function CartilhaPage() {
       title="Cartilha Interativa"
       description={`Página ${currentPage + 1} de ${TOTAL_PAGES}: ${page.label}`}
     >
-      <Box
-        fontFamily="body"
-        id="cartilha-root"
-      >
-        {/* Conteúdo da página */}
+      <Box fontFamily="body" id="cartilha-root">
         <Box
           as="main"
-          key={animKey}
-          maxW="780px" 
+          maxW="780px"
           mx="auto"
-          pb="120px" // Espaço para o PageController no final
+          pb="130px"
           id="main-content"
-          style={{ animation: 'pageEnter 0.45s cubic-bezier(0.34,1.2,0.64,1) both' }}
         >
-          {renderPage(page)}
+          <PageTransitionWrapper pageKey={animKey} direction={direction}>
+            {renderPage(page)}
+          </PageTransitionWrapper>
         </Box>
 
-        {/* Barra de navegação inferior */}
         <PageController
           currentPage={currentPage}
           totalPages={TOTAL_PAGES}
           onPrev={handlePrev}
           onNext={handleNext}
+          onGoTo={goTo}
         />
-
-        {/* Estilos para animações */}
-        <style>{`
-          @keyframes pageEnter {
-            from { opacity: 0; transform: translateY(20px); }
-            to   { opacity: 1; transform: translateY(0); }
-          }
-        `}</style>
       </Box>
     </AppShell>
   )
