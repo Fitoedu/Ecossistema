@@ -14,13 +14,15 @@ import {
 import Link from 'next/link'
 import type { IconType } from 'react-icons'
 import {
-    LuBookOpen,
-    LuGamepad2,
-    LuInfo,
-    LuLeaf,
-    LuNewspaper,
-    LuUserRound,
-    LuUsers,
+  LuBookOpen,
+  LuFlaskConical,
+  LuGamepad2,
+  LuInfo,
+  LuLeaf,
+  LuNewspaper,
+  LuScrollText,
+  LuUserRound,
+  LuUsers,
 } from 'react-icons/lu'
 
 type Feature = {
@@ -35,25 +37,25 @@ type Feature = {
 
 const features = [
   {
-    icon: Leaf,
+    icon: LuLeaf,
     title: 'Plantas Medicinais',
     desc: 'Explore um catálogo visual e didático com espécies e usos terapêuticos.',
     href: '/plantas-medicinais',
   },
   {
-    icon: BookOpen,
+    icon: LuBookOpen,
     title: 'Conteúdo Educativo',
     desc: 'Artigos, vídeos e quizzes criados por especialistas em fitoterapia.',
     href: null,
   },
   {
-    icon: FlaskConical,
+    icon: LuFlaskConical,
     title: 'Pesquisa Científica',
     desc: 'Referências atualizadas de estudos clínicos e etnobotânicos.',
     href: null,
   },
   {
-    icon: ScrollText,
+    icon: LuScrollText,
     title: 'Cartilha Interativa',
     desc: 'Aprenda sobre fitossanidade, pragas e casos reais do Amapá de forma interativa.',
     href: '/cartilha',
@@ -129,7 +131,7 @@ export default function Home() {
                 color="brand.600"
                 bg="whiteAlpha.700"
               >
-                <Icon as={UserRound} boxSize={4} />
+                <Icon as={LuUserRound} boxSize={4} />
               </Flex>
             </Link>
             <Link href="/conteudo" aria-label="Ajuda" style={{ textDecoration: 'none' }}>
@@ -144,12 +146,11 @@ export default function Home() {
                 color="brand.600"
                 bg="whiteAlpha.700"
               >
-                <Icon as={Info} boxSize={4} />
+                <Icon as={LuInfo} boxSize={4} />
               </Flex>
             </Link>
           </Flex>
         </Flex>
-
         <Box px={{ base: 4, md: 6, lg: 7 }} py={{ base: 4, md: 5 }}>
           <Box
             position="relative"
@@ -162,7 +163,7 @@ export default function Home() {
             <Box
               position="absolute"
               inset={0}
-              bg="linear-gradient(90deg, rgba(8, 47, 20, 0.82) 0%, rgba(8, 47, 20, 0.5) 42%, rgba(8, 47, 20, 0.08) 100%)"
+              bg="linear-gradient(90deg, rgba(8, 47, 20, 0.82) 0%, rgba(8, 47, 20, 0.5) 42%, rgba(8, 47, 20,.08) 100%)"
               zIndex={1}
             />
             <Box
