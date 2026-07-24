@@ -76,15 +76,40 @@ function LeadText({ children }: { children: React.ReactNode }) {
   );
 }
 
+/** Renderiza imageSrc como <img> responsivo dentro de um container fixo */
+function IconImg({ src, alt, size = 32 }: { src: string; alt: string; size?: number }) {
+  return (
+    <Box
+      w={`${size}px`}
+      h={`${size}px`}
+      flexShrink={0}
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      overflow="hidden"
+      borderRadius="8px"
+    >
+      <Image
+        src={src}
+        alt={alt}
+        width={size}
+        height={size}
+        style={{ objectFit: 'contain', width: '100%', height: '100%' }}
+        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+      />
+    </Box>
+  );
+}
+
 export function Callout({
   variant = "green",
-  icon,
+  imageSrc,
   title,
   children,
   mt,
 }: {
   variant?: CalloutData["variant"];
-  icon: string;
+  imageSrc: string;
   title: string;
   children: React.ReactNode;
   mt?: number | string;
@@ -117,9 +142,7 @@ export function Callout({
       align="flex-start"
       gap={4}
     >
-      <Text fontSize="28px" flexShrink={0} lineHeight="1" mt="2px">
-        {icon}
-      </Text>
+      <IconImg src={imageSrc} alt={title} size={36} />
       <Box>
         <Text
           display="block"
@@ -166,7 +189,7 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
 function IconCardsGrid({
   cards,
 }: {
-  cards: { emoji: string; label: string }[];
+  cards: { imageSrc: string; label: string; alt: string }[];
 }) {
   const cols = Math.min(cards.length, 4);
   return (
@@ -175,7 +198,7 @@ function IconCardsGrid({
       gap={4}
       my={6}
     >
-      {cards.map(({ emoji, label }) => (
+      {cards.map(({ imageSrc, label, alt }) => (
         <Box
           key={label}
           bg="white"
@@ -195,9 +218,9 @@ function IconCardsGrid({
           }}
           transition="all 0.25s ease"
         >
-          <Text fontSize="36px" lineHeight="1">
-            {emoji}
-          </Text>
+          <Box w="52px" h="52px" borderRadius="12px" overflow="hidden" display="flex" alignItems="center" justifyContent="center">
+            <Image src={imageSrc} alt={alt} width={52} height={52} style={{ objectFit: 'contain', width: '100%', height: '100%' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+          </Box>
           <Text
             fontSize="0.75rem"
             fontWeight="600"
@@ -226,7 +249,7 @@ function CalloutList({
         <Callout
           key={i}
           variant={c.variant}
-          icon={c.icon}
+          imageSrc={c.imageSrc}
           title={c.title}
           mt={i === 0 ? startMt : 4}
         >
@@ -825,7 +848,7 @@ export function PageContent({ data }: { data: PageContentData }) {
       {data.topCallout && (
         <Callout
           variant={data.topCallout.variant}
-          icon={data.topCallout.icon}
+          imageSrc={data.topCallout.imageSrc}
           title={data.topCallout.title}
           mt={0}
         >
@@ -835,7 +858,7 @@ export function PageContent({ data }: { data: PageContentData }) {
 
       <LeadText>{data.leadText}</LeadText>
 
-      {data.iconCards && <IconCardsGrid cards={data.iconCards} />}
+      {data.imageCards && <IconCardsGrid cards={data.imageCards} />}
 
       {data.midSectionHeading && (
         <>
@@ -861,7 +884,13 @@ export function PageLapbook({ data }: { data: PageLapbookData }) {
       />
       <LiftTheFlap
         title={data.lapbookTitle}
-        flaps={data.flaps}
+        flaps={data.flaps.map((f) => ({
+          id: f.id,
+          frontEmoji: '',
+          frontText: f.coverTitle,
+          backContent: f.content,
+          backAccent: f.backAccent,
+        }))}
         columns={data.columns ?? 2}
       />
       {data.callouts && <CalloutList callouts={data.callouts} startMt={5} />}
@@ -899,9 +928,9 @@ export function PageImpact({ data }: { data: PageImpactData }) {
               right="-20px"
               aria-hidden="true"
             />
-            <Text fontSize="32px" mb={2}>
-              {card.icon}
-            </Text>
+            <Box w="40px" h="40px" mb={2} mx="auto">
+              <Image src={card.imageSrc} alt={card.label} width={40} height={40} style={{ objectFit: 'contain', width: '100%', height: '100%' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+            </Box>
             <Text
               fontSize="1.8rem"
               fontWeight="900"
@@ -949,10 +978,10 @@ export function PageImpact({ data }: { data: PageImpactData }) {
               display="flex"
               alignItems="center"
               justifyContent="center"
-              fontSize="22px"
               flexShrink={0}
+              p="8px"
             >
-              {item.icon}
+              <Image src={item.imageSrc} alt={item.title} width={28} height={28} style={{ objectFit: 'contain', filter: 'brightness(0) invert(1)' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
             </Box>
             <Box>
               <Text fontWeight="700" fontSize="0.9rem" color="#1B5E20" mb={1}>
@@ -971,7 +1000,7 @@ export function PageImpact({ data }: { data: PageImpactData }) {
 
 export function PageAlert({ data }: { data: PageAlertData }) {
   const pestCards = data.pragaCards?.map((p) => ({
-    emoji: p.emoji,
+    emoji: '🚨',
     name: p.title,
     severity: "Praga Quarentenária" as const,
     description: p.desc,
@@ -979,9 +1008,9 @@ export function PageAlert({ data }: { data: PageAlertData }) {
     impact: {
       headline: "Ameaça à Agricultura",
       items: [
-        { icon: "⚠️", text: p.desc },
-        { icon: "🌾", text: "Controle oficial obrigatório pelo MAPA." },
-        { icon: "🚫", text: "Pode bloquear exportações de frutas e vegetais." },
+        { icon: '⚠️', text: p.desc },
+        { icon: '🌾', text: "Controle oficial obrigatório pelo MAPA." },
+        { icon: '🚫', text: "Pode bloquear exportações de frutas e vegetais." },
       ],
     },
   }));
@@ -1019,9 +1048,9 @@ export function PageAlert({ data }: { data: PageAlertData }) {
           right="-60px"
           aria-hidden="true"
         />
-        <Text fontSize="36px" flexShrink={0}>
-          {data.alertIcon}
-        </Text>
+        <Box w="48px" h="48px" flexShrink={0} display="flex" alignItems="center" justifyContent="center">
+          <Image src={data.alertImageSrc} alt={data.alertTitle} width={48} height={48} style={{ objectFit: 'contain', filter: 'brightness(0) invert(1)' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+        </Box>
         <Box>
           <Text fontSize="1rem" fontWeight="800" mb={1}>
             {data.alertTitle}
@@ -1082,10 +1111,10 @@ export function PageOrgaos({ data }: { data: PageOrgaosData }) {
               display="flex"
               alignItems="center"
               justifyContent="center"
-              fontSize="22px"
               flexShrink={0}
+              p="8px"
             >
-              {o.icon}
+              <Image src={o.imageSrc} alt={o.name} width={28} height={28} style={{ objectFit: 'contain', filter: 'brightness(0) invert(1)' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
             </Box>
             <Box>
               <Text fontWeight="700" fontSize="0.9rem" color="#1B5E20" mb={1}>
@@ -1103,38 +1132,39 @@ export function PageOrgaos({ data }: { data: PageOrgaosData }) {
 }
 
 export function PageCase({ data }: { data: PageCaseData }) {
-  const heroGradients = {
-    green: "linear-gradient(135deg, #2E7D32, #66BB6A)",
-    amber: "linear-gradient(135deg, #E65100, #FF8F00)",
-    teal: "linear-gradient(135deg, #00695C, #26A69A)",
+  const heroGradients: Record<typeof data.heroVariant, string> = {
+    green:  "linear-gradient(135deg, #2E7D32, #66BB6A)",
+    amber:  "linear-gradient(135deg, #E65100, #FF8F00)",
+    teal:   "linear-gradient(135deg, #00695C, #26A69A)",
+    red:    "linear-gradient(135deg, #B71C1C, #C62828)",
+    purple: "linear-gradient(135deg, #4A148C, #6A1B9A)",
   };
-  const lapbookVariants: Record<
-    typeof data.heroVariant,
-    PocketCard["variant"]
-  > = {
-    green: "green",
-    amber: "amber",
-    teal: "teal",
+  const lapbookVariants: Record<typeof data.heroVariant, PocketCard["variant"]> = {
+    green:  "green",
+    amber:  "amber",
+    teal:   "teal",
+    red:    "red",
+    purple: "purple",
   };
 
   const pocketCards: PocketCard[] = data.details.map((row, i) => ({
     id: `detail-${i}`,
-    emoji: row.icon,
+    emoji: '📋',
     title: row.label,
     subtitle: "Clique para ver detalhes",
     variant: lapbookVariants[data.heroVariant],
-    details: [{ icon: row.icon, label: row.label, value: row.value }],
+    details: [{ icon: '📌', label: row.label, value: row.value }],
   }));
 
   const calloutPockets: PocketCard[] = data.callouts.map((c, i) => ({
     id: `callout-${i}`,
-    emoji: c.icon,
+    emoji: c.variant === 'red' ? '⚠️' : '💡',
     title: c.title,
     subtitle: c.variant === "red" ? "⚠️ Alerta Importante" : "💡 Saiba mais",
     variant:
       c.variant === "red" ? "red" : c.variant === "yellow" ? "amber" : "green",
-    details: [{ icon: c.icon, label: c.title, value: c.text }],
-    callout: { icon: c.icon, text: c.text },
+    details: [{ icon: '📌', label: c.title, value: c.text }],
+    callout: { icon: c.variant === 'red' ? '⚠️' : '💡', text: c.text },
   }));
 
   return (
@@ -1151,16 +1181,16 @@ export function PageCase({ data }: { data: PageCaseData }) {
           bg={heroGradients[data.heroVariant]}
           color="white"
         >
-          <Text
-            fontSize={{ base: "52px", md: "72px" }}
+          <Box
+            w={{ base: '64px', md: '88px' }}
+            h={{ base: '64px', md: '88px' }}
             flexShrink={0}
-            style={{
-              filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.2))",
-              animation: "floatIcon 4s ease-in-out infinite",
-            }}
+            borderRadius="16px"
+            overflow="hidden"
+            style={{ filter: 'drop-shadow(0 6px 16px rgba(0,0,0,0.25))', animation: 'floatIcon 4s ease-in-out infinite' }}
           >
-            {data.heroEmoji}
-          </Text>
+            <Image src={data.heroImageSrc} alt={data.heroTitle} width={88} height={88} style={{ objectFit: 'cover', width: '100%', height: '100%' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+          </Box>
           <Box flex="1" minW="180px">
             <Text
               as="h1"
@@ -1277,9 +1307,9 @@ export function PageChain({ data }: { data: PageChainData }) {
                   />
                 )}
               </VStack>
-              <Text fontSize="28px" flexShrink={0}>
-                {item.icon}
-              </Text>
+              <Box w="32px" h="32px" flexShrink={0}>
+                <Image src={item.imageSrc} alt={item.text.slice(0, 30)} width={32} height={32} style={{ objectFit: 'contain', width: '100%', height: '100%' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+              </Box>
               <Text
                 fontSize="0.88rem"
                 color="#212121"
@@ -1331,14 +1361,17 @@ export function PageClosing({ data }: { data: PageClosingData }) {
           right="-60px"
           aria-hidden="true"
         />
-        <Text
-          fontSize="64px"
-          display="block"
+        <Box
+          w="80px"
+          h="80px"
           mb={4}
-          style={{ animation: "floatIcon 3s ease-in-out infinite" }}
+          mx="auto"
+          borderRadius="20px"
+          overflow="hidden"
+          style={{ animation: 'floatIcon 3s ease-in-out infinite' }}
         >
-          {data.heroEmoji}
-        </Text>
+          <Image src={data.heroImageSrc} alt={data.heroTitle} width={80} height={80} style={{ objectFit: 'cover', width: '100%', height: '100%' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+        </Box>
         <Text
           as="h1"
           fontSize="clamp(1.6rem, 4vw, 2.2rem)"
@@ -1375,9 +1408,9 @@ export function PageClosing({ data }: { data: PageClosingData }) {
             }}
             transition="all 0.25s ease"
           >
-            <Text fontSize="32px" mb={2} display="block">
-              {p.icon}
-            </Text>
+            <Box w="40px" h="40px" mb={2} mx="auto" borderRadius="10px" overflow="hidden">
+              <Image src={p.imageSrc} alt={p.label} width={40} height={40} style={{ objectFit: 'contain', width: '100%', height: '100%' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+            </Box>
             <Text fontSize="0.78rem" fontWeight="700" color="#1B5E20">
               {p.label}
             </Text>
@@ -1408,7 +1441,7 @@ export function PageClosing({ data }: { data: PageClosingData }) {
 
       <Callout
         variant={data.callout.variant}
-        icon={data.callout.icon}
+        imageSrc={data.callout.imageSrc}
         title={data.callout.title}
       >
         {data.callout.text}
