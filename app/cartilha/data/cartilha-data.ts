@@ -54,6 +54,8 @@ export interface CalloutData {
   imageSrc: string
   title: string
   text: string
+  imageSize?: number
+  imageCircular?: boolean
 }
 
 /**
@@ -81,6 +83,8 @@ export interface ImageCardData {
   label: string
   /** Texto alternativo para acessibilidade */
   alt: string
+  /** Define o estilo do card. 'icon' (default) ou 'full' para preencher. */
+  display?: 'icon' | 'full'
 }
 
 /** Uma tag de categoria (cover-tags, etc.) */
@@ -397,16 +401,16 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     leadText:
       'Nesta cartilha, você vai descobrir o mundo fascinante da Fitossanidade — a ciência que cuida da saúde das plantas. Vamos explorar juntos:',
     imageCards: [
-      { imageSrc: '/assets/icones/praga-icone.png', label: 'O que são pragas e doenças', alt: 'Icone de microrganismo representando pragas' },
-      { imageSrc: '/assets/icones/agricultura-icone.png', label: 'Como afetam a agricultura', alt: 'Icone de planta na lavoura' },
-      { imageSrc: '/assets/icones/escudo-icone.png', label: 'Como nos protegemos delas', alt: 'Icone de escudo protetor' },
-      { imageSrc: '/assets/icones/amapa-icone.png', label: 'Casos reais do Amapá', alt: 'Icone de mapa do Amapá' },
+      { imageSrc: '/images/Doenças/Fitoplasma.webp', label: 'O que são pragas e doenças', alt: 'Ilustração de doença de planta causada por Fitoplasma', display: 'full' },
+      { imageSrc: '/images/Agricultura/irrigation.webp', label: 'Como afetam a agricultura', alt: 'Imagem de sistema de irrigação em uma lavoura', display: 'full' },
+      { imageSrc: '/images/Método de Controle/Pulverizacao correta.webp', label: 'Como nos protegemos delas', alt: 'Imagem de um agricultor aplicando defensivos corretamente', display: 'full' },
+      { imageSrc: '/images/Pragas/Mosca da Carambola/1.webp', label: 'Casos reais do Amapá', alt: 'Imagem da Mosca da Carambola, uma praga relevante para o Amapá', display: 'full' },
     ],
     topCallout: {
       variant: 'green',
-      imageSrc: '/assets/icones/planta-icone.png',
+      imageSrc: '/assets/dona_fito_meio_corpo.png',
       title: 'Olá, futuro cientista!',
-      text: 'Assim como nós, humanos, podemos ficar gripados ou com febre, as plantas tambem podem ser atacadas por "viloes" que as deixam fracas, feias e improdutivas. Esses viloes se chamam pragas e doencas.',
+      text: 'Assim como nós, humanos, podemos ficar gripados ou com febre, as plantas tambem podem ser atacadas por "vilões" que as deixam fracas, feias e improdutivas. Esses viloes se chamam pragas e doencas.',
     },
     callouts: [
       {
@@ -450,7 +454,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'green',
-        imageSrc: '/assets/icones/curiosidade-icone.png',
+        imageSrc: '/assets/dona_fito_meio_corpo.png',
         title: 'Curiosidade!',
         text: 'O Brasil é um dos maiores exportadores agrícolas do mundo. Por isso, cuidar da saúde das plantas é também cuidar da economia de milhões de famílias brasileiras!',
       },

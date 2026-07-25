@@ -189,7 +189,7 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
 function IconCardsGrid({
   cards,
 }: {
-  cards: { imageSrc: string; label: string; alt: string }[];
+  cards: { imageSrc: string; label: string; alt: string; display?: 'icon' | 'full' }[];
 }) {
   const cols = Math.min(cards.length, 4);
   return (
@@ -198,7 +198,7 @@ function IconCardsGrid({
       gap={4}
       my={6}
     >
-      {cards.map(({ imageSrc, label, alt }) => (
+      {cards.map(({ imageSrc, label, alt, display }) => (
         <Box
           key={label}
           bg="white"
@@ -218,9 +218,35 @@ function IconCardsGrid({
           }}
           transition="all 0.25s ease"
         >
-          <Box w="52px" h="52px" borderRadius="12px" overflow="hidden" display="flex" alignItems="center" justifyContent="center">
-            <Image src={imageSrc} alt={alt} width={52} height={52} style={{ objectFit: 'contain', width: '100%', height: '100%' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+          <Box
+            w={display === 'full' ? 'full' : "52px"}
+            h={display === 'full' ? "180px" : "52px"}
+            borderRadius="12px"
+            overflow="hidden"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            mb={display === 'full' ? 4 : 0}
+          >
+            <Image
+              src={imageSrc}
+              alt={alt}
+              width={display === 'full' ? 500 : 52}
+              height={display === 'full' ? 180 : 52}
+              style={{ objectFit: display === 'full' ? 'cover' : 'contain', width: '100%', height: '100%' }}
+              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+            />
           </Box>
+
+          {display === 'full' && (
+            <Box
+              w="80%"
+              h="1px"
+              bg="rgba(46,125,50,0.2)"
+              my={2}
+            />
+          )}
+
           <Text
             fontSize="0.75rem"
             fontWeight="600"
