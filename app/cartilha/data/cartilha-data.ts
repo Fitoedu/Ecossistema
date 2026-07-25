@@ -14,10 +14,14 @@ export type CalloutVariant = 'green' | 'yellow' | 'red'
 /** Variante de acento do LiftTheFlap */
 export type FlapAccent = 'green' | 'yellow' | 'red' | 'teal'
 
+/** Categoria de microorganismo para o hotspot */
+export type MicroorgCategory = 'fungo' | 'bacteria' | 'virus' | 'fitoplasma'
+
 /** Tipo de interação da página — usado para selecionar o layout correto */
 export type InteractionType =
   | 'standard'       // Página de conteúdo textual clássico
   | 'lift-the-flap'  // Abas interativas (LiftTheFlap)
+  | 'hotspot'        // Lente de Investigação (Hotspot Interativo)
   | 'quiz'           // Quiz auto-contido
   | 'find-the-hero'  // Mini-jogo: Encontre o Herói
   | 'cover'          // Capa da cartilha
@@ -133,6 +137,27 @@ export interface PillarData {
   imageSrc: string
   label: string
   sub: string
+}
+
+/**
+ * Item de microorganismo para a página de Hotspot Interativo.
+ * Cada item representa uma doença/patógeno com imagem de fundo e card informativo.
+ */
+export interface HotspotItemData {
+  /** Identificador único */
+  id: string
+  /** Nome da doença/patógeno */
+  name: string
+  /** Categoria para coloração do badge */
+  category: MicroorgCategory
+  /** URL da imagem de fundo do card (foto da doença na folha/fruto) */
+  backgroundImageSrc: string
+  /** Texto principal de explicação */
+  concept: string
+  /** Texto de alerta/impacto (aparece em destaque vermelho) */
+  impactText?: string
+  /** Texto de prevenção (aparece em destaque amarelo) */
+  preventionText?: string
 }
 
 /** Card de alerta de praga quarentenária */
@@ -340,11 +365,29 @@ export interface PageClosingData extends PersonaBlock {
   footerText: string
 }
 
+/**
+ * HOTSPOT — Página de Lente de Investigação com imagens interativas
+ */
+export interface PageHotspotData extends PersonaBlock {
+  type: 'hotspot'
+  interactionType: 'hotspot'
+  id: string
+  label: string
+  badgeLabel: string
+  title: string
+  titleHighlight?: string
+  titleSuffix?: string
+  leadText: string
+  items: HotspotItemData[]
+  callouts?: CalloutData[]
+}
+
 /** Union type de todos os tipos de página */
 export type CartilhaPageData =
   | PageCoverData
   | PageContentData
   | PageLapbookData
+  | PageHotspotData
   | PageImpactData
   | PageAlertData
   | PageOrgaosData
@@ -617,72 +660,91 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 06 — FUNGOS E BACTÉRIAS (LIFT-THE-FLAP)
+     PÁGINA 06 — FUNGOS, BACTÉRIAS E VÍRUS (HOTSPOT INTERATIVO)
   ───────────────────────────────────────────────────── */
   {
-    type: 'lapbook',
-    interactionType: 'lift-the-flap',
+    type: 'hotspot',
+    interactionType: 'hotspot',
     id: 'p06',
-    label: 'Fungos e Bactérias',
-    badgeLabel: 'Lapbook Interativo',
-    lapbookBadge: 'Os Invasores Invisíveis',
-    lapbookTitle: 'Fungos, Bactérias e Vírus: O que não se vê pode machucar!',
-    lapbookSubtitle: 'Levante cada aba e descubra os microorganismos que adoecem as nossas plantas!',
-    backgroundImageSrc: '/assets/cenarios/fundo-lapbook-amarelo.png',
-    flaps: [
+    label: 'Fungos, Bactérias e Vírus',
+    badgeLabel: 'Lente de Investigação',
+    title: 'Os Invasores ',
+    titleHighlight: 'Invisíveis',
+    titleSuffix: ' das Plantas',
+    leadText:
+      'Fungos, bactérias e vírus são micro-organismos que adoecem as plantas. Clique em cada imagem para investigar o que está acontecendo com essa folha ou fruto!',
+    items: [
       {
         id: 'fungo-ferrugem',
-        coverTitle: 'O que é a Ferrugem?',
-        coverImageSrc: '/assets/pragas/fungos/ferrugem-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'A ferrugem é uma doença causada por fungos que deixam manchas alaranjadas ou marrons nas folhas, parecendo ferrugem de metal. Ela se espalha pelo vento e pode destruir uma lavoura de soja ou trigo em poucos dias!',
-        contentImageSrc: '/assets/pragas/fungos/ferrugem-folha-dano.png',
-        backAccent: 'red',
+        name: 'Ferrugem',
+        category: 'fungo',
+        backgroundImageSrc: '/images/Sintomas/clorose.webp',
+        concept:
+          'A ferrugem é uma doença causada por fungos que deixam manchas alaranjadas ou marrons nas folhas, semelhantes à ferrugem de metal. Ela se espalha pelo vento e pode destruir lavouras de soja ou trigo em poucos dias!',
+        impactText:
+          'Pode causar perdas de até 70% da colheita de soja. Uma das doenças fúngicas mais destrutivas do agronegócio brasileiro.',
+        preventionText:
+          'Use variedades resistentes e fungicidas preventivos. O monitoramento precoce é fundamental!',
       },
       {
         id: 'fungo-antracnose',
-        coverTitle: 'O que é a Antracnose?',
-        coverImageSrc: '/assets/pragas/fungos/antracnose-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'A antracnose é um fungo que causa manchas escuras e afundadas nos frutos, como manga, mamao e tomate. Os frutos apodrecem antes de amadurecer e ficam imprestaveis para venda. É muito comum no clima umido da Amazonia!',
-        contentImageSrc: '/assets/pragas/fungos/antracnose-fruto.png',
-        backAccent: 'yellow',
+        name: 'Antracnose',
+        category: 'fungo',
+        backgroundImageSrc: '/images/Sintomas/podridao.webp',
+        concept:
+          'A antracnose é causada por fungos do gênero Colletotrichum. Provoca manchas escuras e afundadas nos frutos de manga, mamão e tomate. Os frutos apodrecem antes de amadurecer, ficando impróprios para venda.',
+        impactText:
+          'Muito comum no clima úmido da Amazônia. Frutos infectados perdem completamente o valor comercial.',
+        preventionText:
+          'Evite excesso de umidade, faça colheita no tempo certo e aplique fungicidas cúpricos como medida preventiva.',
       },
       {
         id: 'fungo-requeima',
-        coverTitle: 'O que é a Requeima?',
-        coverImageSrc: '/assets/pragas/fungos/requeima-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'A requeima, causada pelo fungo Phytophthora infestans, é a mesma doença que causou a Grande Fome da Irlanda no século XIX! Ela ataca batatinha, tomate e pimenta, causando o apodrecimento rápido das plantas.',
-        contentImageSrc: '/assets/pragas/fungos/requeima-batata.png',
-        backAccent: 'red',
+        name: 'Requeima',
+        category: 'fungo',
+        backgroundImageSrc: '/images/Sintomas/necrose.webp',
+        concept:
+          'A requeima, causada pelo oomiceto Phytophthora infestans, foi responsável pela Grande Fome da Irlanda no século XIX! Ela ataca batata, tomate e pimenta, provocando o apodrecimento rápido e total das plantas.',
+        impactText:
+          'Em condições ideais de umidade e frio, pode destruir uma lavoura de batata em apenas 10 dias. É considerada emergência fitossanitária.',
+        preventionText:
+          'Plante variedades resistentes, faça rotação de culturas e aplique fungicidas sistêmicos de forma preventiva.',
       },
       {
         id: 'bacteria-cancro',
-        coverTitle: 'O que é o Cancro Citrico?',
-        coverImageSrc: '/assets/pragas/bacterias/cancro-citrico-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'O cancro citrico é uma doença bacteriana que ataca laranjas, limões e outras frutas cítricas. Causa lesões nas folhas, frutos e caules. Frutos infectados não podem ser exportados — prejuízo enorme para os produtores!',
-        contentImageSrc: '/assets/pragas/bacterias/cancro-citrico-fruto.png',
-        backAccent: 'teal',
+        name: 'Cancro Cítrico',
+        category: 'bacteria',
+        backgroundImageSrc: '/images/Sintomas/frutos com lesoes.webp',
+        concept:
+          'O cancro cítrico é uma doença bacteriana causada por Xanthomonas citri. Ataca laranjas, limões e outras frutas cítricas, causando lesões elevadas nas folhas, frutos e caules. Frutos infectados não podem ser exportados.',
+        impactText:
+          'Prejuízo enorme para produtores: frutos com sintomas são descartados e a planta infectada deve ser erradicada por lei.',
+        preventionText:
+          'Utilize mudas certificadas, higienize ferramentas e evite trabalhar na lavoura com folhas molhadas. É de notificação obrigatória ao MAPA.',
       },
       {
         id: 'virus-mosaico',
-        coverTitle: 'O que é o Vírus do Mosaico?',
-        coverImageSrc: '/assets/pragas/virus/mosaico-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'O vírus do mosaico deixa as folhas das plantas com um padrão de manchas claras e escuras, parecendo um mosaico! Ele é transmitido por insetos como pulgões. Afeta tomate, feijão, mandioca e muitas outras culturas.',
-        contentImageSrc: '/assets/pragas/virus/mosaico-folha.png',
-        backAccent: 'green',
+        name: 'Vírus do Mosaico',
+        category: 'virus',
+        backgroundImageSrc: '/images/Sintomas/murcha.webp',
+        concept:
+          'O vírus do mosaico (TMV, CMV e outros) deixa as folhas com padrão de manchas claras e escuras, parecendo um mosaico colorido. É transmitido por insetos vetores como pulgões. Afeta tomate, feijão, mandioca e muitas outras culturas.',
+        impactText:
+          'Não existe cura para vírus em plantas. Uma vez infectada, a planta deve ser removida para evitar a disseminação para as vizinhas.',
+        preventionText:
+          'Controle os insetos vetores (pulgões, moscas-brancas), use mudas sadias e elimine imediatamente plantas sintomáticas.',
       },
       {
         id: 'fitoplasma',
-        coverTitle: 'O que e o Fitoplasma?',
-        coverImageSrc: '/assets/pragas/bacterias/fitoplasma-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'O fitoplasma e um micro-organismo que vive dentro dos "canos" da planta (floema). Causa o amarelecimento letal de palmeiras como o acai, coco e dende — sem cura conhecida! E transmitido por insetos vetores.',
-        contentImageSrc: '/assets/pragas/bacterias/fitoplasma-palmeira.png',
-        backAccent: 'red',
+        name: 'Fitoplasma',
+        category: 'fitoplasma',
+        backgroundImageSrc: '/images/Doenças/Fitoplasma.webp',
+        concept:
+          'O fitoplasma é um micro-organismo que vive dentro dos vasos condutores da planta (floema). Causa o amarelecimento letal de palmeiras como açaí, coco e dendê — sem cura conhecida! É transmitido por cigarrinhas e outros insetos vetores.',
+        impactText:
+          'O amarelecimento fatal do coqueiro já destruiu milhões de palmeiras no Brasil. A doença é irreversível e a planta morre em poucos meses após a infecção.',
+        preventionText:
+          'Controle rigoroso dos insetos vetores e erradicação imediata de palmeiras sintomáticas. Não existe tratamento curativo.',
       },
     ],
     callouts: [
@@ -694,7 +756,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       },
     ],
     personaText:
-      'Esses inimigos são invisíveis a olho nu, mas causam estragos enormes! Fungos, bactérias e vírus são os "germes das plantas". Levante as abas para conhecê-los e saber como nos protegemos!',
+      'Esses inimigos são invisíveis a olho nu, mas causam estragos enormes! Fungos, bactérias e vírus são os "germes das plantas". Clique em cada imagem para investigar o que está acontecendo!',
     personaEmotion: 'alert',
     personaImageSrc: '/assets/dona-fito/dona-fito-alert.png',
   },

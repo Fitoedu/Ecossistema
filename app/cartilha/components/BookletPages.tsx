@@ -9,10 +9,12 @@ import LiftTheFlap from "./LiftTheFlap";
 import LapbookFolder, { type PocketCard } from "./LapbookFolder";
 import { PestCardGrid } from "./PestCard";
 import Quiz from "./Quiz";
+import { ImageDiscoveryHotspotGrid } from "./ImageDiscoveryHotspot";
 import type {
   PageCoverData,
   PageContentData,
   PageLapbookData,
+  PageHotspotData,
   PageImpactData,
   PageAlertData,
   PageOrgaosData,
@@ -1022,7 +1024,69 @@ export function PageLapbook({ data }: { data: PageLapbookData }) {
   );
 }
 
+export function PageHotspot({ data }: { data: PageHotspotData }) {
+  return (
+    <Box>
+      <SectionBadge>{data.badgeLabel}</SectionBadge>
+
+      <PageTitle>
+        {data.title}
+        {data.titleHighlight && <Highlight>{data.titleHighlight}</Highlight>}
+        {data.titleSuffix}
+      </PageTitle>
+
+      {/* Banner instrutivo com ícone de lupa */}
+      <Box
+        bg="linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%)"
+        borderRadius="16px"
+        p="14px 20px"
+        mb={4}
+        display="flex"
+        alignItems="center"
+        gap={3}
+        position="relative"
+        overflow="hidden"
+      >
+        <Box
+          position="absolute"
+          w="120px"
+          h="120px"
+          borderRadius="50%"
+          bg="rgba(255,255,255,0.05)"
+          right="-30px"
+          top="-40px"
+          aria-hidden="true"
+        />
+        <Box
+          w="36px"
+          h="36px"
+          borderRadius="50%"
+          bg="#FBC02D"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          flexShrink={0}
+          boxShadow="0 2px 8px rgba(0,0,0,0.25)"
+        >
+          <Text fontSize="1rem" fontWeight="900" color="#212121" lineHeight={1}>
+            🔬
+          </Text>
+        </Box>
+        <Text fontSize="0.82rem" color="white" lineHeight="1.55" fontWeight="500" position="relative" zIndex={1}>
+          {data.leadText}
+        </Text>
+      </Box>
+
+      {/* Grade de Hotspots — 2 colunas */}
+      <ImageDiscoveryHotspotGrid items={data.items} />
+
+      {data.callouts && <CalloutList callouts={data.callouts} startMt={4} />}
+    </Box>
+  );
+}
+
 export function PageImpact({ data }: { data: PageImpactData }) {
+
   return (
     <Box>
       <SectionBadge>{data.badgeLabel}</SectionBadge>

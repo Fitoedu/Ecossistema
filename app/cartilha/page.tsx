@@ -9,6 +9,7 @@ import {
   PageCover,
   PageContent,
   PageLapbook,
+  PageHotspot,
   PageImpact,
   PageAlert,
   PageOrgaos,
@@ -28,6 +29,7 @@ function renderPage(page: CartilhaPageData) {
     case 'cover': return <PageCover data={page} />
     case 'content': return <PageContent data={page} />
     case 'lapbook': return <PageLapbook data={page} />
+    case 'hotspot': return <PageHotspot data={page} />
     case 'impact': return <PageImpact data={page} />
     case 'alert': return <PageAlert data={page} />
     case 'orgaos': return <PageOrgaos data={page} />
