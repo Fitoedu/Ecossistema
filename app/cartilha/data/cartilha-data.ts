@@ -458,7 +458,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'yellow',
-        imageSrc: '/assets/icones/lampada-icone.png',
+        imageSrc: '/assets/joaninha_corpo_todo.png',
         title: 'Linguagem fácil para todos!',
         text: 'Esta cartilha foi criada especialmente para estudantes como você. Não precisamos ser cientistas para entender e ajudar a proteger as plantas da nossa região!',
       },
@@ -534,7 +534,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'yellow',
-        imageSrc: '/assets/icones/lampada-icone.png',
+        imageSrc: '/assets/joaninha_corpo_todo.png',
         title: 'Sabia que...',
         text: 'A mandioca e o açaí são duas das principais "fábricas de comida" do Amapá! Milhares de famílias dependem dessas plantas para viver e para vender seus produtos.',
       },
@@ -648,7 +648,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'yellow',
-        imageSrc: '/assets/icones/atencao-icone.png',
+        imageSrc: '/assets/joaninha_corpo_todo.png',
         title: 'Atenção!',
         text: 'Nem todo inseto é praga! Abelhas, joaninhas e vespinhas parasitoides são aliadas da lavoura. Conhecer os "heróis" e os "vilões" do campo é essencial para um bom manejo agrícola!',
       },
@@ -788,7 +788,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'yellow',
-        imageSrc: '/assets/icones/lampada-icone.png',
+        imageSrc: '/assets/joaninha_corpo_todo.png',
         title: 'Curiosidade!',
         text: 'O aguapé (jacinto-d’água) é uma planta invasora aquática que bloqueia rios e lagos no Amapá, prejudicando a pesca e a navegação. Até plantas podem ser pragas em locais errados!',
       },
@@ -889,7 +889,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'yellow',
-        imageSrc: '/assets/icones/pergunta-icone.png',
+        imageSrc: '/assets/joaninha_corpo_todo.png',
         title: 'Por que o nome "Quarentenária"?',
         text: 'O termo vem de "quarentena" — o periodo de isolamento usado para evitar a propagação de doenças. Assim como fazemos quarentena para proteger as pessoas, fazemos quarentena fitossanitária para proteger as plantas!',
       },
@@ -1223,7 +1223,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'yellow',
-        imageSrc: '/assets/icones/coracao-icone.png',
+        imageSrc: '/assets/joaninha_corpo_todo.png',
         title: 'Você pode fazer a diferença!',
         text: 'Não transporte plantas ou frutas de regiões desconhecidas. Compre produtos com selos de qualidade. Apoie agricultores locais. Essas atitudes simples ajudam a manter a fitossanidade da nossa região!',
       },
