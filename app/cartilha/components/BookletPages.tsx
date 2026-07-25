@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { Box, Grid, HStack, Text, VStack, SimpleGrid } from "@chakra-ui/react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { FaHandPointer } from 'react-icons/fa';
 import LiftTheFlap from "./LiftTheFlap";
 import LapbookFolder, { type PocketCard } from "./LapbookFolder";
 import { PestCardGrid } from "./PestCard";
@@ -218,6 +219,7 @@ function FlipCard({ card }: FlipCardProps) {
       h={cardHeight}
       cursor="pointer"
       onClick={() => setIsFlipped((prev) => !prev)}
+      position="relative" // Main container for the card, used for icon positioning
     >
       <motion.div
         style={{
@@ -303,7 +305,28 @@ function FlipCard({ card }: FlipCardProps) {
           justifyContent="center"
           textAlign="center"
           boxShadow="0 4px 12px rgba(0,0,0,0.08)"
+          overflow="visible" // Ensure icon can spill out
         >
+          {/* Hand Icon - moved to the back face */}
+          {isFlipped && ( // Only show icon when back face is visible
+            <motion.div
+              animate={{ y: [0, -8, 0], x: [0, 8, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+              style={{
+                position: 'absolute',
+                top: -8,
+                right: -8,
+                zIndex: 10,
+                filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))',
+                color: 'white',
+                fontSize: '1.8rem',
+                pointerEvents: 'none',
+                transform: 'rotateY(180deg)', // Un-flip the icon so it's not mirrored
+              }}
+            >
+              <FaHandPointer />
+            </motion.div>
+          )}
           <Text fontSize="0.9rem" color="#1B5E20" fontWeight="500">
             Aqui vai a explicação sobre este tópico...
           </Text>
