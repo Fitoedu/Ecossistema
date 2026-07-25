@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { Box, Grid, HStack, Text, VStack, SimpleGrid } from "@chakra-ui/react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
@@ -20,6 +20,7 @@ import type {
   PageQuizData,
   PageClosingData,
   CalloutData,
+  ImageCardData,
 } from "../data/cartilha-data";
 
 function SectionBadge({ children }: { children: React.ReactNode }) {
@@ -77,7 +78,15 @@ function LeadText({ children }: { children: React.ReactNode }) {
 }
 
 /** Renderiza imageSrc como <img> responsivo dentro de um container fixo */
-function IconImg({ src, alt, size = 32 }: { src: string; alt: string; size?: number }) {
+function IconImg({
+  src,
+  alt,
+  size = 32,
+}: {
+  src: string;
+  alt: string;
+  size?: number;
+}) {
   return (
     <Box
       w={`${size}px`}
@@ -94,8 +103,10 @@ function IconImg({ src, alt, size = 32 }: { src: string; alt: string; size?: num
         alt={alt}
         width={size}
         height={size}
-        style={{ objectFit: 'contain', width: '100%', height: '100%' }}
-        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+        style={{ objectFit: "contain", width: "100%", height: "100%" }}
+        onError={(e) => {
+          (e.target as HTMLImageElement).style.display = "none";
+        }}
       />
     </Box>
   );
@@ -186,23 +197,45 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
   );
 }
 
-function IconCardsGrid({
-  cards,
-}: {
-  cards: { imageSrc: string; label: string; alt: string; display?: 'icon' | 'full' }[];
-}) {
-  const cols = Math.min(cards.length, 4);
+/* ─────────────────────────────────────────────────────────────────────────
+   FLIP CARD COMPONENT
+───────────────────────────────────────────────────────────────────────── */
+
+interface FlipCardProps {
+  card: ImageCardData;
+}
+
+function FlipCard({ card }: FlipCardProps) {
+  const [isFlipped, setIsFlipped] = useState(true);
+  const { imageSrc, label, alt, display } = card;
+
+  // Ensure the card has enough height for the back content, especially for 'full' display
+  const cardHeight = display === "full" ? "280px" : "150px";
+
   return (
-    <Grid
-      templateColumns={{ base: "repeat(2, 1fr)", md: `repeat(${cols}, 1fr)` }}
-      gap={4}
-      my={6}
+    <Box
+      style={{ perspective: "1000px" }}
+      h={cardHeight}
+      cursor="pointer"
+      onClick={() => setIsFlipped((prev) => !prev)}
     >
-      {cards.map(({ imageSrc, label, alt, display }) => (
+      <motion.div
+        style={{
+          width: "100%",
+          height: "100%",
+          transformStyle: "preserve-3d",
+        }}
+        animate={{ rotateY: isFlipped ? 180 : 0 }}
+        transition={{ type: "spring", stiffness: 260, damping: 20 }}
+      >
+        {/* Card Front */}
         <Box
-          key={label}
+          position="absolute"
+          inset={0}
+          style={{ backfaceVisibility: "hidden" }}
           bg="white"
-          border="1px solid rgba(46,125,50,0.14)"
+          border="1px solid"
+          borderColor="rgba(46,125,50,0.14)"
           borderRadius="16px"
           p="20px 12px"
           textAlign="center"
@@ -210,43 +243,36 @@ function IconCardsGrid({
           flexDir="column"
           alignItems="center"
           gap={2}
-          cursor="default"
-          _hover={{
-            transform: "translateY(-4px)",
-            boxShadow: "0 4px 24px rgba(46,125,50,0.12)",
-            borderColor: "#66BB6A",
-          }}
-          transition="all 0.25s ease"
+          boxShadow="0 4px 12px rgba(0,0,0,0.08)"
         >
           <Box
-            w={display === 'full' ? 'full' : "52px"}
-            h={display === 'full' ? "180px" : "52px"}
+            w={display === "full" ? "full" : "52px"}
+            h={display === "full" ? "180px" : "52px"}
             borderRadius="12px"
             overflow="hidden"
             display="flex"
             alignItems="center"
             justifyContent="center"
-            mb={display === 'full' ? 4 : 0}
+            flexShrink={0}
           >
             <Image
               src={imageSrc}
               alt={alt}
-              width={display === 'full' ? 500 : 52}
-              height={display === 'full' ? 180 : 52}
-              style={{ objectFit: display === 'full' ? 'cover' : 'contain', width: '100%', height: '100%' }}
-              onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+              width={display === "full" ? 500 : 52}
+              height={display === "full" ? 180 : 52}
+              style={{
+                objectFit: display === "full" ? "cover" : "contain",
+                width: "100%",
+                height: "100%",
+              }}
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = "none";
+              }}
             />
           </Box>
-
-          {display === 'full' && (
-            <Box
-              w="80%"
-              h="1px"
-              bg="rgba(46,125,50,0.2)"
-              my={2}
-            />
+          {display === "full" && (
+            <Box w="80%" h="1px" bg="rgba(46,125,50,0.2)" my={2} />
           )}
-
           <Text
             fontSize="0.75rem"
             fontWeight="600"
@@ -257,6 +283,46 @@ function IconCardsGrid({
             {label}
           </Text>
         </Box>
+
+        {/* Card Back */}
+        <Box
+          position="absolute"
+          inset={0}
+          style={{
+            backfaceVisibility: "hidden",
+            transform: "rotateY(180deg)",
+          }}
+          bg="#E8F5E9"
+          border="1px solid"
+          borderColor="rgba(46,125,50,0.2)"
+          borderRadius="16px"
+          p="20px"
+          display="flex"
+          flexDir="column"
+          alignItems="center"
+          justifyContent="center"
+          textAlign="center"
+          boxShadow="0 4px 12px rgba(0,0,0,0.08)"
+        >
+          <Text fontSize="0.9rem" color="#1B5E20" fontWeight="500">
+            Aqui vai a explicação sobre este tópico...
+          </Text>
+        </Box>
+      </motion.div>
+    </Box>
+  );
+}
+
+function IconCardsGrid({ cards }: { cards: ImageCardData[] }) {
+  const cols = Math.min(cards.length, 4);
+  return (
+    <Grid
+      templateColumns={{ base: "repeat(2, 1fr)", md: `repeat(${cols}, 1fr)` }}
+      gap={6} // Increased gap for better 3D spacing
+      my={6}
+    >
+      {cards.map((card) => (
+        <FlipCard key={card.label} card={card} />
       ))}
     </Grid>
   );
@@ -787,9 +853,19 @@ export function PageCover({ data }: { data: PageCoverData }) {
           mb={3}
           letterSpacing="-0.02em"
         >
-          {titleLines.map((line, i) => (
-            <span key={i}>
-              {line.trim() === data.highlight.trim() ? (
+          {titleLines.map((line, i) => {
+            if (!line.includes(data.highlight)) {
+              return (
+                <span key={i}>
+                  {line}
+                  {i < titleLines.length - 1 && <br />}
+                </span>
+              );
+            }
+            const parts = line.split(data.highlight);
+            return (
+              <span key={i}>
+                {parts[0]}
                 <Text
                   as="span"
                   bgGradient="to-r"
@@ -797,14 +873,13 @@ export function PageCover({ data }: { data: PageCoverData }) {
                   gradientTo="#FBC02D"
                   bgClip="text"
                 >
-                  {line}
+                  {data.highlight}
                 </Text>
-              ) : (
-                line
-              )}
-              {i < titleLines.length - 1 && <br />}
-            </span>
-          ))}
+                {parts[1]}
+                {i < titleLines.length - 1 && <br />}
+              </span>
+            );
+          })}
         </Text>
       </motion.div>
 
@@ -912,7 +987,7 @@ export function PageLapbook({ data }: { data: PageLapbookData }) {
         title={data.lapbookTitle}
         flaps={data.flaps.map((f) => ({
           id: f.id,
-          frontEmoji: '',
+          frontEmoji: "",
           frontText: f.coverTitle,
           backContent: f.content,
           backAccent: f.backAccent,
@@ -955,7 +1030,16 @@ export function PageImpact({ data }: { data: PageImpactData }) {
               aria-hidden="true"
             />
             <Box w="40px" h="40px" mb={2} mx="auto">
-              <Image src={card.imageSrc} alt={card.label} width={40} height={40} style={{ objectFit: 'contain', width: '100%', height: '100%' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+              <Image
+                src={card.imageSrc}
+                alt={card.label}
+                width={40}
+                height={40}
+                style={{ objectFit: "contain", width: "100%", height: "100%" }}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = "none";
+                }}
+              />
             </Box>
             <Text
               fontSize="1.8rem"
@@ -1007,7 +1091,19 @@ export function PageImpact({ data }: { data: PageImpactData }) {
               flexShrink={0}
               p="8px"
             >
-              <Image src={item.imageSrc} alt={item.title} width={28} height={28} style={{ objectFit: 'contain', filter: 'brightness(0) invert(1)' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+              <Image
+                src={item.imageSrc}
+                alt={item.title}
+                width={28}
+                height={28}
+                style={{
+                  objectFit: "contain",
+                  filter: "brightness(0) invert(1)",
+                }}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = "none";
+                }}
+              />
             </Box>
             <Box>
               <Text fontWeight="700" fontSize="0.9rem" color="#1B5E20" mb={1}>
@@ -1026,7 +1122,7 @@ export function PageImpact({ data }: { data: PageImpactData }) {
 
 export function PageAlert({ data }: { data: PageAlertData }) {
   const pestCards = data.pragaCards?.map((p) => ({
-    emoji: '🚨',
+    emoji: "🚨",
     name: p.title,
     severity: "Praga Quarentenária" as const,
     description: p.desc,
@@ -1034,9 +1130,9 @@ export function PageAlert({ data }: { data: PageAlertData }) {
     impact: {
       headline: "Ameaça à Agricultura",
       items: [
-        { icon: '⚠️', text: p.desc },
-        { icon: '🌾', text: "Controle oficial obrigatório pelo MAPA." },
-        { icon: '🚫', text: "Pode bloquear exportações de frutas e vegetais." },
+        { icon: "⚠️", text: p.desc },
+        { icon: "🌾", text: "Controle oficial obrigatório pelo MAPA." },
+        { icon: "🚫", text: "Pode bloquear exportações de frutas e vegetais." },
       ],
     },
   }));
@@ -1074,8 +1170,24 @@ export function PageAlert({ data }: { data: PageAlertData }) {
           right="-60px"
           aria-hidden="true"
         />
-        <Box w="48px" h="48px" flexShrink={0} display="flex" alignItems="center" justifyContent="center">
-          <Image src={data.alertImageSrc} alt={data.alertTitle} width={48} height={48} style={{ objectFit: 'contain', filter: 'brightness(0) invert(1)' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+        <Box
+          w="48px"
+          h="48px"
+          flexShrink={0}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <Image
+            src={data.alertImageSrc}
+            alt={data.alertTitle}
+            width={48}
+            height={48}
+            style={{ objectFit: "contain", filter: "brightness(0) invert(1)" }}
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = "none";
+            }}
+          />
         </Box>
         <Box>
           <Text fontSize="1rem" fontWeight="800" mb={1}>
@@ -1140,7 +1252,19 @@ export function PageOrgaos({ data }: { data: PageOrgaosData }) {
               flexShrink={0}
               p="8px"
             >
-              <Image src={o.imageSrc} alt={o.name} width={28} height={28} style={{ objectFit: 'contain', filter: 'brightness(0) invert(1)' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+              <Image
+                src={o.imageSrc}
+                alt={o.name}
+                width={28}
+                height={28}
+                style={{
+                  objectFit: "contain",
+                  filter: "brightness(0) invert(1)",
+                }}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = "none";
+                }}
+              />
             </Box>
             <Box>
               <Text fontWeight="700" fontSize="0.9rem" color="#1B5E20" mb={1}>
@@ -1159,38 +1283,41 @@ export function PageOrgaos({ data }: { data: PageOrgaosData }) {
 
 export function PageCase({ data }: { data: PageCaseData }) {
   const heroGradients: Record<typeof data.heroVariant, string> = {
-    green:  "linear-gradient(135deg, #2E7D32, #66BB6A)",
-    amber:  "linear-gradient(135deg, #E65100, #FF8F00)",
-    teal:   "linear-gradient(135deg, #00695C, #26A69A)",
-    red:    "linear-gradient(135deg, #B71C1C, #C62828)",
+    green: "linear-gradient(135deg, #2E7D32, #66BB6A)",
+    amber: "linear-gradient(135deg, #E65100, #FF8F00)",
+    teal: "linear-gradient(135deg, #00695C, #26A69A)",
+    red: "linear-gradient(135deg, #B71C1C, #C62828)",
     purple: "linear-gradient(135deg, #4A148C, #6A1B9A)",
   };
-  const lapbookVariants: Record<typeof data.heroVariant, PocketCard["variant"]> = {
-    green:  "green",
-    amber:  "amber",
-    teal:   "teal",
-    red:    "red",
+  const lapbookVariants: Record<
+    typeof data.heroVariant,
+    PocketCard["variant"]
+  > = {
+    green: "green",
+    amber: "amber",
+    teal: "teal",
+    red: "red",
     purple: "purple",
   };
 
   const pocketCards: PocketCard[] = data.details.map((row, i) => ({
     id: `detail-${i}`,
-    emoji: '📋',
+    emoji: "📋",
     title: row.label,
     subtitle: "Clique para ver detalhes",
     variant: lapbookVariants[data.heroVariant],
-    details: [{ icon: '📌', label: row.label, value: row.value }],
+    details: [{ icon: "📌", label: row.label, value: row.value }],
   }));
 
   const calloutPockets: PocketCard[] = data.callouts.map((c, i) => ({
     id: `callout-${i}`,
-    emoji: c.variant === 'red' ? '⚠️' : '💡',
+    emoji: c.variant === "red" ? "⚠️" : "💡",
     title: c.title,
     subtitle: c.variant === "red" ? "⚠️ Alerta Importante" : "💡 Saiba mais",
     variant:
       c.variant === "red" ? "red" : c.variant === "yellow" ? "amber" : "green",
-    details: [{ icon: '📌', label: c.title, value: c.text }],
-    callout: { icon: c.variant === 'red' ? '⚠️' : '💡', text: c.text },
+    details: [{ icon: "📌", label: c.title, value: c.text }],
+    callout: { icon: c.variant === "red" ? "⚠️" : "💡", text: c.text },
   }));
 
   return (
@@ -1208,14 +1335,26 @@ export function PageCase({ data }: { data: PageCaseData }) {
           color="white"
         >
           <Box
-            w={{ base: '64px', md: '88px' }}
-            h={{ base: '64px', md: '88px' }}
+            w={{ base: "64px", md: "88px" }}
+            h={{ base: "64px", md: "88px" }}
             flexShrink={0}
             borderRadius="16px"
             overflow="hidden"
-            style={{ filter: 'drop-shadow(0 6px 16px rgba(0,0,0,0.25))', animation: 'floatIcon 4s ease-in-out infinite' }}
+            style={{
+              filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.25))",
+              animation: "floatIcon 4s ease-in-out infinite",
+            }}
           >
-            <Image src={data.heroImageSrc} alt={data.heroTitle} width={88} height={88} style={{ objectFit: 'cover', width: '100%', height: '100%' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+            <Image
+              src={data.heroImageSrc}
+              alt={data.heroTitle}
+              width={88}
+              height={88}
+              style={{ objectFit: "cover", width: "100%", height: "100%" }}
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = "none";
+              }}
+            />
           </Box>
           <Box flex="1" minW="180px">
             <Text
@@ -1334,7 +1473,20 @@ export function PageChain({ data }: { data: PageChainData }) {
                 )}
               </VStack>
               <Box w="32px" h="32px" flexShrink={0}>
-                <Image src={item.imageSrc} alt={item.text.slice(0, 30)} width={32} height={32} style={{ objectFit: 'contain', width: '100%', height: '100%' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+                <Image
+                  src={item.imageSrc}
+                  alt={item.text.slice(0, 30)}
+                  width={32}
+                  height={32}
+                  style={{
+                    objectFit: "contain",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = "none";
+                  }}
+                />
               </Box>
               <Text
                 fontSize="0.88rem"
@@ -1394,9 +1546,18 @@ export function PageClosing({ data }: { data: PageClosingData }) {
           mx="auto"
           borderRadius="20px"
           overflow="hidden"
-          style={{ animation: 'floatIcon 3s ease-in-out infinite' }}
+          style={{ animation: "floatIcon 3s ease-in-out infinite" }}
         >
-          <Image src={data.heroImageSrc} alt={data.heroTitle} width={80} height={80} style={{ objectFit: 'cover', width: '100%', height: '100%' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+          <Image
+            src={data.heroImageSrc}
+            alt={data.heroTitle}
+            width={80}
+            height={80}
+            style={{ objectFit: "cover", width: "100%", height: "100%" }}
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = "none";
+            }}
+          />
         </Box>
         <Text
           as="h1"
@@ -1434,8 +1595,24 @@ export function PageClosing({ data }: { data: PageClosingData }) {
             }}
             transition="all 0.25s ease"
           >
-            <Box w="40px" h="40px" mb={2} mx="auto" borderRadius="10px" overflow="hidden">
-              <Image src={p.imageSrc} alt={p.label} width={40} height={40} style={{ objectFit: 'contain', width: '100%', height: '100%' }} onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }} />
+            <Box
+              w="40px"
+              h="40px"
+              mb={2}
+              mx="auto"
+              borderRadius="10px"
+              overflow="hidden"
+            >
+              <Image
+                src={p.imageSrc}
+                alt={p.label}
+                width={40}
+                height={40}
+                style={{ objectFit: "contain", width: "100%", height: "100%" }}
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = "none";
+                }}
+              />
             </Box>
             <Text fontSize="0.78rem" fontWeight="700" color="#1B5E20">
               {p.label}

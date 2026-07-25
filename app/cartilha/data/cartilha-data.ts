@@ -688,7 +688,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'green',
-        imageSrc: '/assets/icones/prevencao-icone.png',
+        imageSrc: '/assets/dona_fito_meio_corpo.png',
         title: 'A prevenção é sempre melhor!',
         text: 'Fungos e bactérias se espalham pela água, pelo vento e por ferramentas contaminadas. Higienizar os instrumentos agrícolas, usar sementes certificadas e evitar o excesso de água são formas simples de prevenir essas doenças!',
       },
@@ -765,7 +765,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'green',
-        imageSrc: '/assets/icones/sustentabilidade-icone.png',
+        imageSrc: '/assets/dona_fito_meio_corpo.png',
         title: 'A natureza é sábia!',
         text: 'Quando preservamos a biodiversidade ao redor das lavouras — matas, rios, bosques — estamos protegendo o lar dos nossos aliados naturais. Fazenda sustentavel e fazenda saudavel!',
       },
