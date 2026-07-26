@@ -26,6 +26,7 @@ import type {
   CalloutData,
   ImageCardData,
 } from "../data/cartilha-data";
+import { Avatar } from "./Avatar";
 
 function SectionBadge({ children }: { children: React.ReactNode }) {
   return (
@@ -955,7 +956,7 @@ export function PageCover({ data }: { data: PageCoverData }) {
 
       {/* ── Persona ── */}
       <Box w="full" maxW="480px" mx="auto">
-        <PersonaGreeting />
+        <Avatar/>
       </Box>
     </VStack>
   );
