@@ -660,30 +660,7 @@ function PersonaGreeting() {
 
         {/* Avatar */}
         <Box flexShrink={0}>
-          <Box
-            w="60px"
-            h="60px"
-            borderRadius="50%"
-            position="relative"
-            overflow="hidden"
-            bg="linear-gradient(135deg, #A5D6A7, #2E7D32)"
-            boxShadow={[
-              "0 1px 0 rgba(255,255,255,0.5) inset",
-              "0 6px 20px rgba(46,125,50,0.30)",
-              "0 2px 6px rgba(0,0,0,0.12)",
-            ].join(", ")}
-            border="3px solid white"
-            role="img"
-            aria-label="Dona Fito — mascote do EducaFito"
-          >
-            <Image
-              src="/assets/dona_fito_meio_corpo.png"
-              alt="Dona Fito"
-              fill
-              sizes="60px"
-              style={{ objectFit: "cover", objectPosition: "center 20%" }}
-            />
-          </Box>
+          <Avatar />
           {/* Name tag below avatar */}
           <Box
             mt={1}
@@ -691,7 +668,7 @@ function PersonaGreeting() {
             bg="#E8F5E9"
             borderRadius="999px"
             px={2}
-            py="2px"
+            py={2}
           >
             <Text
               fontSize="0.55rem"
@@ -720,7 +697,6 @@ function PersonaGreeting() {
             borderRight="12px solid #E8F5E9"
             aria-hidden="true"
           />
-
           <Box
             bg="#F1F8E9"
             borderRadius="16px"
@@ -956,7 +932,7 @@ export function PageCover({ data }: { data: PageCoverData }) {
 
       {/* ── Persona ── */}
       <Box w="full" maxW="480px" mx="auto">
-        <Avatar/>
+        <PersonaGreeting/>
       </Box>
     </VStack>
   );
