@@ -16,6 +16,7 @@ import {
   PageCase,
   PageChain,
   PageQuiz,
+  PageFindTheHero,
   PageClosing,
 } from './components/BookletPages'
 import {
@@ -36,6 +37,7 @@ function renderPage(page: CartilhaPageData) {
     case 'case': return <PageCase data={page} />
     case 'chain': return <PageChain data={page} />
     case 'quiz': return <PageQuiz data={page} />
+    case 'find-the-hero': return <PageFindTheHero data={page} />
     case 'closing': return <PageClosing data={page} />
   }
 }

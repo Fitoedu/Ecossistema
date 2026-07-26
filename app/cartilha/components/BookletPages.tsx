@@ -21,6 +21,7 @@ import type {
   PageCaseData,
   PageChainData,
   PageQuizData,
+  PageFindTheHeroData,
   PageClosingData,
   CalloutData,
   ImageCardData,
@@ -1598,6 +1599,115 @@ export function PageQuiz({ data }: { data: PageQuizData }) {
     <Box>
       <SectionBadge>{data.badgeLabel}</SectionBadge>
       <Quiz />
+    </Box>
+  );
+}
+
+export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
+  const [revealed, setRevealed] = useState<Record<string, boolean>>({});
+
+  const handleReveal = (id: string) => {
+    setRevealed((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  return (
+    <Box>
+      <SectionBadge>{data.badgeLabel}</SectionBadge>
+      <PageTitle>{data.title}</PageTitle>
+      <LeadText>{data.subtitle}</LeadText>
+
+      <SimpleGrid columns={{ base: 2, md: 3 }} gap={6} my={8}>
+        {data.characters.map((char) => {
+          const isRevealed = revealed[char.id];
+          const isHero = char.isHero;
+
+          return (
+            <motion.div
+              key={char.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+            >
+              <Box
+                h="full"
+                p={4}
+                bg={isRevealed ? (isHero ? 'green.50' : 'red.50') : 'white'}
+                borderRadius="20px"
+                border="2px solid"
+                borderColor={
+                  isRevealed
+                    ? isHero
+                      ? 'green.200'
+                      : 'red.200'
+                    : 'gray.200'
+                }
+                textAlign="center"
+                cursor="pointer"
+                onClick={() => handleReveal(char.id)}
+                transition="all 0.3s ease"
+                boxShadow={
+                  isRevealed
+                    ? `0 10px 25px -5px ${
+                        isHero ? 'rgba(67, 160, 71, 0.2)' : 'rgba(229, 57, 53, 0.2)'
+                      }`
+                    : 'sm'
+                }
+                _hover={{
+                  transform: 'translateY(-5px)',
+                  boxShadow: 'xl',
+                }}
+                position="relative"
+                overflow="hidden"
+              >
+                <motion.div
+                  animate={{ scale: isRevealed ? 1.1 : 1 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+                >
+                  <Image
+                    src={char.imageSrc}
+                    alt={char.name}
+                    width={100}
+                    height={100}
+                    style={{
+                      margin: '0 auto',
+                      borderRadius: '50%',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                      border: `4px solid ${
+                        isRevealed
+                          ? isHero
+                            ? '#4CAF50'
+                            : '#F44336'
+                          : 'white'
+                      }`,
+                    }}
+                  />
+                </motion.div>
+                <Text fontWeight="700" mt={4} color="gray.800">
+                  {char.name}
+                </Text>
+                {isRevealed && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <Text
+                      fontSize="sm"
+                      color={isHero ? 'green.700' : 'red.700'}
+                      fontWeight="bold"
+                      mt={2}
+                    >
+                      {char.revealText}
+                    </Text>
+                  </motion.div>
+                )}
+              </Box>
+            </motion.div>
+          );
+        })}
+      </SimpleGrid>
+
+      {data.callouts && <CalloutList callouts={data.callouts} startMt={4} />}
     </Box>
   );
 }

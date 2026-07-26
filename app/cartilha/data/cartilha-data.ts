@@ -453,7 +453,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       variant: 'green',
       imageSrc: '/assets/dona_fito_meio_corpo.png',
       title: 'Olá, futuro cientista!',
-      text: 'Assim como nós, humanos, podemos ficar gripados ou com febre, as plantas tambem podem ser atacadas por "vilões" que as deixam fracas, feias e improdutivas. Esses viloes se chamam pragas e doencas.',
+      text: 'Assim como nós, humanos, podemos ficar gripados ou com febre, as plantas tambem podem ser atacadas por "vilões" que as deixam fracas, feias e improdutivas. Esses vilões se chamam pragas e doenças.',
     },
     callouts: [
       {
@@ -1292,7 +1292,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'green',
-        imageSrc: '/assets/icones/trofeu-icone.png',
+        imageSrc: '/assets//trofeu-icone.png',
         title: 'Parabéns por aprender!',
         text: 'Distinguir heróis de vilões na natureza é o primeiro passo para um manejo sustentável da lavoura. Agricultores que conhecem seus aliados naturais usam menos agrotoxicos e tem melhores colheitas!',
       },
