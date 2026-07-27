@@ -1,42 +1,64 @@
 'use client'
 
-import {
-  Box,
-  Flex,
-  Text,
-  Stack,
-  Icon,
-  SimpleGrid,
-  Image,
-  Button,
-} from '@chakra-ui/react'
-import { Info, Leaf, BookOpen, FlaskConical, ScrollText, UserRound } from 'lucide-react'
+import { Box, Flex, Text, Stack, Icon, SimpleGrid, Image, Button } from '@chakra-ui/react'
+import { Info, GraduationCap, BookOpen, Gamepad2, CalendarDays, Users, UserRound } from 'lucide-react'
 import Link from 'next/link'
 
 const features = [
   {
-    icon: Leaf,
-    title: 'Plantas Medicinais',
-    desc: 'Explore o catálogo completo de espécies com propriedades terapêuticas.',
-    href: null,
+    icon: GraduationCap,
+    title: 'Educação Fitossanitária',
+    desc: 'Aprenda os conceitos básicos para proteger a natureza.',
+    href: '/educacao',
+    iconBg: '#1f5f3f',
+    cardBg: '#eef1e9',
+    cardBorder: '#e2e6db',
   },
   {
     icon: BookOpen,
-    title: 'Conteúdo Educativo',
-    desc: 'Artigos, vídeos e quizzes criados por especialistas em fitoterapia.',
-    href: null,
-  },
-  {
-    icon: FlaskConical,
-    title: 'Pesquisa Científica',
-    desc: 'Referências atualizadas de estudos clínicos e etnobotânicos.',
-    href: null,
-  },
-  {
-    icon: ScrollText,
     title: 'Cartilha Interativa',
-    desc: 'Aprenda sobre fitossanidade, pragas e casos reais do Amapá de forma interativa.',
+    desc: 'Explore nosso material didático animado.',
     href: '/cartilha',
+    iconBg: '#1f5f3f',
+    cardBg: '#a8e6a1',
+    cardBorder: '#8fd987',
+  },
+  {
+    icon: Gamepad2,
+    title: 'Jogos',
+    desc: 'Aprender brincando é muito mais divertido!',
+    href: '/jogos',
+    iconBg: '#f2a71b',
+    cardBg: '#fbedb0',
+    cardBorder: '#f6e08e',
+  },
+  {
+    icon: CalendarDays,
+    title: 'Na Mídia',
+    desc: 'Notícias, vídeos e destaques do projeto.',
+    href: '/midia',
+    iconBg: '#0f2a52',
+    cardBg: '#1f5fb0',
+    cardBorder: '#1a4f92',
+    dark: true,
+  },
+  {
+    icon: Users,
+    title: 'Equipe',
+    desc: 'Conheça os profissionais por trás do EducaFito.',
+    href: '/equipe',
+    iconBg: '#4a4a4a',
+    cardBg: '#e9e9e9',
+    cardBorder: '#dcdcdc',
+  },
+  {
+    icon: Info,
+    title: 'Sobre o Projeto',
+    desc: 'Nossa missão e parceiros institucionais.',
+    href: '/sobre',
+    iconBg: '#4a4a4a',
+    cardBg: '#e9e9e9',
+    cardBorder: '#dcdcdc',
   },
 ]
 
@@ -228,7 +250,7 @@ export default function Home() {
             </Flex>
           </Box>
         </Box>
-        
+
         <SimpleGrid
           columns={{ base: 1, md: 2, lg: 3 }}
           gap={4}
@@ -236,15 +258,19 @@ export default function Home() {
           pb={{ base: 6, md: 7 }}
           maxW="1180px"
           mx="auto"
+          flex="1"
         >
           {features.map((f) => {
+            const textColor = f.dark ? 'white' : 'fg'
+            const descColor = f.dark ? 'whiteAlpha.900' : 'muted'
+
             const cardContent = (
-              <Stack gap={4}>
+              <Stack gap={3}>
                 <Flex
                   w={10}
                   h={10}
                   borderRadius="md"
-                  bg="brand.700"
+                  bg={f.iconBg}
                   align="center"
                   justify="center"
                   color="white"
@@ -252,72 +278,69 @@ export default function Home() {
                 >
                   <Icon as={f.icon} boxSize={4.5} />
                 </Flex>
-                <Text fontWeight={800} fontSize="lg" color="fg">
+                <Text fontWeight={800} fontSize="lg" color={textColor}>
                   {f.title}
                 </Text>
-                <Text color="muted" fontSize="sm" lineHeight={1.55} maxW="240px">
+                <Text color={descColor} fontSize="sm" lineHeight={1.55} maxW="260px">
                   {f.desc}
                 </Text>
-                {f.href && (
-                  <Text
-                    fontSize="xs"
-                    fontWeight={700}
-                    color="brand.500"
-                    letterSpacing="0.04em"
-                  >
-                    Acessar cartilha →
-                  </Text>
-                )}
               </Stack>
             )
 
-            return f.href ? (
+            return (
               <Link
                 key={f.title}
                 href={f.href}
-                style={{ textDecoration: 'none', flex: '1 1 280px', maxWidth: '340px', display: 'block' }}
+                style={{ textDecoration: 'none', display: 'block' }}
               >
                 <Box
                   id={`feature-card-${f.title.toLowerCase().replace(/\s+/g, '-')}`}
-                  bg="brand.700"
+                  bg={f.cardBg}
                   border="1px solid"
-                  borderColor="brand.800"
+                  borderColor={f.cardBorder}
                   borderRadius="2xl"
-                  p={7}
-                  transition="all 0.25s ease"
+                  p={6}
                   h="100%"
+                  transition="all 0.25s ease"
                   _hover={{
                     transform: 'translateY(-4px)',
-                    boxShadow: '0 16px 40px rgba(16,185,129,0.25)',
-                    borderColor: 'brand.500',
+                    boxShadow: '0 16px 40px rgba(16,185,129,0.18)',
                   }}
                 >
                   {cardContent}
                 </Box>
               </Link>
-            ) : (
-              <Box
-                key={f.title}
-                id={`feature-card-${f.title.toLowerCase().replace(/\s+/g, '-')}`}
-                flex="1 1 280px"
-                maxW="340px"
-                bg="brand.700"
-                border="1px solid"
-                borderColor="brand.800"
-                borderRadius="2xl"
-                p={7}
-                transition="all 0.25s ease"
-                _hover={{
-                  transform: 'translateY(-4px)',
-                  boxShadow: '0 16px 40px rgba(16,185,129,0.15)',
-                  borderColor: 'brand.500',
-                }}
-              >
-                {cardContent}
-              </Box>
             )
           })}
         </SimpleGrid>
+
+        <Flex
+          as="footer"
+          px={{ base: 4, md: 6, lg: 7 }}
+          py={4}
+          align="center"
+          justify="space-between"
+          direction={{ base: 'column', sm: 'row' }}
+          gap={2}
+          borderTop="1px solid"
+          borderColor="brand.100"
+          bg="rgba(250, 252, 246, 0.92)"
+          fontSize="sm"
+          color="muted"
+        >
+          <Text>© 2026 EducaFito - Educação Fitossanitária Regional.</Text>
+          <Flex align="center" gap={4}>
+            <Link href="/parceiros" style={{ textDecoration: 'none' }}>
+              <Text _hover={{ color: 'brand.600' }}>Parceiros Institucionais</Text>
+            </Link>
+            <Link href="/termos" style={{ textDecoration: 'none' }}>
+              <Text _hover={{ color: 'brand.600' }}>Termos de Uso</Text>
+            </Link>
+            <Link href="/privacidade" style={{ textDecoration: 'none' }}>
+              <Text _hover={{ color: 'brand.600' }}>Privacidade</Text>
+            </Link>
+          </Flex>
+        </Flex>
       </Flex>
     </Box>
   )
