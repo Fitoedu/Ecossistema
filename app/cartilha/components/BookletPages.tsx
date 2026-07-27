@@ -956,7 +956,7 @@ export function PageCover({ data }: { data: PageCoverData }) {
 
       {/* ── Persona ── */}
       <Box w="full" maxW="480px" mx="auto">
-        <Avatar/>
+        <PersonaGreeting/>
       </Box>
     </VStack>
   );
