@@ -119,13 +119,11 @@ function IconImg({
 
 export function Callout({
   variant = "green",
-  imageSrc,
   title,
   children,
   mt,
 }: {
   variant?: CalloutData["variant"];
-  imageSrc: string;
   title: string;
   children: React.ReactNode;
   mt?: number | string;
@@ -135,16 +133,19 @@ export function Callout({
       bg: "#E8F5E9",
       border: "rgba(46,125,50,0.2)",
       titleColor: "#1B5E20",
+      src: "/assets/dona_fito_meio_corpo.png"
     },
     yellow: {
       bg: "#FFF9C4",
       border: "rgba(251,192,45,0.4)",
       titleColor: "#F57F17",
+      src: "/assets/joaninha_corpo_todo.png"
     },
     red: {
       bg: "#FFEBEE",
       border: "rgba(198,40,40,0.2)",
       titleColor: "#C62828",
+      src: "/assets/dona_fito_meio_corpo.png"
     },
   };
   const s = styles[variant];
@@ -158,7 +159,9 @@ export function Callout({
       align="flex-start"
       gap={4}
     >
-      <IconImg src={imageSrc} alt={title} size={36} />
+      <Box flexShrink={0}>
+        <Avatar src={s.src}/>
+      </Box>
       <Box>
         <Text
           display="block"
@@ -345,7 +348,7 @@ function IconCardsGrid({ cards }: { cards: ImageCardData[] }) {
   return (
     <Grid
       templateColumns={{ base: "repeat(2, 1fr)", md: `repeat(${cols}, 1fr)` }}
-      gap={6} // Increased gap for better 3D spacing
+      gap={6}
       my={6}
     >
       {cards.map((card) => (
@@ -354,6 +357,7 @@ function IconCardsGrid({ cards }: { cards: ImageCardData[] }) {
     </Grid>
   );
 }
+
 
 function CalloutList({
   callouts,
@@ -368,7 +372,6 @@ function CalloutList({
         <Callout
           key={i}
           variant={c.variant}
-          imageSrc={c.imageSrc}
           title={c.title}
           mt={i === 0 ? startMt : 4}
         >
@@ -660,7 +663,7 @@ function PersonaGreeting() {
 
         {/* Avatar */}
         <Box flexShrink={0}>
-          <Avatar />
+          <Avatar src="/assets/dona_fito_meio_corpo.png" />
           {/* Name tag below avatar */}
           <Box
             mt={1}
@@ -952,7 +955,6 @@ export function PageContent({ data }: { data: PageContentData }) {
       {data.topCallout && (
         <Callout
           variant={data.topCallout.variant}
-          imageSrc={data.topCallout.imageSrc}
           title={data.topCallout.title}
           mt={0}
         >
@@ -1818,7 +1820,6 @@ export function PageClosing({ data }: { data: PageClosingData }) {
 
       <Callout
         variant={data.callout.variant}
-        imageSrc={data.callout.imageSrc}
         title={data.callout.title}
       >
         {data.callout.text}
