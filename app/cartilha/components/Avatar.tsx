@@ -1,6 +1,7 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import Image from "next/image";
-export function Avatar() {
+
+export function Avatar({ src }: { src: string }) {
   return (
     <>
         {/* Avatar */}
@@ -18,11 +19,10 @@ export function Avatar() {
             ].join(", ")}
             border="3px solid white"
             role="img"
-            aria-label="Dona Fito — mascote do EducaFito"
           >
             <Image
-              src="/assets/dona_fito_meio_corpo.png"
-              alt="Dona Fito"
+              src={src}
+              alt="Avatar"
               fill
               sizes="60px"
               style={{ objectFit: "cover", objectPosition: "center 20%" }}

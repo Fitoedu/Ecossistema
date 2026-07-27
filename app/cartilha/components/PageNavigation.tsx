@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight, BookOpen, CheckCircle2 } from 'lucide-react'
+import { ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react'
 import { Box, Text, HStack, VStack } from '@chakra-ui/react'
 
 interface PageNavigationProps {
