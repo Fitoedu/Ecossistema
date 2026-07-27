@@ -201,36 +201,36 @@ base/                                  ← raiz do projeto
 ```typescript
 // lib/theme.ts — tokens personalizados do EducaFito
 const theme = {
-  colors: {
-    brand: {
-      50:  '#f0fdf4',  // fundo claro
-      100: '#dcfce7',
-      300: '#6ee7b7',
-      500: '#34d399',  // verde principal (já usado no splash)
-      700: '#059669',
-      900: '#064e3b',
+    colors: {
+        brand: {
+            50:  '#f0fdf4',  // fundo claro
+            100: '#dcfce7',
+            300: '#6ee7b7',
+            500: '#34d399',  // verde principal (já usado no splash)
+            700: '#059669',
+            900: '#064e3b',
+        },
+        soil: {             // paleta "terra" para contexto rural'
+            100: '#fef3c7',
+            500: '#d97706',
+            900: '#78350f',
+        },
+        dark: {             // modo escuro — padrão da plataforma
+            bg:      '#0f2027',
+            surface: '#1a3a2a',
+            card:    '#1e4535',
+            border:  '#2d6a4f',
+        }
     },
-    soil: {             // paleta "terra" para contexto rural'
-      100: '#fef3c7',
-      500: '#d97706',
-      900: '#78350f',
+    fonts: {
+        heading: 'Inter, system-ui, sans-serif',
+        body:    'Inter, system-ui, sans-serif',
+        mono:    'Geist Mono, monospace',
     },
-    dark: {             // modo escuro — padrão da plataforma
-      bg:      '#0f2027',
-      surface: '#1a3a2a',
-      card:    '#1e4535',
-      border:  '#2d6a4f',
+    radii: {
+        card: '16px',
+        badge: '999px',
     }
-  },
-  fonts: {
-    heading: 'Inter, system-ui, sans-serif',
-    body:    'Inter, system-ui, sans-serif',
-    mono:    'Geist Mono, monospace',
-  },
-  radii: {
-    card: '16px',
-    badge: '999px',
-  }
 }
 ```
 
@@ -311,12 +311,12 @@ import { Box, Text } from '@chakra-ui/react'
 import type { Questao } from '@/types/gamificacao'
 
 interface QuizCardProps {
-  questao: Questao
-  onResponder: (alternativa: string) => void
+    questao: Questao
+    onResponder: (alternativa: string) => void
 }
 
 export function QuizCard({ questao, onResponder }: QuizCardProps) {
-  // ...
+    // ...
 }
 ```
 
