@@ -228,7 +228,7 @@ export default function Home() {
             </Flex>
           </Box>
         </Box>
-
+        
         <SimpleGrid
           columns={{ base: 1, md: 2, lg: 3 }}
           gap={4}
