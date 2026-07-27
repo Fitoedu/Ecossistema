@@ -1670,11 +1670,23 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
                   >
+                    {/* 1. TÍTULO SEPARADO E EM DESTAQUE */}
+                    <Text
+                      fontSize="md"
+                      color={isHero ? 'green.800' : 'red.800'}
+                      fontWeight="black"
+                      textTransform="uppercase"
+                      mt={3}
+                      mb={1}
+                    >
+                      {isHero ? 'HERÓI!' : 'VILÃO!'}
+                    </Text>
+
+                    {/* 2. DESCRIÇÃO LOGO ABAIXO */}
                     <Text
                       fontSize="sm"
                       color={isHero ? 'green.700' : 'red.700'}
-                      fontWeight="bold"
-                      mt={2}
+                      fontWeight="medium"
                     >
                       {char.revealText}
                     </Text>
