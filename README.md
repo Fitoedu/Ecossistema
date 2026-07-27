@@ -45,14 +45,14 @@ graph TB
 base/                                  ← raiz do projeto
 ├── app/                               ← Next.js App Router
 │   ├── layout.tsx                     ← RootLayout (Chakra Provider, fontes, PWA meta)
-│   ├── page.tsx                       ← Splash Screen
+│   ├── page.tsx                       ← Splash Screen (já existe)
 │   ├── globals.css                    ← tokens CSS globais + reset
 │   │
 │   ├── (auth)/                        ← Grupo de rotas sem layout de nav
 │   │   ├── login/page.tsx
 │   │   └── cadastro/page.tsx
 │   │
-│   ├── home/                          ← Dashboard principal
+│   ├── home/                          ← Dashboard principal (já existe)
 │   │   └── page.tsx
 │   │
 │   ├── conteudo/                      ── TCC I: Módulo de Conteúdo
@@ -91,7 +91,7 @@ base/                                  ← raiz do projeto
 │       └── ranking/route.ts
 │
 ├── components/                        ← Componentes reutilizáveis
-│   ├── ui/                            ← Chakra UI snippets 
+│   ├── ui/                            ← Chakra UI snippets (já existe)
 │   │   ├── provider.tsx               ← ChakraProvider + ColorMode
 │   │   ├── color-mode.tsx
 │   │   ├── toaster.tsx
@@ -290,6 +290,24 @@ graph LR
 
 ---
 
+## Camada de Dados
+
+```mermaid
+graph TD
+    PAGES[Pages / Server Components] -->|fetch server-side| API_ROUTES[API Routes\n/app/api/*]
+    PAGES -->|dados estáticos| JSON_DATA[/data/*.json]
+    CLIENT[Client Components] -->|hooks| LIB_HOOKS[lib/hooks/*]
+    LIB_HOOKS -->|cache + fetch| API_ROUTES
+    LIB_HOOKS -->|estado local| STORE[lib/store/userStore]
+    API_ROUTES -->|futuramente| BACKEND[Backend / CMS\n ex: Strapi, Supabase]
+    CLIENT -->|offline| SW_CACHE[Service Worker Cache]
+```
+
+> [!NOTE]
+> Na fase inicial (TCC I), os dados educacionais podem ser 100% estáticos em `/data/*.json`, com migração progressiva para um CMS/backend conforme o projeto escala nos TCCs II e III.
+
+---
+
 ## Convenções de Código
 
 ### Nomenclatura de Arquivos
@@ -382,6 +400,9 @@ import type { Usuario } from '@/types/usuario'
 | Fontes | Inter (Google Fonts via Next.js) | Legibilidade + consistência com design atual |
 | Offline | next-pwa + Service Worker | Essencial para escolas rurais com conectividade limitada |
 | Estilo | Chakra + CSS Modules para casos específicos | Evita conflito Tailwind × Chakra |
+
+> [!IMPORTANT]
+> O Tailwind CSS está instalado como devDependency mas **não deve ser misturado** com Chakra UI v3 para evitar conflitos de especificidade. Use Chakra para toda a UI e CSS Modules apenas para animações ou estilos muito específicos.
 
 > [!TIP]
 > Para o contexto de **Região Norte / escolas rurais**, priorize:
