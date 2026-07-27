@@ -384,11 +384,44 @@ export interface PageHotspotData extends PersonaBlock {
   callouts?: CalloutData[]
 }
 
+/**
+ * Item da galeria de pragas — exibido em card e expandido em modal.
+ */
+export interface PestGalleryItemData {
+  /** Identificador único do item */
+  id: number
+  /** Nome popular da praga */
+  name: string
+  /** Caminho da imagem representativa */
+  imageSrc: string
+  /** Descrição didática exibida no modal */
+  description: string
+}
+
+/**
+ * GALERIA DE PRAGAS — Página 05 (substitui Lapbook)
+ * Grid de cards clicáveis que abrem modais informativos via Chakra UI.
+ */
+export interface PagePestGalleryData extends PersonaBlock {
+  type: 'pest-gallery'
+  interactionType: 'standard'
+  id: string
+  label: string
+  badgeLabel: string
+  title: string
+  titleHighlight?: string
+  titleSuffix?: string
+  leadText: string
+  pestGalleryItems: PestGalleryItemData[]
+  callouts?: CalloutData[]
+}
+
 /** Union type de todos os tipos de página */
 export type CartilhaPageData =
   | PageCoverData
   | PageContentData
   | PageLapbookData
+  | PagePestGalleryData
   | PageHotspotData
   | PageImpactData
   | PageAlertData
@@ -455,7 +488,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       variant: 'green',
       imageSrc: '/assets/dona_fito_meio_corpo.png',
       title: 'Olá, futuro cientista!',
-      text: 'Assim como nós, humanos, podemos ficar gripados ou com febre, as plantas tambem podem ser atacadas por "vilões" que as deixam fracas, feias e improdutivas. Esses vilões se chamam pragas e doenças.',
+      text: 'Assim como nós, humanos, podemos ficar gripados ou com febre, as plantas também podem ser atacadas por "vilões" que as deixam fracas, feias e improdutivas. Esses vilões se chamam pragas e doenças.',
     },
     callouts: [
       {
@@ -530,9 +563,9 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       { imageSrc: '/assets/icones/solo-icone.png', label: 'Solo rico em minerais', alt: 'Solo fértil' },
       { imageSrc: '/assets/icones/fruta-icone.png', label: 'Resultado: alimento gostoso!', alt: 'Frutas frescas' },
     ],
-    midSectionHeading: 'E o que acontece quando a fábrica é atacada?',
+    midSectionHeading: 'E o que acontece quando a fábrica é atacada?',
     midSectionText:
-      'Quando pragas invadem a lavoura, é como se alguem danificasse as máquinas da fábrica. A produção cai, os alimentos ficam escassos e mais caros. E por isso que a Fitossânidade é tão importante para nos, consumidores!',
+      'Quando pragas invadem a lavoura, é como se alguém danificasse as máquinas da fábrica. A produção cai, os alimentos ficam escassos e mais caros. E é por isso que a Fitossanidade é tão importante para nós, consumidores!',
     callouts: [
       {
         variant: 'yellow',
@@ -560,7 +593,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     titleHighlight: 'Praga Agrícola?',
     heroImageSrc: '/assets/pragas/praga-agricola-visao-geral.png',
     leadText:
-      'Uma praga agricola e qualquer organismo vivo — inseto, fungo, bacteria, virus, planta invasora — que cause dano economico a uma lavoura. Nem todo bichinho e uma praga! So e praga quando causa prejuizo real ao agricultor.',
+      'Uma praga agrícola é qualquer organismo vivo — inseto, fungo, bactéria, vírus, planta invasora — que cause dano econômico a uma lavoura. Nem todo bichinho é uma praga! Só é praga quando causa prejuízo real ao agricultor.',
     statCards: [
       { gradient: 'linear-gradient(135deg, #2E7D32, #388E3C)', imageSrc: '/assets/icones/perda-colheita-icone.png', stat: '40%', label: 'das colheitas mundiais são perdidas por pragas, segundo a FAO.', textColor: 'white' },
       { gradient: 'linear-gradient(135deg, #F57F17, #FBC02D)', imageSrc: '/assets/icones/dinheiro-icone.png', stat: 'R$ Bilhões', label: 'de prejuízo anual para o agronegócio brasileiro.', textColor: '#212121' },
@@ -579,72 +612,60 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 05 — OS INSETOS E ÁCAROS (LIFT-THE-FLAP)
+     PÁGINA 05 — INSETOS E ÁCAROS (GALERIA DE CARDS COM MODAIS)
   ───────────────────────────────────────────────────── */
   {
-    type: 'lapbook',
-    interactionType: 'lift-the-flap',
+    type: 'pest-gallery',
+    interactionType: 'standard',
     id: 'p05',
-    label: 'Os Insetos e Acaros',
-    badgeLabel: 'Lapbook Interativo',
-    lapbookBadge: 'Descubra os Invasores Minusculos',
-    lapbookTitle: 'Insetos e Acaros: Os Pequenos Viloes da Lavoura',
-    lapbookSubtitle: 'Levante cada aba e descubra como esses seres minusculos causam grandes prejuizos!',
-    backgroundImageSrc: '/assets/cenarios/fundo-lapbook-verde.png',
-    flaps: [
+    label: 'Insetos e Ácaros',
+    badgeLabel: 'Galeria Interativa',
+    title: 'Insetos e Ácaros: ',
+    titleHighlight: 'Os Pequenos Vilões da Lavoura',
+    leadText:
+      'Clique em qualquer card para conhecer de perto esses organismos que causam grandes prejuízos nas lavouras. Identificar o invasor é o primeiro passo para combatê-lo.',
+    pestGalleryItems: [
       {
-        id: 'gafanhoto',
-        coverTitle: 'O que é o Gafanhoto?',
-        coverImageSrc: '/assets/pragas/insetos/gafanhoto-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'O gafanhoto é um inseto que voa em enxames gigantes e pode destruir campos inteiros de cultivo em poucas horas. Quando milhoes deles voam juntos, chamamos de "praga de gafanhotos" — um dos maiores pesadelos dos agricultores!',
-        contentImageSrc: '/assets/pragas/insetos/gafanhoto-dano.png',
-        backAccent: 'red',
+        id: 1,
+        name: 'Gafanhoto',
+        imageSrc: '/assets/pragas/gafanhoto.png',
+        description:
+          'O gafanhoto é um inseto que voa em enxames gigantes e pode destruir campos inteiros de cultivo em poucas horas. Quando milhoes deles voam juntos, chamamos de praga de gafanhotos — um dos maiores pesadelos dos agricultores. Seu aparato bucal mastigador devasta folhas, caules e frutos de forma extremamente rapida.',
       },
       {
-        id: 'pulgao',
-        coverTitle: 'O que é o Pulgão?',
-        coverImageSrc: '/assets/pragas/insetos/pulgao-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'O pulgão é um inseto minúsculo que suga a seiva das plantas, enfraquecendo-as. Ele se reproduz muito rápido e pode cobrir toda uma planta em poucos dias! Além disso, transmite vírus de planta para planta.',
-        contentImageSrc: '/assets/pragas/insetos/pulgao-colonia.png',
-        backAccent: 'yellow',
+        id: 2,
+        name: 'Pulgao',
+        imageSrc: '/assets/pragas/pulgao.png',
+        description:
+          'O pulgão é um inseto minúsculo que suga a seiva das plantas, enfraquecendo-as progressivamente. Ele se reproduz com velocidade impressionante e pode cobrir toda uma planta em poucos dias. Além do dano direto, atua como vetor de vírus fitopatogênicos, transmitindo doenças de planta para planta durante a alimentação.',
       },
       {
-        id: 'mosca-branca',
-        coverTitle: 'O que e a Mosca-branca?',
-        coverImageSrc: '/assets/pragas/insetos/mosca-branca-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'A mosca-branca e um inseto pequenino que vive na parte de baixo das folhas. Ela suga a seiva, provoca o amarelamento das folhas e transmite virus. E dificil de combater porque se esconde embaixo das folhas!',
-        contentImageSrc: '/assets/pragas/insetos/mosca-branca-folha.png',
-        backAccent: 'teal',
+        id: 3,
+        name: 'Mosca-branca',
+        imageSrc: '/assets/pragas/mosca-branca.png',
+        description:
+          'A mosca-branca é um inseto de pequeno porte que coloniza a face abaxial das folhas. Ela suga a seiva, provoca clorose foliar e excreta honeydew, favorecendo o desenvolvimento de fumagina. Sua alta capacidade de transmissão de geminiviruses representa uma das maiores ameaças fitossanitárias para culturas como tomate, feijão e mandioca.',
       },
       {
-        id: 'broca',
-        coverTitle: 'O que é a Broca?',
-        coverImageSrc: '/assets/pragas/insetos/broca-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'A broca é a larva (filhinho) de vários tipos de insetos. Ela "fura" o caule, o fruto ou a raiz da planta por dentro, causando danos que não são visíveis por fora. Quando percebemos o problema, já é tarde demais!',
-        contentImageSrc: '/assets/pragas/insetos/broca-dano-caule.png',
-        backAccent: 'red',
+        id: 4,
+        name: 'Broca',
+        imageSrc: '/assets/pragas/broca.png',
+        description:
+          'A broca é a larva de diversas espécies de insetos das ordens Coleoptera e Lepidoptera. Ela perfura e escava o interior do caule, fruto ou raiz da planta, tornando os danos internos invisíveis até que o estrago já seja irreversível. O controle é especialmente difícil porque o inseto fica protegido dentro do tecido vegetal.',
       },
       {
-        id: 'acaro',
-        coverTitle: 'O que é o Ácaro?',
-        coverImageSrc: '/assets/pragas/acaros/acaro-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'Os ácaros são artropodes tão pequenos que mal conseguimos vê-los! Eles vivem nas folhas e sugam a seiva, causando manchas amareladas e queda de folhas. Em tempo seco e quente, eles se reproduzem muito rapidamente.',
-        contentImageSrc: '/assets/pragas/acaros/acaro-folha-ampliado.png',
-        backAccent: 'yellow',
+        id: 5,
+        name: 'Ácaro',
+        imageSrc: '/assets/pragas/acaro.png',
+        description:
+          'Os ácaros são artropodes aracnídeos de dimensões microscópicas, difíceis de visualizar a olho nu. Eles vivem na epiderme foliar e sugam o conteudo celular, causando bronzeamento, manchas amareladas e queda precoce de folhas. Em periodos de seca e calor intenso, sua velocidade de reproducao aumenta drasticamente, agravando as infestacoes.',
       },
       {
-        id: 'trips',
-        coverTitle: 'O que é o Trips?',
-        coverImageSrc: '/assets/pragas/insetos/trips-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'O trips é um inseto tão pequeno que parece um ponto! Ele raspa e suga as células das plantas, deixando marcas prateadas ou douradas nas folhas e frutos. Também transmite vírus perigosos de uma planta para outra.',
-        contentImageSrc: '/assets/pragas/insetos/trips-dano-fruto.png',
-        backAccent: 'green',
+        id: 6,
+        name: 'Trips',
+        imageSrc: '/assets/pragas/trips.png',
+        description:
+          'O trips é um inseto da ordem Thysanoptera de tamanho diminuto, quase imperceptível a olho nu. Ele raspa e suga as células epidérmicas das plantas, provocando estrias prateadas ou douradas características em folhas e frutos. Adicionalmente, é vetor de tospovirus altamente agressivos, como o Tomato spotted wilt virus (TSWV), que não tem cura nas plantas infectadas.',
       },
     ],
     callouts: [
@@ -652,11 +673,11 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         variant: 'yellow',
         imageSrc: '/assets/joaninha_corpo_todo.png',
         title: 'Atenção!',
-        text: 'Nem todo inseto é praga! Abelhas, joaninhas e vespinhas parasitoides são aliadas da lavoura. Conhecer os "heróis" e os "vilões" do campo é essencial para um bom manejo agrícola!',
+        text: 'Nem todo inseto é praga! Abelhas, joaninhas e vespinhas parasitoides são aliadas da lavoura. Conhecer os benefícios e os prejudiciais é essencial para um manejo agrícola responsável.',
       },
     ],
     personaText:
-      'Uau, que turma complicada! Insetos e ácaros são os mais diversos vilões da lavoura. Mas não se assuste — levante cada aba para conhecê-los de pertinho e aprender como nos defendemos deles!',
+      'Que turma! Insetos e ácaros são os mais diversos vilões da lavoura. Clique em cada card para conhecê-los de perto e aprender como nos defendemos deles.',
     personaEmotion: 'pointing',
     personaImageSrc: '/assets/dona-fito/dona-fito-pointing.png',
   },
@@ -921,7 +942,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     titleSuffix: ' nossas plantas!',
     heroImageSrc: '/assets/cenarios/pesquisador-laboratorio.png',
     leadText:
-      'Por tras de cada solução fitossanitária existe um pesquisador dedicado! Essas pessoas estudam pragas, desenvolvem novas variedades de plantas resistentes e criam métodos de controle sustentáveis.',
+      'Por trás de cada solução fitossanitária existe um pesquisador dedicado! Essas pessoas estudam pragas, desenvolvem novas variedades de plantas resistentes e criam métodos de controle sustentáveis.',
     items: [
       { imageSrc: '/assets/icones/embrapa-icone.png', name: 'Embrapa — Empresa Brasileira de Pesquisa Agropecuária', desc: 'Desenvolveu variedades de mandioca resistentes a vassoura-de-bruxa e tecnicas de controle biologico para a Amazonia.' },
       { imageSrc: '/assets/icones/universidade-icone.png', name: 'Universidades e Institutos Federais', desc: 'Formam biologos, agronomos e engenheiros florestais que pesquisam pragas locais e desenvolvem solucoes regionais.' },

@@ -8,12 +8,14 @@ import { FaHandPointer } from 'react-icons/fa';
 import LiftTheFlap from "./LiftTheFlap";
 import LapbookFolder, { type PocketCard } from "./LapbookFolder";
 import { PestCardGrid } from "./PestCard";
+import PestModalGallery from "./PestModalGallery";
 import Quiz from "./Quiz";
 import { ImageDiscoveryHotspotGrid } from "./ImageDiscoveryHotspot";
 import type {
   PageCoverData,
   PageContentData,
   PageLapbookData,
+  PagePestGalleryData,
   PageHotspotData,
   PageImpactData,
   PageAlertData,
@@ -1003,6 +1005,44 @@ export function PageLapbook({ data }: { data: PageLapbookData }) {
     </Box>
   );
 }
+
+/**
+ * PAGINA 05 — GALERIA DE PRAGAS COM MODAIS
+ *
+ * Este componente e intencionalmente "burro" em relacao ao modal:
+ * ele apenas renderiza o grid e repassa o callback onSelectItem para cima.
+ * O DialogRoot reside em page.tsx, fora do PageTransitionWrapper, para
+ * escapar do stacking context criado por filter + transform.
+ */
+export function PagePestGallery({
+  data,
+  onSelectItem,
+}: {
+  data: PagePestGalleryData
+  onSelectItem: (item: import('../data/cartilha-data').PestGalleryItemData, index: number) => void
+}) {
+  return (
+    <Box>
+      <SectionBadge>{data.badgeLabel}</SectionBadge>
+
+      <PageTitle>
+        {data.title}
+        {data.titleHighlight && <Highlight>{data.titleHighlight}</Highlight>}
+        {data.titleSuffix}
+      </PageTitle>
+
+      <LeadText>{data.leadText}</LeadText>
+
+      <PestModalGallery
+        items={data.pestGalleryItems}
+        onSelectItem={onSelectItem}
+      />
+
+      {data.callouts && <CalloutList callouts={data.callouts} />}
+    </Box>
+  );
+}
+
 
 export function PageHotspot({ data }: { data: PageHotspotData }) {
   return (
