@@ -1,6 +1,14 @@
 import type { Metadata, Viewport } from "next"
+import { Poppins } from "next/font/google"
 import { Box } from "@chakra-ui/react"
 import { Provider } from "@/components/ui/provider"
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  variable: "--font-poppins",
+  display: "swap",
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://educafito.vercel.app"),
@@ -40,8 +48,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f8fcf9" },
-    { media: "(prefers-color-scheme: dark)", color: "#07120d" },
+    { media: "(prefers-color-scheme: light)", color: "#2E7D32" },
+    { media: "(prefers-color-scheme: dark)", color: "#225C28" },
   ],
   width: "device-width",
   initialScale: 1,
@@ -54,8 +62,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
-      <body suppressHydrationWarning>
+    <html lang="pt-BR" className={poppins.variable} suppressHydrationWarning>
+      <body>
         <Provider>
           <Box minH="100vh" bg="bg" color="fg">
             {children}
