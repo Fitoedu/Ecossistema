@@ -41,7 +41,7 @@ export function Sidebar() {
             w="40px"
             h="40px"
             borderRadius="full"
-            bg="brand.500"
+            bg="primary.500"
             align="center"
             justify="center"
             flexShrink={0}
@@ -70,12 +70,12 @@ export function Sidebar() {
                   px={4}
                   py={3}
                   borderRadius="xl"
-                  bg={isActive ? 'brand.500' : 'transparent'}
+                  bg={isActive ? 'primary.500' : 'transparent'}
                   color={isActive ? 'white' : 'fg'}
                   fontWeight={isActive ? 600 : 500}
                   transition="all 0.2s ease"
                   _hover={{
-                    bg: isActive ? 'brand.500' : 'brand.50',
+                    bg: isActive ? 'primary.500' : 'primary.50',
                   }}
                 >
                   <Box as={Icon} fontSize="18px" strokeWidth={2} />
@@ -93,7 +93,7 @@ export function Sidebar() {
         px={5}
         pt={4}
         borderTop="1px dashed"
-        borderColor="brand.100"
+        borderColor="primary.100"
       >
         {footerItems.map(({ href, label, icon: Icon }) => (
           <Link key={href} href={href} passHref>
@@ -106,7 +106,7 @@ export function Sidebar() {
               color="muted"
               fontWeight={500}
               transition="all 0.2s ease"
-              _hover={{ bg: 'brand.50', color: 'fg' }}
+              _hover={{ bg: 'primary.50', color: 'fg' }}
             >
               <Box as={Icon} fontSize="18px" strokeWidth={2} />
               <Text fontSize="15px">{label}</Text>

@@ -218,10 +218,7 @@ export default function Home() {
               <NextLink href="/parceiros">Parceiros Institucionais</NextLink>
             </ChakraLink>
             <ChakraLink asChild _hover={{ color: 'primary.600' }} textDecoration="none">
-              <NextLink href="/termos">Termos de Uso</NextLink>
-            </ChakraLink>
-            <ChakraLink asChild _hover={{ color: 'primary.600' }} textDecoration="none">
-              <NextLink href="/privacidade">Privacidade</NextLink>
+              <NextLink href="/contato">Contato</NextLink>
             </ChakraLink>
           </Flex>
         </Flex>
