@@ -50,7 +50,7 @@ export default function Home() {
               position="relative"
             >
               <NextImage
-                src="/imgs/joaninha_corpo_todo.png"
+                src="/assets/joaninha_corpo_todo.png"
                 alt="Mascote EducaFito"
                 fill
                 sizes="32px"
@@ -179,7 +179,7 @@ export default function Home() {
                   filter="drop-shadow(0 18px 24px rgba(0,0,0,0.22))"
                 >
                   <NextImage
-                    src="/imgs/dona_fito_meio_corpo.png"
+                    src="/assets/dona_fito_meio_corpo.png"
                     alt="Dona Fito em destaque"
                     fill
                     sizes="(max-width: 768px) 200px, 280px"
