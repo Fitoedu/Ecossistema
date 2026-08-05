@@ -7,7 +7,9 @@ import { system } from "@/app/theme"
 export function Provider({ children }: { children: React.ReactNode }) {
   return (
     <ChakraProvider value={system}>
-      <ColorModeProvider>{children}</ColorModeProvider>
+      <ColorModeProvider forcedTheme="light" enableSystem={false}>
+        {children}
+      </ColorModeProvider>
     </ChakraProvider>
   )
 }
