@@ -2,6 +2,7 @@
 
 import { AppShell } from '@/components/layout/AppShell'
 import { Badge, Box, Flex, Heading, Stack, Text } from '@chakra-ui/react'
+import NextImage from 'next/image'
 import { MapPin } from 'lucide-react'
 import { sobreContent } from './_data/sobre'
 import { HistoriaCard } from './components/HistoriaCard'
@@ -22,6 +23,26 @@ export default function SobrePage() {
             bg="neutral.100"
             zIndex={0}
           />
+
+          <Box
+            position="absolute"
+            top="-12px"
+            right="16px"
+            w={{ base: '160px', md: '200px' }}
+            h={{ base: '160px', md: '200px' }}
+            borderRadius="full"
+            overflow="hidden"
+            zIndex={1}
+          >
+            <NextImage
+              src="/assets/dona_fito_meio_corpo.png"
+              alt="Dona Fito"
+              fill
+              sizes="(max-width: 768px) 160px, 200px"
+              style={{ objectFit: 'contain' }}
+              priority
+            />
+          </Box>
 
           <Stack gap={4} position="relative" zIndex={1} maxW="560px">
             <Badge
