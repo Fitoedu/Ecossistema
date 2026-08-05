@@ -1,33 +1,17 @@
 'use client'
 
-import { useState } from 'react'
-import {
-  Box,
-  Button,
-  Text,
-  VStack,
-  HStack,
-  Progress,
-} from '@chakra-ui/react'
+import { useState, useCallback } from 'react'
+import { motion, AnimatePresence, useAnimationControls } from 'framer-motion'
+import { Box, Text, VStack, HStack } from '@chakra-ui/react'
+import { CheckCircle, XCircle, ChevronRight, Trophy, RotateCcw, Lightbulb } from 'lucide-react'
 
-/* ── Types ───────────────────────────────────────────── */
-interface Option {
-  id: string
-  text: string
-}
+interface Option   { id: string; text: string }
+interface Question { id: number; text: string; options: Option[]; correctId: string; explanation: string; emoji: string }
 
-interface Question {
-  id: number
-  text: string
-  options: Option[]
-  correctId: string
-  explanation: string
-}
-
-/* ── Questions Data ──────────────────────────────────── */
 const QUESTIONS: Question[] = [
   {
     id: 1,
+    emoji: '🔬',
     text: 'O que é Fitossanidade?',
     options: [
       { id: 'a', text: 'A ciência que estuda apenas os remédios naturais.' },
@@ -36,10 +20,11 @@ const QUESTIONS: Question[] = [
       { id: 'd', text: 'O processo de irrigação dos campos agrícolas.' },
     ],
     correctId: 'b',
-    explanation: 'Fitossanidade é a ciência que zela pela saúde das plantas, prevenindo e controlando pragas, doenças e plantas invasoras.',
+    explanation: 'Fitossanidade zela pela saúde das plantas, prevenindo e controlando pragas, doenças e plantas invasoras para garantir colheitas saudáveis.',
   },
   {
     id: 2,
+    emoji: '🚨',
     text: 'O que é uma Praga Quarentenária?',
     options: [
       { id: 'a', text: 'Um inseto comum encontrado em jardins residenciais.' },
@@ -48,11 +33,12 @@ const QUESTIONS: Question[] = [
       { id: 'd', text: 'Qualquer planta que cresce entre as lavouras.' },
     ],
     correctId: 'c',
-    explanation: 'Pragas quarentenárias são de alto impacto econômico e sofrem controle rigoroso para impedir sua entrada e dispersão no território nacional.',
+    explanation: 'Pragas quarentenárias têm alto impacto econômico e sofrem controle rigoroso para impedir sua entrada e dispersão no Brasil.',
   },
   {
     id: 3,
-    text: 'Qual das opções abaixo é um exemplo de caso real de praga no Amapá / Região Norte?',
+    emoji: '🌿',
+    text: 'Qual praga representa um caso real no Amapá / Região Norte?',
     options: [
       { id: 'a', text: 'A ferrugem do café no sul de Minas Gerais.' },
       { id: 'b', text: 'A vassoura-de-bruxa na mandioca.' },
@@ -60,10 +46,11 @@ const QUESTIONS: Question[] = [
       { id: 'd', text: 'A podridão-seca da soja no Cerrado.' },
     ],
     correctId: 'b',
-    explanation: 'A vassoura-de-bruxa (causada pelo fungo Moniliophthora perniciosa) é uma praga relevante que afeta a mandioca na Região Norte, incluindo o Amapá.',
+    explanation: 'A vassoura-de-bruxa (fungo Moniliophthora perniciosa) é uma praga relevante que afeta a mandioca na Região Norte, podendo reduzir até 90% da produção.',
   },
   {
     id: 4,
+    emoji: '🏛️',
     text: 'Qual órgão federal é responsável pela fiscalização fitossanitária no Brasil?',
     options: [
       { id: 'a', text: 'IBAMA' },
@@ -72,10 +59,11 @@ const QUESTIONS: Question[] = [
       { id: 'd', text: 'INPE' },
     ],
     correctId: 'c',
-    explanation: 'O MAPA, por meio do VIGIAGRO e da Secretaria de Defesa Agropecuária, é responsável pelo controle e fiscalização fitossanitária nas fronteiras e no território brasileiro.',
+    explanation: 'O MAPA, por meio do VIGIAGRO, fiscaliza a entrada e dispersão de pragas em portos, aeroportos e fronteiras terrestres do Brasil.',
   },
   {
     id: 5,
+    emoji: '🛡️',
     text: 'Qual das práticas abaixo NÃO é uma boa prática fitossanitária?',
     options: [
       { id: 'a', text: 'Usar sementes certificadas e sadias.' },
@@ -84,337 +72,667 @@ const QUESTIONS: Question[] = [
       { id: 'd', text: 'Monitorar regularmente a lavoura.' },
     ],
     correctId: 'c',
-    explanation: 'Transportar plantas sem verificar a origem é uma prática de risco, pois pode facilitar a disseminação de pragas e doenças entre regiões.',
+    explanation: 'Transportar plantas sem verificar a origem facilita a disseminação de pragas e doenças entre regiões — o risco mais simples de evitar.',
   },
 ]
 
-/* ── Score helper ────────────────────────────────────── */
-function getResultData(score: number, total: number) {
+function getResultTier(score: number, total: number) {
   const pct = score / total
-  if (pct === 1)   return { emoji: '🏆', stars: '⭐⭐⭐⭐⭐', msg: 'Parabéns! Você é um(a) Expert em Fitossanidade!', sub: 'Incrível! Você acertou todas as perguntas. Você está pronto(a) para defender nossas lavouras!' }
-  if (pct >= 0.8)  return { emoji: '🌟', stars: '⭐⭐⭐⭐', msg: 'Excelente! Quase perfeito!', sub: 'Você demonstrou ótimo conhecimento sobre fitossanidade. Continue aprendendo!' }
-  if (pct >= 0.6)  return { emoji: '🌱', stars: '⭐⭐⭐', msg: 'Muito bem! Você está no caminho certo!', sub: 'Bom desempenho! Reveja os tópicos que errou e tente novamente.' }
-  if (pct >= 0.4)  return { emoji: '📖', stars: '⭐⭐', msg: 'Continue estudando!', sub: 'Você deu um bom começo. Releia a cartilha e tente novamente para melhorar sua pontuação.' }
-  return { emoji: '🌿', stars: '⭐', msg: 'Não desista! Todo especialista já foi iniciante.', sub: 'Releia a cartilha com calma e tente novamente. Você vai melhorar!' }
+  if (pct === 1)    return { emoji: '🏆', grade: 'A+', label: 'Expert em Fitossanidade!',        color: '#2E7D32', bg: 'linear-gradient(135deg,#1B5E20,#2E7D32)', stars: 5 }
+  if (pct >= 0.8)   return { emoji: '🌟', grade: 'A',  label: 'Excelente! Quase perfeito.',       color: '#00695C', bg: 'linear-gradient(135deg,#004D40,#00897B)', stars: 4 }
+  if (pct >= 0.6)   return { emoji: '🌱', grade: 'B',  label: 'Muito bem! No caminho certo.',     color: '#F57F17', bg: 'linear-gradient(135deg,#E65100,#F57C00)', stars: 3 }
+  if (pct >= 0.4)   return { emoji: '📖', grade: 'C',  label: 'Continue estudando!',              color: '#1565C0', bg: 'linear-gradient(135deg,#0D47A1,#1565C0)', stars: 2 }
+  return              { emoji: '🌿', grade: 'D',  label: 'Todo especialista foi iniciante!', color: '#C62828', bg: 'linear-gradient(135deg,#B71C1C,#C62828)', stars: 1 }
 }
 
-/* ── Option colour logic ─────────────────────────────── */
-function getOptionStyle(
-  optId: string,
-  selected: string | null,
-  revealed: boolean,
-  correctId: string,
-) {
-  if (!revealed) {
-    if (selected === optId)
-      return { border: '2px solid #2E7D32', bg: '#E8F5E9', letterBg: '#2E7D32', letterColor: 'white' }
-    return { border: '2px solid #EEEEEE', bg: '#FAFAFA', letterBg: '#EEEEEE', letterColor: '#424242' }
-  }
-  if (optId === correctId)
-    return { border: '2px solid #2E7D32', bg: '#E8F5E9', letterBg: '#2E7D32', letterColor: 'white' }
-  if (selected === optId)
-    return { border: '2px solid #C62828', bg: '#FFEBEE', letterBg: '#C62828', letterColor: 'white' }
-  return { border: '2px solid #EEEEEE', bg: '#FAFAFA', letterBg: '#EEEEEE', letterColor: '#424242' }
+function QuizProgress({ current, total }: { current: number; total: number }) {
+  const pct = ((current + 1) / total) * 100
+  return (
+    <Box w="full">
+      <HStack justify="space-between" mb="6px">
+        <Text fontSize="0.65rem" fontWeight="700" textTransform="uppercase"
+          letterSpacing="0.08em" color="#2E7D32">
+          Pergunta {current + 1} de {total}
+        </Text>
+        <Text fontSize="0.65rem" fontWeight="600" color="rgba(46,125,50,0.6)">
+          {Math.round(pct)}%
+        </Text>
+      </HStack>
+      <Box h="6px" bg="rgba(46,125,50,0.1)" borderRadius="999px" overflow="hidden">
+        <motion.div
+          animate={{ width: `${pct}%` }}
+          transition={{ type: 'spring', stiffness: 120, damping: 18 }}
+          style={{
+            height: '100%',
+            background: 'linear-gradient(90deg, #2E7D32, #66BB6A)',
+            borderRadius: '999px',
+            boxShadow: '0 0 8px rgba(102,187,106,0.5)',
+          }}
+        />
+      </Box>
+    </Box>
+  )
 }
 
-/* ── Component ───────────────────────────────────────── */
-export default function Quiz() {
-  const [currentQ, setCurrentQ]   = useState(0)
-  const [selected, setSelected]   = useState<string | null>(null)
-  const [revealed, setRevealed]   = useState(false)
-  const [answers, setAnswers]     = useState<(string | null)[]>(Array(QUESTIONS.length).fill(null))
-  const [finished, setFinished]   = useState(false)
+function AnswerCard({
+  opt,
+  status,
+  isRevealed,
+  onSelect,
+}: {
+  opt: Option
+  status: 'idle' | 'selected' | 'correct' | 'wrong' | 'dim'
+  isRevealed: boolean
+  onSelect: () => void
+}) {
+  const controls = useAnimationControls()
 
-  const question = QUESTIONS[currentQ]
-  const isLast   = currentQ === QUESTIONS.length - 1
+  const handleClick = useCallback(async () => {
+    if (isRevealed) return
+    onSelect()
+  }, [isRevealed, onSelect])
 
-  const score = answers.reduce<number>((acc, ans, idx) =>
-    ans === QUESTIONS[idx].correctId ? acc + 1 : acc, 0)
+  const shake = useCallback(async () => {
+    await controls.start({
+      x: [0, -8, 8, -6, 6, -4, 4, 0],
+      transition: { duration: 0.45, ease: 'easeInOut' },
+    })
+  }, [controls])
 
-  const handleSelect = (optId: string) => {
-    if (revealed) return
-    setSelected(optId)
+  useState(() => {
+    if (status === 'wrong') shake()
+  })
+
+  const styles = {
+    idle:     { bg: '#FFFFFF',  border: '2px solid #E8EDE9', letterBg: 'rgba(46,125,50,0.08)', letterColor: '#2E7D32', shadow: '0 2px 8px rgba(0,0,0,0.06), 0 1px 0 rgba(255,255,255,0.9) inset' },
+    selected: { bg: '#F1F8F2',  border: '2px solid #2E7D32',  letterBg: '#2E7D32',             letterColor: '#FFF',    shadow: '0 4px 16px rgba(46,125,50,0.18), 0 1px 0 rgba(255,255,255,0.9) inset' },
+    correct:  { bg: '#E8F5E9',  border: '2px solid #2E7D32',  letterBg: '#2E7D32',             letterColor: '#FFF',    shadow: '0 4px 20px rgba(46,125,50,0.25)' },
+    wrong:    { bg: '#FFEBEE',  border: '2px solid #C62828',  letterBg: '#C62828',             letterColor: '#FFF',    shadow: '0 4px 20px rgba(198,40,40,0.2)' },
+    dim:      { bg: '#FAFAFA',  border: '2px solid #F0F0F0',  letterBg: '#E0E0E0',             letterColor: '#9E9E9E', shadow: 'none' },
   }
+  const s = styles[status]
 
-  const handleConfirm = () => {
-    if (!selected) return
-    setRevealed(true)
-    const newAnswers = [...answers]
-    newAnswers[currentQ] = selected
-    setAnswers(newAnswers)
-  }
-
-  const handleNext = () => {
-    if (isLast) {
-      setFinished(true)
-    } else {
-      setCurrentQ(q => q + 1)
-      setSelected(null)
-      setRevealed(false)
-    }
-  }
-
-  const handleRetry = () => {
-    setCurrentQ(0)
-    setSelected(null)
-    setRevealed(false)
-    setAnswers(Array(QUESTIONS.length).fill(null))
-    setFinished(false)
-  }
-
-  /* ── Result screen ── */
-  if (finished) {
-    const result = getResultData(score, QUESTIONS.length)
-    return (
-      <VStack gap={4} textAlign="center" py={6}>
-        <Text fontSize="72px">{result.emoji}</Text>
-
+  return (
+    <motion.div
+      animate={controls}
+      whileHover={isRevealed ? {} : { y: -2, scale: 1.01 }}
+      whileTap={isRevealed ? {} : { scale: 0.96, y: 2 }}
+      transition={{ type: 'spring', stiffness: 400, damping: 24 }}
+      onClick={handleClick}
+      style={{ cursor: isRevealed ? 'default' : 'pointer', width: '100%' }}
+    >
+      <Box
+        bg={s.bg}
+        border={s.border}
+        borderRadius="16px"
+        p="14px 18px"
+        display="flex"
+        alignItems="center"
+        gap={3}
+        boxShadow={s.shadow}
+        transition="background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease"
+        role="button"
+        aria-pressed={status === 'selected' || status === 'correct' || status === 'wrong'}
+      >
         <Box
-          w="140px" h="140px" borderRadius="50%"
-          border="8px solid #E8F5E9"
-          display="flex" flexDir="column" alignItems="center" justifyContent="center"
-          bg="white"
-          boxShadow="0 0 0 4px #2E7D32, 0 12px 32px rgba(46,125,50,0.2)"
+          w="32px"
+          h="32px"
+          borderRadius="50%"
+          bg={s.letterBg}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          fontSize="0.78rem"
+          fontWeight="800"
+          color={s.letterColor}
+          flexShrink={0}
+          transition="background 0.2s ease"
         >
-          <Text fontSize="2.4rem" fontWeight="900" color="#1B5E20" lineHeight="1">
-            {score}/{QUESTIONS.length}
-          </Text>
-          <Text fontSize="0.72rem" fontWeight="600" color="gray.600">acertos</Text>
+          {opt.id.toUpperCase()}
         </Box>
 
-        <Text fontSize="1.1rem" fontWeight="700" color="#1B5E20">{result.msg}</Text>
-        <Text fontSize="0.85rem" color="gray.600" lineHeight="1.65" maxW="380px">{result.sub}</Text>
-        <Text fontSize="28px" letterSpacing="4px">{result.stars}</Text>
+        <Text
+          flex="1"
+          fontSize="0.86rem"
+          fontWeight={status === 'selected' || status === 'correct' || status === 'wrong' ? 600 : 400}
+          color={status === 'dim' ? '#9E9E9E' : '#1a1a1a'}
+          lineHeight="1.55"
+          transition="color 0.2s ease"
+        >
+          {opt.text}
+        </Text>
 
-        {/* Answer review */}
-        <Box w="full" textAlign="left" mb={6}>
-          <Text
-            fontSize="0.7rem" textTransform="uppercase" letterSpacing="0.1em"
-            fontWeight="700" color="#2E7D32" mb={3}
+        <AnimatePresence>
+          {status === 'correct' && (
+            <motion.div
+              initial={{ scale: 0, rotate: -20 }}
+              animate={{ scale: 1, rotate: 0 }}
+              exit={{ scale: 0 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+            >
+              <CheckCircle size={20} color="#2E7D32" strokeWidth={2.5} />
+            </motion.div>
+          )}
+          {status === 'wrong' && (
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 0 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+            >
+              <XCircle size={20} color="#C62828" strokeWidth={2.5} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </Box>
+    </motion.div>
+  )
+}
+
+function ResultScreen({
+  score,
+  total,
+  answers,
+  onRetry,
+}: {
+  score: number
+  total: number
+  answers: (string | null)[]
+  onRetry: () => void
+}) {
+  const tier = getResultTier(score, total)
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30, scale: 0.96 }}
+      animate={{ opacity: 1, y: 0,  scale: 1 }}
+      transition={{ type: 'spring', stiffness: 220, damping: 24 }}
+    >
+      <VStack gap={5} pb={6}>
+        <Box
+          w="full"
+          borderRadius="24px"
+          overflow="hidden"
+          boxShadow="0 16px 48px rgba(0,0,0,0.18)"
+        >
+          <Box
+            bg={tier.bg}
+            py="36px"
+            px={6}
+            textAlign="center"
+            position="relative"
+            overflow="hidden"
           >
+            <Box position="absolute" w="200px" h="200px" borderRadius="50%"
+              bg="rgba(255,255,255,0.06)" top="-60px" right="-40px" aria-hidden="true" />
+            <Box position="absolute" w="120px" h="120px" borderRadius="50%"
+              bg="rgba(255,255,255,0.04)" bottom="-40px" left="-20px" aria-hidden="true" />
+
+            <motion.div
+              animate={{ y: [0, -8, 0], rotate: [0, 4, -4, 0] }}
+              transition={{ repeat: Infinity, duration: 3.5, ease: 'easeInOut' }}
+              style={{ fontSize: '64px', lineHeight: 1, marginBottom: '16px', display: 'block' }}
+              aria-hidden="true"
+            >
+              {tier.emoji}
+            </motion.div>
+
+            <HStack justify="center" gap="4px" mb={3}>
+              {Array.from({ length: 5 }).map((_, i) => (
+                <motion.span
+                  key={i}
+                  initial={{ opacity: 0, scale: 0, rotate: -30 }}
+                  animate={{ opacity: i < tier.stars ? 1 : 0.2, scale: 1, rotate: 0 }}
+                  transition={{ delay: 0.3 + i * 0.1, type: 'spring', stiffness: 300, damping: 18 }}
+                  style={{ fontSize: '24px', display: 'inline-block' }}
+                  aria-hidden="true"
+                >
+                  ⭐
+                </motion.span>
+              ))}
+            </HStack>
+
+            <Text as="h2" fontSize="clamp(1.2rem,3.5vw,1.6rem)" fontWeight="900" color="white" mb={1} lineHeight="1.2">
+              {tier.label}
+            </Text>
+            <Text fontSize="0.85rem" color="rgba(255,255,255,0.8)" lineHeight="1.6" maxW="320px" mx="auto">
+              Fitossanidade é responsabilidade de todos. Compartilhe o que aprendeu!
+            </Text>
+          </Box>
+
+          <Box
+            bg="white"
+            py={5}
+            px={6}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            gap={5}
+          >
+            <Box
+              w="90px"
+              h="90px"
+              borderRadius="50%"
+              border="6px solid #E8F5E9"
+              boxShadow={`0 0 0 3px ${tier.color}, 0 8px 24px rgba(0,0,0,0.1)`}
+              display="flex"
+              flexDir="column"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Text fontSize="1.6rem" fontWeight="900" color={tier.color} lineHeight="1">
+                {score}
+              </Text>
+              <Text fontSize="0.6rem" fontWeight="700" color="gray.400" textTransform="uppercase" letterSpacing="0.05em">
+                de {total}
+              </Text>
+            </Box>
+            <Box>
+              <Text fontSize="0.75rem" fontWeight="700" textTransform="uppercase"
+                letterSpacing="0.08em" color="#9E9E9E" mb={1}>
+                Pontuação Final
+              </Text>
+              <HStack gap={1} align="baseline">
+                <Text fontSize="2.4rem" fontWeight="900" color={tier.color} lineHeight="1">
+                  {tier.grade}
+                </Text>
+                <Text fontSize="0.8rem" fontWeight="600" color="gray.500" mb="4px">
+                  — {Math.round((score / total) * 100)}%
+                </Text>
+              </HStack>
+            </Box>
+          </Box>
+        </Box>
+
+        <Box w="full">
+          <Text fontSize="0.65rem" fontWeight="700" textTransform="uppercase"
+            letterSpacing="0.1em" color="#2E7D32" mb={3}>
             Revisão das respostas
           </Text>
-          <VStack gap={2} align="stretch">
+          <VStack gap="10px" align="stretch">
             {QUESTIONS.map((q, idx) => {
-              const userAns = answers[idx]
+              const userAns   = answers[idx]
               const isCorrect = userAns === q.correctId
               return (
                 <Box
                   key={q.id}
-                  bg={isCorrect ? '#E8F5E9' : '#FFEBEE'}
-                  border={`1px solid ${isCorrect ? '#66BB6A' : '#EF9A9A'}`}
-                  borderRadius="14px"
-                  p="14px 16px"
+                  bg={isCorrect ? '#F1F8F2' : '#FFF5F5'}
+                  border={`1.5px solid ${isCorrect ? '#A5D6A7' : '#EF9A9A'}`}
+                  borderRadius="16px"
+                  p="16px 18px"
                 >
-                  <HStack gap={2} align="flex-start" mb={1}>
-                    <Text fontSize="16px">{isCorrect ? '✅' : '❌'}</Text>
-                    <Text fontSize="0.82rem" fontWeight="600" color="#212121" lineHeight="1.4">{q.text}</Text>
+                  <HStack gap={2} align="flex-start" mb="6px">
+                    {isCorrect
+                      ? <CheckCircle size={16} color="#2E7D32" strokeWidth={2.5} style={{ flexShrink: 0, marginTop: 2 }} />
+                      : <XCircle    size={16} color="#C62828" strokeWidth={2.5} style={{ flexShrink: 0, marginTop: 2 }} />
+                    }
+                    <Text fontSize="0.82rem" fontWeight="600" color="#212121" lineHeight="1.4">
+                      {q.text}
+                    </Text>
                   </HStack>
                   {!isCorrect && (
-                    <Text fontSize="0.75rem" color="#424242" ml={6} lineHeight="1.5">
-                      <Text as="strong" color="#2E7D32">Resposta correta: </Text>
-                      {q.options.find(o => o.id === q.correctId)?.text}
+                    <Text fontSize="0.75rem" color="#2E7D32" fontWeight="600" ml="24px" mb="4px">
+                      ✓ {q.options.find(o => o.id === q.correctId)?.text}
                     </Text>
                   )}
-                  <Text fontSize="0.72rem" color="#616161" ml={6} mt={1} lineHeight="1.5">
-                    💡 {q.explanation}
-                  </Text>
+                  <HStack gap="6px" align="flex-start" ml="24px">
+                    <Lightbulb size={13} color="#F57F17" strokeWidth={2} style={{ flexShrink: 0, marginTop: 2 }} />
+                    <Text fontSize="0.73rem" color="#616161" lineHeight="1.55">
+                      {q.explanation}
+                    </Text>
+                  </HStack>
                 </Box>
               )
             })}
           </VStack>
         </Box>
 
-        <Button
-          id="quiz-retry-btn"
-          variant="outline"
-          borderColor="#2E7D32"
-          color="#2E7D32"
-          borderWidth="2px"
-          borderRadius="14px"
-          px={7} py={3}
-          fontWeight="700"
-          _hover={{ bg: '#2E7D32', color: 'white', transform: 'translateY(-2px)' }}
-          transition="all 0.25s ease"
-          onClick={handleRetry}
-        >
-          🔄 Tentar novamente
-        </Button>
+        <VStack gap={3} w="full">
+          <motion.button
+            whileHover={{ scale: 1.02, y: -2 }}
+            whileTap={{ scale: 0.96, y: 2 }}
+            transition={{ type: 'spring', stiffness: 380, damping: 24 }}
+            onClick={onRetry}
+            style={{
+              width: '100%',
+              background: 'linear-gradient(135deg, #2E7D32, #43A047)',
+              color: 'white',
+              border: 'none',
+              borderRadius: '16px',
+              padding: '14px 24px',
+              fontSize: '0.9rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '8px',
+              boxShadow: '0 4px 0 rgba(15,60,20,0.5), 0 8px 24px rgba(46,125,50,0.3)',
+            }}
+          >
+            <RotateCcw size={16} strokeWidth={2.5} />
+            Tentar novamente
+          </motion.button>
+        </VStack>
       </VStack>
+    </motion.div>
+  )
+}
+
+export default function QuizGamificado() {
+  const [currentQ,  setCurrentQ]  = useState(0)
+  const [selected,  setSelected]  = useState<string | null>(null)
+  const [revealed,  setRevealed]  = useState(false)
+  const [answers,   setAnswers]   = useState<(string | null)[]>(Array(QUESTIONS.length).fill(null))
+  const [finished,  setFinished]  = useState(false)
+  const [wrongAnim, setWrongAnim] = useState(false)
+
+  const question = QUESTIONS[currentQ]
+  const isLast   = currentQ === QUESTIONS.length - 1
+
+  const score = answers.reduce<number>(
+    (acc, ans, idx) => (ans === QUESTIONS[idx].correctId ? acc + 1 : acc),
+    0,
+  )
+
+  const handleSelect = useCallback((optId: string) => {
+    if (revealed) return
+    setSelected(optId)
+  }, [revealed])
+
+  const handleConfirm = useCallback(() => {
+    if (!selected) return
+    const newAnswers = [...answers]
+    newAnswers[currentQ] = selected
+    setAnswers(newAnswers)
+    setRevealed(true)
+    if (selected !== question.correctId) {
+      setWrongAnim(true)
+      setTimeout(() => setWrongAnim(false), 600)
+    }
+  }, [selected, answers, currentQ, question.correctId])
+
+  const handleNext = useCallback(() => {
+    if (isLast) {
+      setFinished(true)
+    } else {
+      setCurrentQ(q => q + 1)
+      setSelected(null)
+      setRevealed(false)
+      setWrongAnim(false)
+    }
+  }, [isLast])
+
+  const handleRetry = useCallback(() => {
+    setCurrentQ(0)
+    setSelected(null)
+    setRevealed(false)
+    setAnswers(Array(QUESTIONS.length).fill(null))
+    setFinished(false)
+    setWrongAnim(false)
+  }, [])
+
+  if (finished) {
+    return (
+      <ResultScreen
+        score={score}
+        total={QUESTIONS.length}
+        answers={answers}
+        onRetry={handleRetry}
+      />
     )
   }
 
-  /* ── Question screen ── */
   return (
     <Box>
-      {/* Header */}
-      <VStack textAlign="center" gap={2} mb={6}>
-        <Text
-          fontSize="56px"
-          display="block"
-          style={{ animation: 'floatIcon 3s ease-in-out infinite' }}
+      <VStack textAlign="center" gap={2} mb={7}>
+        <Box
+          display="inline-flex"
+          alignItems="center"
+          gap={2}
+          bg="#E8F5E9"
+          border="1px solid rgba(46,125,50,0.2)"
+          px="14px"
+          py="6px"
+          borderRadius="999px"
+          mb={1}
         >
-          🧠
-        </Text>
-        <Text fontSize="clamp(1.6rem,4vw,2.2rem)" fontWeight="800" color="#1B5E20" lineHeight="1.2">
-          Quiz de Aprendizagem
-        </Text>
-        <Text fontSize="1rem" color="gray.600" lineHeight="1.75">
-          Teste o que você aprendeu! Responda as 5 perguntas abaixo sobre Fitossanidade.
-        </Text>
-
-        <Box w="full" mt={3}>
-          <Progress.Root
-            value={((currentQ + 1) / QUESTIONS.length) * 100}
-            size="sm"
-          >
-            <Progress.Track borderRadius="full" h="8px" bg="gray.200">
-              <Progress.Range
-                style={{
-                  background: 'linear-gradient(90deg, #2E7D32, #66BB6A)',
-                  borderRadius: '999px',
-                }}
-              />
-            </Progress.Track>
-          </Progress.Root>
-          <Text fontSize="0.75rem" color="#424242" fontWeight="600" textAlign="right" mt={1}>
-            Pergunta {currentQ + 1} de {QUESTIONS.length}
+          <Text fontSize="16px" aria-hidden="true">🧠</Text>
+          <Text fontSize="0.68rem" fontWeight="700" textTransform="uppercase"
+            letterSpacing="0.08em" color="#1B5E20">
+            Quiz de Aprendizagem
           </Text>
         </Box>
+
+        <Text
+          as="h1"
+          fontSize="clamp(1.5rem, 4vw, 2rem)"
+          fontWeight="900"
+          color="#1B5E20"
+          lineHeight="1.15"
+          letterSpacing="-0.02em"
+        >
+          Teste seus conhecimentos
+        </Text>
+        <Text fontSize="0.88rem" color="gray.500" lineHeight="1.65" maxW="380px">
+          5 perguntas sobre Fitossanidade e Proteção de Plantas
+        </Text>
       </VStack>
 
-      {/* Question card */}
-      <Box
-        key={currentQ}
-        bg="white"
-        borderRadius="20px"
-        p="28px 24px"
-        boxShadow="0 8px 32px rgba(0,0,0,0.10)"
-        border="1px solid rgba(46,125,50,0.1)"
-        mb={5}
-      >
-        <Text fontSize="0.7rem" fontWeight="700" textTransform="uppercase" letterSpacing="0.1em" color="#2E7D32" mb={2}>
-          Pergunta {currentQ + 1}
-        </Text>
-        <Text fontSize="1rem" fontWeight="700" color="#212121" lineHeight="1.5" mb={5}>
-          {question.text}
-        </Text>
-
-        <VStack gap={2} align="stretch">
-          {question.options.map((opt) => {
-            const style = getOptionStyle(opt.id, selected, revealed, question.correctId)
-            const isCorrectOpt = revealed && opt.id === question.correctId
-            const isWrongOpt   = revealed && selected === opt.id && opt.id !== question.correctId
-
-            return (
-              <Button
-                key={opt.id}
-                id={`quiz-option-${currentQ}-${opt.id}`}
-                w="full"
-                display="flex"
-                alignItems="center"
-                gap={3}
-                px={4} py={3}
-                bg={style.bg}
-                border={style.border}
-                borderRadius="14px"
-                cursor={revealed ? 'not-allowed' : 'pointer'}
-                fontFamily="body"
-                fontSize="0.85rem"
-                fontWeight="500"
-                color="#212121"
-                textAlign="left"
-                h="auto"
-                justifyContent="flex-start"
-                _hover={revealed ? {} : { borderColor: '#66BB6A', bg: '#E8F5E9', transform: 'translateX(4px)' }}
-                transition="all 0.2s ease"
-                disabled={revealed}
-                aria-pressed={selected === opt.id}
-                onClick={() => handleSelect(opt.id)}
-              >
-                <Box
-                  w="28px" h="28px" borderRadius="50%"
-                  bg={style.letterBg}
-                  display="flex" alignItems="center" justifyContent="center"
-                  fontSize="0.75rem" fontWeight="800"
-                  color={style.letterColor}
-                  flexShrink={0}
-                  transition="all 0.2s ease"
-                >
-                  {opt.id.toUpperCase()}
-                </Box>
-                <Text flex="1" whiteSpace="normal" textAlign="left">{opt.text}</Text>
-                {revealed && (
-                  <Text ml="auto" fontSize="18px" flexShrink={0}>
-                    {isCorrectOpt ? '✅' : isWrongOpt ? '❌' : ''}
-                  </Text>
-                )}
-              </Button>
-            )
-          })}
-        </VStack>
-
-        {/* Explanation */}
-        {revealed && (
-          <HStack
-            bg="#E8F5E9"
-            border="1px solid rgba(46,125,50,0.2)"
-            borderRadius="16px"
-            p="20px 24px"
-            mt={4}
-            align="flex-start"
-            gap={4}
-          >
-            <Text fontSize="28px" flexShrink={0} lineHeight="1" mt="2px">💡</Text>
-            <Box>
-              <Text display="block" fontSize="0.95rem" fontWeight="700" mb={1} color="#1B5E20">
-                Explicação
-              </Text>
-              <Text fontSize="0.9rem" lineHeight="1.65" color="#212121">{question.explanation}</Text>
-            </Box>
-          </HStack>
-        )}
+      <Box mb={6}>
+        <QuizProgress current={currentQ} total={QUESTIONS.length} />
       </Box>
 
-      {/* Nav */}
-      <HStack gap={3} flexWrap="wrap">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentQ}
+          initial={{ opacity: 0, x: 40, scale: 0.98 }}
+          animate={{ opacity: 1, x: 0,  scale: 1 }}
+          exit={{ opacity: 0, x: -40, scale: 0.98 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+        >
+          <Box
+            bg="white"
+            borderRadius="22px"
+            boxShadow="0 8px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.05)"
+            border="1.5px solid rgba(46,125,50,0.1)"
+            overflow="hidden"
+            mb={4}
+          >
+            <Box
+              bg="linear-gradient(135deg, #2E7D32, #43A047)"
+              px={5}
+              py={4}
+              display="flex"
+              alignItems="center"
+              gap={3}
+              position="relative"
+              overflow="hidden"
+            >
+              <Box position="absolute" w="80px" h="80px" borderRadius="50%"
+                bg="rgba(255,255,255,0.08)" bottom="-30px" right="-20px" aria-hidden="true" />
+              <Box
+                w="38px" h="38px"
+                bg="rgba(255,255,255,0.15)"
+                borderRadius="12px"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                fontSize="22px"
+                flexShrink={0}
+                aria-hidden="true"
+              >
+                {question.emoji}
+              </Box>
+              <Box>
+                <Text fontSize="0.6rem" fontWeight="700" textTransform="uppercase"
+                  letterSpacing="0.1em" color="rgba(255,255,255,0.7)" mb="2px">
+                  Pergunta {currentQ + 1}
+                </Text>
+                <Text fontSize="0.95rem" fontWeight="700" color="white" lineHeight="1.35">
+                  {question.text}
+                </Text>
+              </Box>
+            </Box>
+
+            <VStack gap="10px" p={5} align="stretch">
+              {question.options.map((opt) => {
+                let status: 'idle' | 'selected' | 'correct' | 'wrong' | 'dim' = 'idle'
+                if (revealed) {
+                  if (opt.id === question.correctId)               status = 'correct'
+                  else if (opt.id === selected)                    status = 'wrong'
+                  else                                             status = 'dim'
+                } else {
+                  if (opt.id === selected)                         status = 'selected'
+                }
+
+                return (
+                  <AnswerCard
+                    key={opt.id}
+                    opt={opt}
+                    status={status}
+                    isRevealed={revealed}
+                    onSelect={() => handleSelect(opt.id)}
+                  />
+                )
+              })}
+            </VStack>
+
+            <AnimatePresence>
+              {revealed && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+                  style={{ overflow: 'hidden' }}
+                >
+                  <Box
+                    mx={5}
+                    mb={5}
+                    bg={selected === question.correctId ? '#E8F5E9' : '#FFF3E0'}
+                    border={`1.5px solid ${selected === question.correctId ? '#A5D6A7' : '#FFCC80'}`}
+                    borderRadius="16px"
+                    p="16px 20px"
+                    display="flex"
+                    alignItems="flex-start"
+                    gap={3}
+                  >
+                    <Lightbulb
+                      size={20}
+                      color="#F57F17"
+                      strokeWidth={2}
+                      style={{ flexShrink: 0, marginTop: 2 }}
+                    />
+                    <Box>
+                      <Text fontSize="0.75rem" fontWeight="700" color="#E65100" mb="4px"
+                        textTransform="uppercase" letterSpacing="0.06em">
+                        Explicação
+                      </Text>
+                      <Text fontSize="0.85rem" color="#212121" lineHeight="1.65">
+                        {question.explanation}
+                      </Text>
+                    </Box>
+                  </Box>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </Box>
+        </motion.div>
+      </AnimatePresence>
+
+      <AnimatePresence mode="wait">
         {!revealed ? (
-          <Button
-            id="quiz-confirm-btn"
-            flex="1"
-            bg="linear-gradient(135deg, #2E7D32, #66BB6A)"
-            color="white"
-            borderRadius="14px"
-            px={6} py={4}
-            fontWeight="700"
-            fontSize="0.9rem"
-            boxShadow="0 2px 12px rgba(46,125,50,0.3)"
-            _hover={!selected ? {} : { transform: 'translateY(-2px)', boxShadow: '0 6px 20px rgba(46,125,50,0.4)' }}
-            disabled={!selected}
-            opacity={!selected ? 0.5 : 1}
-            cursor={!selected ? 'not-allowed' : 'pointer'}
-            onClick={handleConfirm}
+          <motion.div
+            key="confirm"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
           >
-            Confirmar resposta
-          </Button>
+            <motion.button
+              id="quiz-confirm-btn"
+              whileHover={selected ? { scale: 1.02, y: -2 } : {}}
+              whileTap={selected ? { scale: 0.96, y: 2 } : {}}
+              transition={{ type: 'spring', stiffness: 400, damping: 24 }}
+              onClick={handleConfirm}
+              disabled={!selected}
+              style={{
+                width: '100%',
+                background: selected
+                  ? 'linear-gradient(135deg, #2E7D32, #43A047)'
+                  : 'rgba(46,125,50,0.12)',
+                color: selected ? 'white' : 'rgba(46,125,50,0.4)',
+                border: 'none',
+                borderRadius: '16px',
+                padding: '14px 24px',
+                fontSize: '0.9rem',
+                fontWeight: 700,
+                cursor: selected ? 'pointer' : 'not-allowed',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                boxShadow: selected
+                  ? '0 4px 0 rgba(15,60,20,0.45), 0 8px 24px rgba(46,125,50,0.25)'
+                  : 'none',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              Confirmar resposta
+              {selected && <ChevronRight size={18} strokeWidth={2.5} />}
+            </motion.button>
+          </motion.div>
         ) : (
-          <Button
-            id="quiz-next-btn"
-            flex="1"
-            bg="linear-gradient(135deg, #2E7D32, #66BB6A)"
-            color="white"
-            borderRadius="14px"
-            px={6} py={4}
-            fontWeight="700"
-            fontSize="0.9rem"
-            boxShadow="0 2px 12px rgba(46,125,50,0.3)"
-            _hover={{ transform: 'translateY(-2px)', boxShadow: '0 6px 20px rgba(46,125,50,0.4)' }}
-            onClick={handleNext}
+          <motion.div
+            key="next"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
           >
-            {isLast ? '🏁 Ver resultado' : 'Próxima pergunta →'}
-          </Button>
+            <motion.button
+              id="quiz-next-btn"
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.96, y: 2 }}
+              transition={{ type: 'spring', stiffness: 400, damping: 24 }}
+              onClick={handleNext}
+              style={{
+                width: '100%',
+                background: isLast
+                  ? 'linear-gradient(135deg, #F57F17, #FBC02D)'
+                  : 'linear-gradient(135deg, #2E7D32, #43A047)',
+                color: isLast ? '#212121' : 'white',
+                border: 'none',
+                borderRadius: '16px',
+                padding: '14px 24px',
+                fontSize: '0.9rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '8px',
+                boxShadow: isLast
+                  ? '0 4px 0 rgba(200,100,0,0.45), 0 8px 24px rgba(245,127,23,0.3)'
+                  : '0 4px 0 rgba(15,60,20,0.45), 0 8px 24px rgba(46,125,50,0.25)',
+              }}
+            >
+              {isLast ? (
+                <>
+                  <Trophy size={18} strokeWidth={2.5} />
+                  Ver resultado
+                </>
+              ) : (
+                <>
+                  Próxima pergunta
+                  <ChevronRight size={18} strokeWidth={2.5} />
+                </>
+              )}
+            </motion.button>
+          </motion.div>
         )}
-      </HStack>
+      </AnimatePresence>
     </Box>
   )
 }
