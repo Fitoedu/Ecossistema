@@ -5,9 +5,11 @@ import { ClientOnly, IconButton, Skeleton, Span } from "@chakra-ui/react"
 import { ThemeProvider, useTheme } from "next-themes"
 import type { ThemeProviderProps } from "next-themes"
 import * as React from "react"
-import { Moon, Sun } from "lucide-react"
+import { LuMoon, LuSun } from "react-icons/lu"
 
-export function ColorModeProvider(props: ThemeProviderProps) {
+export type ColorModeProviderProps = ThemeProviderProps
+
+export function ColorModeProvider(props: ColorModeProviderProps) {
   return (
     <ThemeProvider attribute="class" disableTransitionOnChange {...props} />
   )
@@ -15,7 +17,7 @@ export function ColorModeProvider(props: ThemeProviderProps) {
 
 export type ColorMode = "light" | "dark"
 
-export interface UseColorModeReturn {
+export type UseColorModeReturn = {
   colorMode: ColorMode
   setColorMode: (colorMode: ColorMode) => void
   toggleColorMode: () => void
@@ -41,7 +43,7 @@ export function useColorModeValue<T>(light: T, dark: T) {
 
 export function ColorModeIcon() {
   const { colorMode } = useColorMode()
-  return colorMode === "dark" ? <Moon /> : <Sun />
+  return colorMode === "dark" ? <LuMoon /> : <LuSun />
 }
 
 export const ColorModeButton = React.forwardRef<
@@ -50,7 +52,7 @@ export const ColorModeButton = React.forwardRef<
 >(function ColorModeButton(props, ref) {
   const { toggleColorMode } = useColorMode()
   return (
-    <ClientOnly fallback={<Skeleton boxSize="9" />}>
+    <ClientOnly fallback={<Skeleton boxSize="8" />}>
       <IconButton
         onClick={toggleColorMode}
         variant="ghost"
@@ -59,10 +61,7 @@ export const ColorModeButton = React.forwardRef<
         ref={ref}
         {...props}
         css={{
-          _icon: {
-            width: "5",
-            height: "5",
-          },
+          _icon: { width: "5", height: "5" },
         }}
       >
         <ColorModeIcon />
