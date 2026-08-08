@@ -21,7 +21,7 @@ export const publicacoes: Publicacao[] = [
     date: '15 de Outubro, 2024',
     title: 'Projeto EducaFito leva educação fitossanitária...',
     description: 'Ação conjunta com pesquisadores locais visa...',
-    image: '/imgs/midia/g1-amapa.jpg',
+    image: '/assets/midia/g1-amapa.webp',
     href: '#',
   },
   {
@@ -30,7 +30,7 @@ export const publicacoes: Publicacao[] = [
     date: '02 de Setembro, 2024',
     title: 'Gamificação como ferramenta no combate...',
     description: 'Como o novo app do EducaFito está transformando a...',
-    image: '/imgs/midia/techagro-rural.jpg',
+    image: '/assets/midia/techagro-rural.webp',
     href: '#',
   },
   {
@@ -39,7 +39,7 @@ export const publicacoes: Publicacao[] = [
     date: '18 de Agosto, 2024',
     title: 'Entrevista: A importância da ciência cidadã na...',
     description: 'Nossa equipe conversou com a rádio local sobre o impacto da...',
-    image: '/imgs/midia/radio-universitaria.jpg',
+    image: '/assets/midia/radio-universitaria.webp',
     href: '#',
   },
 ]
@@ -48,11 +48,11 @@ export const videos: Video[] = [
   {
     id: 'video-1',
     title: 'Vídeo introdutório',
-    thumbnail: '/imgs/midia/video-1-thumb.jpg',
+    thumbnail: '/assets/midia/video-1-thumb.webp',
   },
   {
     id: 'video-2',
     title: 'Demonstração do app',
-    thumbnail: '/imgs/midia/video-2-thumb.jpg',
+    thumbnail: '/assets/midia/video-2-thumb.webp',
   },
 ]

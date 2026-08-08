@@ -3,10 +3,9 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Box, Flex, Heading, Stack, Text } from '@chakra-ui/react'
-import { BookOpen, Gamepad2, GraduationCap, House, Info, Leaf, LogOut, Settings, Tv, Users } from 'lucide-react'
+import { BookOpen, Gamepad2, GraduationCap, Info, Leaf, LogOut, Settings, Tv, Users } from 'lucide-react'
 
 const items = [
-  { href: '/home', label: 'Início', icon: House },
   { href: '/educacao', label: 'Educação', icon: GraduationCap },
   { href: '/cartilha', label: 'Cartilha', icon: BookOpen },
   { href: '/jogos', label: 'Jogos', icon: Gamepad2 },
