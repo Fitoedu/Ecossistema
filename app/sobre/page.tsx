@@ -10,7 +10,7 @@ import { PorqueDigitalCard } from './components/PorqueDigitalCard'
 
 export default function Sobre() {
   return (
-    <AppShell title="Sobre" description="Conheça a história e a missão do EducaFito.">
+    <AppShell>
       <Stack gap={{ base: 8, md: 10 }}>
         <Flex
           direction={{ base: 'column', md: 'row' }}

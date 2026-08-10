@@ -75,10 +75,7 @@ export default function CartilhaPage() {
   const page = getPage(currentPage)
 
   return (
-    <AppShell
-      title="Cartilha Interativa"
-      description={`Página ${currentPage + 1} de ${TOTAL_PAGES}: ${page.label}`}
-    >
+    <AppShell>
       <Box fontFamily="body" id="cartilha-root">
         <Box
           as="main"

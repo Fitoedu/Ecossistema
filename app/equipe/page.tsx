@@ -7,7 +7,7 @@ import { TeamMemberCard } from '@/app/equipe/components/TeamMemberCard'
 
 export default function EquipePage() {
   return (
-    <AppShell title="Equipe" description="Conheça os profissionais por trás do EducaFito.">
+    <AppShell>
       <Stack gap={6}>
         <Stack gap={2}>
           <Heading as="h1" size="lg" color="primary.700">

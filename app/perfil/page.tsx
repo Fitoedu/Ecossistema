@@ -5,7 +5,7 @@ import { Badge, Box, Flex, Heading, Stack, Text } from '@chakra-ui/react'
 
 export default function PerfilPage() {
   return (
-    <AppShell title="Perfil" description="Resumo do progresso do usuário.">
+    <AppShell>
       <Stack gap={6}>
         <Box borderWidth="1px" borderColor="brand.100" borderRadius="2xl" p={6} bg="surface">
           <Flex justify="space-between" align="center" gap={4} flexWrap="wrap">

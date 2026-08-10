@@ -10,7 +10,7 @@ import { VideoCard } from '@/app/midia/components/VideoCard'
 
 export default function MidiaPage() {
   return (
-    <AppShell title="Mídia" description="Conteúdos em vídeo e leitura complementar.">
+    <AppShell>
       <Stack gap={8}>
         <Box>
           <Badge

@@ -23,7 +23,7 @@ const temas = [
 
 export default function ConteudoPage() {
   return (
-    <AppShell title="Conteúdo" description="Seleção de temas para estudo e revisão.">
+    <AppShell>
       <Stack gap={6}>
         <Box>
           <Heading as="h2" size="lg">
