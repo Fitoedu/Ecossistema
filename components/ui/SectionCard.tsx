@@ -1,5 +1,6 @@
-import { Box, Flex, Icon, Text } from '@chakra-ui/react'
+import { Box, Flex, Heading, Icon } from '@chakra-ui/react'
 import type { IconType } from 'react-icons'
+import { useId } from 'react'
 
 interface SectionCardProps {
   title: string
@@ -9,12 +10,16 @@ interface SectionCardProps {
 }
 
 export function SectionCard({ title, icon, accentColor, children }: SectionCardProps) {
+  const headingId = useId()
+
   return (
     <Box
-      bg="white"
+      as="section"
+      aria-labelledby={headingId}
+      bg="surface"
       borderRadius="18px"
       border="1.5px solid"
-      borderColor="rgba(15,107,61,0.08)"
+      borderColor="primary.100"
       p={5}
       boxShadow="0 2px 12px rgba(15,42,26,0.06)"
     >
@@ -30,11 +35,11 @@ export function SectionCard({ title, icon, accentColor, children }: SectionCardP
         >
           <Icon as={icon} boxSize={3.5} />
         </Flex>
-        <Text fontWeight={700} fontSize="sm" color="#1b3327">
+        <Heading id={headingId} as="h3" fontWeight={700} fontSize="sm" color="fg">
           {title}
-        </Text>
+        </Heading>
       </Flex>
-      {children}
+      <Box mt={3}>{children}</Box>
     </Box>
   )
 }
