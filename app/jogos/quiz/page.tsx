@@ -42,7 +42,7 @@ export default function QuizLobbyPage() {
                     align="center"
                     justify="space-between"
                     borderBottom="1px solid"
-                    borderColor="brand.100"
+                    borderColor="primary.100"
                     bg="rgba(250, 252, 246, 0.92)"
                 >
                     <Flex align="center" gap={2}>
@@ -52,24 +52,24 @@ export default function QuizLobbyPage() {
                                 <Text fontSize="sm" color="#5c746d">/</Text>
                             </Flex>
                         </Link>
-                        <Text fontSize="sm" fontWeight={700} color="brand.700">Quiz</Text>
+                        <Text fontSize="sm" fontWeight={700} color="primary.700">Quiz</Text>
                     </Flex>
 
                     <Flex align="center" gap={2}>
                         <Box w={7} h={7} borderRadius="full" overflow="hidden" border="1px solid"
-                             borderColor="brand.200">
+                             borderColor="primary.200">
                             <Image src="/imgs/joaninha_corpo_todo.png" alt="Mascote" w="full" h="full"
                                    objectFit="cover"/>
                         </Box>
                         <Link href="/perfil" aria-label="Perfil" style={{textDecoration: 'none'}}>
                             <Flex w={8} h={8} align="center" justify="center" borderRadius="full" border="1px solid"
-                                  borderColor="brand.200" color="brand.600" bg="whiteAlpha.700">
+                                  borderColor="primary.200" color="primary.600" bg="whiteAlpha.700">
                                 <Icon as={LuUserRound} boxSize={4}/>
                             </Flex>
                         </Link>
                         <Link href="/conteudo" aria-label="Ajuda" style={{textDecoration: 'none'}}>
                             <Flex w={8} h={8} align="center" justify="center" borderRadius="full" border="1px solid"
-                                  borderColor="brand.200" color="brand.600" bg="whiteAlpha.700">
+                                  borderColor="primary.200" color="primary.600" bg="whiteAlpha.700">
                                 <Icon as={LuInfo} boxSize={4}/>
                             </Flex>
                         </Link>
@@ -123,13 +123,13 @@ export default function QuizLobbyPage() {
                     align="center"
                     justify="space-between"
                     borderTop="1px solid"
-                    borderColor="brand.100"
+                    borderColor="primary.100"
                     color="#5c746d"
                     fontSize="xs"
                     gap={3}
                     wrap="wrap"
                 >
-                    <Text fontWeight={700} color="brand.600">
+                    <Text fontWeight={700} color="primary.600">
                         © 2026 EducaFito - Educação Fitossanitária Regional.
                     </Text>
                     <Flex align="center" gap={3} wrap="wrap" justify="flex-end">

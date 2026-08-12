@@ -158,7 +158,7 @@ export default function JogosPage() {
           align="center"
           justify="space-between"
           borderBottom="1px solid"
-          borderColor="brand.100"
+          borderColor="primary.100"
           bg="rgba(250, 252, 246, 0.92)"
         >
           <Flex align="center" gap={3}>
@@ -168,7 +168,7 @@ export default function JogosPage() {
               borderRadius="full"
               overflow="hidden"
               border="1px solid"
-              borderColor="brand.200"
+              borderColor="primary.200"
               boxShadow="0 8px 18px rgba(15, 107, 61, 0.12)"
             >
               <Image
@@ -179,7 +179,7 @@ export default function JogosPage() {
                 objectFit="cover"
               />
             </Box>
-            <Text fontSize="lg" fontWeight={800} color="brand.700">
+            <Text fontSize="lg" fontWeight={800} color="primary.700">
               EducaFito
             </Text>
           </Flex>
@@ -193,8 +193,8 @@ export default function JogosPage() {
                 justify="center"
                 borderRadius="full"
                 border="1px solid"
-                borderColor="brand.200"
-                color="brand.600"
+                borderColor="primary.200"
+                color="primary.600"
                 bg="whiteAlpha.700"
               >
                 <Icon as={LuUserRound} boxSize={4} />
@@ -208,8 +208,8 @@ export default function JogosPage() {
                 justify="center"
                 borderRadius="full"
                 border="1px solid"
-                borderColor="brand.200"
-                color="brand.600"
+                borderColor="primary.200"
+                color="primary.600"
                 bg="whiteAlpha.700"
               >
                 <Icon as={LuInfo} boxSize={4} />
@@ -330,13 +330,13 @@ export default function JogosPage() {
           align="center"
           justify="space-between"
           borderTop="1px solid"
-          borderColor="brand.100"
+          borderColor="primary.100"
           color="muted"
           fontSize="xs"
           gap={3}
           wrap="wrap"
         >
-          <Text fontWeight={700} color="brand.600">
+          <Text fontWeight={700} color="primary.600">
             © 2026 EducaFito - Educação Fitossanitária Regional.
           </Text>
           <Flex align="center" gap={3} wrap="wrap" justify="flex-end">

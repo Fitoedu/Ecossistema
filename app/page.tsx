@@ -125,7 +125,7 @@ export default function SplashScreen() {
           borderRadius="full"
           border="1px solid rgba(15, 107, 61, 0.14)"
           bg="rgba(255,255,255,0.65)"
-          color="brand.700"
+          color="primary.700"
           fontSize="0.72rem"
           fontWeight={700}
           letterSpacing="0.18em"
@@ -213,7 +213,7 @@ export default function SplashScreen() {
               borderRadius="full"
               bg="rgba(255,255,255,0.72)"
               border="1px solid rgba(15, 107, 61, 0.12)"
-              color="brand.700"
+              color="primary.700"
               fontSize="0.85rem"
               fontWeight={600}
               boxShadow="0 10px 24px rgba(6, 45, 27, 0.08)"
@@ -247,7 +247,7 @@ export default function SplashScreen() {
               w="7px"
               h="7px"
               borderRadius="full"
-              bg="brand.500"
+              bg="primary.500"
               animation={`dotPulse 1.2s ease-in-out infinite ${i * 0.18}s`}
             />
           ))}

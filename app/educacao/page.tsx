@@ -36,7 +36,7 @@ export default function ConteudoPage() {
 
         <SimpleGrid columns={{ base: 1, md: 2 }} gap={6}>
           {temas.map((tema) => (
-            <Box key={tema.title} borderWidth="1px" borderColor="brand.100" borderRadius="2xl" p={6} bg="surface">
+            <Box key={tema.title} borderWidth="1px" borderColor="primary.100" borderRadius="2xl" p={6} bg="surface">
               <Badge colorPalette="green" mb={3}>{tema.level}</Badge>
               <Heading as="h3" size="md" mb={2}>
                 {tema.title}
