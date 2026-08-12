@@ -11,7 +11,7 @@ type TeamMemberCardProps = {
 const roleColorMap = {
   primary: 'primary.700',
   tertiary: 'tertiary.700',
-  accent: 'accent.700',
+  accent: 'accent.700'
 } as const
 
 export function TeamMemberCard({ member }: TeamMemberCardProps) {
