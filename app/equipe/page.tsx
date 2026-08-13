@@ -1,29 +1,87 @@
-'use client'
-
+import type { Metadata } from 'next'
 import { AppShell } from '@/components/layout/AppShell'
-import { Heading, SimpleGrid, Stack, Text } from '@chakra-ui/react'
+import { Box, Heading, Link as ChakraLink, Separator, SimpleGrid, Stack, Text } from '@chakra-ui/react'
+import NextLink from 'next/link'
 import { teamMembers } from '@/app/equipe/_data/equipe'
 import { TeamMemberCard } from '@/app/equipe/components/TeamMemberCard'
+import { TeamHero } from '@/app/equipe/components/TeamHero'
+
+export const metadata: Metadata = {
+  title: 'Equipe',
+  description:
+    'Conheça os especialistas do EducaFito — a equipe dedicada a conectar ciência, tecnologia e educação fitossanitária na Amazônia.',
+}
 
 export default function EquipePage() {
   return (
     <AppShell>
-      <Stack gap={6}>
-        <Stack gap={2}>
-          <Heading as="h1" size="lg" color="primary.700">
-            Conheça Nossa Equipe
+      <Stack gap={{ base: 8, md: 10 }}>
+
+        {/* ── Hero ─────────────────────────────────────────────── */}
+        <TeamHero />
+
+        {/* ── Membros da Equipe ─────────────────────────────────── */}
+        <Stack gap={3}>
+          <Heading
+            as="h2"
+            size="sm"
+            color="muted"
+            fontWeight={600}
+            textTransform="uppercase"
+            letterSpacing="0.08em"
+          >
+            Os Integrantes
           </Heading>
-          <Text color="muted" maxW="640px" lineHeight={1.7}>
-            Especialistas dedicados a conectar ciência, tecnologia e educação para proteger as
-            plantas e garantir alimentos saudáveis para todos.
-          </Text>
+          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={5}>
+            {teamMembers.map((member) => (
+              <TeamMemberCard key={member.id} member={member} />
+            ))}
+          </SimpleGrid>
         </Stack>
 
-        <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={5}>
-          {teamMembers.map((member) => (
-            <TeamMemberCard key={member.id} member={member} />
-          ))}
-        </SimpleGrid>
+        <Separator borderColor="border" />
+
+        {/* ── Chamada de Colaboração ────────────────────────────── */}
+        <Box
+          borderRadius="2xl"
+          bg="surface"
+          borderWidth="1px"
+          borderColor="border"
+          px={{ base: 6, md: 10 }}
+          py={{ base: 8, md: 10 }}
+          textAlign="center"
+        >
+          <Stack gap={4} align="center" maxW="480px" mx="auto">
+            <Heading as="h2" size="md" lineHeight={1.3} fontWeight={700}>
+              Quer fazer parte da nossa equipe?
+            </Heading>
+            <Text color="muted" fontSize="sm" lineHeight={1.75}>
+              O EducaFito é um projeto colaborativo e aberto. Se você é pesquisador, educador ou
+              desenvolvedor apaixonado pela Amazônia, entre em contato conosco.
+            </Text>
+            <ChakraLink
+              asChild
+              display="inline-flex"
+              alignItems="center"
+              gap={2}
+              bg="primary.600"
+              color="white"
+              borderRadius="lg"
+              px={6}
+              py={3}
+              fontSize="sm"
+              fontWeight={700}
+              textDecoration="none"
+              transition="all 0.2s ease"
+              _hover={{ bg: 'primary.700', textDecoration: 'none' }}
+            >
+              <NextLink href="/sobre">
+                Saiba mais sobre o projeto
+              </NextLink>
+            </ChakraLink>
+          </Stack>
+        </Box>
+
       </Stack>
     </AppShell>
   )
