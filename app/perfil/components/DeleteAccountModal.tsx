@@ -26,7 +26,7 @@ export function DeleteAccountModal({ isOpen, onClose }: DeleteAccountModalProps)
   //const supabase = createClient()
 
   // O botão só fica ativo se o usuário digitar "EXCLUIR"
-  const isConfirmed = confirmText.trim().toUpperCase() === 'EXCLUIR'
+  const isConfirmed = confirmText.trim() === 'EXCLUIR'
 
   const handleClose = () => {
     setConfirmText('')

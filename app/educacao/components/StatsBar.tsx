@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Flex, Stat, Text } from '@chakra-ui/react'
+import { Flex, Stat } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
 import type { LucideIcon } from 'lucide-react'
 
@@ -19,10 +19,7 @@ const MotionFlex = motion.create(Flex)
 
 export function StatsBar({ stats }: StatsBarProps) {
   return (
-    <Flex
-      gap={4}
-      wrap="wrap"
-    >
+    <Flex gap={4} wrap="wrap" role="group" aria-label="Resumo do progresso">
       {stats.map((item, i) => {
         const IconComp = item.icon
         return (
@@ -53,7 +50,7 @@ export function StatsBar({ stats }: StatsBarProps) {
               color={item.color}
               flexShrink={0}
             >
-              <Box as={IconComp} size={16} strokeWidth={2} aria-hidden />
+              <IconComp size={16} strokeWidth={2} aria-hidden="true" />
             </Flex>
 
             <Stat.Root size="sm">

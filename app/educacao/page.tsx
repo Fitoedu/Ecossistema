@@ -1,183 +1,52 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import {
   Box,
   Badge,
+  EmptyState,
   Flex,
   Heading,
+  Input,
+  InputGroup,
   SimpleGrid,
   Stack,
   Tabs,
   Text,
 } from '@chakra-ui/react'
 import {
-  BookOpen,
-  Bug,
-  FlaskConical,
   GraduationCap,
-  LayoutGrid,
-  Leaf,
-  Microscope,
-  Sprout,
-  TreeDeciduous,
+  Search,
+  SearchX,
   Trophy,
 } from 'lucide-react'
 import { AppShell } from '@/components/layout/AppShell'
 import { TopicCard } from './components/TopicCard'
 import { StatsBar } from './components/StatsBar'
-import type { Topic } from './components/TopicCard'
-
-// ── Dados dos temas ──────────────────────────────────────────────────────────
-
-const temas: Topic[] = [
-  {
-    title: 'Fitopatologia Básica',
-    description:
-      'Entenda as principais doenças de plantas, seus agentes causadores, sintomas e como identificar corretamente cada tipo de infecção.',
-    level: 'Básico',
-    category: 'Fitopatologia',
-    icon: Microscope,
-    color: '#2E7D32',
-    duration: '45 min',
-    lessons: 8,
-    progress: 100,
-  },
-  {
-    title: 'Doenças Fúngicas em Culturas',
-    description:
-      'Aprofunde-se nos fungos fitopatogênicos mais comuns, seu ciclo de vida e as estratégias de manejo integrado mais eficazes.',
-    level: 'Intermediário',
-    category: 'Fitopatologia',
-    icon: FlaskConical,
-    color: '#1565C0',
-    duration: '1h 10min',
-    lessons: 12,
-    progress: 60,
-  },
-  {
-    title: 'Viroses e Bacterioses',
-    description:
-      'Conheça as principais viroses e bacterioses que afetam culturas regionais, vetores envolvidos e controle preventivo.',
-    level: 'Avançado',
-    category: 'Fitopatologia',
-    icon: Bug,
-    color: '#C62828',
-    duration: '1h 30min',
-    lessons: 15,
-    progress: 20,
-  },
-  {
-    title: 'Entomologia Agrícola',
-    description:
-      'Conheça os principais insetos-praga das culturas, seu comportamento, formas de identificação e estratégias de prevenção.',
-    level: 'Básico',
-    category: 'Entomologia',
-    icon: Bug,
-    color: '#E65100',
-    duration: '50 min',
-    lessons: 10,
-    progress: 80,
-  },
-  {
-    title: 'Controle Biológico de Pragas',
-    description:
-      'Explore as técnicas de controle biológico, organismos benéficos e como integrá-los ao manejo sustentável da lavoura.',
-    level: 'Intermediário',
-    category: 'Entomologia',
-    icon: Leaf,
-    color: '#558B2F',
-    duration: '55 min',
-    lessons: 9,
-    progress: 0,
-  },
-  {
-    title: 'Plantas Medicinais',
-    description:
-      'Explore usos terapêuticos, propriedades farmacológicas e cultivo de plantas medicinais de forma segura e contextualizada.',
-    level: 'Básico',
-    category: 'Plantas',
-    icon: Sprout,
-    color: '#00695C',
-    duration: '40 min',
-    lessons: 7,
-    progress: 45,
-  },
-  {
-    title: 'Agroecologia e Sustentabilidade',
-    description:
-      'Compreenda os princípios da agroecologia, boas práticas agrícolas e como promover a biodiversidade nos sistemas produtivos.',
-    level: 'Intermediário',
-    category: 'Plantas',
-    icon: TreeDeciduous,
-    color: '#2E7D32',
-    duration: '1h 05min',
-    lessons: 11,
-    progress: 0,
-  },
-  {
-    title: 'Fitossanidade e Legislação',
-    description:
-      'Conheça a legislação fitossanitária brasileira, normas de quarentena e o papel dos órgãos reguladores no controle de pragas.',
-    level: 'Avançado',
-    category: 'Fitopatologia',
-    icon: BookOpen,
-    color: '#4527A0',
-    duration: '1h 20min',
-    lessons: 14,
-    progress: 0,
-  },
-]
-
-// ── Tabs ─────────────────────────────────────────────────────────────────────
-
-const tabs = [
-  { value: 'todos', label: 'Todos', icon: LayoutGrid },
-  { value: 'Fitopatologia', label: 'Fitopatologia', icon: Microscope },
-  { value: 'Entomologia', label: 'Entomologia', icon: Bug },
-  { value: 'Plantas', label: 'Plantas', icon: Leaf },
-]
-
-// ── Estatísticas ──────────────────────────────────────────────────────────────
-
-const statsData = [
-  {
-    label: 'Módulos',
-    value: temas.length,
-    icon: BookOpen,
-    color: '#2E7D32',
-  },
-  {
-    label: 'Concluídos',
-    value: temas.filter((t) => t.progress === 100).length,
-    icon: Trophy,
-    color: '#FBC02D',
-  },
-  {
-    label: 'Em progresso',
-    value: temas.filter((t) => t.progress > 0 && t.progress < 100).length,
-    icon: GraduationCap,
-    color: '#1565C0',
-  },
-  {
-    label: 'Categorias',
-    value: [...new Set(temas.map((t) => t.category))].length,
-    icon: LayoutGrid,
-    color: '#E65100',
-  },
-]
-
-// ── Página ────────────────────────────────────────────────────────────────────
+import { temas, tabs, withLockState, buildStats } from './_data/educacao'
 
 export default function ConteudoPage() {
   const [activeTab, setActiveTab] = useState('todos')
+  const [query, setQuery] = useState('')
 
-  const filtered =
-    activeTab === 'todos'
-      ? temas
-      : temas.filter((t) => t.category === activeTab)
+  // Trilha sequencial calculada uma vez sobre a lista completa, para que
+  // o estado de bloqueio não mude conforme o usuário filtra por aba/busca.
+  const topicsWithLock = useMemo(() => withLockState(temas), [])
+  const statsData = useMemo(() => buildStats(topicsWithLock), [topicsWithLock])
 
-  const featured = temas.find((t) => t.progress > 0 && t.progress < 100) ?? temas[0]
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    return topicsWithLock
+      .filter((t) => activeTab === 'todos' || t.category === activeTab)
+      .filter(
+        (t) => q === '' || t.title.toLowerCase().includes(q) || t.description.toLowerCase().includes(q),
+      )
+  }, [topicsWithLock, activeTab, query])
+
+  const featured =
+    topicsWithLock.find((t) => !t.locked && t.progress > 0 && t.progress < 100) ??
+    topicsWithLock.find((t) => !t.locked) ??
+    topicsWithLock[0]
 
   return (
     <AppShell>
@@ -192,7 +61,6 @@ export default function ConteudoPage() {
           py={{ base: 6, md: 8 }}
           boxShadow="0 8px 40px rgba(15,42,26,0.18)"
         >
-          {/* Glow decorativo */}
           <Box
             position="absolute"
             top="-40px"
@@ -265,31 +133,56 @@ export default function ConteudoPage() {
         <StatsBar stats={statsData} />
 
         {/* ── Destaque ─────────────────────────────────────── */}
-        <Box>
-          <Flex align="center" gap={2} mb={4}>
-            <Box as={Trophy} size={16} color="var(--chakra-colors-accent-500)" strokeWidth={2.5} aria-hidden />
-            <Heading as="h2" fontSize="sm" fontWeight={700} color="muted" textTransform="uppercase" letterSpacing="wide">
-              Continue de onde parou
-            </Heading>
-          </Flex>
+        {featured && (
+          <Box>
+            <Flex align="center" gap={2} mb={4}>
+              <Box as={Trophy} size={16} color="var(--chakra-colors-accent-500)" strokeWidth={2.5} aria-hidden />
+              <Heading as="h2" fontSize="sm" fontWeight={700} color="muted" textTransform="uppercase" letterSpacing="wide">
+                Continue de onde parou
+              </Heading>
+            </Flex>
 
-          <Box
-            bg="linear-gradient(135deg, var(--chakra-colors-primary-50) 0%, var(--chakra-colors-surface) 100%)"
-            borderRadius="2xl"
-            border="2px solid"
-            borderColor="primary.200"
-            overflow="hidden"
-            boxShadow="0 4px 24px rgba(15,42,26,0.10)"
-          >
-            <TopicCard topic={featured} featured index={0} />
+            <Box
+              bg="linear-gradient(135deg, var(--chakra-colors-primary-50) 0%, var(--chakra-colors-surface) 100%)"
+              borderRadius="2xl"
+              border="2px solid"
+              borderColor="primary.200"
+              overflow="hidden"
+              boxShadow="0 4px 24px rgba(15,42,26,0.10)"
+            >
+              <TopicCard topic={featured} featured index={0} locked={featured.locked} />
+            </Box>
           </Box>
-        </Box>
+        )}
 
-        {/* ── Tabs + Grid ───────────────────────────────────── */}
+        {/* ── Tabs + Busca + Grid ──────────────────────────── */}
         <Box>
-          <Heading as="h2" fontSize="lg" fontWeight={700} color="fg" mb={5}>
-            Todos os módulos
-          </Heading>
+          <Flex
+            align={{ base: 'stretch', sm: 'center' }}
+            justify="space-between"
+            gap={4}
+            mb={5}
+            direction={{ base: 'column', sm: 'row' }}
+          >
+            <Heading as="h2" fontSize="lg" fontWeight={700} color="fg">
+              Todos os módulos
+            </Heading>
+
+            <InputGroup
+              maxW={{ base: 'full', sm: '260px' }}
+              startElement={<Box as={Search} size={15} color="muted" aria-hidden />}
+            >
+              <Input
+                placeholder="Buscar módulos..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                size="sm"
+                borderRadius="lg"
+                bg="surface"
+                aria-label="Buscar módulos por título ou descrição"
+              />
+            </InputGroup>
+          </Flex>
 
           <Tabs.Root
             defaultValue="todos"
@@ -346,13 +239,28 @@ export default function ConteudoPage() {
               ))}
             </Tabs.List>
 
-            {/* Conteúdo das Tabs (conteúdo único controlado por estado) */}
             <Tabs.Content value={activeTab}>
-              <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={5}>
-                {filtered.map((tema, i) => (
-                  <TopicCard key={tema.title} topic={tema} index={i} />
-                ))}
-              </SimpleGrid>
+              {filtered.length > 0 ? (
+                <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={5}>
+                  {filtered.map((tema, i) => (
+                    <TopicCard key={tema.title} topic={tema} index={i} locked={tema.locked} />
+                  ))}
+                </SimpleGrid>
+              ) : (
+                <EmptyState.Root size="md" py={12}>
+                  <EmptyState.Content>
+                    <EmptyState.Indicator>
+                      <Box as={SearchX} size={32} color="muted" strokeWidth={1.5} aria-hidden />
+                    </EmptyState.Indicator>
+                    <EmptyState.Title>Nenhum módulo encontrado</EmptyState.Title>
+                    <EmptyState.Description>
+                      {query
+                        ? `Não encontramos módulos para "${query}" nesta categoria.`
+                        : 'Não há módulos cadastrados nesta categoria ainda.'}
+                    </EmptyState.Description>
+                  </EmptyState.Content>
+                </EmptyState.Root>
+              )}
             </Tabs.Content>
           </Tabs.Root>
         </Box>
