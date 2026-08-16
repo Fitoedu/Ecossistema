@@ -3,7 +3,6 @@ import { Users } from 'lucide-react'
 
 const stats = [
   { value: '3', label: 'Especialistas' },
-  { value: '15+', label: 'Anos de Experiência' },
   { value: '3', label: 'Áreas de Expertise' },
 ]
 

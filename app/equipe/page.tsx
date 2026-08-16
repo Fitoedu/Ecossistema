@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import { AppShell } from '@/components/layout/AppShell'
-import { Box, Heading, Link as ChakraLink, Separator, SimpleGrid, Stack, Text } from '@chakra-ui/react'
-import NextLink from 'next/link'
+import { Box, Heading, Separator, SimpleGrid, Stack, Text } from '@chakra-ui/react'
 import { teamMembers } from '@/app/equipe/_data/equipe'
 import { TeamMemberCard } from '@/app/equipe/components/TeamMemberCard'
 import { TeamHero } from '@/app/equipe/components/TeamHero'
+import { CollaboratorForm } from '@/app/equipe/components/CollaboratorForm'
 
 export const metadata: Metadata = {
   title: 'Equipe',
@@ -59,26 +59,9 @@ export default function EquipePage() {
               O EducaFito é um projeto colaborativo e aberto. Se você é pesquisador, educador ou
               desenvolvedor apaixonado pela Amazônia, entre em contato conosco.
             </Text>
-            <ChakraLink
-              asChild
-              display="inline-flex"
-              alignItems="center"
-              gap={2}
-              bg="primary.600"
-              color="white"
-              borderRadius="lg"
-              px={6}
-              py={3}
-              fontSize="sm"
-              fontWeight={700}
-              textDecoration="none"
-              transition="all 0.2s ease"
-              _hover={{ bg: 'primary.700', textDecoration: 'none' }}
-            >
-              <NextLink href="/sobre">
-                Saiba mais sobre o projeto
-              </NextLink>
-            </ChakraLink>
+
+            {/* Modal interativo com o formulário */}
+            <CollaboratorForm />
           </Stack>
         </Box>
 
