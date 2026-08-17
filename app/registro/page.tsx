@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import { useEffect, useMemo, useRef, useState } from 'react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useEffect, useMemo, useRef, useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   Box,
   Button,
@@ -16,111 +16,63 @@ import {
   InputGroup,
   Stack,
   Text,
-} from '@chakra-ui/react'
-import { Eye, EyeOff, Leaf } from 'lucide-react'
+} from "@chakra-ui/react";
+import { Eye, EyeOff, Leaf } from "lucide-react";
+import {
+  SENHA_MIN_LENGTH,
+  getSenhaForcaNivel,
+  validateRegistroForm,
+  type RegistroFormState,
+} from "@/lib/validation";
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const MIN_SENHA = 8
-
-interface FormState {
-  nome: string
-  email: string
-  senha: string
-  aceiteTermos: boolean
-}
-
-interface FormErrors {
-  nome?: string
-  email?: string
-  senha?: string
-  aceiteTermos?: string
-}
-
-function validate({ nome, email, senha, aceiteTermos }: FormState): FormErrors {
-  const errors: FormErrors = {}
-
-  if (!nome.trim()) {
-    errors.nome = 'Informe seu nome.'
-  }
-
-  if (!email.trim()) {
-    errors.email = 'Informe seu e-mail.'
-  } else if (!EMAIL_REGEX.test(email)) {
-    errors.email = 'Informe um e-mail válido.'
-  }
-
-  if (!senha) {
-    errors.senha = 'Crie uma senha.'
-  } else if (senha.length < MIN_SENHA) {
-    errors.senha = `A senha precisa ter pelo menos ${MIN_SENHA} caracteres.`
-  } else if (!/\d/.test(senha)) {
-    errors.senha = 'A senha precisa ter pelo menos 1 número.'
-  }
-
-  if (!aceiteTermos) {
-    errors.aceiteTermos = 'É preciso aceitar os termos para continuar.'
-  }
-
-  return errors
-}
+type FormState = RegistroFormState;
 
 export default function Registro() {
-  const router = useRouter()
-  const nomeRef = useRef<HTMLInputElement>(null)
+  const router = useRouter();
+  const nomeRef = useRef<HTMLInputElement>(null);
 
   const [form, setForm] = useState<FormState>({
-    nome: '',
-    email: '',
-    senha: '',
+    nome: "",
+    email: "",
+    senha: "",
     aceiteTermos: false,
-  })
+  });
   const [touched, setTouched] = useState<Record<keyof FormState, boolean>>({
     nome: false,
     email: false,
     senha: false,
     aceiteTermos: false,
-  })
-  const [showSenha, setShowSenha] = useState(false)
-  const [loading, setLoading] = useState(false)
+  });
+  const [showSenha, setShowSenha] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const errors = validate(form)
-
-  const senhaForca = useMemo(() => {
-    const { senha } = form
-    if (!senha) return null
-    let score = 0
-    if (senha.length >= MIN_SENHA) score++
-    if (/\d/.test(senha)) score++
-    if (/[a-z]/.test(senha) && /[A-Z]/.test(senha)) score++
-    if (/[^A-Za-z0-9]/.test(senha)) score++
-
-    if (score <= 1) return { label: 'Fraca', color: 'red.500' }
-    if (score <= 2) return { label: 'Razoável', color: 'accent.600' }
-    if (score === 3) return { label: 'Boa', color: 'primary.500' }
-    return { label: 'Forte', color: 'primary.700' }
-  }, [form])
+  const errors = validateRegistroForm(form);
+  const senhaForca = useMemo(() => getSenhaForcaNivel(form.senha), [form.senha]);
 
   useEffect(() => {
-    nomeRef.current?.focus()
-  }, [])
+    nomeRef.current?.focus();
+  }, []);
 
-  function handleChange<K extends keyof FormState>(field: K, value: FormState[K]) {
-    setForm((prev) => ({ ...prev, [field]: value }))
+  function handleChange<K extends keyof FormState>(
+    field: K,
+    value: FormState[K],
+  ) {
+    setForm((prev) => ({ ...prev, [field]: value }));
   }
 
   function handleBlur(field: keyof FormState) {
-    setTouched((prev) => ({ ...prev, [field]: true }))
+    setTouched((prev) => ({ ...prev, [field]: true }));
   }
 
   function handleSubmit(event: React.FormEvent) {
-    event.preventDefault()
-    setTouched({ nome: true, email: true, senha: true, aceiteTermos: true })
+    event.preventDefault();
+    setTouched({ nome: true, email: true, senha: true, aceiteTermos: true });
 
-    if (Object.keys(errors).length > 0) return
+    if (Object.keys(errors).length > 0) return;
 
-    setLoading(true)
+    setLoading(true);
     // Cadastro ainda não implementado — segue direto para o dashboard.
-    router.push('/home')
+    router.push("/home");
   }
 
   return (
@@ -145,7 +97,7 @@ export default function Registro() {
             align="center"
             justify="center"
           >
-            <Box as={Leaf} color="white" fontSize="24px" />
+            <Box as={Leaf} color="white" fontSize="24px" aria-hidden="true" />
           </Flex>
           <Stack gap={1}>
             <Heading as="h1" size="lg">
@@ -166,8 +118,9 @@ export default function Registro() {
                 autoComplete="name"
                 placeholder="Seu nome completo"
                 value={form.nome}
-                onChange={(e) => handleChange('nome', e.target.value)}
-                onBlur={() => handleBlur('nome')}
+                onChange={(e) => handleChange("nome", e.target.value)}
+                onBlur={() => handleBlur("nome")}
+                disabled={loading}
                 borderColor="primary.100"
               />
               {touched.nome && errors.nome && (
@@ -183,8 +136,9 @@ export default function Registro() {
                 autoComplete="email"
                 placeholder="voce@email.com"
                 value={form.email}
-                onChange={(e) => handleChange('email', e.target.value)}
-                onBlur={() => handleBlur('email')}
+                onChange={(e) => handleChange("email", e.target.value)}
+                onBlur={() => handleBlur("email")}
+                disabled={loading}
                 borderColor="primary.100"
               />
               {touched.email && errors.email && (
@@ -198,23 +152,24 @@ export default function Registro() {
                 w="full"
                 endElement={
                   <IconButton
-                    aria-label={showSenha ? 'Ocultar senha' : 'Mostrar senha'}
+                    aria-label={showSenha ? "Ocultar senha" : "Mostrar senha"}
                     variant="ghost"
                     size="sm"
                     onClick={() => setShowSenha((prev) => !prev)}
-                    tabIndex={-1}
+                    disabled={loading}
                   >
                     {showSenha ? <EyeOff size={18} /> : <Eye size={18} />}
                   </IconButton>
                 }
               >
                 <Input
-                  type={showSenha ? 'text' : 'password'}
+                  type={showSenha ? "text" : "password"}
                   autoComplete="new-password"
                   placeholder="••••••••"
                   value={form.senha}
-                  onChange={(e) => handleChange('senha', e.target.value)}
-                  onBlur={() => handleBlur('senha')}
+                  onChange={(e) => handleChange("senha", e.target.value)}
+                  onBlur={() => handleBlur("senha")}
+                  disabled={loading}
                   borderColor="primary.100"
                 />
               </InputGroup>
@@ -223,7 +178,8 @@ export default function Registro() {
                 <Field.ErrorText>{errors.senha}</Field.ErrorText>
               ) : (
                 <Field.HelperText>
-                  Mínimo de {MIN_SENHA} caracteres, incluindo 1 número.
+                  Mínimo de {SENHA_MIN_LENGTH} caracteres, incluindo maiúscula,
+                  minúscula e número.
                 </Field.HelperText>
               )}
 
@@ -243,22 +199,15 @@ export default function Registro() {
               <Checkbox.Root
                 checked={form.aceiteTermos}
                 onCheckedChange={(details) =>
-                  handleChange('aceiteTermos', !!details.checked)
+                  handleChange("aceiteTermos", !!details.checked)
                 }
-                onBlur={() => handleBlur('aceiteTermos')}
+                onBlur={() => handleBlur("aceiteTermos")}
+                disabled={loading}
               >
                 <Checkbox.HiddenInput />
                 <Checkbox.Control borderColor="primary.200" />
                 <Checkbox.Label fontSize="sm" color="fg">
-                  Li e aceito os{' '}
-                  <Link href="/termos" style={{ fontWeight: 600, textDecoration: 'underline' }}>
-                    termos de uso
-                  </Link>{' '}
-                  e a{' '}
-                  <Link href="/privacidade" style={{ fontWeight: 600, textDecoration: 'underline' }}>
-                    política de privacidade
-                  </Link>
-                  .
+                  Li e aceito os termos de uso e a política de privacidade.
                 </Checkbox.Label>
               </Checkbox.Root>
               {touched.aceiteTermos && errors.aceiteTermos && (
@@ -270,7 +219,7 @@ export default function Registro() {
               type="submit"
               bg="primary.500"
               color="white"
-              _hover={{ bg: 'primary.600' }}
+              _hover={{ bg: "primary.600" }}
               loading={loading}
               loadingText="Criando conta..."
               w="full"
@@ -282,12 +231,19 @@ export default function Registro() {
         </form>
 
         <Text mt={6} textAlign="center" fontSize="sm" color="muted">
-          Já tem conta?{' '}
-          <Link href="/login" style={{ color: 'inherit', fontWeight: 600, textDecoration: 'underline' }}>
+          Já tem conta?{" "}
+          <Link
+            href="/login"
+            style={{
+              color: "inherit",
+              fontWeight: 600,
+              textDecoration: "underline",
+            }}
+          >
             Entrar
           </Link>
         </Text>
       </Box>
     </Flex>
-  )
+  );
 }

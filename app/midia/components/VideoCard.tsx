@@ -50,7 +50,7 @@ export function VideoCard({ video }: VideoCardProps) {
           />
         ) : (
           /* Thumbnail + overlay com botão play */
-          <Box as={NextLink} href={video.href} display="block" position="relative" cursor="pointer">
+          <NextLink href={video.href} style={{ display: 'block', position: 'relative', cursor: 'pointer' }}>
             {/* Imagem de capa */}
             <NextImage
               className="thumb-img"
@@ -120,7 +120,7 @@ export function VideoCard({ video }: VideoCardProps) {
                 <Play size={22} fill="currentColor" color="var(--chakra-colors-primary-600)" />
               </Flex>
             </Flex>
-          </Box>
+          </NextLink>
         )}
       </AspectRatio>
 

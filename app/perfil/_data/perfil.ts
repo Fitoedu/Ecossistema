@@ -6,12 +6,6 @@ export interface AppInfoLink {
 // Rótulos para o slider de acessibilidade
 export const TAMANHOS_TEXTO = ["Pequeno", "Médio", "Grande"];
 
-// Links estáticos de informação e termos do app
-export const APP_INFO_LINKS: AppInfoLink[] = [
-  { label: "Termos de Uso", href: "/termos" },
-  { label: "Política de Privacidade", href: "/privacidade" },
-];
-
 // Versão atual da aplicação
 export const APP_VERSION = "v0.0.1 (Test Flight)";
 

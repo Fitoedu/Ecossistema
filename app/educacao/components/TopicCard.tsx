@@ -2,15 +2,17 @@
 
 import { Badge, Box, Button, Flex, Heading, Progress, Text } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Clock, BookOpen, Lock } from 'lucide-react'
-import type { LucideIcon } from 'lucide-react'
+import Link from 'next/link'
+import { ArrowRight, Clock, BookOpen, Lock, CheckCircle2 } from 'lucide-react'
+import { iconMap } from '../_data/educacao'
 
 export interface Topic {
+  slug: string
   title: string
   description: string
   level: 'Básico' | 'Intermediário' | 'Avançado'
   category: string
-  icon: LucideIcon
+  icon: keyof typeof iconMap
   color: string
   duration: string
   lessons: number
@@ -33,7 +35,7 @@ const levelColorPalette: Record<Topic['level'], string> = {
 const MotionBox = motion.create(Box)
 
 export function TopicCard({ topic, featured = false, index = 0, locked = false }: TopicCardProps) {
-  const IconComp = topic.icon
+  const IconComp = iconMap[topic.icon] ?? BookOpen
   const palette = levelColorPalette[topic.level]
 
   return (
@@ -146,11 +148,10 @@ export function TopicCard({ topic, featured = false, index = 0, locked = false }
               <Progress.Root
                 value={topic.progress}
                 size="xs"
-                colorPalette="green"
                 borderRadius="full"
               >
-                <Progress.Track borderRadius="full">
-                  <Progress.Range borderRadius="full" />
+                <Progress.Track borderRadius="full" bg={`${topic.color}18`}>
+                  <Progress.Range borderRadius="full" bg={topic.color} />
                 </Progress.Track>
               </Progress.Root>
             </Box>
@@ -158,37 +159,51 @@ export function TopicCard({ topic, featured = false, index = 0, locked = false }
 
           {locked && (
             <Text fontSize="xs" color="muted" fontStyle="italic">
-              Conclua o módulo anterior desta categoria para desbloquear.
+              Conclua os módulos de nível anterior desta categoria para desbloquear.
             </Text>
           )}
 
-          {/* CTA */}
-          <Button
-            size="sm"
-            colorPalette={locked ? 'gray' : 'green'}
-            variant={locked ? 'outline' : topic.progress > 0 ? 'solid' : 'outline'}
-            borderRadius="lg"
-            fontWeight={600}
-            w="100%"
-            disabled={locked}
-            aria-label={
-              locked
-                ? `${topic.title}: bloqueado, conclua o módulo anterior para desbloquear`
-                : undefined
-            }
-          >
-            {locked ? (
-              <>
-                Bloqueado
-                <Lock size={13} strokeWidth={2.5} aria-hidden style={{ marginLeft: 4 }} />
-              </>
-            ) : (
-              <>
-                {topic.progress > 0 ? 'Continuar módulo' : 'Iniciar módulo'}
-                <ArrowRight size={14} strokeWidth={2.5} aria-hidden style={{ marginLeft: 4 }} />
-              </>
-            )}
-          </Button>
+          {/* CTA — locked continua como <button disabled>; desbloqueado navega para o
+              detalhe do tópico via Chakra `asChild` + next/link (evita <a><button/></a>) */}
+          {locked ? (
+            <Button
+              size="sm"
+              colorPalette="gray"
+              variant="outline"
+              borderRadius="lg"
+              fontWeight={600}
+              w="100%"
+              disabled
+              aria-label={`${topic.title}: bloqueado, conclua os módulos de nível anterior para desbloquear`}
+            >
+              Bloqueado
+              <Lock size={13} strokeWidth={2.5} aria-hidden style={{ marginLeft: 4 }} />
+            </Button>
+          ) : (
+            <Button
+              asChild
+              size="sm"
+              colorPalette="green"
+              variant={topic.progress === 100 ? 'outline' : 'solid'}
+              borderRadius="lg"
+              fontWeight={600}
+              w="100%"
+            >
+              <Link href={`/educacao/${topic.slug}`}>
+                {topic.progress === 100 ? (
+                  <>
+                    Concluído
+                    <CheckCircle2 size={14} strokeWidth={2.5} aria-hidden style={{ marginLeft: 4 }} />
+                  </>
+                ) : (
+                  <>
+                    {topic.progress > 0 ? 'Continuar módulo' : 'Iniciar módulo'}
+                    <ArrowRight size={14} strokeWidth={2.5} aria-hidden style={{ marginLeft: 4 }} />
+                  </>
+                )}
+              </Link>
+            </Button>
+          )}
         </Flex>
       </Flex>
     </MotionBox>

@@ -1,10 +1,9 @@
 'use client'
 
-import { Badge, Stack } from '@chakra-ui/react'
+import { Badge, Flex, Stack, Text } from '@chakra-ui/react'
 import { Info } from 'lucide-react'
 import { SettingsCard } from './SettingsCard'
-import { InfoRow } from './InfoRow'
-import { APP_INFO_LINKS, APP_VERSION } from '../_data/perfil'
+import { APP_VERSION } from '../_data/perfil'
 
 export function AppInfoSection() {
   return (
@@ -19,17 +18,15 @@ export function AppInfoSection() {
         divideY="1px"
         css={{ '& > *': { borderColor: 'var(--chakra-colors-primary-100)' } }}
       >
-        {APP_INFO_LINKS.map((item) => (
-          <InfoRow key={item.label} label={item.label} href={item.href} />
-        ))}
-        <InfoRow
-          label="Versão"
-          trailing={
-            <Badge bg="bg" color="muted" borderRadius="full" px={3} py={1} fontWeight={600}>
-              {APP_VERSION}
-            </Badge>
-          }
-        />
+        <Flex align="center" justify="space-between" py={4}>
+          <Text fontSize="sm" fontWeight={600} color="fg">
+            Versão
+          </Text>
+
+          <Badge bg="bg" color="muted" borderRadius="full" px={3} py={1} fontWeight={600}>
+            {APP_VERSION}
+          </Badge>
+        </Flex>
       </Stack>
     </SettingsCard>
   )
