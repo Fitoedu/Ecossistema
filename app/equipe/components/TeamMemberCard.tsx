@@ -88,8 +88,8 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
           </Box>
 
           {/* Nome + badge de cargo */}
-          <Box pt={1}>
-            <Heading as="h3" size="sm" lineHeight={1.3} mb={2}>
+          <Box pt={1} flex={1} minW={0}>
+            <Heading as="h3" size="sm" lineHeight={1.3} mb={2} wordBreak="break-word">
               {member.name}
             </Heading>
             <Badge
@@ -101,6 +101,11 @@ export function TeamMemberCard({ member }: TeamMemberCardProps) {
               fontSize="xs"
               fontWeight={700}
               letterSpacing="0.02em"
+              whiteSpace="normal"
+              wordBreak="break-word"
+              display="inline-flex"
+              maxW="full"
+              textAlign="left"
             >
               {member.role}
             </Badge>
