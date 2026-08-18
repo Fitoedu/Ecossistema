@@ -11,13 +11,7 @@ export type Publicacao = {
 
 export type Video = {
   id: string
-  title: string
-  description: string
-  thumbnail: string
   href: string
-  duration: string
-  views: string
-  channel: string
 }
 
 export const publicacoes: Publicacao[] = [
@@ -79,44 +73,8 @@ export const publicacoes: Publicacao[] = [
 ]
 
 export const videos: Video[] = [
-  {
-    id: 'video-1',
-    title: 'EducaFito: Conheça o projeto e sua missão',
-    description: 'Uma introdução completa ao ecossistema EducaFito, seus objetivos e como ele está transformando a educação fitossanitária no Amapá.',
-    thumbnail: '/assets/midia/video-1-thumb.webp',
-    href: '#',
-    duration: '4:32',
-    views: '1,2 mil',
-    channel: 'EducaFito Oficial',
-  },
-  {
-    id: 'video-2',
-    title: 'Demonstração do app FitoEdu em sala de aula',
-    description: 'Veja como professores e alunos utilizam o aplicativo nas aulas de ciências para identificar plantas e aprender sobre práticas agrícolas sustentáveis.',
-    thumbnail: '/assets/midia/video-2-thumb.webp',
-    href: '#',
-    duration: '7:15',
-    views: '3,8 mil',
-    channel: 'EducaFito Oficial',
-  },
-  {
-    id: 'video-3',
-    title: 'Cartilha Digital: como usar o módulo de fichas',
-    description: 'Tutorial passo a passo do módulo de cartilhas interativas do FitoEdu, mostrando como navegar pelas fichas de plantas e salvar favoritos.',
-    thumbnail: '/assets/midia/video-1-thumb.webp',
-    href: '#',
-    duration: '3:48',
-    views: '956',
-    channel: 'EducaFito Oficial',
-  },
-  {
-    id: 'video-4',
-    title: 'Entrevista com pesquisadores da UNIFAP sobre o projeto',
-    description: 'Pesquisadores da Universidade Federal do Amapá falam sobre a importância científica do EducaFito e os próximos passos da pesquisa colaborativa.',
-    thumbnail: '/assets/midia/video-2-thumb.webp',
-    href: '#',
-    duration: '12:04',
-    views: '2,1 mil',
-    channel: 'UNIFAP TV',
-  },
+  { id: 'video-1', href: 'https://www.youtube.com/embed/u_wfgjzPFHU?si=-FmJxD2lZR6BTz-R' },
+  { id: 'video-2', href: 'https://www.youtube.com/embed/5HbNqU54kFY?si=u9RMiS7DS7qli6Kf' },
+  { id: 'video-3', href: 'https://www.youtube.com/embed/CIsDBpxREYQ?si=7LkKlg9ja13pf3l8' },
+  { id: 'video-4', href: 'https://www.youtube.com/embed/dyoO432cvw4?si=Tn_1lAiV06pUqyqj' },
 ]
