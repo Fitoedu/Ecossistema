@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next"
 import { Poppins } from "next/font/google"
 import { Box } from "@chakra-ui/react"
 import { Provider } from "@/components/ui/provider"
+import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister"
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -22,10 +23,10 @@ export const metadata: Metadata = {
   manifest: "/manifest.json",
   icons: {
     icon: [
-      { url: "/images/model.png", sizes: "192x192", type: "image/png" },
-      { url: "/images/model.png", sizes: "512x512", type: "image/png" },
+      { url: "/assets/joaninha_corpo_todo.webp", sizes: "192x192", type: "image/webp" },
+      { url: "/assets/dona_fito_meio_corpo.webp", sizes: "512x512", type: "image/webp" },
     ],
-    apple: [{ url: "/images/model.png", sizes: "180x180", type: "image/png" }],
+    apple: [{ url: "/assets/joaninha_corpo_todo.webp", sizes: "180x180", type: "image/webp" }],
   },
   appleWebApp: {
     capable: true,
@@ -65,6 +66,7 @@ export default function RootLayout({
     <html lang="pt-BR" className={poppins.variable} suppressHydrationWarning>
       <body>
         <Provider>
+          <ServiceWorkerRegister />
           <Box minH="100vh" bg="bg" color="fg">
             {children}
           </Box>
