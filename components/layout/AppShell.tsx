@@ -13,10 +13,10 @@ export function AppShell({ children }: AppShellProps) {
           w={{ base: 0, md: '280px' }}
           flexShrink={0}
           p={{ base: 0, md: 4 }}
-          position="sticky"
-          top={0}
-          h="100vh"
-          alignSelf="flex-start"
+          position={{ base: 'static', md: 'sticky' }}
+          top={{ md: 0 }}
+          h={{ md: '100vh' }}
+          alignSelf={{ md: 'flex-start' }}
         >
           <Sidebar />
         </Box>
