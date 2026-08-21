@@ -3,6 +3,7 @@ import { Poppins } from "next/font/google"
 import { Box } from "@chakra-ui/react"
 import { Provider } from "@/components/ui/provider"
 import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister"
+import { OfflineBanner } from "@/components/OfflineBanner"
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -67,6 +68,7 @@ export default function RootLayout({
       <body>
         <Provider>
           <ServiceWorkerRegister />
+          <OfflineBanner />
           <Box minH="100vh" bg="bg" color="fg">
             {children}
           </Box>
