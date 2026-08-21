@@ -1,5 +1,14 @@
-const STATIC_CACHE = 'educafito-static-v2';
-const DATA_CACHE = 'educafito-data-v2';
+const STATIC_CACHE = 'educafito-static-v4';
+const DATA_CACHE = 'educafito-data-v4';
+const SW_VERSION = 'v4';
+const LOCALHOST_HOSTNAMES = new Set(['localhost', '127.0.0.1', '::1']);
+const DEBUG = LOCALHOST_HOSTNAMES.has(self.location.hostname);
+
+function log(...args) {
+  if (DEBUG) {
+    console.info(`[SW ${SW_VERSION}]`, ...args);
+  }
+}
 
 // Recursos mínimos para carregar o App Shell offline
 const APP_SHELL_ASSETS = [
@@ -11,6 +20,7 @@ const APP_SHELL_ASSETS = [
 
 // Instalação: Realiza o pré-cache do App Shell
 self.addEventListener('install', (event) => {
+  log('Install iniciado');
   event.waitUntil(
     (async () => {
       const cache = await caches.open(STATIC_CACHE);
@@ -25,12 +35,14 @@ self.addEventListener('install', (event) => {
         })
       );
       await self.skipWaiting();
+      log('Install finalizado');
     })()
   );
 });
 
 // Ativação: Limpeza de caches antigos
 self.addEventListener('activate', (event) => {
+  log('Activate iniciado');
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
@@ -40,8 +52,16 @@ self.addEventListener('activate', (event) => {
           }
         })
       );
-    }).then(() => self.clients.claim())
+    }).then(() => self.clients.claim()).then(() => {
+      log('Activate finalizado');
+    })
   );
+});
+
+self.addEventListener('message', (event) => {
+  if (event.data?.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
 
 // Interceptação de requisições de rede
@@ -54,6 +74,12 @@ self.addEventListener('fetch', (event) => {
   }
 
   if (url.origin !== self.location.origin) {
+    return;
+  }
+
+  // Evita cache de runtime/chunks do Next para nao misturar artefatos de builds diferentes.
+  if (url.pathname.startsWith('/_next/')) {
+    event.respondWith(fetch(request));
     return;
   }
 
@@ -108,8 +134,14 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 4. Cache First: imagens, fontes, scripts e estilos
-  if (['style', 'script', 'image', 'font'].includes(request.destination)) {
+  // 4. Scripts: sempre rede para evitar servir bundles desatualizados
+  if (request.destination === 'script') {
+    event.respondWith(fetch(request));
+    return;
+  }
+
+  // 5. Cache First: imagens, fontes e estilos
+  if (['style', 'image', 'font'].includes(request.destination)) {
     event.respondWith(
       caches.match(request).then((cachedResponse) => {
         if (cachedResponse) {
@@ -134,7 +166,7 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 5. Default: repassa para rede
+  // 6. Default: repassa para rede
   event.respondWith(
     fetch(request).catch(() => caches.match(request))
   );
