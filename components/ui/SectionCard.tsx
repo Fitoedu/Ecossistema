@@ -1,9 +1,9 @@
 import { Box, Flex, Icon, Text } from '@chakra-ui/react'
-import type { IconType } from 'react-icons'
+import type { LucideIcon } from 'lucide-react'
 
 interface SectionCardProps {
   title: string
-  icon: IconType
+  icon: LucideIcon
   accentColor: string
   children: React.ReactNode
 }

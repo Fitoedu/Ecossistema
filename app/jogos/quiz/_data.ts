@@ -1,14 +1,14 @@
-import type {IconType} from 'react-icons'
+import type { LucideIcon } from 'lucide-react'
 import {
-    LuBug,
-    LuLeaf,
-    LuMicroscope,
-    LuSprout,
-} from 'react-icons/lu'
+    Bug,
+    Leaf,
+    Microscope,
+    Sprout,
+} from 'lucide-react'
 
 export type QuizCategory = {
     id: string
-    icon: IconType
+    icon: LucideIcon
     emoji: string
     label: string
     description: string
@@ -40,7 +40,7 @@ export type FeaturedQuiz = {
 export const categories: QuizCategory[] = [
     {
         id: 'pragas',
-        icon: LuBug,
+        icon: Bug,
         emoji: '🦟',
         label: 'Pragas e Doenças',
         description: 'Identifique pragas comuns e seus métodos de controle.',
@@ -50,7 +50,7 @@ export const categories: QuizCategory[] = [
     },
     {
         id: 'plantas',
-        icon: LuLeaf,
+        icon: Leaf,
         emoji: '🌿',
         label: 'Plantas Medicinais',
         description: 'Espécies, propriedades terapêuticas e usos populares.',
@@ -60,7 +60,7 @@ export const categories: QuizCategory[] = [
     },
     {
         id: 'fitossanidade',
-        icon: LuSprout,
+        icon: Sprout,
         emoji: '🌱',
         label: 'Fitossanidade Geral',
         description: 'Conceitos gerais sobre saúde das plantas e agricultura.',
@@ -70,7 +70,7 @@ export const categories: QuizCategory[] = [
     },
     {
         id: 'identificacao',
-        icon: LuMicroscope,
+        icon: Microscope,
         emoji: '🔬',
         label: 'Identificação Visual',
         description: 'Reconheça sintomas e agentes causadores pelo visual.',
