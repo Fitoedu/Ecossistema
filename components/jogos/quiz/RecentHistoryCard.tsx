@@ -1,13 +1,13 @@
 'use client'
 
 import {Box} from '@chakra-ui/react'
-import {LuCalendarDays} from 'react-icons/lu'
+import {CalendarDays} from 'lucide-react'
 import {SectionCard} from '@/components/ui/SectionCard'
 import {EmptyState} from '@/components/ui/EmptyState'
 
 export function RecentHistoryCard() {
     return (
-        <SectionCard title="Histórico Recente" icon={LuCalendarDays} accentColor="#0369a1">
+        <SectionCard title="Histórico Recente" icon={CalendarDays} accentColor="#0369a1">
             <Box mt={3}>
                 <EmptyState
                     emoji="📋"

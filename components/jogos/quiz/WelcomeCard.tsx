@@ -1,15 +1,15 @@
 'use client'
 
 import {Box, Flex, Icon, Stack, Text} from '@chakra-ui/react'
-import type {IconType} from 'react-icons'
-import {LuCircleHelp, LuRefreshCw, LuZap} from 'react-icons/lu'
+import type {LucideIcon} from 'lucide-react'
+import {CircleHelp, RefreshCw, Zap} from 'lucide-react'
 
 function QuickAccessButton({
                                icon,
                                label,
                                disabled,
                            }: {
-    icon: IconType
+    icon: LucideIcon
     label: string
     disabled?: boolean
 }) {
@@ -95,9 +95,9 @@ export function WelcomeCard() {
                 </Stack>
 
                 <Flex gap={2} shrink={0} wrap="wrap">
-                    <QuickAccessButton icon={LuZap} label="Desafio do Dia" disabled/>
-                    <QuickAccessButton icon={LuRefreshCw} label="Repetir último" disabled/>
-                    <QuickAccessButton icon={LuCircleHelp} label="Como jogar" disabled/>
+                    <QuickAccessButton icon={Zap} label="Desafio do Dia" disabled/>
+                    <QuickAccessButton icon={RefreshCw} label="Repetir último" disabled/>
+                    <QuickAccessButton icon={CircleHelp} label="Como jogar" disabled/>
                 </Flex>
             </Flex>
         </Box>

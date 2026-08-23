@@ -1,8 +1,8 @@
 'use client'
 
 import {Flex, Icon, Stack, Text} from '@chakra-ui/react'
-import type {IconType} from 'react-icons'
-import {LuChartBar, LuFlame, LuStar, LuTrophy, LuZap} from 'react-icons/lu'
+import type {LucideIcon} from 'lucide-react'
+import {ChartBar, Flame, Star, Trophy, Zap} from 'lucide-react'
 import {SectionCard} from '@/components/ui/SectionCard'
 
 function StatRow({
@@ -10,7 +10,7 @@ function StatRow({
                      label,
                      value,
                  }: {
-    icon: IconType
+    icon: LucideIcon
     label: string
     value: string
 }) {
@@ -33,12 +33,12 @@ function StatRow({
 
 export function StatsCard() {
     return (
-        <SectionCard title="Suas Estatísticas" icon={LuChartBar} accentColor="#0f6b3d">
+        <SectionCard title="Suas Estatísticas" icon={ChartBar} accentColor="#0f6b3d">
             <Stack gap={3} mt={3}>
-                <StatRow icon={LuStar} label="Pontuação total" value="—"/>
-                <StatRow icon={LuZap} label="Taxa de acerto" value="—"/>
-                <StatRow icon={LuFlame} label="Sequência atual" value="—"/>
-                <StatRow icon={LuTrophy} label="Melhor pontuação" value="—"/>
+                <StatRow icon={Star} label="Pontuação total" value="—"/>
+                <StatRow icon={Zap} label="Taxa de acerto" value="—"/>
+                <StatRow icon={Flame} label="Sequência atual" value="—"/>
+                <StatRow icon={Trophy} label="Melhor pontuação" value="—"/>
             </Stack>
             <Text fontSize="xs" color="#9ab0a2" mt={3} textAlign="center" fontStyle="italic">
                 Faça seu primeiro quiz para ver suas estatísticas.
