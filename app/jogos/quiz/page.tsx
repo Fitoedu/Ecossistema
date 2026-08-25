@@ -12,7 +12,13 @@ import {FeaturedQuizCard} from '@/components/quiz/FeaturedQuizCard'
 import {CategoryCard} from '@/components/quiz/CategoryCard'
 import {RecentHistoryCard} from '@/components/quiz/RecentHistoryCard'
 
+import {useAuth} from '@/app/context/AuthContext'
+import {useQuizHistory} from '@/hooks/useQuiz'
+
 export default function QuizLobbyPage() {
+    const {user} = useAuth()
+    const {history, loading: historyLoading} = useQuizHistory(user?.id ?? null)
+
     return (
         <Box
             minH="100vh"
@@ -83,7 +89,7 @@ export default function QuizLobbyPage() {
                         <Grid templateColumns={{base: '1fr', lg: '300px 1fr'}} gap={5}>
                             <GridItem>
                                 <Stack gap={5}>
-                                    <StatsCard/>
+                                    <StatsCard history={history}/>
                                     <AchievementsCard achievements={achievements} unlockedIds={[]}/>
                                 </Stack>
                             </GridItem>
@@ -110,7 +116,7 @@ export default function QuizLobbyPage() {
                                         </SimpleGrid>
                                     </Box>
 
-                                    <RecentHistoryCard/>
+                                    <RecentHistoryCard history={history} loading={historyLoading}/>
                                 </Stack>
                             </GridItem>
                         </Grid>

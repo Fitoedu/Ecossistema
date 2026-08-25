@@ -37,12 +37,18 @@ export function DeleteAccountModal({ isOpen, onClose }: DeleteAccountModalProps)
     if (!isConfirmed) return
     setLoading(true)
 
-    // Encerra a sessão no Supabase
-    //await supabase.auth.signOut()
-
-    setLoading(false)
-    handleClose()
-    router.push('/login')
+    try {
+      const supabase = createClient()
+      // Encerra a sessão no Supabase e redireciona
+      await supabase.auth.signOut()
+    } catch {
+      // continua para logout local
+    } finally {
+      setLoading(false)
+      handleClose()
+      router.push('/login')
+      router.refresh()
+    }
   }
 
   return (

@@ -4,6 +4,7 @@ import { Box } from "@chakra-ui/react"
 import { Provider } from "@/components/ui/provider"
 import { ServiceWorkerRegister } from "@/components/ServiceWorkerRegister"
 import { OfflineBanner } from "@/components/OfflineBanner"
+import { AuthProvider } from "@/app/context/AuthContext"
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -67,11 +68,13 @@ export default function RootLayout({
     <html lang="pt-BR" className={poppins.variable} suppressHydrationWarning>
       <body>
         <Provider>
-          <ServiceWorkerRegister />
-          <OfflineBanner />
-          <Box minH="100vh" bg="bg" color="fg">
-            {children}
-          </Box>
+          <AuthProvider>
+            <ServiceWorkerRegister />
+            <OfflineBanner />
+            <Box minH="100vh" bg="bg" color="fg">
+              {children}
+            </Box>
+          </AuthProvider>
         </Provider>
       </body>
     </html>

@@ -11,31 +11,62 @@ import {
   Text,
   Badge,
   Button,
+  Spinner,
 } from '@chakra-ui/react'
 import { Sparkles, Newspaper, Video as VideoIcon, LayoutGrid } from 'lucide-react'
-import { publicacoes, videos } from '@/app/midia/_data/midia'
+import { usePublicacoes } from '@/hooks/usePublicacoes'
+import { publicacoes as localPublicacoes, videos as localVideos } from '@/app/midia/_data/midia'
 import { PublicationCard } from '@/app/midia/components/PublicationCard'
 import { VideoCard } from '@/app/midia/components/VideoCard'
 
 type FilterType = 'all' | 'publicacoes' | 'videos'
 
-const FILTER_OPTIONS: { value: FilterType; label: string; icon: React.ReactNode; count: number }[] = [
-  { value: 'all', label: 'Tudo', icon: <LayoutGrid size={15} />, count: publicacoes.length + videos.length },
-  { value: 'publicacoes', label: 'Publicações', icon: <Newspaper size={15} />, count: publicacoes.length },
-  { value: 'videos', label: 'Vídeos', icon: <VideoIcon size={15} />, count: videos.length },
-]
-
 export default function MidiaPage() {
+  const { publicacoes: dbPublicacoes, videos: dbVideos, loading } = usePublicacoes()
   const [filter, setFilter] = useState<FilterType>('all')
+
+  const publicacoesResolvidas = useMemo(() => {
+    if (!loading && dbPublicacoes.length > 0) {
+      return dbPublicacoes.map((p) => ({
+        id: p.id,
+        source: p.source,
+        date: p.date,
+        title: p.title,
+        description: p.description ?? '',
+        image: p.image ?? '/assets/midia/g1-amapa.webp',
+        href: p.href ?? '#',
+        category: p.category ?? 'Notícia',
+      }))
+    }
+    return localPublicacoes
+  }, [dbPublicacoes, loading])
+
+  const videosResolvidos = useMemo(() => {
+    if (!loading && dbVideos.length > 0) {
+      return dbVideos.map((v) => ({
+        id: v.id,
+        href: v.href,
+        title: v.title ?? undefined,
+        description: v.description ?? undefined,
+      }))
+    }
+    return localVideos
+  }, [dbVideos, loading])
 
   const showPublicacoes = filter === 'all' || filter === 'publicacoes'
   const showVideos = filter === 'all' || filter === 'videos'
 
   const totalShown = useMemo(() => {
-    if (filter === 'all') return publicacoes.length + videos.length
-    if (filter === 'publicacoes') return publicacoes.length
-    return videos.length
-  }, [filter])
+    if (filter === 'all') return publicacoesResolvidas.length + videosResolvidos.length
+    if (filter === 'publicacoes') return publicacoesResolvidas.length
+    return videosResolvidos.length
+  }, [filter, publicacoesResolvidas.length, videosResolvidos.length])
+
+  const filterOptions = useMemo(() => [
+    { value: 'all' as FilterType, label: 'Tudo', icon: <LayoutGrid size={15} />, count: publicacoesResolvidas.length + videosResolvidos.length },
+    { value: 'publicacoes' as FilterType, label: 'Publicações', icon: <Newspaper size={15} />, count: publicacoesResolvidas.length },
+    { value: 'videos' as FilterType, label: 'Vídeos', icon: <VideoIcon size={15} />, count: videosResolvidos.length },
+  ], [publicacoesResolvidas.length, videosResolvidos.length])
 
   return (
     <AppShell>
@@ -102,9 +133,9 @@ export default function MidiaPage() {
             {/* Stats row */}
             <Flex gap={6} mt={6} flexWrap="wrap">
               {[
-                { label: 'Publicações', value: publicacoes.length },
-                { label: 'Vídeos', value: videos.length },
-                { label: 'Fontes de mídia', value: new Set(publicacoes.map(p => p.source)).size },
+                { label: 'Publicações', value: publicacoesResolvidas.length },
+                { label: 'Vídeos', value: videosResolvidos.length },
+                { label: 'Fontes de mídia', value: new Set(publicacoesResolvidas.map(p => p.source)).size },
               ].map(({ label, value }) => (
                 <Box key={label}>
                   <Text fontSize="2xl" fontWeight={800} color="primary.600" lineHeight={1}>
@@ -131,7 +162,7 @@ export default function MidiaPage() {
               borderRadius="full"
               flexWrap="wrap"
             >
-              {FILTER_OPTIONS.map(opt => (
+              {filterOptions.map(opt => (
                 <Button
                   key={opt.value}
                   size="sm"
@@ -202,7 +233,7 @@ export default function MidiaPage() {
                     fontSize="xs"
                     fontWeight={700}
                   >
-                    {publicacoes.length}
+                    {publicacoesResolvidas.length}
                   </Badge>
                 </Flex>
               )}
@@ -220,7 +251,7 @@ export default function MidiaPage() {
                   },
                 }}
               >
-                {publicacoes.map((pub, i) => (
+                {publicacoesResolvidas.map((pub, i) => (
                   <PublicationCard key={pub.id} publicacao={pub} index={i} />
                 ))}
               </SimpleGrid>
@@ -281,7 +312,7 @@ export default function MidiaPage() {
                     fontSize="xs"
                     fontWeight={700}
                   >
-                    {videos.length}
+                    {videosResolvidos.length}
                   </Badge>
                 </Flex>
               )}
@@ -295,7 +326,7 @@ export default function MidiaPage() {
                   },
                 }}
               >
-                {videos.map((video, i) => (
+                {videosResolvidos.map((video, i) => (
                   <Box
                     key={video.id}
                     style={{ animationDelay: `${i * 80}ms` }}

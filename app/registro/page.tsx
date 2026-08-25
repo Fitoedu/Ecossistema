@@ -18,6 +18,8 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { Eye, EyeOff, Leaf } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
+import { logger } from "@/lib/logger";
 import {
   SENHA_MIN_LENGTH,
   getSenhaForcaNivel,
@@ -45,6 +47,7 @@ export default function Registro() {
   });
   const [showSenha, setShowSenha] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [formError, setFormError] = useState<string | null>(null);
 
   const errors = validateRegistroForm(form);
   const senhaForca = useMemo(() => getSenhaForcaNivel(form.senha), [form.senha]);
@@ -58,21 +61,52 @@ export default function Registro() {
     value: FormState[K],
   ) {
     setForm((prev) => ({ ...prev, [field]: value }));
+    setFormError(null);
   }
 
   function handleBlur(field: keyof FormState) {
     setTouched((prev) => ({ ...prev, [field]: true }));
   }
 
-  function handleSubmit(event: React.FormEvent) {
+  async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     setTouched({ nome: true, email: true, senha: true, aceiteTermos: true });
 
-    if (Object.keys(errors).length > 0) return;
+    const hasErrors = Object.values(validateRegistroForm(form)).some(Boolean);
+    if (hasErrors) return;
 
     setLoading(true);
-    // Cadastro ainda não implementado — segue direto para o dashboard.
-    router.push("/home");
+    setFormError(null);
+
+    try {
+      const supabase = createClient();
+      const { data, error } = await supabase.auth.signUp({
+        email: form.email.trim(),
+        password: form.senha,
+        options: {
+          data: { name: form.nome.trim() },
+        },
+      });
+
+      if (error) {
+        logger.warn('auth', 'signup_failed', `Falha no cadastro: ${error.message}`, { email: form.email.trim() });
+        if (error.message.toLowerCase().includes("already registered")) {
+          setFormError("Este e-mail já está cadastrado. Faça login.");
+        } else {
+          setFormError("Não foi possível criar sua conta. Tente novamente.");
+        }
+        return;
+      }
+
+      logger.info('auth', 'signup_success', 'Novo usuário registrado com sucesso', { email: form.email.trim(), nome: form.nome.trim() }, data.user?.id);
+      router.push("/home");
+      router.refresh();
+    } catch (err) {
+      logger.error('auth', 'signup_exception', err, { email: form.email.trim() });
+      setFormError("Ocorreu um erro. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -165,7 +199,7 @@ export default function Registro() {
                 <Input
                   type={showSenha ? "text" : "password"}
                   autoComplete="new-password"
-                  placeholder="••••••••"
+                  placeholder="Digite sua senha"
                   value={form.senha}
                   onChange={(e) => handleChange("senha", e.target.value)}
                   onBlur={() => handleBlur("senha")}
@@ -215,6 +249,12 @@ export default function Registro() {
               )}
             </Field.Root>
 
+            {formError && (
+              <Text fontSize="sm" color="red.500" role="alert">
+                {formError}
+              </Text>
+            )}
+
             <Button
               type="submit"
               bg="primary.500"
@@ -247,3 +287,4 @@ export default function Registro() {
     </Flex>
   );
 }
+

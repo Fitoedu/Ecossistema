@@ -17,6 +17,8 @@ import {
 } from "@chakra-ui/react";
 import { Eye, EyeOff, Leaf } from "lucide-react";
 import { validateEmail, validateSenhaLogin } from "@/lib/validation";
+import { createClient } from "@/lib/supabase/client";
+import { logger } from "@/lib/logger";
 
 interface FormState {
   email: string;
@@ -63,18 +65,38 @@ export default function Login() {
     setTouched((prev) => ({ ...prev, [field]: true }));
   }
 
-  function handleSubmit(event: React.FormEvent) {
+  async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
     setTouched({ email: true, senha: true });
 
-    if (Object.keys(errors).length > 0) return;
+    const hasErrors = Object.values(validate(form)).some(Boolean);
+    if (hasErrors) return;
 
     setLoading(true);
     setFormError(null);
 
-    // Autenticação ainda não implementada — mensagem genérica por segurança
-    // (nunca revelar se o e-mail existe ou não na base).
-    router.push("/home");
+    try {
+      const supabase = createClient();
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email: form.email.trim(),
+        password: form.senha,
+      });
+
+      if (error) {
+        logger.warn('auth', 'login_failed', 'Tentativa de login inválida', { email: form.email.trim() });
+        setFormError("E-mail ou senha incorretos. Verifique e tente novamente.");
+        return;
+      }
+
+      logger.info('auth', 'login_success', 'Login realizado com sucesso', { email: form.email.trim() }, data.user?.id);
+      router.push("/home");
+      router.refresh();
+    } catch (err) {
+      logger.error('auth', 'login_exception', err, { email: form.email.trim() });
+      setFormError("Ocorreu um erro. Tente novamente.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -163,7 +185,7 @@ export default function Login() {
                 <Input
                   type={showSenha ? "text" : "password"}
                   autoComplete="current-password"
-                  placeholder="••••••••"
+                  placeholder="Digite sua senha"
                   value={form.senha}
                   onChange={(e) => handleChange("senha", e.target.value)}
                   onBlur={() => handleBlur("senha")}
@@ -214,3 +236,4 @@ export default function Login() {
     </Flex>
   );
 }
+

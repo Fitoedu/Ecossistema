@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import {
   Box,
   Badge,
+  Button,
   EmptyState,
   Flex,
   Heading,
@@ -15,6 +16,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import {
+  BookMarked,
   GraduationCap,
   PartyPopper,
   Search,
@@ -24,15 +26,43 @@ import {
 import { AppShell } from "@/components/layout/AppShell";
 import { TopicCard } from "./components/TopicCard";
 import { StatsBar } from "./components/StatsBar";
+import { GlossarioDrawer } from "./components/GlossarioDrawer";
 import { temas, tabs, withLockState, buildStats } from "./_data/educacao";
+import { useTopics } from "@/hooks/useTopics";
+import { useProgress } from "@/hooks/useProgress";
+import { useAuth } from "@/app/context/AuthContext";
 
 export default function ConteudoPage() {
+  const { user } = useAuth();
+  const { topics: dbTopics, loading: topicsLoading } = useTopics();
+  const { getProgressPct } = useProgress(user?.id ?? null);
+  const [glossarioOpen, setGlossarioOpen] = useState(false);
+
+  // Mescla dados do banco com dados locais como fallback
+  const temasResolvidos = useMemo(() => {
+    if (!topicsLoading && dbTopics.length > 0) {
+      return dbTopics.map((t) => ({
+        slug: t.slug,
+        title: t.title,
+        description: t.description ?? "",
+        level: t.level as "Básico" | "Intermediário" | "Avançado",
+        category: t.category,
+        icon: t.icon ?? "BookOpen",
+        color: t.color ?? "#2E7D32",
+        duration: t.duration ?? "—",
+        lessons: t.lessons_count,
+        progress: getProgressPct(t.id),
+      }));
+    }
+    return temas;
+  }, [dbTopics, topicsLoading, getProgressPct]);
+
   const [activeTab, setActiveTab] = useState("todos");
   const [query, setQuery] = useState("");
 
   // Trilha sequencial calculada uma vez sobre a lista completa, para que
   // o estado de bloqueio não mude conforme o usuário filtra por aba/busca.
-  const topicsWithLock = useMemo(() => withLockState(temas), []);
+  const topicsWithLock = useMemo(() => withLockState(temasResolvidos), [temasResolvidos]);
   const statsData = useMemo(() => buildStats(topicsWithLock), [topicsWithLock]);
 
   const filtered = useMemo(() => {
@@ -252,20 +282,34 @@ export default function ConteudoPage() {
               Todos os módulos
             </Heading>
 
-            <InputGroup
-              maxW={{ base: "full", sm: "260px" }}
-              startElement={<Search size={16} color="muted" aria-hidden />}
-            >
-              <Input
-                placeholder="Buscar módulos..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
+            <Flex align="center" gap={2} wrap="wrap">
+              <Button
                 size="sm"
+                variant="outline"
+                colorPalette="green"
                 borderRadius="lg"
-                bg="surface"
-                aria-label="Buscar módulos por título ou descrição"
-              />
-            </InputGroup>
+                onClick={() => setGlossarioOpen(true)}
+                gap={1.5}
+              >
+                <BookMarked size={14} />
+                Glossário Fitossanitário
+              </Button>
+
+              <InputGroup
+                maxW={{ base: "full", sm: "240px" }}
+                startElement={<Search size={16} color="muted" aria-hidden />}
+              >
+                <Input
+                  placeholder="Buscar módulos..."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  size="sm"
+                  borderRadius="lg"
+                  bg="surface"
+                  aria-label="Buscar módulos por título ou descrição"
+                />
+              </InputGroup>
+            </Flex>
           </Flex>
 
           <Tabs.Root
@@ -361,6 +405,11 @@ export default function ConteudoPage() {
           </Tabs.Root>
         </Box>
       </Stack>
+
+      <GlossarioDrawer
+        open={glossarioOpen}
+        onOpenChange={setGlossarioOpen}
+      />
     </AppShell>
   );
 }
