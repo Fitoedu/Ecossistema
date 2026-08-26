@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
   Box,
+  Button,
   Flex,
   Heading,
   Stack,
@@ -17,12 +18,14 @@ import {
   GraduationCap,
   Info,
   Leaf,
+  LogIn,
   LogOut,
   MoreHorizontal,
   Settings,
   Tv,
   Users,
 } from 'lucide-react'
+import { useAuth } from '@/providers/AuthProvider'
 
 const items = [
   { href: '/educacao', label: 'Educação', icon: GraduationCap },
@@ -33,19 +36,11 @@ const items = [
   { href: '/sobre', label: 'Sobre', icon: Info },
 ]
 
-const footerItems = [
-  { href: '/perfil', label: 'Configurações', icon: Settings },
-  { href: '/sair', label: 'Sair', icon: LogOut },
-]
-
-const mobilePrimaryItems = items.slice(0, 4)
-const mobileMoreItems = [...items.slice(4), ...footerItems]
-
 function isRouteActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`)
 }
 
-// Altura da bottom nav — usada tanto na nav quanto no padding do conteúdo, centralizada aqui para não dessincronizar se o valor mudar.
+// Altura da bottom nav — usada tanto na nav quanto no padding do conteúdo
 export const MOBILE_NAV_HEIGHT = '72px'
 
 export function Sidebar() {
@@ -64,6 +59,10 @@ export function Sidebar() {
 
 function DesktopSidebar() {
   const pathname = usePathname()
+  const { user, signOut } = useAuth()
+
+  const userName =
+    user?.user_metadata?.name || user?.email?.split('@')[0] || null
 
   return (
     <Flex
@@ -139,30 +138,80 @@ function DesktopSidebar() {
         borderTop="1px dashed"
         borderColor="primary.100"
       >
-        {footerItems.map(({ href, label, icon: Icon }) => {
-          const isActive = isRouteActive(pathname, href)
+        {/* Info do Usuário Logado */}
+        {user && (
+          <Box px={4} py={2} mb={1} bg="neutral.50" borderRadius="lg">
+            <Text fontSize="2xs" color="muted" textTransform="uppercase" fontWeight={600} letterSpacing="wider">
+              Conectado como
+            </Text>
+            <Text fontSize="xs" fontWeight={700} color="primary.800" truncate>
+              {userName || user.email}
+            </Text>
+          </Box>
+        )}
 
-          return (
-            <Link key={href} href={href}>
-              <Flex
-                align="center"
-                gap={3}
-                px={4}
-                py={2}
-                minH="44px"
-                borderRadius="xl"
-                color="muted"
-                fontWeight={500}
-                transition="all 0.2s ease"
-                aria-current={isActive ? 'page' : undefined}
-                _hover={{ bg: 'primary.50', color: 'fg' }}
-              >
-                <Box as={Icon} fontSize="18px" strokeWidth={2} aria-hidden />
-                <Text fontSize="15px">{label}</Text>
-              </Flex>
-            </Link>
-          )
-        })}
+        {/* Link Configurações */}
+        <Link href="/perfil">
+          <Flex
+            align="center"
+            gap={3}
+            px={4}
+            py={2.5}
+            minH="44px"
+            borderRadius="xl"
+            color={isRouteActive(pathname, '/perfil') ? 'primary.700' : 'muted'}
+            bg={isRouteActive(pathname, '/perfil') ? 'primary.50' : 'transparent'}
+            fontWeight={isRouteActive(pathname, '/perfil') ? 700 : 500}
+            transition="all 0.2s ease"
+            aria-current={isRouteActive(pathname, '/perfil') ? 'page' : undefined}
+            _hover={{ bg: 'primary.50', color: 'fg' }}
+          >
+            <Box as={Settings} fontSize="18px" strokeWidth={2} aria-hidden />
+            <Text fontSize="15px">Configurações</Text>
+          </Flex>
+        </Link>
+
+        {/* Botão Sair / Entrar */}
+        {user ? (
+          <Flex
+            as="button"
+            onClick={() => signOut()}
+            align="center"
+            gap={3}
+            px={4}
+            py={2.5}
+            minH="44px"
+            borderRadius="xl"
+            color="red.600"
+            fontWeight={500}
+            transition="all 0.2s ease"
+            cursor="pointer"
+            w="100%"
+            textAlign="left"
+            _hover={{ bg: 'red.50', color: 'red.700' }}
+          >
+            <Box as={LogOut} fontSize="18px" strokeWidth={2} aria-hidden />
+            <Text fontSize="15px">Sair</Text>
+          </Flex>
+        ) : (
+          <Link href="/login">
+            <Flex
+              align="center"
+              gap={3}
+              px={4}
+              py={2.5}
+              minH="44px"
+              borderRadius="xl"
+              color="primary.700"
+              fontWeight={600}
+              transition="all 0.2s ease"
+              _hover={{ bg: 'primary.50', color: 'primary.800' }}
+            >
+              <Box as={LogIn} fontSize="18px" strokeWidth={2} aria-hidden />
+              <Text fontSize="15px">Entrar</Text>
+            </Flex>
+          </Link>
+        )}
       </Stack>
     </Flex>
   )
@@ -170,10 +219,14 @@ function DesktopSidebar() {
 
 function MobileBottomNav() {
   const pathname = usePathname()
+  const { user, signOut } = useAuth()
 
-  const isMoreActive = mobileMoreItems.some(
-    ({ href }) => isRouteActive(pathname, href)
-  )
+  const mobilePrimaryItems = items.slice(0, 4)
+  const mobileMoreExtraItems = items.slice(4) // Equipe, Sobre
+
+  const isMoreActive =
+    mobileMoreExtraItems.some(({ href }) => isRouteActive(pathname, href)) ||
+    isRouteActive(pathname, '/perfil')
 
   return (
     <Flex
@@ -252,16 +305,12 @@ function MobileBottomNav() {
 
         <Portal>
           <Menu.Positioner>
-            <Menu.Content borderRadius="xl" boxShadow="lg" minW="200px">
-              {mobileMoreItems.map(({ href, label, icon: Icon }) => (
+            <Menu.Content borderRadius="xl" boxShadow="lg" minW="220px">
+              {mobileMoreExtraItems.map(({ href, label, icon: Icon }) => (
                 <Menu.Item key={href} value={href} asChild>
                   <Link
                     href={href}
-                    aria-current={
-                        isRouteActive(pathname, href)
-                        ? 'page'
-                        : undefined
-                    }
+                    aria-current={isRouteActive(pathname, href) ? 'page' : undefined}
                   >
                     <Flex align="center" gap={3} px={2} py={2} minH="44px">
                       <Box as={Icon} fontSize="18px" strokeWidth={2} aria-hidden />
@@ -270,6 +319,45 @@ function MobileBottomNav() {
                   </Link>
                 </Menu.Item>
               ))}
+
+              <Menu.Item value="/perfil" asChild>
+                <Link
+                  href="/perfil"
+                  aria-current={isRouteActive(pathname, '/perfil') ? 'page' : undefined}
+                >
+                  <Flex align="center" gap={3} px={2} py={2} minH="44px">
+                    <Box as={Settings} fontSize="18px" strokeWidth={2} aria-hidden />
+                    <Text fontSize="14px">Configurações</Text>
+                  </Flex>
+                </Link>
+              </Menu.Item>
+
+              {user ? (
+                <Menu.Item
+                  value="sair"
+                  onClick={() => signOut()}
+                  color="red.600"
+                  cursor="pointer"
+                >
+                  <Flex align="center" gap={3} px={2} py={2} minH="44px" color="red.600" w="100%">
+                    <Box as={LogOut} fontSize="18px" strokeWidth={2} aria-hidden />
+                    <Text fontSize="14px" fontWeight={600}>
+                      Sair da Conta
+                    </Text>
+                  </Flex>
+                </Menu.Item>
+              ) : (
+                <Menu.Item value="/login" asChild>
+                  <Link href="/login">
+                    <Flex align="center" gap={3} px={2} py={2} minH="44px" color="primary.700">
+                      <Box as={LogIn} fontSize="18px" strokeWidth={2} aria-hidden />
+                      <Text fontSize="14px" fontWeight={600}>
+                        Entrar
+                      </Text>
+                    </Flex>
+                  </Link>
+                </Menu.Item>
+              )}
             </Menu.Content>
           </Menu.Positioner>
         </Portal>
