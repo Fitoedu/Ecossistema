@@ -1,28 +1,32 @@
-﻿'use client'
+'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useCallback } from 'react'
 import { getTopics } from '@/lib/services/topicsService'
+import { useDataCache } from '@/hooks/useDataCache'
 import type { Topic } from '@/lib/types'
 
 export function useTopics() {
-  const [topics, setTopics] = useState<Topic[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-
-  const fetch = useCallback(async () => {
-    setLoading(true)
-    setError(null)
-    try {
-      const data = await getTopics()
-      setTopics(data)
-    } catch (e) {
-      setError((e as Error).message)
-    } finally {
-      setLoading(false)
-    }
+  const fetcher = useCallback(async () => {
+    return await getTopics()
   }, [])
 
-  useEffect(() => { fetch() }, [fetch])
+  const {
+    data: topics,
+    loading,
+    isRevalidating,
+    error,
+    refetch,
+    mutate,
+  } = useDataCache<Topic[]>('topics:published', fetcher, [], {
+    ttl: 10 * 60 * 1000, // 10 minutos de cache
+  })
 
-  return { topics, loading, error, refetch: fetch }
+  return {
+    topics,
+    loading,
+    isRevalidating,
+    error: error ? error.message : null,
+    refetch,
+    mutate,
+  }
 }

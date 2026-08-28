@@ -1,173 +1,97 @@
-const STATIC_CACHE = 'educafito-static-v4';
-const DATA_CACHE = 'educafito-data-v4';
-const SW_VERSION = 'v4';
-const LOCALHOST_HOSTNAMES = new Set(['localhost', '127.0.0.1', '::1']);
-const DEBUG = LOCALHOST_HOSTNAMES.has(self.location.hostname);
-
-function log(...args) {
-  if (DEBUG) {
-    console.info(`[SW ${SW_VERSION}]`, ...args);
-  }
-}
-
-// Recursos mínimos para carregar o App Shell offline
-const APP_SHELL_ASSETS = [
+// EducaFito Service Worker
+const CACHE_NAME = 'educafito-cache-v1'
+const STATIC_ASSETS = [
   '/',
   '/home',
+  '/educacao',
   '/cartilha',
-  '/perfil',
-];
+  '/jogos',
+  '/midia',
+  '/manifest.json',
+  '/favicon.ico',
+]
 
-// Instalação: Realiza o pré-cache do App Shell
+// Instalação: Pré-cache do shell da aplicação
 self.addEventListener('install', (event) => {
-  log('Install iniciado');
   event.waitUntil(
-    (async () => {
-      const cache = await caches.open(STATIC_CACHE);
-      await Promise.all(
-        APP_SHELL_ASSETS.map(async (asset) => {
-          try {
-            await cache.add(asset);
-          } catch (error) {
-            // Nao interrompe a instalacao caso algum recurso opcional falhe.
-            console.warn('[SW] Falha no pre-cache:', asset, error);
-          }
-        })
-      );
-      await self.skipWaiting();
-      log('Install finalizado');
-    })()
-  );
-});
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(STATIC_ASSETS).catch((err) => {
+        console.warn('[SW] Aviso no precache inicial:', err)
+      })
+    })
+  )
+  self.skipWaiting()
+})
 
 // Ativação: Limpeza de caches antigos
 self.addEventListener('activate', (event) => {
-  log('Activate iniciado');
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
-        cacheNames.map((cache) => {
-          if (cache !== STATIC_CACHE && cache !== DATA_CACHE) {
-            return caches.delete(cache);
+        cacheNames.map((name) => {
+          if (name !== CACHE_NAME) {
+            return caches.delete(name)
           }
         })
-      );
-    }).then(() => self.clients.claim()).then(() => {
-      log('Activate finalizado');
+      )
     })
-  );
-});
+  )
+  self.clients.claim()
+})
 
-self.addEventListener('message', (event) => {
-  if (event.data?.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
-});
-
-// Interceptação de requisições de rede
+// Interceptação de requisições: Stale-While-Revalidate para páginas e Cache-First para imagens
 self.addEventListener('fetch', (event) => {
-  const { request } = event;
-  const url = new URL(request.url);
+  const url = new URL(event.request.url)
 
-  if (request.method !== 'GET') {
-    return;
+  // Ignora requisições de outras origens ou métodos que não sejam GET
+  if (event.request.method !== 'GET' || !url.origin.includes(self.location.origin)) {
+    return
   }
 
-  if (url.origin !== self.location.origin) {
-    return;
+  // Não cacheia chamadas de API ou autenticação do Supabase
+  if (url.pathname.startsWith('/auth') || url.pathname.includes('supabase.co')) {
+    return
   }
 
-  // Evita cache de runtime/chunks do Next para nao misturar artefatos de builds diferentes.
-  if (url.pathname.startsWith('/_next/')) {
-    event.respondWith(fetch(request));
-    return;
-  }
-
-  // 1. Network Only: Vídeos externos (YouTube), autenticação e rotas de ranking ao vivo
-  if (
-    url.hostname.includes('youtube.com') ||
-    url.hostname.includes('googlevideo.com') ||
-    url.pathname.startsWith('/api/ranking') ||
-    url.pathname.startsWith('/api/auth')
-  ) {
-    event.respondWith(fetch(request));
-    return;
-  }
-
-  // 2. Stale-While-Revalidate: APIs de conteúdo educacional e progresso
-  if (url.pathname.startsWith('/api/conteudo') || url.pathname.startsWith('/api/progresso')) {
+  // Imagens e assets estáticos: Cache-First
+  if (url.pathname.startsWith('/images/') || url.pathname.startsWith('/assets/')) {
     event.respondWith(
-      caches.open(DATA_CACHE).then(async (cache) => {
-        const cachedResponse = await cache.match(request);
-        const fetchPromise = fetch(request)
-          .then((networkResponse) => {
-            if (networkResponse && networkResponse.status === 200) {
-              cache.put(request, networkResponse.clone());
-            }
-            return networkResponse;
-          })
-          .catch(() => cachedResponse);
+      caches.open(CACHE_NAME).then(async (cache) => {
+        const cachedResponse = await cache.match(event.request)
+        if (cachedResponse) return cachedResponse
 
-        return cachedResponse || fetchPromise;
-      })
-    );
-    return;
-  }
-
-  // 3. Navigations: Network First com fallback offline para a home
-  if (request.mode === 'navigate') {
-    event.respondWith(
-      fetch(request)
-        .then((networkResponse) => {
-          const responseToCache = networkResponse.clone();
-          caches.open(STATIC_CACHE).then((cache) => {
-            cache.put(request, responseToCache);
-          });
-          return networkResponse;
-        })
-        .catch(async () => {
-          const cachedPage = await caches.match(request);
-          if (cachedPage) return cachedPage;
-          return caches.match('/home');
-        })
-    );
-    return;
-  }
-
-  // 4. Scripts: sempre rede para evitar servir bundles desatualizados
-  if (request.destination === 'script') {
-    event.respondWith(fetch(request));
-    return;
-  }
-
-  // 5. Cache First: imagens, fontes e estilos
-  if (['style', 'image', 'font'].includes(request.destination)) {
-    event.respondWith(
-      caches.match(request).then((cachedResponse) => {
-        if (cachedResponse) {
-          return cachedResponse;
+        try {
+          const networkResponse = await fetch(event.request)
+          if (networkResponse.status === 200) {
+            cache.put(event.request, networkResponse.clone())
+          }
+          return networkResponse
+        } catch (err) {
+          return cachedResponse || new Response('Offline asset unavailable', { status: 503 })
         }
-
-        return fetch(request)
-          .then((networkResponse) => {
-            if (!networkResponse || networkResponse.status !== 200) {
-              return networkResponse;
-            }
-
-            const responseToCache = networkResponse.clone();
-            caches.open(STATIC_CACHE).then((cache) => {
-              cache.put(request, responseToCache);
-            });
-
-            return networkResponse;
-          });
       })
-    );
-    return;
+    )
+    return
   }
 
-  // 6. Default: repassa para rede
+  // Páginas de navegação: Network-First com fallback para cache
   event.respondWith(
-    fetch(request).catch(() => caches.match(request))
-  );
-});
+    fetch(event.request)
+      .then((networkResponse) => {
+        if (networkResponse.status === 200) {
+          const responseToCache = networkResponse.clone()
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache)
+          })
+        }
+        return networkResponse
+      })
+      .catch(async () => {
+        const cachedResponse = await caches.match(event.request)
+        if (cachedResponse) return cachedResponse
+        return caches.match('/home') || new Response('Você está offline', {
+          headers: { 'Content-Type': 'text/html; charset=utf-8' },
+        })
+      })
+  )
+})

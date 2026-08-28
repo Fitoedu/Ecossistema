@@ -1,6 +1,21 @@
 import { createClient } from '@/lib/supabase/client'
 import { logger } from '@/lib/logger'
+import { invalidateCache } from '@/lib/cache/memoryCache'
 import type { Publicacao, PublicacaoInsert, PublicacaoUpdate } from '@/lib/types'
+
+async function triggerRevalidate(path: string) {
+  try {
+    if (typeof window !== 'undefined') {
+      await fetch('/api/revalidate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path }),
+      })
+    }
+  } catch (err) {
+    console.warn('[ISR] Falha ao revalidar rota:', path, err)
+  }
+}
 
 /** Lista publicacoes publicadas, da mais recente para a mais antiga. */
 export async function getPublicacoes(): Promise<Publicacao[]> {
@@ -44,6 +59,10 @@ export async function createPublicacao(payload: PublicacaoInsert): Promise<Publi
     throw error
   }
   logger.info('midia', 'create_publicacao_success', `Publicação criada: "${data.title}"`, { publicacaoId: data.id })
+
+  invalidateCache('midia:all')
+  triggerRevalidate('/midia')
+
   return data
 }
 
@@ -64,6 +83,10 @@ export async function updatePublicacao(
     throw error
   }
   logger.info('midia', 'update_publicacao_success', `Publicação atualizada: "${data.title}"`, { publicacaoId: id })
+
+  invalidateCache('midia:all')
+  triggerRevalidate('/midia')
+
   return data
 }
 
@@ -76,4 +99,7 @@ export async function deletePublicacao(id: string): Promise<void> {
     throw error
   }
   logger.info('midia', 'delete_publicacao_success', `Publicação excluída`, { publicacaoId: id })
+
+  invalidateCache('midia:all')
+  triggerRevalidate('/midia')
 }

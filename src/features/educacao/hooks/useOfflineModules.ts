@@ -1,7 +1,13 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import type { TopicWithLock, Lesson, Topic } from '../data/educacao'
+import {
+  idbSaveModule,
+  idbGetModule,
+  idbGetAllModuleSlugs,
+  idbRemoveModule,
+} from '@/lib/offline/indexedDb'
+import type { Lesson, Topic } from '../data/educacao'
 
 export interface OfflineModulePackage {
   slug: string
@@ -14,15 +20,28 @@ export function useOfflineModules() {
   const [savedSlugs, setSavedSlugs] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
 
-  const loadSavedSlugs = useCallback(() => {
+  const loadSavedSlugs = useCallback(async () => {
     if (typeof window === 'undefined') return
     try {
-      const keys = Object.keys(localStorage)
-      const offlineKeys = keys.filter((k) => k.startsWith('educafito_offline_module_'))
-      const slugs = offlineKeys.map((k) => k.replace('educafito_offline_module_', ''))
-      setSavedSlugs(slugs)
+      // Tenta carregar do IndexedDB
+      const idbSlugs = await idbGetAllModuleSlugs()
+
+      // Fallback/Migração do localStorage se houver dados antigos
+      const lsKeys = Object.keys(localStorage)
+      const lsOfflineKeys = lsKeys.filter((k) => k.startsWith('educafito_offline_module_'))
+      const lsSlugs = lsOfflineKeys.map((k) => k.replace('educafito_offline_module_', ''))
+
+      const merged = Array.from(new Set([...idbSlugs, ...lsSlugs]))
+      setSavedSlugs(merged)
     } catch {
-      // ignore
+      // Em caso de falha no IndexedDB, usa localStorage
+      try {
+        const keys = Object.keys(localStorage)
+        const offlineKeys = keys.filter((k) => k.startsWith('educafito_offline_module_'))
+        setSavedSlugs(offlineKeys.map((k) => k.replace('educafito_offline_module_', '')))
+      } catch {
+        setSavedSlugs([])
+      }
     } finally {
       setLoading(false)
     }
@@ -38,7 +57,7 @@ export function useOfflineModules() {
   )
 
   const saveModuleOffline = useCallback(
-    (slug: string, topic: Topic, lessons: Lesson[]) => {
+    async (slug: string, topic: Topic, lessons: Lesson[]) => {
       if (typeof window === 'undefined') return false
       try {
         const pkg: OfflineModulePackage = {
@@ -47,30 +66,42 @@ export function useOfflineModules() {
           lessons,
           savedAt: new Date().toISOString(),
         }
-        localStorage.setItem(`educafito_offline_module_${slug}`, JSON.stringify(pkg))
+
+        // Salva no IndexedDB (sem limite de 5MB)
+        const savedInIdb = await idbSaveModule(pkg)
+
+        // Também mantém cópia de segurança
+        if (!savedInIdb) {
+          localStorage.setItem(`educafito_offline_module_${slug}`, JSON.stringify(pkg))
+        }
+
         setSavedSlugs((prev) => (prev.includes(slug) ? prev : [...prev, slug]))
         return true
       } catch (e) {
-        console.error('Erro ao salvar módulo offline:', e)
+        console.error('[Offline] Erro ao salvar módulo:', e)
         return false
       }
     },
     [],
   )
 
-  const removeModuleOffline = useCallback((slug: string) => {
+  const removeModuleOffline = useCallback(async (slug: string) => {
     if (typeof window === 'undefined') return
     try {
+      await idbRemoveModule(slug)
       localStorage.removeItem(`educafito_offline_module_${slug}`)
       setSavedSlugs((prev) => prev.filter((s) => s !== slug))
-    } catch {
-      // ignore
+    } catch (e) {
+      console.warn('[Offline] Erro ao remover módulo:', e)
     }
   }, [])
 
-  const getSavedModule = useCallback((slug: string): OfflineModulePackage | null => {
+  const getSavedModule = useCallback(async (slug: string): Promise<OfflineModulePackage | null> => {
     if (typeof window === 'undefined') return null
     try {
+      const fromIdb = await idbGetModule<OfflineModulePackage>(slug)
+      if (fromIdb) return fromIdb
+
       const stored = localStorage.getItem(`educafito_offline_module_${slug}`)
       return stored ? JSON.parse(stored) : null
     } catch {
@@ -88,4 +119,3 @@ export function useOfflineModules() {
     refetch: loadSavedSlugs,
   }
 }
-

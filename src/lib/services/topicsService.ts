@@ -1,6 +1,21 @@
 import { createClient } from '@/lib/supabase/client'
 import { logger } from '@/lib/logger'
+import { invalidateCache } from '@/lib/cache/memoryCache'
 import type { Topic, TopicInsert, TopicUpdate } from '@/lib/types'
+
+async function triggerRevalidate(path: string) {
+  try {
+    if (typeof window !== 'undefined') {
+      await fetch('/api/revalidate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path }),
+      })
+    }
+  } catch (err) {
+    console.warn('[ISR] Falha ao revalidar rota:', path, err)
+  }
+}
 
 /** Lista todos os topicos publicados, ordenados por order_index. */
 export async function getTopics(): Promise<Topic[]> {
@@ -57,6 +72,11 @@ export async function createTopic(payload: TopicInsert): Promise<Topic> {
     throw error
   }
   logger.info('educacao', 'create_topic_success', `Módulo criado: "${data.title}"`, { topicId: data.id, slug: data.slug })
+
+  // Invalida cache de clientes e revalida a página estática no Next.js
+  invalidateCache('topics:published')
+  triggerRevalidate('/educacao')
+
   return data
 }
 
@@ -74,6 +94,14 @@ export async function updateTopic(id: string, payload: TopicUpdate): Promise<Top
     throw error
   }
   logger.info('educacao', 'update_topic_success', `Módulo atualizado: "${data.title}"`, { topicId: id })
+
+  // Invalida cache e revalida páginas estáticas
+  invalidateCache('topics:published')
+  triggerRevalidate('/educacao')
+  if (data.slug) {
+    triggerRevalidate(`/educacao/${data.slug}`)
+  }
+
   return data
 }
 
@@ -86,4 +114,8 @@ export async function deleteTopic(id: string): Promise<void> {
     throw error
   }
   logger.info('educacao', 'delete_topic_success', `Módulo excluído`, { topicId: id })
+
+  // Invalida cache e revalida
+  invalidateCache('topics:published')
+  triggerRevalidate('/educacao')
 }

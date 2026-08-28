@@ -1,40 +1,54 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useCallback } from 'react'
 import { getProfile, upsertProfile } from '@/lib/services/profileService'
 import { useAuth } from '@/providers/AuthProvider'
+import { useDataCache } from '@/hooks/useDataCache'
 import type { Profile, ProfileUpdate } from '@/lib/types'
 
 export function useProfile() {
   const { user } = useAuth()
-  const [profile, setProfile] = useState<Profile | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
 
-  const fetch = useCallback(async () => {
-    if (!user) { setLoading(false); return }
-    setLoading(true)
-    setError(null)
-    try {
-      const data = await getProfile(user.id)
-      setProfile(data)
-    } catch (e) {
-      setError((e as Error).message)
-    } finally {
-      setLoading(false)
-    }
+  const fetcher = useCallback(async (): Promise<Profile | null> => {
+    if (!user) return null
+    return await getProfile(user.id)
   }, [user])
 
-  useEffect(() => { fetch() }, [fetch])
+  const cacheKey = user ? `user-profile:${user.id}` : null
+
+  const {
+    data: profile,
+    loading,
+    isRevalidating,
+    error,
+    refetch,
+    mutate,
+  } = useDataCache<Profile | null>(cacheKey, fetcher, null, {
+    enabled: !!user,
+    ttl: 5 * 60 * 1000, // 5 minutos
+  })
 
   const updateProfile = useCallback(
     async (payload: Omit<ProfileUpdate, 'updated_at'>) => {
       if (!user) return
+
+      // Mutação otimista no cache
+      mutate((prev) => (prev ? { ...prev, ...payload } : null))
+
+      // Persiste no Supabase e atualiza com dado real
       const updated = await upsertProfile(user.id, payload)
-      setProfile(updated)
+      mutate(updated)
+      return updated
     },
-    [user],
+    [user, mutate],
   )
 
-  return { profile, loading, error, updateProfile, refetch: fetch }
+  return {
+    profile,
+    loading: user ? loading : false,
+    isRevalidating,
+    error: error ? error.message : null,
+    updateProfile,
+    refetch,
+  }
 }

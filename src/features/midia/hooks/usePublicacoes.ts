@@ -1,31 +1,43 @@
-﻿'use client'
+'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useCallback } from 'react'
 import { getPublicacoes } from '@/lib/services/publicacoesService'
 import { getVideos } from '@/lib/services/videosService'
+import { useDataCache } from '@/hooks/useDataCache'
 import type { Publicacao, Video } from '@/lib/types'
 
-export function usePublicacoes() {
-  const [publicacoes, setPublicacoes] = useState<Publicacao[]>([])
-  const [videos, setVideos] = useState<Video[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+interface MidiaData {
+  publicacoes: Publicacao[]
+  videos: Video[]
+}
 
-  const fetch = useCallback(async () => {
-    setLoading(true)
-    setError(null)
-    try {
-      const [pubs, vids] = await Promise.all([getPublicacoes(), getVideos()])
-      setPublicacoes(pubs)
-      setVideos(vids)
-    } catch (e) {
-      setError((e as Error).message)
-    } finally {
-      setLoading(false)
-    }
+export function usePublicacoes() {
+  const fetcher = useCallback(async (): Promise<MidiaData> => {
+    const [publicacoes, videos] = await Promise.all([getPublicacoes(), getVideos()])
+    return { publicacoes, videos }
   }, [])
 
-  useEffect(() => { fetch() }, [fetch])
+  const {
+    data,
+    loading,
+    isRevalidating,
+    error,
+    refetch,
+  } = useDataCache<MidiaData>(
+    'midia:all',
+    fetcher,
+    { publicacoes: [], videos: [] },
+    {
+      ttl: 15 * 60 * 1000, // 15 minutos de cache
+    }
+  )
 
-  return { publicacoes, videos, loading, error, refetch: fetch }
+  return {
+    publicacoes: data.publicacoes,
+    videos: data.videos,
+    loading,
+    isRevalidating,
+    error: error ? error.message : null,
+    refetch,
+  }
 }

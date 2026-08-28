@@ -1,5 +1,20 @@
-﻿import { createClient } from '@/lib/supabase/client'
+import { createClient } from '@/lib/supabase/client'
+import { invalidateCache } from '@/lib/cache/memoryCache'
 import type { Lesson, LessonInsert, LessonUpdate } from '@/lib/types'
+
+async function triggerRevalidate(path: string) {
+  try {
+    if (typeof window !== 'undefined') {
+      await fetch('/api/revalidate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path }),
+      })
+    }
+  } catch (err) {
+    console.warn('[ISR] Falha ao revalidar rota:', path, err)
+  }
+}
 
 /** Lista aulas publicadas de um topico, ordenadas por order_index. */
 export async function getLessonsByTopic(topicId: string): Promise<Lesson[]> {
@@ -35,6 +50,10 @@ export async function createLesson(payload: LessonInsert): Promise<Lesson> {
     .select()
     .single()
   if (error) throw error
+
+  invalidateCache('lessons')
+  triggerRevalidate('/educacao')
+
   return data
 }
 
@@ -48,6 +67,10 @@ export async function updateLesson(id: string, payload: LessonUpdate): Promise<L
     .select()
     .single()
   if (error) throw error
+
+  invalidateCache('lessons')
+  triggerRevalidate('/educacao')
+
   return data
 }
 
@@ -56,4 +79,7 @@ export async function deleteLesson(id: string): Promise<void> {
   const supabase = createClient()
   const { error } = await supabase.from('lessons').delete().eq('id', id)
   if (error) throw error
+
+  invalidateCache('lessons')
+  triggerRevalidate('/educacao')
 }

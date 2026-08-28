@@ -1,6 +1,21 @@
 import { createClient } from '@/lib/supabase/client'
 import { logger } from '@/lib/logger'
+import { invalidateCache } from '@/lib/cache/memoryCache'
 import type { Video, VideoInsert, VideoUpdate } from '@/lib/types'
+
+async function triggerRevalidate(path: string) {
+  try {
+    if (typeof window !== 'undefined') {
+      await fetch('/api/revalidate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ path }),
+      })
+    }
+  } catch (err) {
+    console.warn('[ISR] Falha ao revalidar rota:', path, err)
+  }
+}
 
 /** Lista videos publicados, ordenados por order_index. */
 export async function getVideos(): Promise<Video[]> {
@@ -44,6 +59,10 @@ export async function createVideo(payload: VideoInsert): Promise<Video> {
     throw error
   }
   logger.info('midia', 'create_video_success', `Vídeo cadastrado`, { videoId: data.id, href: data.href })
+
+  invalidateCache('midia:all')
+  triggerRevalidate('/midia')
+
   return data
 }
 
@@ -61,6 +80,10 @@ export async function updateVideo(id: string, payload: VideoUpdate): Promise<Vid
     throw error
   }
   logger.info('midia', 'update_video_success', `Vídeo atualizado`, { videoId: id })
+
+  invalidateCache('midia:all')
+  triggerRevalidate('/midia')
+
   return data
 }
 
@@ -73,4 +96,7 @@ export async function deleteVideo(id: string): Promise<void> {
     throw error
   }
   logger.info('midia', 'delete_video_success', `Vídeo excluído`, { videoId: id })
+
+  invalidateCache('midia:all')
+  triggerRevalidate('/midia')
 }
