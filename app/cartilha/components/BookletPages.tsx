@@ -156,25 +156,25 @@ export function Callout({
       bg={s.bg}
       border={`1px solid ${s.border}`}
       borderRadius="16px"
-      p="20px 24px"
+      p={{ base: '16px 18px', sm: '20px 24px' }}
       mt={mt}
       align="flex-start"
-      gap={4}
+      gap={{ base: 3, sm: 4 }}
     >
       <Box flexShrink={0}>
-        <Avatar src={s.src}/>
+        <Avatar src={s.src} />
       </Box>
-      <Box>
+      <Box flex="1" minW={0}>
         <Text
           display="block"
-          fontSize="0.95rem"
+          fontSize={{ base: '0.88rem', sm: '0.95rem' }}
           fontWeight="700"
           mb={1}
           color={s.titleColor}
         >
           {title}
         </Text>
-        <Text fontSize="0.9rem" lineHeight="1.65" color="#212121">
+        <Text fontSize={{ base: '0.85rem', sm: '0.9rem' }} lineHeight="1.65" color="#212121">
           {children}
         </Text>
       </Box>
@@ -349,8 +349,8 @@ function IconCardsGrid({ cards }: { cards: ImageCardData[] }) {
   const cols = Math.min(cards.length, 4);
   return (
     <Grid
-      templateColumns={{ base: "repeat(2, 1fr)", md: `repeat(${cols}, 1fr)` }}
-      gap={6}
+      templateColumns={{ base: 'repeat(2, 1fr)', md: `repeat(${cols}, 1fr)` }}
+      gap={{ base: 4, sm: 6 }}
       my={6}
     >
       {cards.map((card) => (
@@ -397,7 +397,7 @@ function LapbookHeader({
     <Box
       bg="linear-gradient(135deg, #1B5E20, #2E7D32)"
       borderRadius="20px"
-      p="28px 24px"
+      p={{ base: '20px 18px', sm: '28px 24px' }}
       color="white"
       mb={6}
       position="relative"
@@ -431,7 +431,7 @@ function LapbookHeader({
       </Box>
       <Text
         as="h1"
-        fontSize="clamp(1.3rem, 3.5vw, 1.9rem)"
+        fontSize="clamp(1.2rem, 3.5vw, 1.9rem)"
         fontWeight="900"
         lineHeight="1.2"
         mb={1}
@@ -439,7 +439,7 @@ function LapbookHeader({
       >
         {title}
       </Text>
-      <Text fontSize="0.85rem" opacity={0.85} lineHeight="1.65">
+      <Text fontSize={{ base: '0.8rem', sm: '0.85rem' }} opacity={0.85} lineHeight="1.65">
         {subtitle}
       </Text>
     </Box>
@@ -547,7 +547,7 @@ function PlantCard({
 
         <VStack
           gap={3}
-          p="28px 20px 24px"
+          p={{ base: '20px 16px 18px', sm: '28px 20px 24px' }}
           align="center"
           position="relative"
           zIndex={1}
@@ -644,9 +644,9 @@ function PersonaGreeting() {
           "0 4px 12px rgba(0,0,0,0.08)",
         ].join(", ")}
         border="1.5px solid rgba(46,125,50,0.15)"
-        p="20px"
+        p={{ base: '16px', sm: '20px' }}
         display="flex"
-        gap={4}
+        gap={{ base: 3, sm: 4 }}
         alignItems="flex-start"
         position="relative"
         overflow="visible"
@@ -745,7 +745,7 @@ export function PageCover({ data }: { data: PageCoverData }) {
   const titleLines = data.title.split("\n");
 
   return (
-    <VStack gap={0} textAlign="center" py={2} pb={6}>
+    <VStack gap={0} textAlign="center" py={{ base: 1, sm: 2 }} pb={{ base: 4, sm: 6 }}>
       {/* ── Badge ── */}
       <motion.div
         initial={{ opacity: 0, y: -12 }}
@@ -916,7 +916,7 @@ export function PageCover({ data }: { data: PageCoverData }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, ease: "easeOut", delay: 0.36 }}
       >
-        <HStack flexWrap="wrap" gap={2} justify="center" mb={8}>
+        <HStack flexWrap="wrap" gap={2} justify="center" mb={{ base: 5, sm: 8 }}>
           {data.tags.map((tag) => (
             <Box
               key={tag.label}
@@ -924,7 +924,7 @@ export function PageCover({ data }: { data: PageCoverData }) {
               color="#2E7D32"
               border="1px solid rgba(46,125,50,0.2)"
               borderRadius="999px"
-              fontSize="0.72rem"
+              fontSize={{ base: '0.68rem', sm: '0.72rem' }}
               fontWeight="600"
               px={3}
               py={1}
@@ -1116,7 +1116,7 @@ export function PageImpact({ data }: { data: PageImpactData }) {
       </PageTitle>
       <LeadText>{data.leadText}</LeadText>
 
-      <SimpleGrid columns={{ base: 1, md: 3 }} gap={4} my={6}>
+      <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} gap={{ base: 3, sm: 4 }} my={6}>
         {data.statCards.map((card) => (
           <Box
             key={card.stat}
@@ -1178,8 +1178,8 @@ export function PageImpact({ data }: { data: PageImpactData }) {
             bg="white"
             border="1px solid rgba(46,125,50,0.14)"
             borderRadius="16px"
-            p="16px 20px"
-            gap={4}
+            p={{ base: '14px 16px', sm: '16px 20px' }}
+            gap={{ base: 3, sm: 4 }}
             align="flex-start"
             _hover={{
               borderColor: "#66BB6A",
@@ -1258,10 +1258,10 @@ export function PageAlert({ data }: { data: PageAlertData }) {
         bg="linear-gradient(135deg, #B71C1C, #C62828)"
         color="white"
         borderRadius="18px"
-        p={6}
+        p={{ base: '20px 18px', sm: 6 }}
         my={6}
         display="flex"
-        gap={4}
+        gap={{ base: 3, sm: 4 }}
         alignItems="flex-start"
         boxShadow="0 8px 24px rgba(198,40,40,0.3)"
         position="relative"
@@ -1278,8 +1278,8 @@ export function PageAlert({ data }: { data: PageAlertData }) {
           aria-hidden="true"
         />
         <Box
-          w="48px"
-          h="48px"
+          w={{ base: '36px', sm: '48px' }}
+          h={{ base: '36px', sm: '48px' }}
           flexShrink={0}
           display="flex"
           alignItems="center"
@@ -1296,11 +1296,11 @@ export function PageAlert({ data }: { data: PageAlertData }) {
             }}
           />
         </Box>
-        <Box>
-          <Text fontSize="1rem" fontWeight="800" mb={1}>
+        <Box flex="1" minW={0}>
+          <Text fontSize={{ base: '0.9rem', sm: '1rem' }} fontWeight="800" mb={1}>
             {data.alertTitle}
           </Text>
-          <Text fontSize="0.85rem" lineHeight="1.65" opacity={0.93}>
+          <Text fontSize={{ base: '0.82rem', sm: '0.85rem' }} lineHeight="1.65" opacity={0.93}>
             {data.alertText}
           </Text>
         </Box>
@@ -1339,8 +1339,8 @@ export function PageOrgaos({ data }: { data: PageOrgaosData }) {
             bg="white"
             border="1px solid rgba(46,125,50,0.14)"
             borderRadius="16px"
-            p="16px 20px"
-            gap={4}
+            p={{ base: '14px 16px', sm: '16px 20px' }}
+            gap={{ base: 3, sm: 4 }}
             align="flex-start"
             _hover={{
               borderColor: "#66BB6A",
@@ -1498,8 +1498,8 @@ export function PageChain({ data }: { data: PageChainData }) {
 
       <Box
         bg="linear-gradient(135deg, #1B5E20, #2E7D32)"
-        borderRadius="24px"
-        p="40px 32px"
+        borderRadius={{ base: '20px', sm: '24px' }}
+        p={{ base: '28px 20px', sm: '40px 32px' }}
         textAlign="center"
         color="white"
         mb={6}
@@ -1635,7 +1635,7 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
       <PageTitle>{data.title}</PageTitle>
       <LeadText>{data.subtitle}</LeadText>
 
-      <SimpleGrid columns={{ base: 2, md: 3 }} gap={6} my={8}>
+      <SimpleGrid columns={{ base: 2, sm: 3 }} gap={{ base: 3, sm: 4, md: 6 }} my={{ base: 5, sm: 8 }}>
         {data.characters.map((char) => {
           const isRevealed = revealed[char.id];
           const isHero = char.isHero;
@@ -1649,9 +1649,9 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
             >
               <Box
                 h="full"
-                p={4}
+                p={{ base: 3, sm: 4 }}
                 bg={isRevealed ? (isHero ? 'green.50' : 'red.50') : 'white'}
-                borderRadius="20px"
+                borderRadius={{ base: '16px', sm: '20px' }}
                 border="2px solid"
                 borderColor={
                   isRevealed
@@ -1698,10 +1698,13 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                             : '#F44336'
                           : 'white'
                       }`,
+                      width: '100%',
+                      maxWidth: '100px',
+                      height: 'auto',
                     }}
                   />
                 </motion.div>
-                <Text fontWeight="700" mt={4} color="gray.800">
+                <Text fontWeight="700" mt={3} fontSize={{ base: '0.78rem', sm: '1rem' }} color="gray.800">
                   {char.name}
                 </Text>
                 {isRevealed && (
@@ -1710,21 +1713,21 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
                   >
-                    {/* 1. TÍTULO SEPARADO E EM DESTAQUE */}
+                    {/* Título herói/vilão */}
                     <Text
-                      fontSize="md"
+                      fontSize={{ base: '0.7rem', sm: 'md' }}
                       color={isHero ? 'green.800' : 'red.800'}
                       fontWeight="black"
                       textTransform="uppercase"
-                      mt={3}
+                      mt={2}
                       mb={1}
                     >
                       {isHero ? 'HERÓI!' : 'VILÃO!'}
                     </Text>
 
-                    {/* 2. DESCRIÇÃO LOGO ABAIXO */}
+                    {/* Texto de revelação */}
                     <Text
-                      fontSize="sm"
+                      fontSize={{ base: '0.65rem', sm: 'sm' }}
                       color={isHero ? 'green.700' : 'red.700'}
                       fontWeight="medium"
                     >
@@ -1750,10 +1753,10 @@ export function PageClosing({ data }: { data: PageClosingData }) {
 
       <Box
         bg="linear-gradient(160deg, #1B5E20, #2E7D32, #66BB6A)"
-        borderRadius="24px"
-        p="48px 32px"
+        borderRadius={{ base: '20px', sm: '24px' }}
+        p={{ base: '32px 20px', sm: '48px 32px' }}
         color="white"
-        mb={7}
+        mb={{ base: 5, sm: 7 }}
         position="relative"
         overflow="hidden"
       >
@@ -1808,7 +1811,7 @@ export function PageClosing({ data }: { data: PageClosingData }) {
         </Text>
       </Box>
 
-      <SimpleGrid columns={{ base: 2, md: 4 }} gap={4} mb={7}>
+      <SimpleGrid columns={{ base: 2, sm: 2, md: 4 }} gap={{ base: 3, sm: 4 }} mb={{ base: 5, sm: 7 }}>
         {data.pillars.map((p) => (
           <Box
             key={p.label}

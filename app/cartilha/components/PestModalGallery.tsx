@@ -4,9 +4,7 @@ import Image from 'next/image'
 import { SimpleGrid, Box, Text } from '@chakra-ui/react'
 import type { PestGalleryItemData } from '../data/cartilha-data'
 
-/* ─────────────────────────────────────────────────────────────────────────
-   ACCENT PALETTE — cada praga recebe uma cor distinta ciclicamente
-───────────────────────────────────────────────────────────────────────── */
+// ─── Paleta de acentos ────────────────────────────────────────────────────────
 
 export const PEST_ACCENT_PALETTE = [
   { gradient: 'linear-gradient(135deg, #B71C1C, #E53935)', light: '#FFF5F5', border: '#FC8181' },
@@ -19,9 +17,7 @@ export const PEST_ACCENT_PALETTE = [
 
 export type PestAccent = typeof PEST_ACCENT_PALETTE[number]
 
-/* ─────────────────────────────────────────────────────────────────────────
-   TYPES
-───────────────────────────────────────────────────────────────────────── */
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 interface PestGalleryCardProps {
   item: PestGalleryItemData
@@ -35,9 +31,7 @@ export interface PestModalGalleryProps {
   onSelectItem: (item: PestGalleryItemData, index: number) => void
 }
 
-/* ─────────────────────────────────────────────────────────────────────────
-   PEST GALLERY CARD — card clicavel do grid
-───────────────────────────────────────────────────────────────────────── */
+// ─── PestGalleryCard ──────────────────────────────────────────────────────────
 
 function PestGalleryCard({ item, accentIndex, onClick }: PestGalleryCardProps) {
   const accent = PEST_ACCENT_PALETTE[accentIndex % PEST_ACCENT_PALETTE.length]
@@ -46,7 +40,7 @@ function PestGalleryCard({ item, accentIndex, onClick }: PestGalleryCardProps) {
     <button
       type="button"
       onClick={onClick}
-      aria-label={`Abrir informacoes sobre ${item.name}`}
+      aria-label={`Abrir informações sobre ${item.name}`}
       style={{
         all: 'unset',
         display: 'flex',
@@ -60,6 +54,8 @@ function PestGalleryCard({ item, accentIndex, onClick }: PestGalleryCardProps) {
         cursor: 'pointer',
         textAlign: 'left',
         transition: 'all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1)',
+        // Touch target mínimo garantido via minHeight
+        minHeight: '44px',
       }}
       onMouseEnter={(e) => {
         const el = e.currentTarget
@@ -74,9 +70,9 @@ function PestGalleryCard({ item, accentIndex, onClick }: PestGalleryCardProps) {
         el.style.borderColor = `${accent.border}66`
       }}
     >
-      {/* Card header com gradiente */}
+      {/* Header do card com gradiente */}
       <Box
-        h="140px"
+        h={{ base: '110px', sm: '140px' }}
         position="relative"
         overflow="hidden"
         display="flex"
@@ -85,7 +81,7 @@ function PestGalleryCard({ item, accentIndex, onClick }: PestGalleryCardProps) {
         flexShrink={0}
         style={{ background: accent.gradient }}
       >
-        {/* Circulos decorativos */}
+        {/* Círculos decorativos */}
         <Box
           position="absolute"
           w="120px"
@@ -110,8 +106,8 @@ function PestGalleryCard({ item, accentIndex, onClick }: PestGalleryCardProps) {
         {/* Imagem da praga */}
         <Box
           position="relative"
-          w="96px"
-          h="96px"
+          w={{ base: '72px', sm: '96px' }}
+          h={{ base: '72px', sm: '96px' }}
           borderRadius="50%"
           overflow="hidden"
           border="3px solid rgba(255,255,255,0.35)"
@@ -131,10 +127,14 @@ function PestGalleryCard({ item, accentIndex, onClick }: PestGalleryCardProps) {
         </Box>
       </Box>
 
-      {/* Rodape do card */}
-      <Box p="16px 18px 20px" flex="1" style={{ background: accent.light }}>
+      {/* Rodapé do card */}
+      <Box
+        p={{ base: '12px 14px 16px', sm: '16px 18px 20px' }}
+        flex="1"
+        style={{ background: accent.light }}
+      >
         <Text
-          fontSize="0.95rem"
+          fontSize={{ base: '0.85rem', sm: '0.95rem' }}
           fontWeight="800"
           color="#1a1a1a"
           lineHeight="1.25"
@@ -143,7 +143,11 @@ function PestGalleryCard({ item, accentIndex, onClick }: PestGalleryCardProps) {
         >
           {item.name}
         </Text>
-        <Text fontSize="0.72rem" color="#555" fontWeight="500">
+        <Text
+          fontSize={{ base: '0.68rem', sm: '0.72rem' }}
+          color="#555"
+          fontWeight="500"
+        >
           Toque para saber mais
         </Text>
       </Box>
@@ -151,18 +155,18 @@ function PestGalleryCard({ item, accentIndex, onClick }: PestGalleryCardProps) {
   )
 }
 
-/* ─────────────────────────────────────────────────────────────────────────
-   PEST MODAL GALLERY — apenas o grid de cards.
-   O DialogRoot foi deliberadamente elevado para page.tsx para escapar do
-   stacking context criado pelo PageTransitionWrapper (filter + transform).
-   Este componente e intencionalmente stateless em relacao ao modal.
-───────────────────────────────────────────────────────────────────────── */
+// ─── PestModalGallery ─────────────────────────────────────────────────────────
 
+/**
+ * Grid de cards stateless em relação ao modal.
+ * O DialogRoot reside em page.tsx, fora do PageTransitionWrapper, para
+ * escapar do stacking context criado por filter + transform.
+ */
 export default function PestModalGallery({ items, onSelectItem }: PestModalGalleryProps) {
   return (
     <SimpleGrid
       columns={{ base: 2, sm: 2, md: 3 }}
-      gap={4}
+      gap={{ base: 3, sm: 4 }}
       my={6}
     >
       {items.map((item, index) => (

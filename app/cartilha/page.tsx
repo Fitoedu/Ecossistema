@@ -110,12 +110,17 @@ export default function CartilhaPage() {
       title="Cartilha Interativa"
       description={`Página ${currentPage + 1} de ${TOTAL_PAGES}: ${page.label}`}
     >
-      <Box fontFamily="body" id="cartilha-root">
+      <Box
+        fontFamily="body"
+        id="cartilha-root"
+        style={{ overflowX: 'hidden' }}
+      >
         <Box
           as="main"
           maxW="780px"
           mx="auto"
-          pb="130px"
+          pb={{ base: '140px', sm: '130px' }}
+          px={{ base: 4, sm: 0 }}
           id="main-content"
         >
           <PageTransitionWrapper pageKey={animKey} direction={direction}>

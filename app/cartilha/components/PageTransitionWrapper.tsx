@@ -3,8 +3,12 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import React from 'react'
 
+// ─── Constantes de animação ──────────────────────────────────────────────────
+
 const SPRING = { type: 'spring' as const, stiffness: 260, damping: 28, mass: 0.9 }
 const EASE   = [0.4, 0, 0.2, 1] as const
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function makeVariants(direction: 'next' | 'prev') {
   const sign = direction === 'next' ? 1 : -1
@@ -36,12 +40,16 @@ function makeVariants(direction: 'next' | 'prev') {
   }
 }
 
+// ─── Types ────────────────────────────────────────────────────────────────────
+
 interface PageTransitionWrapperProps {
   pageKey: number | string
   direction?: 'next' | 'prev'
   children: React.ReactNode
   className?: string
 }
+
+// ─── Componente ───────────────────────────────────────────────────────────────
 
 export default function PageTransitionWrapper({
   pageKey,

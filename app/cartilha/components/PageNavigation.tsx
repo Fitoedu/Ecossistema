@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react'
 import { Box, Text, HStack, VStack } from '@chakra-ui/react'
 
+// ─── Types ────────────────────────────────────────────────────────────────────
+
 interface PageNavigationProps {
   currentPage: number
   totalPages: number
@@ -12,6 +14,8 @@ interface PageNavigationProps {
   onNext: () => void
   onGoTo?: (index: number) => void
 }
+
+// ─── Constantes ───────────────────────────────────────────────────────────────
 
 const PAGE_EMOJIS: Record<number, string> = {
   0:  '📗', // Capa
@@ -30,40 +34,40 @@ const PAGE_EMOJIS: Record<number, string> = {
   13: '🎓', // Encerramento
 }
 
-function NavButton({
-  onClick,
-  disabled,
-  direction,
-  isLast,
-  id,
-  label,
-}: {
+// ─── NavButton ────────────────────────────────────────────────────────────────
+
+interface NavButtonProps {
   onClick: () => void
   disabled: boolean
   direction: 'prev' | 'next'
   isLast?: boolean
   id: string
   label: string
-}) {
+}
+
+function NavButton({ onClick, disabled, direction, isLast, id, label }: NavButtonProps) {
   const isPrev = direction === 'prev'
 
   const baseStyle: React.CSSProperties = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: '6px',
-    borderRadius: '16px',
+    gap: '4px',
+    borderRadius: '14px',
     fontWeight: 700,
-    fontSize: '0.82rem',
+    fontSize: '0.78rem',
     letterSpacing: '-0.01em',
     cursor: disabled ? 'not-allowed' : 'pointer',
     outline: 'none',
-    padding: isPrev ? '12px 18px' : '12px 22px',
-    minWidth: isPrev ? '52px' : '120px',
+    // Touch target mínimo de 44px (altura) em mobile
+    padding: isPrev ? '12px 14px' : '12px 18px',
+    minWidth: isPrev ? '44px' : '100px',
+    minHeight: '44px',
     transition: 'opacity 0.2s ease',
     opacity: disabled ? 0.35 : 1,
     userSelect: 'none',
     WebkitUserSelect: 'none',
+    flexShrink: 0,
     ...(isPrev
       ? {
           background: 'linear-gradient(180deg, #ffffff 0%, #f0f7f1 100%)',
@@ -101,7 +105,7 @@ function NavButton({
         }),
   }
 
-    const tapStyle = disabled
+  const tapStyle = disabled
     ? undefined
     : {
         scale: 0.95,
@@ -121,7 +125,7 @@ function NavButton({
       aria-disabled={disabled}
       type="button"
       style={baseStyle}
-            whileHover={disabled ? undefined : { y: -2, scale: 1.02 }}
+      whileHover={disabled ? undefined : { y: -2, scale: 1.02 }}
       whileTap={tapStyle}
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
     >
@@ -142,6 +146,8 @@ function NavButton({
     </motion.button>
   )
 }
+
+// ─── ProgressDots ─────────────────────────────────────────────────────────────
 
 function ProgressDots({
   currentPage,
@@ -165,7 +171,7 @@ function ProgressDots({
   )
 
   return (
-    <HStack gap="5px" align="center" justify="center" aria-hidden="true">
+    <HStack gap="4px" align="center" justify="center" aria-hidden="true">
       {start > 0 && (
         <Box w="4px" h="4px" borderRadius="50%" bg="rgba(46,125,50,0.25)" />
       )}
@@ -179,6 +185,7 @@ function ProgressDots({
             type="button"
             title={`Ir para página ${i + 1}`}
             onClick={() => onGoTo?.(i)}
+            // Touch target mínimo de 24px garantido via padding implícito do animate
             style={{
               background: isCurrent
                 ? 'linear-gradient(135deg, #2E7D32, #66BB6A)'
@@ -198,7 +205,7 @@ function ProgressDots({
               scale:  isCurrent ? 1 : isPast ? 0.9 : 0.8,
             }}
             transition={{ type: 'spring', stiffness: 360, damping: 28 }}
-                        whileHover={onGoTo ? { scale: 1.3 } : undefined}
+            whileHover={onGoTo ? { scale: 1.3 } : undefined}
             whileTap={onGoTo ? { scale: 0.85 } : undefined}
           >
             {isCurrent && (
@@ -217,7 +224,7 @@ function ProgressDots({
                 }}
                 aria-hidden="true"
               >
-                                {PAGE_EMOJIS[currentPage] ? PAGE_EMOJIS[currentPage] : '●'}
+                {PAGE_EMOJIS[currentPage] ?? '●'}
               </motion.span>
             )}
           </motion.button>
@@ -229,6 +236,8 @@ function ProgressDots({
     </HStack>
   )
 }
+
+// ─── PageInfo ─────────────────────────────────────────────────────────────────
 
 function PageInfo({
   currentPage,
@@ -263,12 +272,12 @@ function PageInfo({
             </Text>
             {pageLabel && (
               <Text
-                fontSize="0.7rem"
+                fontSize={{ base: '0.62rem', sm: '0.7rem' }}
                 fontWeight="700"
                 color="#1B5E20"
                 lineHeight="1.25"
                 style={{
-                  maxWidth: '140px',
+                  maxWidth: '130px',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
@@ -296,6 +305,8 @@ function PageInfo({
     </VStack>
   )
 }
+
+// ─── PageNavigation (exportação padrão) ───────────────────────────────────────
 
 export default function PageNavigation({
   currentPage,
@@ -328,9 +339,10 @@ export default function PageNavigation({
       borderTop="1px solid rgba(46,125,50,0.10)"
       boxShadow="0 -4px 24px rgba(0,0,0,0.06), 0 -1px 0 rgba(46,125,50,0.08)"
       pt="10px"
-      pb="max(18px, env(safe-area-inset-bottom))"
-      px="16px"
+      pb="max(16px, env(safe-area-inset-bottom))"
+      px={{ base: '12px', sm: '16px' }}
     >
+      {/* Barra de progresso */}
       <Box
         position="absolute"
         top={0}
@@ -355,7 +367,7 @@ export default function PageNavigation({
       <HStack
         maxW="780px"
         mx="auto"
-        gap={3}
+        gap={{ base: 2, sm: 3 }}
         align="center"
       >
         <NavButton

@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Box, Grid, Text, HStack, VStack } from '@chakra-ui/react'
 
+// ─── Types ────────────────────────────────────────────────────────────────────
+
 export interface Flap {
   id: string
   frontEmoji: string
@@ -20,6 +22,8 @@ interface LiftTheFlapProps {
   direction?: 'top' | 'left' | 'right' | 'bottom'
 }
 
+// ─── Constantes ───────────────────────────────────────────────────────────────
+
 const ACCENT: Record<
   NonNullable<Flap['backAccent']>,
   { bg: string; border: string; badgeBg: string; badgeText: string }
@@ -30,6 +34,10 @@ const ACCENT: Record<
   teal:   { bg: 'linear-gradient(145deg,#E0F2F1,#E8F5E9)', border: '#26A69A', badgeBg: '#00695C', badgeText: '#fff' },
 }
 
+const PAPER_TEXTURE = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")`
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
 function getFoldParams(direction: NonNullable<LiftTheFlapProps['direction']>) {
   switch (direction) {
     case 'top':    return { origin: 'top center',    axisKey: 'rotateX' as const, angle: -110 }
@@ -39,7 +47,7 @@ function getFoldParams(direction: NonNullable<LiftTheFlapProps['direction']>) {
   }
 }
 
-const PAPER_TEXTURE = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")`
+// ─── FlapCard ─────────────────────────────────────────────────────────────────
 
 function FlapCard({
   flap,
@@ -67,6 +75,7 @@ function FlapCard({
       style={{ perspective: '900px' }}
       role="listitem"
     >
+      {/* Conteúdo da parte de trás (revelado) */}
       <Box
         position="absolute"
         inset="0"
@@ -88,7 +97,7 @@ function FlapCard({
         <VStack
           gap={3}
           align="flex-start"
-          p="20px 22px 24px"
+          p={{ base: '16px 18px 20px', sm: '20px 22px 24px' }}
           position="relative"
           zIndex={1}
           h="full"
@@ -111,7 +120,7 @@ function FlapCard({
             {flap.frontEmoji} Resposta
           </Box>
           <Text
-            fontSize="0.88rem"
+            fontSize={{ base: '0.82rem', sm: '0.88rem' }}
             fontWeight="400"
             color="#1a1a1a"
             lineHeight="1.75"
@@ -121,6 +130,7 @@ function FlapCard({
         </VStack>
       </Box>
 
+      {/* Aba animada (frente) */}
       <motion.div
         initial={false}
         animate={animateVariant}
@@ -157,10 +167,11 @@ function FlapCard({
             style={{ backgroundImage: PAPER_TEXTURE }}
             transition="border-color 0.25s ease"
           >
+            {/* Cabeçalho verde */}
             <Box
               bg="linear-gradient(135deg, #2E7D32, #43A047)"
-              px={5}
-              py={4}
+              px={{ base: 4, sm: 5 }}
+              py={{ base: '12px', sm: 4 }}
               display="flex"
               alignItems="center"
               gap={3}
@@ -168,7 +179,7 @@ function FlapCard({
               transition="background 0.25s ease"
             >
               <Text
-                fontSize="30px"
+                fontSize={{ base: '24px', sm: '30px' }}
                 lineHeight="1"
                 flexShrink={0}
                 aria-hidden="true"
@@ -178,7 +189,7 @@ function FlapCard({
               </Text>
               <Text
                 flex="1"
-                fontSize="0.88rem"
+                fontSize={{ base: '0.82rem', sm: '0.88rem' }}
                 fontWeight="700"
                 color="white"
                 lineHeight="1.4"
@@ -187,6 +198,7 @@ function FlapCard({
               >
                 {flap.frontText}
               </Text>
+              {/* Ícone de hamburguer */}
               <Box
                 display="flex"
                 flexDir="column"
@@ -198,12 +210,13 @@ function FlapCard({
               >
                 <Box w="14px" h="2px" bg="white" borderRadius="2px" />
                 <Box w="10px" h="2px" bg="white" borderRadius="2px" />
-                <Box w="6px" h="2px" bg="white" borderRadius="2px" />
+                <Box w="6px"  h="2px" bg="white" borderRadius="2px" />
               </Box>
             </Box>
 
+            {/* Dica de interação */}
             <Box
-              px={5}
+              px={{ base: 4, sm: 5 }}
               py={3}
               display="flex"
               alignItems="center"
@@ -221,6 +234,7 @@ function FlapCard({
         </button>
       </motion.div>
 
+      {/* Região acessível oculta */}
       <Box
         id={`ltf-region-${flap.id}`}
         role="region"
@@ -231,6 +245,8 @@ function FlapCard({
     </Box>
   )
 }
+
+// ─── LiftTheFlap (exportação padrão) ─────────────────────────────────────────
 
 export default function LiftTheFlap({
   title,
@@ -251,12 +267,13 @@ export default function LiftTheFlap({
 
   return (
     <Box w="full">
+      {/* Banner instrutivo */}
       <HStack
         aria-hidden="true"
         bg="rgba(46,125,50,0.07)"
         border="1px solid rgba(46,125,50,0.18)"
         borderRadius="16px"
-        p="14px 20px"
+        p={{ base: '12px 16px', sm: '14px 20px' }}
         mb={5}
         align="flex-start"
         gap={3}
@@ -276,7 +293,7 @@ export default function LiftTheFlap({
           🎴
         </Text>
         <Box flex="1">
-          <Text fontSize="0.82rem" fontWeight="600" color="#1B5E20" lineHeight="1.55">
+          <Text fontSize={{ base: '0.78rem', sm: '0.82rem' }} fontWeight="600" color="#1B5E20" lineHeight="1.55">
             {subtitle}
           </Text>
           <Text fontSize="0.72rem" color="#5c746d" mt={1}>
@@ -285,9 +302,10 @@ export default function LiftTheFlap({
         </Box>
       </HStack>
 
+      {/* Grid de abas — 1 coluna em mobile, `columns` em sm+ */}
       <Grid
         templateColumns={{ base: '1fr', sm: `repeat(${columns}, minmax(0, 1fr))` }}
-        gap={5}
+        gap={{ base: 4, sm: 5 }}
         role="list"
         aria-label={title}
       >
@@ -302,6 +320,7 @@ export default function LiftTheFlap({
         ))}
       </Grid>
 
+      {/* Dica após abrir primeira aba */}
       <AnimatePresence>
         {openIds.length > 0 && (
           <motion.div
@@ -316,14 +335,14 @@ export default function LiftTheFlap({
               bg="linear-gradient(135deg,#E8F5E9,#F1F8E9)"
               border="1.5px solid rgba(46,125,50,0.25)"
               borderRadius="16px"
-              px={5}
+              px={{ base: 4, sm: 5 }}
               py={3}
               display="flex"
               alignItems="center"
               gap={3}
             >
               <Text fontSize="20px" aria-hidden="true">🌿</Text>
-              <Text fontSize="0.82rem" color="#2E7D32" fontWeight="600" lineHeight="1.55">
+              <Text fontSize={{ base: '0.78rem', sm: '0.82rem' }} color="#2E7D32" fontWeight="600" lineHeight="1.55">
                 Clique em outra aba para comparar, ou na mesma para fechar!
               </Text>
             </Box>

@@ -2,17 +2,10 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import {
-  Box,
-  Flex,
-  Text,
-  SimpleGrid,
-} from '@chakra-ui/react'
+import { Box, Flex, Text, SimpleGrid } from '@chakra-ui/react'
 import type { HotspotItemData, MicroorgCategory } from '../data/cartilha-data'
 
-/* ═══════════════════════════════════════════════════════════════════
-   CONSTANTES DE DESIGN
-═══════════════════════════════════════════════════════════════════ */
+// ─── Constantes de design ─────────────────────────────────────────────────────
 
 const CATEGORY_META: Record<
   MicroorgCategory,
@@ -40,9 +33,7 @@ const CATEGORY_META: Record<
   },
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   VARIANTES FRAMER MOTION
-═══════════════════════════════════════════════════════════════════ */
+// ─── Variantes Framer Motion ──────────────────────────────────────────────────
 
 const triggerVariants = {
   initial: { opacity: 0, scale: 0.4 },
@@ -70,9 +61,7 @@ const cardVariants = {
   },
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   HOTSPOT CARD INDIVIDUAL
-═══════════════════════════════════════════════════════════════════ */
+// ─── HotspotCard ──────────────────────────────────────────────────────────────
 
 function HotspotCard({ item }: { item: HotspotItemData }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -81,7 +70,7 @@ function HotspotCard({ item }: { item: HotspotItemData }) {
   return (
     <Box
       position="relative"
-      minHeight="300px"
+      minHeight={{ base: '260px', sm: '300px' }}
       borderRadius="18px"
       overflow="hidden"
       bg="linear-gradient(135deg, #1B5E20, #2E7D32)"
@@ -129,7 +118,7 @@ function HotspotCard({ item }: { item: HotspotItemData }) {
             }}
           >
             <Text
-              fontSize="0.82rem"
+              fontSize={{ base: '0.75rem', sm: '0.82rem' }}
               fontWeight="800"
               color="white"
               textTransform="uppercase"
@@ -145,7 +134,7 @@ function HotspotCard({ item }: { item: HotspotItemData }) {
         )}
       </AnimatePresence>
 
-      {/* ── ESTADO 1: Gatilho Circular Pulsante ── */}
+      {/* ESTADO 1: Gatilho Circular Pulsante */}
       <AnimatePresence>
         {!isOpen && (
           <motion.div
@@ -168,8 +157,8 @@ function HotspotCard({ item }: { item: HotspotItemData }) {
               transition={{ repeat: Infinity, duration: 2.2, ease: 'easeInOut' }}
             >
               <Box
-                w="104px"
-                h="104px"
+                w={{ base: '88px', sm: '104px' }}
+                h={{ base: '88px', sm: '104px' }}
                 borderRadius="50%"
                 bg="rgba(27,94,32,0.93)"
                 border="3px dashed white"
@@ -196,7 +185,7 @@ function HotspotCard({ item }: { item: HotspotItemData }) {
                   </Text>
                 </Box>
                 <Text
-                  fontSize="0.6rem"
+                  fontSize={{ base: '0.55rem', sm: '0.6rem' }}
                   fontWeight="700"
                   color="white"
                   textAlign="center"
@@ -211,7 +200,7 @@ function HotspotCard({ item }: { item: HotspotItemData }) {
         )}
       </AnimatePresence>
 
-      {/* ── ESTADO 2: Card de Descoberta ── */}
+      {/* ESTADO 2: Card de Descoberta */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -284,12 +273,12 @@ function HotspotCard({ item }: { item: HotspotItemData }) {
                   </Box>
                 </Flex>
 
-                {/* Botão Fechar (X) */}
+                {/* Botão Fechar — touch target adequado */}
                 <Box
                   as="button"
                   aria-label={`Fechar informações sobre ${item.name}`}
-                  w="26px"
-                  h="26px"
+                  w="32px"
+                  h="32px"
                   borderRadius="50%"
                   bg="rgba(255,255,255,0.22)"
                   border="1.5px solid rgba(255,255,255,0.45)"
@@ -323,7 +312,7 @@ function HotspotCard({ item }: { item: HotspotItemData }) {
                   '&::-webkit-scrollbar-thumb': { background: '#ccc', borderRadius: '2px' },
                 }}
               >
-                {/* Conceito — container com maxHeight para scroll interno */}
+                {/* Conceito */}
                 <Box
                   overflowY="auto"
                   maxHeight="120px"
@@ -338,7 +327,7 @@ function HotspotCard({ item }: { item: HotspotItemData }) {
                   </Text>
                 </Box>
 
-                {/* Destaque de Impacto — bg vermelho */}
+                {/* Destaque de Impacto */}
                 {item.impactText && (
                   <Box
                     bg="#FFEBEE"
@@ -365,7 +354,7 @@ function HotspotCard({ item }: { item: HotspotItemData }) {
                   </Box>
                 )}
 
-                {/* Destaque de Prevenção — bg amarelo */}
+                {/* Destaque de Prevenção */}
                 {item.preventionText && (
                   <Box
                     bg="#FFFDE7"
@@ -399,9 +388,7 @@ function HotspotCard({ item }: { item: HotspotItemData }) {
   )
 }
 
-/* ═══════════════════════════════════════════════════════════════════
-   EXPORTAÇÃO — Grid de Hotspots
-═══════════════════════════════════════════════════════════════════ */
+// ─── ImageDiscoveryHotspotGrid (exportação) ───────────────────────────────────
 
 export interface ImageDiscoveryHotspotGridProps {
   items: HotspotItemData[]
@@ -409,7 +396,11 @@ export interface ImageDiscoveryHotspotGridProps {
 
 export function ImageDiscoveryHotspotGrid({ items }: ImageDiscoveryHotspotGridProps) {
   return (
-    <SimpleGrid columns={{ base: 1, sm: 2 }} gap={5} my={6}>
+    <SimpleGrid
+      columns={{ base: 1, sm: 2 }}
+      gap={{ base: 4, sm: 5 }}
+      my={6}
+    >
       {items.map((item, idx) => (
         <motion.div
           key={item.id}

@@ -4,14 +4,14 @@
  * PestDialog.tsx
  *
  * Renderiza o DialogRoot do Chakra UI v3 para o modal da galeria de pragas.
- * Este componente e renderizado em page.tsx — diretamente dentro do <AppShell>,
- * FORA do <PageTransitionWrapper> — para garantir que o Portal do Dialog nao
- * herde o stacking context criado por `filter` e `transform` da animacao de
- * transicao de pagina.
+ * Este componente é renderizado em page.tsx — diretamente dentro do <AppShell>,
+ * FORA do <PageTransitionWrapper> — para garantir que o Portal do Dialog não
+ * herde o stacking context criado por `filter` e `transform` da animação de
+ * transição de página.
  *
  * ARQUITETURA:
  *   page.tsx (AppShell)
- *     ├─ PageTransitionWrapper  ← filter + transform  (Modal NAO pode ficar aqui)
+ *     ├─ PageTransitionWrapper  ← filter + transform  (Modal NÃO pode ficar aqui)
  *     │    └─ renderPage(page)
  *     │         └─ PagePestGallery
  *     │              └─ PestModalGallery (grid stateless)
@@ -37,14 +37,12 @@ import {
 import { PEST_ACCENT_PALETTE } from './PestModalGallery'
 import type { PestGalleryItemData } from '../data/cartilha-data'
 
-/* ─────────────────────────────────────────────────────────────────────────
-   TYPES
-───────────────────────────────────────────────────────────────────────── */
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 export interface PestDialogProps {
   /** Item selecionado; null = modal fechado */
   selectedItem: PestGalleryItemData | null
-  /** Indice do item selecionado — determina a paleta de cores */
+  /** Índice do item selecionado — determina a paleta de cores */
   selectedIndex: number
   /** Controlador de abertura */
   open: boolean
@@ -52,10 +50,12 @@ export interface PestDialogProps {
   onClose: () => void
 }
 
-/* ─────────────────────────────────────────────────────────────────────────
-   PEST DIALOG — modal isolado do stacking context pai
-───────────────────────────────────────────────────────────────────────── */
+// ─── PestDialog ───────────────────────────────────────────────────────────────
 
+/**
+ * Portal garante que o DialogRoot e seus filhos sejam montados diretamente
+ * no <body>, escapando de qualquer ancestral com filter/transform/overflow.
+ */
 export default function PestDialog({
   selectedItem,
   selectedIndex,
@@ -65,13 +65,6 @@ export default function PestDialog({
   const accent = PEST_ACCENT_PALETTE[selectedIndex % PEST_ACCENT_PALETTE.length]
 
   return (
-    /**
-     * Portal garante que o DialogRoot e seus filhos sejam montados diretamente
-     * no <body>, escapando de qualquer ancestral com filter/transform/overflow.
-     * Mesmo que o Chakra ja use Portal internamente no DialogPositioner,
-     * envolver o DialogRoot inteiro no Portal e a garantia mais robusta contra
-     * stacking context criado por um ancestral arbitrario.
-     */
     <Portal>
       <DialogRoot
         open={open}
@@ -82,7 +75,7 @@ export default function PestDialog({
         motionPreset="slide-in-bottom"
         scrollBehavior="inside"
       >
-        {/* Backdrop com blur — equivalente ao ModalOverlay */}
+        {/* Backdrop com blur */}
         <DialogBackdrop
           bg="blackAlpha.600"
           backdropFilter="blur(10px)"
@@ -90,17 +83,18 @@ export default function PestDialog({
 
         <DialogPositioner>
           <DialogContent
-            borderRadius="24px"
+            borderRadius={{ base: '20px', sm: '24px' }}
             overflow="hidden"
             boxShadow="0 32px 80px rgba(0,0,0,0.30), 0 8px 24px rgba(0,0,0,0.15)"
-            mx={4}
-            maxW="440px"
+            mx={{ base: 3, sm: 4 }}
+            maxW={{ base: '100%', sm: '440px' }}
+            w="full"
           >
             {selectedItem && (
               <>
-                {/* Cabecalho visual com imagem */}
+                {/* Cabeçalho visual com imagem */}
                 <Box
-                  h="200px"
+                  h={{ base: '160px', sm: '200px' }}
                   position="relative"
                   overflow="hidden"
                   display="flex"
@@ -108,7 +102,7 @@ export default function PestDialog({
                   justifyContent="center"
                   style={{ background: accent.gradient }}
                 >
-                  {/* Circulos decorativos */}
+                  {/* Círculos decorativos */}
                   <Box
                     position="absolute"
                     w="200px"
@@ -130,11 +124,11 @@ export default function PestDialog({
                     aria-hidden="true"
                   />
 
-                  {/* Imagem da praga com objectFit="contain" */}
+                  {/* Imagem da praga */}
                   <Box
                     position="relative"
-                    w="140px"
-                    h="140px"
+                    w={{ base: '120px', sm: '140px' }}
+                    h={{ base: '120px', sm: '140px' }}
                     borderRadius="50%"
                     overflow="hidden"
                     border="4px solid rgba(255,255,255,0.40)"
@@ -155,9 +149,9 @@ export default function PestDialog({
                 </Box>
 
                 {/* Header do Dialog */}
-                <DialogHeader pt={5} pb={2} px={6}>
+                <DialogHeader pt={4} pb={2} px={{ base: 4, sm: 6 }}>
                   <DialogTitle
-                    fontSize="1.3rem"
+                    fontSize={{ base: '1.1rem', sm: '1.3rem' }}
                     fontWeight="800"
                     color="#1a1a1a"
                     letterSpacing="-0.01em"
@@ -167,7 +161,7 @@ export default function PestDialog({
                   </DialogTitle>
                 </DialogHeader>
 
-                {/* Botao de fechar */}
+                {/* Botão de fechar */}
                 <DialogCloseTrigger
                   top={3}
                   right={3}
@@ -179,7 +173,7 @@ export default function PestDialog({
                 />
 
                 {/* Body do Dialog */}
-                <DialogBody px={6} pb={8} pt={2}>
+                <DialogBody px={{ base: 4, sm: 6 }} pb={{ base: 6, sm: 8 }} pt={2}>
                   <VStack align="stretch" gap={4}>
                     {/* Divisor de acento */}
                     <Box
@@ -190,7 +184,7 @@ export default function PestDialog({
                     />
 
                     <Text
-                      fontSize="0.9rem"
+                      fontSize={{ base: '0.85rem', sm: '0.9rem' }}
                       color="#3a3a3a"
                       lineHeight="1.8"
                       fontWeight="400"
