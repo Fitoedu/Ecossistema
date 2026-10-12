@@ -1,18 +1,20 @@
 'use client'
 
 import Image from 'next/image'
+import { useState } from 'react'
+import { Search } from 'lucide-react'
 import { SimpleGrid, Box, Text } from '@chakra-ui/react'
 import type { PestGalleryItemData } from '../data/cartilha-data'
 
 // ─── Paleta de acentos ────────────────────────────────────────────────────────
 
 export const PEST_ACCENT_PALETTE = [
-  { gradient: 'linear-gradient(135deg, #B71C1C, #E53935)', light: '#FFF5F5', border: '#FC8181' },
+  { gradient: 'linear-gradient(135deg, #2E7D32, #66BB6A)', light: '#F0FFF4', border: '#9AE6B4' },
   { gradient: 'linear-gradient(135deg, #E65100, #FB8C00)', light: '#FFF8F0', border: '#FBD38D' },
-  { gradient: 'linear-gradient(135deg, #1565C0, #1976D2)', light: '#EBF8FF', border: '#90CDF4' },
-  { gradient: 'linear-gradient(135deg, #1B5E20, #2E7D32)', light: '#F0FFF4', border: '#9AE6B4' },
-  { gradient: 'linear-gradient(135deg, #4A148C, #6A1B9A)', light: '#FAF5FF', border: '#D6BCFA' },
-  { gradient: 'linear-gradient(135deg, #004D40, #00695C)', light: '#E0FFF8', border: '#81E6D9' },
+  { gradient: 'linear-gradient(135deg, #F57F17, #FBC02D)', light: '#FFFBEA', border: '#F6E05E' },
+  { gradient: 'linear-gradient(135deg, #1B5E20, #388E3C)', light: '#F0FFF4', border: '#68D391' },
+  { gradient: 'linear-gradient(135deg, #8D6E63, #A1887F)', light: '#FAF7F5', border: '#C6B5AE' },
+  { gradient: 'linear-gradient(135deg, #558B2F, #7CB342)', light: '#F7FCEB', border: '#A5D66A' },
 ] as const
 
 export type PestAccent = typeof PEST_ACCENT_PALETTE[number]
@@ -35,6 +37,7 @@ export interface PestModalGalleryProps {
 
 function PestGalleryCard({ item, accentIndex, onClick }: PestGalleryCardProps) {
   const accent = PEST_ACCENT_PALETTE[accentIndex % PEST_ACCENT_PALETTE.length]
+  const [hasImageError, setHasImageError] = useState(false)
 
   return (
     <button
@@ -103,27 +106,60 @@ function PestGalleryCard({ item, accentIndex, onClick }: PestGalleryCardProps) {
           aria-hidden="true"
         />
 
+        <Box
+          position="absolute"
+          top="10px"
+          left="10px"
+          display="flex"
+          alignItems="center"
+          gap="4px"
+          px="7px"
+          py="4px"
+          borderRadius="999px"
+          bg="rgba(0,0,0,0.28)"
+          color="white"
+          fontSize="0.58rem"
+          fontWeight="700"
+          letterSpacing="0.02em"
+          pointerEvents="none"
+        >
+          <Search size={12} strokeWidth={2.4} aria-hidden="true" />
+          Ampliar
+        </Box>
+
         {/* Imagem da praga */}
         <Box
           position="relative"
-          w={{ base: '72px', sm: '96px' }}
+          w={{ base: '100px', sm: '132px' }}
           h={{ base: '72px', sm: '96px' }}
-          borderRadius="50%"
+          borderRadius="14px"
           overflow="hidden"
           border="3px solid rgba(255,255,255,0.35)"
           boxShadow="0 4px 16px rgba(0,0,0,0.25)"
           bg="rgba(255,255,255,0.12)"
         >
-          <Image
-            src={item.imageSrc}
-            alt={`Imagem de ${item.name}`}
-            fill
-            style={{ objectFit: 'cover' }}
-            onError={(e) => {
-              const target = e.target as HTMLImageElement
-              target.style.display = 'none'
-            }}
-          />
+          {hasImageError ? (
+            <Box
+              h="full"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              bg="rgba(255,255,255,0.14)"
+              color="white"
+              fontSize="2rem"
+              aria-label={`Imagem de ${item.name} indisponível`}
+            >
+              🌿
+            </Box>
+          ) : (
+            <Image
+              src={item.imageSrc}
+              alt={`Imagem de ${item.name}`}
+              fill
+              style={{ objectFit: 'cover' }}
+              onError={() => setHasImageError(true)}
+            />
+          )}
         </Box>
       </Box>
 

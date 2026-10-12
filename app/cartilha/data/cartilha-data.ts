@@ -396,6 +396,10 @@ export interface PestGalleryItemData {
   imageSrc: string
   /** Descrição didática exibida no modal */
   description: string
+  /** Tipo de dano causado na planta */
+  damageType?: string
+  /** Dica para identificação em campo */
+  fieldTip?: string
 }
 
 /**
@@ -628,42 +632,54 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       {
         id: 1,
         name: 'Gafanhoto',
-        imageSrc: '/assets/pragas/gafanhoto.png',
+        imageSrc: 'https://images.unsplash.com/photo-1533318087102-b3ad366ed041',
+        damageType: 'Desfolha folhas, caules e frutos ao se alimentar em grandes quantidades.',
+        fieldTip: 'Procure folhas mastigadas e a presença de adultos ou ninfas saltadoras.',
         description:
           'O gafanhoto é um inseto que voa em enxames gigantes e pode destruir campos inteiros de cultivo em poucas horas. Quando milhoes deles voam juntos, chamamos de praga de gafanhotos — um dos maiores pesadelos dos agricultores. Seu aparato bucal mastigador devasta folhas, caules e frutos de forma extremamente rapida.',
       },
       {
         id: 2,
-        name: 'Pulgao',
-        imageSrc: '/assets/pragas/pulgao.png',
+        name: 'Pulgão',
+        imageSrc: '/imagens/pragas/pulgao.jpg',
+        damageType: 'Suga a seiva e pode transmitir vírus entre plantas.',
+        fieldTip: 'Observe colônias pequenas na face inferior das folhas e brotos novos.',
         description:
           'O pulgão é um inseto minúsculo que suga a seiva das plantas, enfraquecendo-as progressivamente. Ele se reproduz com velocidade impressionante e pode cobrir toda uma planta em poucos dias. Além do dano direto, atua como vetor de vírus fitopatogênicos, transmitindo doenças de planta para planta durante a alimentação.',
       },
       {
         id: 3,
         name: 'Mosca-branca',
-        imageSrc: '/assets/pragas/mosca-branca.png',
+        imageSrc: '/imagens/pragas/mosca-branca.jpg',
+        damageType: 'Suga a seiva, causa clorose e favorece a fumagina nas folhas.',
+        fieldTip: 'Toque a planta e observe pequenos insetos brancos levantando voo.',
         description:
           'A mosca-branca é um inseto de pequeno porte que coloniza a face abaxial das folhas. Ela suga a seiva, provoca clorose foliar e excreta honeydew, favorecendo o desenvolvimento de fumagina. Sua alta capacidade de transmissão de geminiviruses representa uma das maiores ameaças fitossanitárias para culturas como tomate, feijão e mandioca.',
       },
       {
         id: 4,
         name: 'Broca',
-        imageSrc: '/assets/pragas/broca.png',
+        imageSrc: '/imagens/pragas/broca.jpg',
+        damageType: 'Perfura caules, frutos ou raízes, comprometendo os tecidos por dentro.',
+        fieldTip: 'Procure orifícios, serragem e galerias em caules, frutos ou raízes.',
         description:
           'A broca é a larva de diversas espécies de insetos das ordens Coleoptera e Lepidoptera. Ela perfura e escava o interior do caule, fruto ou raiz da planta, tornando os danos internos invisíveis até que o estrago já seja irreversível. O controle é especialmente difícil porque o inseto fica protegido dentro do tecido vegetal.',
       },
       {
         id: 5,
         name: 'Ácaro',
-        imageSrc: '/assets/pragas/acaro.png',
+        imageSrc: '/imagens/pragas/acaro.jpg',
+        damageType: 'Suga o conteúdo das células e provoca bronzeamento e queda das folhas.',
+        fieldTip: 'Verifique pontilhado amarelado, teias finas e folhas bronzeadas em tempo seco.',
         description:
           'Os ácaros são artropodes aracnídeos de dimensões microscópicas, difíceis de visualizar a olho nu. Eles vivem na epiderme foliar e sugam o conteudo celular, causando bronzeamento, manchas amareladas e queda precoce de folhas. Em periodos de seca e calor intenso, sua velocidade de reproducao aumenta drasticamente, agravando as infestacoes.',
       },
       {
         id: 6,
         name: 'Trips',
-        imageSrc: '/assets/pragas/trips.png',
+        imageSrc: '/imagens/pragas/trips.jpg',
+        damageType: 'Raspa e suga células, causando estrias prateadas e transmitindo vírus.',
+        fieldTip: 'Observe estrias prateadas em folhas e frutos e insetos muito pequenos e estreitos.',
         description:
           'O trips é um inseto da ordem Thysanoptera de tamanho diminuto, quase imperceptível a olho nu. Ele raspa e suga as células epidérmicas das plantas, provocando estrias prateadas ou douradas características em folhas e frutos. Adicionalmente, é vetor de tospovirus altamente agressivos, como o Tomato spotted wilt virus (TSWV), que não tem cura nas plantas infectadas.',
       },

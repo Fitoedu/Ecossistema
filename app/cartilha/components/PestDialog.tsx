@@ -20,6 +20,7 @@
  */
 
 import Image from 'next/image'
+import { useState } from 'react'
 import {
   Box,
   Text,
@@ -63,6 +64,8 @@ export default function PestDialog({
   onClose,
 }: PestDialogProps) {
   const accent = PEST_ACCENT_PALETTE[selectedIndex % PEST_ACCENT_PALETTE.length]
+  const [imageErrorId, setImageErrorId] = useState<number | null>(null)
+  const hasImageError = selectedItem !== null && imageErrorId === selectedItem.id
 
   return (
     <Portal>
@@ -135,16 +138,28 @@ export default function PestDialog({
                     boxShadow="0 8px 32px rgba(0,0,0,0.30)"
                     bg="rgba(255,255,255,0.15)"
                   >
-                    <Image
-                      src={selectedItem.imageSrc}
-                      alt={`Imagem de ${selectedItem.name}`}
-                      fill
-                      style={{ objectFit: 'contain' }}
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement
-                        target.style.display = 'none'
-                      }}
-                    />
+                    {hasImageError ? (
+                      <Box
+                        h="full"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        color="white"
+                        fontSize="3rem"
+                        bg="rgba(255,255,255,0.12)"
+                        aria-label={`Imagem de ${selectedItem.name} indisponível`}
+                      >
+                        🌿
+                      </Box>
+                    ) : (
+                      <Image
+                        src={selectedItem.imageSrc}
+                        alt={`Imagem de ${selectedItem.name}`}
+                        fill
+                        style={{ objectFit: 'cover' }}
+                        onError={() => setImageErrorId(selectedItem.id)}
+                      />
+                    )}
                   </Box>
                 </Box>
 
@@ -191,6 +206,26 @@ export default function PestDialog({
                     >
                       {selectedItem.description}
                     </Text>
+                    {selectedItem.damageType && (
+                      <Box bg="orange.50" borderLeft="4px solid" borderColor="orange.400" p={3} borderRadius="md">
+                        <Text fontSize="0.72rem" fontWeight="800" color="orange.800" mb={1}>
+                          Tipo de dano
+                        </Text>
+                        <Text fontSize="0.8rem" color="gray.700" lineHeight="1.5">
+                          {selectedItem.damageType}
+                        </Text>
+                      </Box>
+                    )}
+                    {selectedItem.fieldTip && (
+                      <Box bg="green.50" borderLeft="4px solid" borderColor="green.500" p={3} borderRadius="md">
+                        <Text fontSize="0.72rem" fontWeight="800" color="green.800" mb={1}>
+                          Dica de identificação em campo
+                        </Text>
+                        <Text fontSize="0.8rem" color="gray.700" lineHeight="1.5">
+                          {selectedItem.fieldTip}
+                        </Text>
+                      </Box>
+                    )}
                   </VStack>
                 </DialogBody>
               </>
