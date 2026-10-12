@@ -323,11 +323,9 @@ export default function PageNavigation({
     <Box
       as="nav"
       aria-label="Navegação da cartilha"
-      position="fixed"
+      position="sticky"
       bottom={0}
-      left={0}
-      right={0}
-      zIndex={50}
+      zIndex={10}
       style={{
         background: [
           'linear-gradient(180deg, rgba(248,252,249,0) 0%, rgba(248,252,249,0.96) 18%)',

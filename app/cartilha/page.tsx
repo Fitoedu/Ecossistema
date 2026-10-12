@@ -119,22 +119,23 @@ export default function CartilhaPage() {
           as="main"
           maxW="780px"
           mx="auto"
-          pb={{ base: '140px', sm: '130px' }}
           px={{ base: 4, sm: 0 }}
           id="main-content"
         >
           <PageTransitionWrapper pageKey={animKey} direction={direction}>
             {renderPage(page, handleSelectPest)}
           </PageTransitionWrapper>
-        </Box>
 
-        <PageController
-          currentPage={currentPage}
-          totalPages={TOTAL_PAGES}
-          onPrev={handlePrev}
-          onNext={handleNext}
-          onGoTo={goTo}
-        />
+          <Box as="footer">
+            <PageController
+              currentPage={currentPage}
+              totalPages={TOTAL_PAGES}
+              onPrev={handlePrev}
+              onNext={handleNext}
+              onGoTo={goTo}
+            />
+          </Box>
+        </Box>
       </Box>
 
       {/*
