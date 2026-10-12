@@ -31,6 +31,7 @@ import type {
 import { Avatar } from "./Avatar";
 import BeforeAfterSlider from "./BeforeAfterSlider";
 import MascotSpeech from "./MascotSpeech";
+import DragAndDropSorter from "./DragAndDropSorter";
 
 function SectionBadge({ children }: { children: React.ReactNode }) {
   return (
@@ -1090,6 +1091,45 @@ export function PageLapbook({ data }: { data: PageLapbookData }) {
         columns={data.columns ?? 2}
       />
       {data.callouts && <CalloutList callouts={data.callouts} startMt={5} />}
+
+      {/* ─── Atividade interativa — exclusiva da página p13 ─────────────────── */}
+      {data.id === 'p13' && (
+        <Box mt={6}>
+          <Box
+            h="1px"
+            bg="linear-gradient(90deg, transparent, rgba(46,125,50,0.25), transparent)"
+            mb={5}
+          />
+
+          {/* Prompt pedagógico da Dona Fito */}
+          <Box mb={5}>
+            <MascotSpeech
+              speech={
+                <>
+                  Agora é a sua vez de praticar! Classifique cada ação
+                  abaixo em{' '}
+                  <Text as="strong" color="#2E7D32">
+                    Prática Segura
+                  </Text>{' '}
+                  ou{' '}
+                  <Text as="strong" color="#BF360C">
+                    Risco Fitossanitário
+                  </Text>
+                  . Você pode clicar ou arrastar os cartões!
+                </>
+              }
+              variant="question"
+              delay={0.1}
+            />
+          </Box>
+
+          {/* Atividade de classificação */}
+          <DragAndDropSorter
+            safeLabel="Práticas Seguras"
+            riskLabel="Riscos Fitossanitários"
+          />
+        </Box>
+      )}
     </Box>
   );
 }
