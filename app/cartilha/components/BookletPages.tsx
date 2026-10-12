@@ -3,8 +3,8 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { Box, Grid, HStack, Text, VStack, SimpleGrid } from "@chakra-ui/react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Apple, Droplets, Leaf, Sun } from "lucide-react";
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { Apple, BarChart3, Coins, Droplets, Leaf, Sun, TreePine } from "lucide-react";
 import LiftTheFlap from "./LiftTheFlap";
 import LapbookFolder, { type PocketCard } from "./LapbookFolder";
 import { PestCardGrid } from "./PestCard";
@@ -1496,7 +1496,282 @@ export function PageHotspot({ data }: { data: PageHotspotData }) {
   );
 }
 
+const PRAGA_STAT_CARDS = [
+  {
+    front: 'Perdas Mundiais (FAO)',
+    back: '40% das colheitas perdidas por pragas',
+    icon: BarChart3,
+    bg: 'green.500',
+  },
+  {
+    front: 'Prejuízo Econômico',
+    back: 'R$ Bilhões perdidos anualmente no Brasil',
+    icon: Coins,
+    bg: 'orange.400',
+  },
+  {
+    front: 'Risco Ambiental',
+    back: 'Ameaça ao ecossistema local por espécies invasoras',
+    icon: TreePine,
+    bg: 'green.800',
+  },
+] as const
+
+function PragaStatRevealCard({
+  card,
+}: {
+  card: (typeof PRAGA_STAT_CARDS)[number]
+}) {
+  const [revealed, setRevealed] = useState(false)
+  const Icon = card.icon
+
+  return (
+    <Box
+      h="150px"
+      cursor="pointer"
+      position="relative"
+      style={{ perspective: '1000px' }}
+      onClick={() => setRevealed((current) => !current)}
+      onMouseEnter={() => setRevealed(true)}
+      onMouseLeave={() => setRevealed(false)}
+      role="button"
+      tabIndex={0}
+      aria-label={`${card.front}: ${revealed ? card.back : 'revelar informação'}`}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault()
+          setRevealed((current) => !current)
+        }
+      }}
+    >
+      <motion.div
+        style={{ width: '100%', height: '100%', transformStyle: 'preserve-3d' }}
+        animate={{ rotateY: revealed ? 180 : 0 }}
+        transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+      >
+        <Box
+          position="absolute"
+          inset={0}
+          style={{ backfaceVisibility: 'hidden' }}
+          bg={card.bg}
+          color="white"
+          borderRadius="18px"
+          p={5}
+          display="flex"
+          flexDir="column"
+          alignItems="center"
+          justifyContent="center"
+          textAlign="center"
+          boxShadow="0 5px 16px rgba(46,125,50,0.18)"
+        >
+          <Icon size={28} strokeWidth={2.1} aria-hidden="true" />
+          <Text mt={3} fontSize="0.9rem" fontWeight="800" lineHeight="1.25">
+            {card.front}
+          </Text>
+        </Box>
+        <Box
+          position="absolute"
+          inset={0}
+          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+          bg={card.bg}
+          color="white"
+          borderRadius="18px"
+          p={5}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          textAlign="center"
+          boxShadow="0 5px 16px rgba(46,125,50,0.18)"
+        >
+          <Text fontSize="0.92rem" fontWeight="800" lineHeight="1.45">
+            {card.back}
+          </Text>
+        </Box>
+      </motion.div>
+    </Box>
+  )
+}
+
+const PRAGA_IMPACT_IMAGE_URLS = [
+  '/imagens/impactos/reducao-producao.jpg',
+  '/imagens/impactos/aumento-custos.jpg',
+  '/imagens/impactos/bloqueio-exportacoes.jpg',
+  '/imagens/impactos/mudancas-climaticas.jpg',
+] as const
+
+function PragaImpactImage({
+  imageUrl,
+  title,
+}: {
+  imageUrl: string
+  title: string
+}) {
+  const [hasError, setHasError] = useState(false)
+
+  return (
+    <Box
+      position="relative"
+      minH={{ base: '150px', md: '170px' }}
+      borderRadius="lg"
+      overflow="hidden"
+      border="1px solid"
+      borderColor="green.200"
+      boxShadow="sm"
+      bg="green.50"
+    >
+      {!hasError ? (
+        <Image
+          src={imageUrl}
+          alt={`Fotografia ilustrativa: ${title}`}
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          style={{ objectFit: 'cover' }}
+          onError={() => setHasError(true)}
+        />
+      ) : (
+        <Box
+          h="full"
+          minH={{ base: '150px', md: '170px' }}
+          display="flex"
+          flexDir="column"
+          alignItems="center"
+          justifyContent="center"
+          textAlign="center"
+          px={5}
+          bgGradient="linear(to-br, green.50, yellow.50)"
+        >
+          <Text fontSize="2rem" aria-hidden="true">
+            🌱
+          </Text>
+          <Text mt={2} fontSize="0.72rem" fontWeight="700" color="green.800">
+            Fotografia de campo em breve
+          </Text>
+          <Text mt={1} fontSize="0.65rem" color="green.700">
+            Imagem ilustrativa do impacto
+          </Text>
+        </Box>
+      )}
+    </Box>
+  )
+}
+
+function PragaImpactAccordion({ impacts }: { impacts: PageImpactData['impacts'] }) {
+  const [openImpact, setOpenImpact] = useState<number | null>(null)
+
+  return (
+    <VStack gap={3} align="stretch">
+      {impacts.map((item, index) => {
+        const isOpen = openImpact === index
+
+        return (
+          <Box
+            key={item.title}
+            border="1px solid"
+            borderColor={isOpen ? 'green.400' : 'green.100'}
+            borderRadius="16px"
+            bg={isOpen ? 'green.50' : 'white'}
+            overflow="hidden"
+            transition="all 0.2s ease"
+          >
+            <Box
+              as="button"
+              w="full"
+              display="flex"
+              alignItems="center"
+              gap={{ base: 3, sm: 4 }}
+              p={{ base: '14px 16px', sm: '16px 20px' }}
+              textAlign="left"
+              cursor="pointer"
+              onClick={() => setOpenImpact(isOpen ? null : index)}
+              aria-expanded={isOpen}
+              _hover={{ bg: 'green.50' }}
+            >
+              <Box
+                w="44px"
+                h="44px"
+                borderRadius="12px"
+                bg="green.600"
+                color="white"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                flexShrink={0}
+                fontSize="1.1rem"
+                fontWeight="800"
+              >
+                {index + 1}
+              </Box>
+              <Text flex="1" fontWeight="700" fontSize="0.9rem" color="green.900">
+                {item.title}
+              </Text>
+              <Text color="green.700" fontSize="1.2rem" aria-hidden="true">
+                {isOpen ? '−' : '+'}
+              </Text>
+            </Box>
+            <AnimatePresence initial={false}>
+              {isOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.22, ease: 'easeOut' }}
+                >
+                  <Box px={{ base: 4, sm: 5 }} pb={4} pl={{ base: 4, sm: 5 }}>
+                    <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: 3, md: 5 }} alignItems="center">
+                      <Text fontSize="0.78rem" color="gray.700" lineHeight="1.55">
+                        {item.desc}
+                      </Text>
+                      <PragaImpactImage
+                        imageUrl={PRAGA_IMPACT_IMAGE_URLS[index]}
+                        title={item.title}
+                      />
+                    </SimpleGrid>
+                  </Box>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </Box>
+        )
+      })}
+    </VStack>
+  )
+}
+
+function PragaAgricolaInteractivePage({ data }: { data: PageImpactData }) {
+  return (
+    <Box>
+      <SectionBadge>{data.badgeLabel}</SectionBadge>
+      <PageTitle>
+        {data.title}
+        {data.titleHighlight && <Highlight>{data.titleHighlight}</Highlight>}
+      </PageTitle>
+      <LeadText>{data.leadText}</LeadText>
+
+      <Text
+        fontSize="0.78rem"
+        fontWeight="600"
+        color="green.700"
+        textAlign="center"
+        mb={3}
+      >
+        Clique nas estatísticas do topo para revelar os números e selecione os impactos para explorar!
+      </Text>
+      <SimpleGrid columns={{ base: 1, sm: 3 }} gap={{ base: 3, sm: 4 }} mb={7}>
+        {PRAGA_STAT_CARDS.map((card) => (
+          <PragaStatRevealCard key={card.front} card={card} />
+        ))}
+      </SimpleGrid>
+
+      <SectionHeading>Principais impactos</SectionHeading>
+      <PragaImpactAccordion impacts={data.impacts} />
+    </Box>
+  )
+}
+
 export function PageImpact({ data }: { data: PageImpactData }) {
+  if (data.id === 'p04') {
+    return <PragaAgricolaInteractivePage data={data} />
+  }
 
   return (
     <Box>
