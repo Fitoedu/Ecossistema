@@ -29,6 +29,8 @@ import type {
   ImageCardData,
 } from "../data/cartilha-data";
 import { Avatar } from "./Avatar";
+import BeforeAfterSlider from "./BeforeAfterSlider";
+import MascotSpeech from "./MascotSpeech";
 
 function SectionBadge({ children }: { children: React.ReactNode }) {
   return (
@@ -772,77 +774,15 @@ export function PageCover({ data }: { data: PageCoverData }) {
         </Box>
       </motion.div>
 
-      {/* ── Plant Cards ── */}
-      <Box w="full" maxW="480px" mx="auto" mb={8} position="relative">
-        {/* VS badge centred between the two cards */}
-        <Box
-          position="absolute"
-          left="50%"
-          top="50%"
-          transform="translate(-50%, -50%)"
-          bg="white"
-          borderRadius="50%"
-          w="38px"
-          h="38px"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          fontSize="11px"
-          fontWeight="800"
-          color="#1B5E20"
-          boxShadow={[
-            "0 1px 0 rgba(255,255,255,0.9) inset",
-            "0 4px 12px rgba(46,125,50,0.20)",
-            "0 2px 4px rgba(0,0,0,0.10)",
-          ].join(", ")}
-          border="2px solid rgba(46,125,50,0.18)"
-          zIndex={10}
-          aria-hidden="true"
-        >
-          VS
-        </Box>
-
-        <HStack gap={3} align="stretch">
-          <motion.div
-            style={{ flex: 1, minWidth: 0, display: "flex" }}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: 0.05 }}
-          >
-            <PlantCard
-              variant="healthy"
-              emoji="🌿"
-              title="Planta Saudável"
-              desc="Folhas verdes e viçosas, crescimento forte e colheita abundante."
-              gradient="linear-gradient(145deg, #C8E6C9 0%, #A5D6A7 60%, #81C784 100%)"
-              accentColor="#2E7D32"
-              textColor="#1B5E20"
-              glowColor="rgba(46,125,50,0.20)"
-              patternA="rgba(255,255,255,0.18)"
-              patternB="rgba(255,255,255,0.12)"
-            />
-          </motion.div>
-
-          <motion.div
-            style={{ flex: 1, minWidth: 0, display: "flex" }}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: 0.15 }}
-          >
-            <PlantCard
-              variant="sick"
-              emoji="🍂"
-              title="Planta Doente"
-              desc="Manchas, folhas murchas e frutos danificados por pragas e doenças."
-              gradient="linear-gradient(145deg, #FFCDD2 0%, #EF9A9A 60%, #E57373 100%)"
-              accentColor="#C62828"
-              textColor="#7F1D1D"
-              glowColor="rgba(198,40,40,0.18)"
-              patternA="rgba(255,255,255,0.16)"
-              patternB="rgba(255,255,255,0.10)"
-            />
-          </motion.div>
-        </HStack>
+      {/* ── BeforeAfterSlider — comparação fotográfica ── */}
+      <Box w="full" maxW="480px" mx="auto" mb={8}>
+        <BeforeAfterSlider
+          beforeImage="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?q=80&w=800&auto=format&fit=crop"
+          afterImage="https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?q=80&w=800&auto=format&fit=crop"
+          beforeLabel="Planta Saudável"
+          afterLabel="Planta Doente"
+          altText="Comparação de plantação saudável versus doente"
+        />
       </Box>
 
       {/* ── Title ── */}
@@ -939,11 +879,159 @@ export function PageCover({ data }: { data: PageCoverData }) {
       <Box w="full" maxW="480px" mx="auto">
         <PersonaGreeting/>
       </Box>
+
     </VStack>
   );
 }
 
+/* ─── Pilares de aprendizado — grid exclusivo da Página 01 ──────────────────
+   Renderiza 4 cards semânticos com ícone textual, título e fundo suave.
+   Sem emojis inline — os ícones são renderizados como texto tipográfico
+   dentro de um Box com fundo de acento, mantendo o visual académico.
+──────────────────────────────────────────────────────────────────────────── */
+
+const PILARES = [
+  {
+    symbol: '\u03A6',  // Φ — representa Fito / ciência vegetal
+    label: 'O que é Fitossanidade?',
+    desc: 'A ciência que cuida da saúde das plantas e garante colheitas saudáveis.',
+    accentBg: '#E8F5E9',
+    accentColor: '#2E7D32',
+    borderColor: 'rgba(46,125,50,0.18)',
+  },
+  {
+    symbol: '\u25B2',  // ▲ — triângulo de alerta/atenção
+    label: 'O que são Pragas Agrícolas?',
+    desc: 'Organismos que atacam plantas e causam perdas na produção de alimentos.',
+    accentBg: '#FFF3E0',
+    accentColor: '#E65100',
+    borderColor: 'rgba(230,81,0,0.18)',
+  },
+  {
+    symbol: '\u25CE',  // ◎ — alvo/localização
+    label: 'Casos Reais da Região Norte',
+    desc: 'Pragas e doenças que já afetaram lavouras do Amapá e da Amazônia.',
+    accentBg: '#E3F2FD',
+    accentColor: '#1565C0',
+    borderColor: 'rgba(21,101,192,0.18)',
+  },
+  {
+    symbol: '\u25A0',  // ■ — bloco/proteção/escudo
+    label: 'Como Proteger e Evitar',
+    desc: 'Técnicas e boas práticas para prevenir e controlar pragas com segurança.',
+    accentBg: '#F3E5F5',
+    accentColor: '#6A1B9A',
+    borderColor: 'rgba(106,27,154,0.18)',
+  },
+] as const
+
+function PillarGrid() {
+  return (
+    <SimpleGrid columns={{ base: 1, sm: 2 }} gap={3} mt={1}>
+      {PILARES.map((p, i) => (
+        <motion.div
+          key={p.label}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: 'easeOut', delay: 0.12 + i * 0.07 }}
+        >
+          <Box
+            bg="white"
+            border={`1.5px solid ${p.borderColor}`}
+            borderRadius="16px"
+            p={{ base: '14px 16px', sm: '16px 18px' }}
+            display="flex"
+            alignItems="flex-start"
+            gap={3}
+            boxShadow="0 2px 8px rgba(0,0,0,0.05)"
+            h="full"
+          >
+            {/* Símbolo tipográfico como ícone */}
+            <Box
+              w="36px"
+              h="36px"
+              borderRadius="10px"
+              bg={p.accentBg}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              flexShrink={0}
+              aria-hidden="true"
+            >
+              <Text
+                fontSize="1.1rem"
+                fontWeight="800"
+                color={p.accentColor}
+                lineHeight="1"
+                userSelect="none"
+              >
+                {p.symbol}
+              </Text>
+            </Box>
+
+            <Box flex="1" minW={0}>
+              <Text
+                fontSize={{ base: '0.8rem', sm: '0.83rem' }}
+                fontWeight="700"
+                color="#1a2e1a"
+                lineHeight="1.35"
+                mb="4px"
+              >
+                {p.label}
+              </Text>
+              <Text
+                fontSize={{ base: '0.74rem', sm: '0.77rem' }}
+                color="#555"
+                lineHeight="1.55"
+              >
+                {p.desc}
+              </Text>
+            </Box>
+          </Box>
+        </motion.div>
+      ))}
+    </SimpleGrid>
+  )
+}
+
+/* ─── PageContent ────────────────────────────────────────────────────────── */
+
 export function PageContent({ data }: { data: PageContentData }) {
+  /* Layout especial para a Página 01 — Apresentação */
+  if (data.id === 'p01') {
+    return (
+      <Box>
+        <SectionBadge>{data.badgeLabel}</SectionBadge>
+
+        {/* Título principal */}
+        <PageTitle>
+          {data.title}
+          {data.titleHighlight && <Highlight>{data.titleHighlight}</Highlight>}
+          {data.titleSuffix}
+        </PageTitle>
+
+        {/* Único balão da Dona Fito — fala do topCallout */}
+        {data.topCallout && (
+          <Box mb={5}>
+            <MascotSpeech
+              speech={data.topCallout.text}
+              avatarSide="left"
+              variant="default"
+              delay={0.15}
+            />
+          </Box>
+        )}
+
+        {/* Texto de introdução */}
+        <LeadText>{data.leadText}</LeadText>
+
+        {/* Grid dos 4 pilares do aprendizado */}
+        <PillarGrid />
+      </Box>
+    )
+  }
+
+  /* Layout padrão para todas as demais páginas de conteúdo */
   return (
     <Box>
       <SectionBadge>{data.badgeLabel}</SectionBadge>
