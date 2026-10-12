@@ -997,7 +997,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     badgeLabel: 'Boas Praticas',
     lapbookBadge: 'Como Proteger a Lavoura?',
     lapbookTitle: 'Como Evitar e Controlar as Pragas Agrícolas?',
-    lapbookSubtitle: 'Levante cada aba e descubra as ferramentas que protegem nossas lavouras!',
+    lapbookSubtitle: 'Arraste ou clique nos cartões para classificar as atitudes de proteção da lavoura!',
     backgroundImageSrc: '/assets/cenarios/fundo-lapbook-teal.png',
     flaps: [
       {

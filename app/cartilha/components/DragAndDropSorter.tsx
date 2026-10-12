@@ -101,8 +101,9 @@ const DEFAULT_CARDS: SorterCard[] = [
 // ─── Paletas de cor ───────────────────────────────────────────────────────────
 
 const SAFE_PALETTE = {
-  zone: 'rgba(46,125,50,0.07)',
-  border: 'rgba(46,125,50,0.30)',
+  zone: 'rgba(46,125,50,0.10)',          // fundo sempre visível (verde claro)
+  zoneBg: '#F1F8F1',                      // bg sólido base da zona
+  border: 'rgba(46,125,50,0.35)',
   borderActive: '#2E7D32',
   header: '#2E7D32',
   headerBg: '#E8F5E9',
@@ -112,8 +113,9 @@ const SAFE_PALETTE = {
 }
 
 const RISK_PALETTE = {
-  zone: 'rgba(230,81,0,0.06)',
-  border: 'rgba(230,81,0,0.28)',
+  zone: 'rgba(230,81,0,0.09)',            // fundo sempre visível (laranja claro)
+  zoneBg: '#FFF3EE',                      // bg sólido base da zona
+  border: 'rgba(230,81,0,0.32)',
   borderActive: '#E65100',
   header: '#BF360C',
   headerBg: '#FBE9E7',
@@ -221,9 +223,16 @@ function SortableCard({
         boxShadow={
           isSelected
             ? '0 0 0 3px rgba(21,101,192,0.20), 0 4px 16px rgba(0,0,0,0.08)'
-            : '0 2px 8px rgba(0,0,0,0.06)'
+            : isDone
+            ? '0 1px 4px rgba(0,0,0,0.06)'
+            : '0 2px 10px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05)'
         }
-        transition="background 0.2s, border-color 0.2s, box-shadow 0.2s"
+        transition="background 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.18s"
+        _hover={!isDone && !isSelected ? {
+          transform: 'translateY(-2px)',
+          boxShadow: '0 6px 20px rgba(0,0,0,0.12), 0 2px 6px rgba(0,0,0,0.07)',
+          borderColor: 'rgba(0,0,0,0.18)',
+        } : {}}
         onClick={() => { if (!isDone) onSelect() }}
         onKeyDown={(e) => {
           if (!isDone && (e.key === 'Enter' || e.key === ' ')) {
@@ -346,11 +355,12 @@ function DropZone({ zone, label, cards, isTargeted, onClick, zoneRef }: DropZone
     <Box
       ref={zoneRef}
       minH="140px"
-      bg={isTargeted ? pal.zone : 'rgba(0,0,0,0.02)'}
+      bg={isTargeted ? pal.zone : pal.zoneBg}
       border={`2px dashed ${isTargeted ? pal.borderActive : pal.border}`}
       borderRadius="18px"
       p={{ base: 3, sm: 4 }}
-      transition="background 0.2s, border-color 0.2s"
+      transition="background 0.2s, border-color 0.2s, box-shadow 0.2s"
+      boxShadow={isTargeted ? `0 0 0 4px ${pal.zone}` : 'none'}
       cursor="pointer"
       onClick={onClick}
       role="button"
