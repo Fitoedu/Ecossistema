@@ -1,417 +1,243 @@
 'use client'
 
+import Image from 'next/image'
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Box, Flex, Text, SimpleGrid } from '@chakra-ui/react'
+import { AnimatePresence, motion } from 'framer-motion'
+import {
+  Box,
+  DialogBackdrop,
+  DialogBody,
+  DialogCloseTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogPositioner,
+  DialogRoot,
+  DialogTitle,
+  Flex,
+  Portal,
+  SimpleGrid,
+  Text,
+  VStack,
+} from '@chakra-ui/react'
+import { Search } from 'lucide-react'
 import type { HotspotItemData, MicroorgCategory } from '../data/cartilha-data'
-
-// ─── Constantes de design ─────────────────────────────────────────────────────
 
 const CATEGORY_META: Record<
   MicroorgCategory,
-  { label: string; badgeBg: string; dotColor: string }
+  { label: string; color: string; soft: string }
 > = {
-  fungo: {
-    label: 'Fungo',
-    badgeBg: 'linear-gradient(135deg, #BF360C, #E64A19)',
-    dotColor: '#FF8A65',
-  },
-  bacteria: {
-    label: 'Bactéria',
-    badgeBg: 'linear-gradient(135deg, #0D47A1, #1976D2)',
-    dotColor: '#64B5F6',
-  },
-  virus: {
-    label: 'Vírus',
-    badgeBg: 'linear-gradient(135deg, #4A148C, #7B1FA2)',
-    dotColor: '#CE93D8',
-  },
-  fitoplasma: {
-    label: 'Fitoplasma',
-    badgeBg: 'linear-gradient(135deg, #33691E, #689F38)',
-    dotColor: '#AED581',
-  },
+  fungo: { label: 'Fungo', color: 'orange.700', soft: 'orange.50' },
+  bacteria: { label: 'Bactéria', color: 'yellow.800', soft: 'yellow.50' },
+  virus: { label: 'Vírus', color: 'green.700', soft: 'green.50' },
+  fitoplasma: { label: 'Fitoplasma', color: 'teal.700', soft: 'teal.50' },
 }
 
-// ─── Variantes Framer Motion ──────────────────────────────────────────────────
-
-const triggerVariants = {
-  initial: { opacity: 0, scale: 0.4 },
-  animate: {
-    opacity: 1,
-    scale: 1,
-    transition: { type: 'spring' as const, bounce: 0.5, duration: 0.55 },
-  },
-  exit: { opacity: 0, scale: 0.3, transition: { duration: 0.22, ease: 'easeIn' as const } },
-}
-
-const cardVariants = {
-  initial: { opacity: 0, y: 18, scale: 0.92 },
-  animate: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { type: 'spring' as const, bounce: 0.3, duration: 0.5 },
-  },
-  exit: {
-    opacity: 0,
-    y: 12,
-    scale: 0.94,
-    transition: { duration: 0.22, ease: 'easeIn' as const },
-  },
-}
-
-// ─── HotspotCard ──────────────────────────────────────────────────────────────
-
-function HotspotCard({ item }: { item: HotspotItemData }) {
-  const [isOpen, setIsOpen] = useState(false)
-  const meta = CATEGORY_META[item.category]
+function InvestigationModal({
+  item,
+  onClose,
+}: {
+  item: HotspotItemData | null
+  onClose: () => void
+}) {
+  const meta = item ? CATEGORY_META[item.category] : CATEGORY_META.fungo
 
   return (
-    <Box
-      position="relative"
-      minHeight={{ base: '260px', sm: '300px' }}
-      borderRadius="18px"
-      overflow="hidden"
-      bg="linear-gradient(135deg, #1B5E20, #2E7D32)"
-      backgroundImage={`url('${item.backgroundImageSrc}')`}
-      backgroundSize="cover"
-      backgroundPosition="center"
-      cursor={isOpen ? 'default' : 'pointer'}
-      role="button"
-      aria-label={`Investigar: ${item.name}`}
-      aria-expanded={isOpen}
-      onClick={() => { if (!isOpen) setIsOpen(true) }}
-      _hover={!isOpen ? { transform: 'translateY(-3px)' } : undefined}
-      transition="transform 0.25s ease"
-      boxShadow="0 6px 28px rgba(0,0,0,0.25)"
-    >
-      {/* Overlay escuro sobre a imagem */}
-      <Box
-        position="absolute"
-        inset={0}
-        bg={
-          isOpen
-            ? 'rgba(0,0,0,0.6)'
-            : 'linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 60%, transparent 100%)'
-        }
-        transition="background 0.4s ease"
-        borderRadius="18px"
-        aria-hidden="true"
-      />
-
-      {/* Nome da doença no rodapé — visível apenas no estado fechado */}
-      <AnimatePresence>
-        {!isOpen && (
-          <motion.div
-            key="label"
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 6 }}
-            style={{
-              position: 'absolute',
-              bottom: 14,
-              left: 14,
-              right: 14,
-              zIndex: 2,
-              pointerEvents: 'none',
-            }}
+    <Portal>
+      <DialogRoot
+        open={Boolean(item)}
+        onOpenChange={(details) => {
+          if (!details.open) onClose()
+        }}
+        placement="center"
+        motionPreset="slide-in-bottom"
+        scrollBehavior="inside"
+      >
+        <DialogBackdrop bg="blackAlpha.600" backdropFilter="blur(8px)" />
+        <DialogPositioner>
+          <DialogContent
+            mx={{ base: 3, sm: 4 }}
+            maxW={{ base: '100%', sm: '560px' }}
+            w="full"
+            borderRadius={{ base: '20px', sm: '24px' }}
+            overflow="hidden"
+            boxShadow="0 28px 70px rgba(0,0,0,0.3)"
           >
-            <Text
-              fontSize={{ base: '0.75rem', sm: '0.82rem' }}
-              fontWeight="800"
-              color="white"
-              textTransform="uppercase"
-              letterSpacing="0.08em"
-              textShadow="0 1px 6px rgba(0,0,0,0.8)"
-            >
-              {item.name}
-            </Text>
-            <Text fontSize="0.65rem" color="rgba(255,255,255,0.75)" fontWeight="600" mt="2px">
-              {meta.label}
-            </Text>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* ESTADO 1: Gatilho Circular Pulsante */}
-      <AnimatePresence>
-        {!isOpen && (
-          <motion.div
-            key="trigger"
-            variants={triggerVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            style={{
-              position: 'absolute',
-              inset: 0,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 3,
-            }}
-          >
-            <motion.div
-              animate={{ scale: [1, 1.06, 1] }}
-              transition={{ repeat: Infinity, duration: 2.2, ease: 'easeInOut' }}
-            >
-              <Box
-                w={{ base: '88px', sm: '104px' }}
-                h={{ base: '88px', sm: '104px' }}
-                borderRadius="50%"
-                bg="rgba(27,94,32,0.93)"
-                border="3px dashed white"
-                display="flex"
-                flexDir="column"
-                alignItems="center"
-                justifyContent="center"
-                gap="5px"
-                boxShadow="0 8px 32px rgba(0,0,0,0.5), 0 0 0 6px rgba(255,255,255,0.1)"
-                backdropFilter="blur(3px)"
-              >
+            {item && (
+              <>
                 <Box
-                  w="32px"
-                  h="32px"
-                  borderRadius="50%"
-                  bg="#FBC02D"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  boxShadow="0 2px 8px rgba(0,0,0,0.3)"
+                  h={{ base: '220px', sm: '290px' }}
+                  position="relative"
+                  overflow="hidden"
+                  bg={meta.soft}
                 >
-                  <Text fontSize="1rem" fontWeight="900" color="#212121" lineHeight={1}>
-                    ?
-                  </Text>
-                </Box>
-                <Text
-                  fontSize={{ base: '0.55rem', sm: '0.6rem' }}
-                  fontWeight="700"
-                  color="white"
-                  textAlign="center"
-                  lineHeight="1.25"
-                  px="10px"
-                >
-                  O que há nesta folha?
-                </Text>
-              </Box>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* ESTADO 2: Card de Descoberta */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            key="discovery-card"
-            variants={cardVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            style={{
-              position: 'absolute',
-              inset: '10px',
-              zIndex: 5,
-              display: 'flex',
-              flexDirection: 'column',
-            }}
-          >
-            <Box
-              bg="white"
-              borderRadius="14px"
-              boxShadow="xl"
-              overflow="hidden"
-              h="full"
-              display="flex"
-              flexDir="column"
-            >
-              {/* Cabeçalho colorido por categoria */}
-              <Flex
-                align="center"
-                justify="space-between"
-                px={3}
-                py="10px"
-                bg={meta.badgeBg}
-                flexShrink={0}
-              >
-                <Flex align="center" gap="7px" flex={1} minW={0}>
-                  <Box
-                    w="8px"
-                    h="8px"
-                    borderRadius="50%"
-                    bg={meta.dotColor}
-                    flexShrink={0}
-                    boxShadow={`0 0 6px ${meta.dotColor}`}
+                  <Image
+                    src={item.backgroundImageSrc}
+                    alt={`Fotografia ampliada de ${item.name}`}
+                    fill
+                    sizes="(max-width: 560px) 100vw, 560px"
+                    style={{ objectFit: 'cover' }}
                   />
-                  <Text
-                    fontSize="0.78rem"
-                    fontWeight="900"
-                    color="white"
-                    textTransform="uppercase"
-                    letterSpacing="0.05em"
-                    overflow="hidden"
-                    style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}
-                  >
-                    {item.name}
-                  </Text>
                   <Box
-                    bg="rgba(255,255,255,0.22)"
-                    borderRadius="999px"
-                    px="8px"
-                    py="2px"
-                    flexShrink={0}
-                  >
-                    <Text
-                      fontSize="0.55rem"
-                      fontWeight="700"
-                      color="white"
-                      whiteSpace="nowrap"
-                    >
+                    position="absolute"
+                    inset={0}
+                    bg="linear-gradient(to top, rgba(0,0,0,0.55), transparent 55%)"
+                  />
+                  <Box position="absolute" left={5} right={5} bottom={4}>
+                    <Text color="white" fontSize={{ base: '1.35rem', sm: '1.65rem' }} fontWeight="900">
+                      {item.name}
+                    </Text>
+                    <Text color="white" fontSize="0.8rem" fontWeight="700">
                       {meta.label}
                     </Text>
                   </Box>
-                </Flex>
+                </Box>
 
-                {/* Botão Fechar — touch target adequado */}
-                <Box
-                  as="button"
-                  aria-label={`Fechar informações sobre ${item.name}`}
-                  w="32px"
-                  h="32px"
+                <DialogHeader px={{ base: 4, sm: 6 }} pt={5} pb={2}>
+                  <DialogTitle color="green.900" fontSize={{ base: '1.05rem', sm: '1.2rem' }}>
+                    Lente de Investigação
+                  </DialogTitle>
+                </DialogHeader>
+                <DialogCloseTrigger
+                  top={3}
+                  right={3}
+                  w="36px"
+                  h="36px"
+                  bg="rgba(0,0,0,0.35)"
+                  color="white"
                   borderRadius="50%"
-                  bg="rgba(255,255,255,0.22)"
-                  border="1.5px solid rgba(255,255,255,0.45)"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  flexShrink={0}
-                  ml={2}
-                  cursor="pointer"
-                  _hover={{ bg: 'rgba(255,255,255,0.38)' }}
-                  transition="background 0.2s"
-                  onClick={(e: React.MouseEvent) => {
-                    e.stopPropagation()
-                    setIsOpen(false)
-                  }}
+                  fontSize="1.35rem"
+                  fontWeight="800"
+                  lineHeight="1"
+                  _hover={{ bg: 'rgba(0,0,0,0.55)' }}
+                  _focusVisible={{ outline: '3px solid', outlineColor: 'yellow.300' }}
                 >
-                  <Text fontSize="0.72rem" fontWeight="900" color="white" lineHeight={1}>
-                    ✕
-                  </Text>
-                </Box>
-              </Flex>
-
-              {/* Corpo com scroll */}
-              <Box
-                flex={1}
-                overflowY="auto"
-                p={3}
-                css={{
-                  '&::-webkit-scrollbar': { width: '3px' },
-                  '&::-webkit-scrollbar-track': { background: '#f5f5f5' },
-                  '&::-webkit-scrollbar-thumb': { background: '#ccc', borderRadius: '2px' },
-                }}
-              >
-                {/* Conceito */}
-                <Box
-                  overflowY="auto"
-                  maxHeight="120px"
-                  mb={item.impactText || item.preventionText ? 2 : 0}
-                  css={{
-                    '&::-webkit-scrollbar': { width: '2px' },
-                    '&::-webkit-scrollbar-thumb': { background: '#ddd' },
-                  }}
-                >
-                  <Text fontSize="0.75rem" lineHeight="1.65" color="#212121">
-                    {item.concept}
-                  </Text>
-                </Box>
-
-                {/* Destaque de Impacto */}
-                {item.impactText && (
-                  <Box
-                    bg="#FFEBEE"
-                    border="1px solid rgba(198,40,40,0.2)"
-                    borderRadius="10px"
-                    p="9px 11px"
-                    mb={item.preventionText ? 2 : 0}
-                  >
-                    <Flex align="center" gap="5px" mb="3px">
-                      <Text fontSize="0.62rem" lineHeight={1}>⚠️</Text>
-                      <Text
-                        fontSize="0.6rem"
-                        fontWeight="800"
-                        color="#B71C1C"
-                        textTransform="uppercase"
-                        letterSpacing="0.06em"
-                      >
-                        Impacto
+                  ×
+                </DialogCloseTrigger>
+                <DialogBody px={{ base: 4, sm: 6 }} pb={{ base: 6, sm: 8 }}>
+                  <VStack align="stretch" gap={3}>
+                    <Box bg={meta.soft} borderLeft="4px solid" borderColor={meta.color} p={3} borderRadius="md">
+                      <Text fontSize="0.72rem" fontWeight="800" color={meta.color} mb={1}>
+                        O que observar
                       </Text>
-                    </Flex>
-                    <Text fontSize="0.69rem" color="#7F0000" lineHeight="1.5">
-                      {item.impactText}
-                    </Text>
-                  </Box>
-                )}
-
-                {/* Destaque de Prevenção */}
-                {item.preventionText && (
-                  <Box
-                    bg="#FFFDE7"
-                    border="1px solid rgba(251,192,45,0.35)"
-                    borderRadius="10px"
-                    p="9px 11px"
-                  >
-                    <Flex align="center" gap="5px" mb="3px">
-                      <Text fontSize="0.62rem" lineHeight={1}>🛡️</Text>
-                      <Text
-                        fontSize="0.6rem"
-                        fontWeight="800"
-                        color="#F57F17"
-                        textTransform="uppercase"
-                        letterSpacing="0.06em"
-                      >
-                        Prevenção
+                      <Text fontSize="0.85rem" color="gray.700" lineHeight="1.6">
+                        {item.concept}
                       </Text>
-                    </Flex>
-                    <Text fontSize="0.69rem" color="#5D4037" lineHeight="1.5">
-                      {item.preventionText}
-                    </Text>
-                  </Box>
-                )}
-              </Box>
-            </Box>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </Box>
+                    </Box>
+                    <Box bg="orange.50" borderLeft="4px solid" borderColor="orange.400" p={3} borderRadius="md">
+                      <Text fontSize="0.72rem" fontWeight="800" color="orange.800" mb={1}>
+                        Como se espalha
+                      </Text>
+                      <Text fontSize="0.85rem" color="gray.700" lineHeight="1.6">
+                        {item.spreadText}
+                      </Text>
+                    </Box>
+                  </VStack>
+                </DialogBody>
+              </>
+            )}
+          </DialogContent>
+        </DialogPositioner>
+      </DialogRoot>
+    </Portal>
   )
 }
 
-// ─── ImageDiscoveryHotspotGrid (exportação) ───────────────────────────────────
+function HotspotCard({
+  item,
+  onInvestigate,
+}: {
+  item: HotspotItemData
+  onInvestigate: () => void
+}) {
+  const meta = CATEGORY_META[item.category]
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 22 }}
+      animate={{ opacity: 1, y: 0 }}
+      whileHover={{ y: -3 }}
+      transition={{ duration: 0.35, ease: 'easeOut' }}
+      style={{ height: '100%' }}
+    >
+      <Box
+        as="button"
+        onClick={onInvestigate}
+        position="relative"
+        w="full"
+        h={{ base: '250px', sm: '290px' }}
+        borderRadius="18px"
+        overflow="hidden"
+        cursor="pointer"
+        textAlign="left"
+        bg="green.900"
+        backgroundImage={`url('${item.backgroundImageSrc}')`}
+        backgroundSize="cover"
+        backgroundPosition="center"
+        boxShadow="0 6px 28px rgba(0,0,0,0.2)"
+        border="0"
+        _hover={{ transform: 'translateY(-3px)', shadow: 'md' }}
+        _focusVisible={{ outline: '3px solid', outlineColor: 'yellow.300', outlineOffset: '3px' }}
+      >
+        <Box position="absolute" inset={0} bg="linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.05) 70%)" />
+
+        <motion.div
+          animate={{ scale: [1, 1.08, 1] }}
+          transition={{ repeat: Infinity, duration: 2.1, ease: 'easeInOut' }}
+          style={{ position: 'absolute', top: '50%', left: '50%', zIndex: 2, transform: 'translate(-50%, -50%)' }}
+        >
+          <Flex
+            w={{ base: '48px', sm: '54px' }}
+            h={{ base: '48px', sm: '54px' }}
+            align="center"
+            justify="center"
+            borderRadius="50%"
+            bg="rgba(255,255,255,0.92)"
+            color={meta.color}
+            border="3px solid"
+            borderColor="yellow.300"
+            boxShadow="0 0 0 7px rgba(255,255,255,0.18), 0 5px 18px rgba(0,0,0,0.3)"
+            aria-hidden="true"
+          >
+            <Search size={24} strokeWidth={2.5} />
+          </Flex>
+        </motion.div>
+
+        <Box position="absolute" left={4} right={4} bottom={4} zIndex={3}>
+          <Text color="white" fontSize={{ base: '0.85rem', sm: '0.95rem' }} fontWeight="900">
+            {item.name}
+          </Text>
+          <Text color="whiteAlpha.800" fontSize="0.7rem" fontWeight="700">
+            {meta.label} · clique para investigar
+          </Text>
+        </Box>
+      </Box>
+    </motion.div>
+  )
+}
 
 export interface ImageDiscoveryHotspotGridProps {
   items: HotspotItemData[]
 }
 
 export function ImageDiscoveryHotspotGrid({ items }: ImageDiscoveryHotspotGridProps) {
+  const [selectedItem, setSelectedItem] = useState<HotspotItemData | null>(null)
+
   return (
-    <SimpleGrid
-      columns={{ base: 1, sm: 2 }}
-      gap={{ base: 4, sm: 5 }}
-      my={6}
-    >
-      {items.map((item, idx) => (
-        <motion.div
-          key={item.id}
-          initial={{ opacity: 0, y: 22 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: idx * 0.09, duration: 0.45, ease: 'easeOut' }}
-        >
-          <HotspotCard item={item} />
-        </motion.div>
-      ))}
-    </SimpleGrid>
+    <>
+      <SimpleGrid columns={{ base: 1, sm: 2 }} gap={{ base: 4, sm: 5 }} my={6}>
+        {items.map((item) => (
+          <HotspotCard key={item.id} item={item} onInvestigate={() => setSelectedItem(item)} />
+        ))}
+      </SimpleGrid>
+      <AnimatePresence>
+        {selectedItem && (
+          <InvestigationModal
+            item={selectedItem}
+            onClose={() => setSelectedItem(null)}
+          />
+        )}
+      </AnimatePresence>
+    </>
   )
 }
 

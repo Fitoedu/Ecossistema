@@ -156,6 +156,8 @@ export interface HotspotItemData {
   backgroundImageSrc: string
   /** Texto principal de explicação */
   concept: string
+  /** Como o agente causador se dissemina no campo */
+  spreadText: string
   /** Texto de alerta/impacto (aparece em destaque vermelho) */
   impactText?: string
   /** Texto de prevenção (aparece em destaque amarelo) */
@@ -720,6 +722,8 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         backgroundImageSrc: '/images/Sintomas/clorose.webp',
         concept:
           'A ferrugem é uma doença causada por fungos que deixam manchas alaranjadas ou marrons nas folhas, semelhantes à ferrugem de metal. Ela se espalha pelo vento e pode destruir lavouras de soja ou trigo em poucos dias!',
+        spreadText:
+          'Os esporos são carregados pelo vento e também podem viajar em respingos de chuva e ferramentas contaminadas.',
         impactText:
           'Pode causar perdas de até 70% da colheita de soja. Uma das doenças fúngicas mais destrutivas do agronegócio brasileiro.',
         preventionText:
@@ -732,6 +736,8 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         backgroundImageSrc: '/images/Sintomas/podridao.webp',
         concept:
           'A antracnose é causada por fungos do gênero Colletotrichum. Provoca manchas escuras e afundadas nos frutos de manga, mamão e tomate. Os frutos apodrecem antes de amadurecer, ficando impróprios para venda.',
+        spreadText:
+          'A chuva e a irrigação espalham os esporos entre folhas e frutos; restos de plantas e ferramentas contaminadas também transportam o fungo.',
         impactText:
           'Muito comum no clima úmido da Amazônia. Frutos infectados perdem completamente o valor comercial.',
         preventionText:
@@ -744,6 +750,8 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         backgroundImageSrc: '/images/Sintomas/necrose.webp',
         concept:
           'A requeima, causada pelo oomiceto Phytophthora infestans, foi responsável pela Grande Fome da Irlanda no século XIX! Ela ataca batata, tomate e pimenta, provocando o apodrecimento rápido e total das plantas.',
+        spreadText:
+          'Esporos são levados pelo vento e por respingos de chuva, especialmente em períodos frios e muito úmidos.',
         impactText:
           'Em condições ideais de umidade e frio, pode destruir uma lavoura de batata em apenas 10 dias. É considerada emergência fitossanitária.',
         preventionText:
@@ -756,6 +764,8 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         backgroundImageSrc: '/images/Sintomas/frutos com lesoes.webp',
         concept:
           'O cancro cítrico é uma doença bacteriana causada por Xanthomonas citri. Ataca laranjas, limões e outras frutas cítricas, causando lesões elevadas nas folhas, frutos e caules. Frutos infectados não podem ser exportados.',
+        spreadText:
+          'Respingos de chuva, vento, insetos e ferramentas contaminadas levam a bactéria de uma planta para outra.',
         impactText:
           'Prejuízo enorme para produtores: frutos com sintomas são descartados e a planta infectada deve ser erradicada por lei.',
         preventionText:
@@ -768,6 +778,8 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         backgroundImageSrc: '/images/Sintomas/murcha.webp',
         concept:
           'O vírus do mosaico (TMV, CMV e outros) deixa as folhas com padrão de manchas claras e escuras, parecendo um mosaico colorido. É transmitido por insetos vetores como pulgões. Afeta tomate, feijão, mandioca e muitas outras culturas.',
+        spreadText:
+          'Insetos vetores, como pulgões e moscas-brancas, transmitem o vírus; mãos e ferramentas contaminadas também podem espalhá-lo.',
         impactText:
           'Não existe cura para vírus em plantas. Uma vez infectada, a planta deve ser removida para evitar a disseminação para as vizinhas.',
         preventionText:
@@ -780,6 +792,8 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         backgroundImageSrc: '/images/Doenças/Fitoplasma.webp',
         concept:
           'O fitoplasma é um micro-organismo que vive dentro dos vasos condutores da planta (floema). Causa o amarelecimento letal de palmeiras como açaí, coco e dendê — sem cura conhecida! É transmitido por cigarrinhas e outros insetos vetores.',
+        spreadText:
+          'Cigarrinhas e outros insetos vetores adquirem o fitoplasma de plantas doentes e o transmitem ao se alimentarem de plantas saudáveis.',
         impactText:
           'O amarelecimento fatal do coqueiro já destruiu milhões de palmeiras no Brasil. A doença é irreversível e a planta morre em poucos meses após a infecção.',
         preventionText:
