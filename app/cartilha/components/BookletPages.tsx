@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { Box, Grid, HStack, Text, VStack, SimpleGrid } from "@chakra-ui/react";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { FaHandPointer } from 'react-icons/fa';
+import { Apple, Droplets, Leaf, Sun } from "lucide-react";
 import LiftTheFlap from "./LiftTheFlap";
 import LapbookFolder, { type PocketCard } from "./LapbookFolder";
 import { PestCardGrid } from "./PestCard";
@@ -211,145 +211,325 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
-   FLIP CARD COMPONENT
+   FLIP CARDS — Página 3
 ───────────────────────────────────────────────────────────────────────── */
 
-interface FlipCardProps {
-  card: ImageCardData;
-}
+const FITOSSANIDADE_CARDS = [
+  {
+    title: 'Phyton',
+    subtitle: 'Origem da Palavra',
+    explanation: 'Termo grego para PLANTA. Estuda a saúde e proteção do reino vegetal.',
+    bg: 'green.50',
+    border: 'green.200',
+    accent: 'green.700',
+  },
+  {
+    title: 'Sanitas',
+    subtitle: 'Significado de Saúde',
+    explanation: 'Termo latim para SAÚDE. Previne a entrada de fungos, vírus e insetos.',
+    bg: 'yellow.50',
+    border: 'yellow.300',
+    accent: 'yellow.700',
+  },
+  {
+    title: 'Segurança Alimentar',
+    subtitle: 'Alimento para todos',
+    explanation: 'Garante alimentos saudáveis e sem contaminação para a população.',
+    bg: 'orange.50',
+    border: 'orange.300',
+    accent: 'orange.700',
+  },
+  {
+    title: 'Agricultura Familiar',
+    subtitle: 'Força da nossa região',
+    explanation: 'Protege a renda e a produção dos pequenos agricultores da nossa região.',
+    bg: 'teal.50',
+    border: 'teal.200',
+    accent: 'teal.700',
+  },
+] as const
 
-function FlipCard({ card }: FlipCardProps) {
-  const [isFlipped, setIsFlipped] = useState(true);
-  const { imageSrc, label, alt, display } = card;
-
-  // Ensure the card has enough height for the back content, especially for 'full' display
-  const cardHeight = display === "full" ? "280px" : "150px";
+function FitossanidadeFlipCard({
+  card,
+}: {
+  card: (typeof FITOSSANIDADE_CARDS)[number]
+}) {
+  const [isFlipped, setIsFlipped] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
+  const showingBack = isFlipped || isHovered
 
   return (
     <Box
-      style={{ perspective: "1000px" }}
-      h={cardHeight}
+      h={{ base: '190px', sm: '205px' }}
       cursor="pointer"
-      onClick={() => setIsFlipped((prev) => !prev)}
-      position="relative" // Main container for the card, used for icon positioning
+      position="relative"
+      style={{ perspective: '1000px' }}
+      onClick={() => setIsFlipped((current) => !current)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      role="button"
+      tabIndex={0}
+      aria-label={`${card.title}: ${showingBack ? 'explicação' : 'ver explicação'}`}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault()
+          setIsFlipped((current) => !current)
+        }
+      }}
     >
       <motion.div
-        style={{
-          width: "100%",
-          height: "100%",
-          transformStyle: "preserve-3d",
-        }}
-        animate={{ rotateY: isFlipped ? 180 : 0 }}
-        transition={{ type: "spring", stiffness: 260, damping: 20 }}
+        style={{ width: '100%', height: '100%', transformStyle: 'preserve-3d' }}
+        animate={{ rotateY: showingBack ? 180 : 0 }}
+        transition={{ type: 'spring', stiffness: 260, damping: 22 }}
       >
-        {/* Card Front */}
         <Box
           position="absolute"
           inset={0}
-          style={{ backfaceVisibility: "hidden" }}
-          bg="white"
+          style={{ backfaceVisibility: 'hidden' }}
+          bg={card.bg}
           border="1px solid"
-          borderColor="rgba(46,125,50,0.14)"
+          borderColor={card.border}
           borderRadius="16px"
-          p="20px 12px"
-          textAlign="center"
-          display="flex"
-          flexDir="column"
-          alignItems="center"
-          gap={2}
-          boxShadow="0 4px 12px rgba(0,0,0,0.08)"
-        >
-          <Box
-            w={display === "full" ? "full" : "52px"}
-            h={display === "full" ? "180px" : "52px"}
-            borderRadius="12px"
-            overflow="hidden"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            flexShrink={0}
-          >
-            <Image
-              src={imageSrc}
-              alt={alt}
-              width={display === "full" ? 500 : 52}
-              height={display === "full" ? 180 : 52}
-              style={{
-                objectFit: display === "full" ? "cover" : "contain",
-                width: "100%",
-                height: "100%",
-              }}
-              onError={(e) => {
-                (e.target as HTMLImageElement).style.display = "none";
-              }}
-            />
-          </Box>
-          {display === "full" && (
-            <Box w="80%" h="1px" bg="rgba(46,125,50,0.2)" my={2} />
-          )}
-          <Text
-            fontSize="0.75rem"
-            fontWeight="600"
-            color="#2E7D32"
-            lineHeight="1.3"
-            textAlign="center"
-          >
-            {label}
-          </Text>
-        </Box>
-
-        {/* Card Back */}
-        <Box
-          position="absolute"
-          inset={0}
-          style={{
-            backfaceVisibility: "hidden",
-            transform: "rotateY(180deg)",
-          }}
-          bg="#E8F5E9"
-          border="1px solid"
-          borderColor="rgba(46,125,50,0.2)"
-          borderRadius="16px"
-          p="20px"
+          p={{ base: 4, sm: 5 }}
           display="flex"
           flexDir="column"
           alignItems="center"
           justifyContent="center"
           textAlign="center"
           boxShadow="0 4px 12px rgba(0,0,0,0.08)"
-          overflow="visible" // Ensure icon can spill out
         >
-          {/* Hand Icon - moved to the back face */}
-          {isFlipped && ( // Only show icon when back face is visible
-            <motion.div
-              animate={{ y: [0, -8, 0], x: [0, 8, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-              style={{
-                position: 'absolute',
-                top: -8,
-                right: -8,
-                zIndex: 10,
-                filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.3))',
-                color: 'white',
-                fontSize: '1.8rem',
-                pointerEvents: 'none',
-                transform: 'rotateY(180deg)', // Un-flip the icon so it's not mirrored
-              }}
-            >
-              <FaHandPointer />
-            </motion.div>
-          )}
-          <Text fontSize="0.9rem" color="#1B5E20" fontWeight="500">
-            Aqui vai a explicação sobre este tópico...
+          <Text fontSize={{ base: '1rem', sm: '1.1rem' }} fontWeight="800" color={card.accent}>
+            {card.title}
+          </Text>
+          <Text mt={2} fontSize="0.72rem" fontWeight="700" color={card.accent} opacity={0.8}>
+            {card.subtitle}
+          </Text>
+        </Box>
+
+        <Box
+          position="absolute"
+          inset={0}
+          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+          bg={card.accent}
+          borderRadius="16px"
+          p={{ base: 4, sm: 5 }}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          textAlign="center"
+          boxShadow="0 4px 12px rgba(0,0,0,0.12)"
+        >
+          <Text fontSize={{ base: '0.8rem', sm: '0.85rem' }} lineHeight="1.55" color="white" fontWeight="600">
+            {card.explanation}
           </Text>
         </Box>
       </motion.div>
     </Box>
-  );
+  )
+}
+
+function FitossanidadeFlipCards() {
+  return (
+    <Box my={6}>
+      <Text
+        fontSize="0.78rem"
+        fontWeight="600"
+        color="green.700"
+        textAlign="center"
+        mb={3}
+      >
+        Clique em cada cartão para virar e descobrir o significado!
+      </Text>
+      <SimpleGrid columns={{ base: 2, sm: 2 }} gap={{ base: 3, sm: 4 }}>
+        {FITOSSANIDADE_CARDS.map((card) => (
+          <FitossanidadeFlipCard key={card.title} card={card} />
+        ))}
+      </SimpleGrid>
+    </Box>
+  )
+}
+
+const PLANT_PROCESS_STEPS = [
+  {
+    title: 'Luz Solar',
+    label: 'Energia',
+    explanation: 'A luz do sol fornece a energia que a planta precisa para começar a produzir seu alimento.',
+    icon: Sun,
+    bg: 'yellow.50',
+    border: 'yellow.300',
+    accent: 'orange.600',
+  },
+  {
+    title: 'Água e Solo',
+    label: 'Nutrientes',
+    explanation: 'As raízes absorvem água e nutrientes do solo para manter a planta forte e saudável.',
+    icon: Droplets,
+    bg: 'green.50',
+    border: 'green.200',
+    accent: 'green.700',
+  },
+  {
+    title: 'A Máquina (Folha)',
+    label: 'Transformação',
+    explanation: 'Nas folhas, a planta transforma luz, água e nutrientes em energia e matéria para crescer.',
+    icon: Leaf,
+    bg: 'orange.50',
+    border: 'orange.300',
+    accent: 'orange.700',
+  },
+  {
+    title: 'Produto Final',
+    label: 'Alimento Gostoso!',
+    explanation: 'O resultado são frutos, sementes, raízes e folhas que chegam à nossa mesa.',
+    icon: Apple,
+    bg: 'green.50',
+    border: 'green.200',
+    accent: 'green.800',
+  },
+] as const
+
+function PlantProcessFlow() {
+  const [activeStep, setActiveStep] = useState<number | null>(null)
+  const [hoveredStep, setHoveredStep] = useState<number | null>(null)
+  const selectedStep = hoveredStep ?? activeStep
+
+  return (
+    <Box my={6}>
+      <Text
+        fontSize="0.78rem"
+        fontWeight="600"
+        color="green.700"
+        textAlign="center"
+        mb={4}
+      >
+        Clique em cada etapa do processo para ver como a planta fabrica o nosso alimento!
+      </Text>
+      <Box
+        display="flex"
+        flexDir={{ base: 'column', md: 'row' }}
+        alignItems={{ base: 'stretch', md: 'flex-start' }}
+        gap={{ base: 3, md: 2 }}
+      >
+        {PLANT_PROCESS_STEPS.map((step, index) => {
+          const Icon = step.icon
+          const isSelected = selectedStep === index
+
+          return (
+            <Box
+              key={step.title}
+              display="flex"
+              flex={{ md: 1 }}
+              alignItems="center"
+              gap={{ base: 3, md: 2 }}
+              flexDir={{ base: 'column', md: 'row' }}
+              w="full"
+            >
+              <Box flex="1" w="full">
+                <motion.div
+                  whileHover={{ y: -4 }}
+                  transition={{ type: 'spring', stiffness: 320, damping: 20 }}
+                >
+                  <Box
+                    bg={step.bg}
+                    border="1px solid"
+                    borderColor={step.border}
+                    borderRadius="16px"
+                    p={{ base: 4, md: 3 }}
+                    minH={{ base: '125px', md: '145px' }}
+                    display="flex"
+                    flexDir="column"
+                    alignItems="center"
+                    justifyContent="center"
+                    textAlign="center"
+                    cursor="pointer"
+                    boxShadow={isSelected ? 'md' : 'sm'}
+                    transition="box-shadow 0.2s ease"
+                    onClick={() => setActiveStep(activeStep === index ? null : index)}
+                    onMouseEnter={() => setHoveredStep(index)}
+                    onMouseLeave={() => setHoveredStep(null)}
+                    role="button"
+                    tabIndex={0}
+                    aria-expanded={isSelected}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault()
+                        setActiveStep(activeStep === index ? null : index)
+                      }
+                    }}
+                  >
+                    <Box
+                      w="42px"
+                      h="42px"
+                      borderRadius="12px"
+                      bg="white"
+                      color={step.accent}
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      mb={2}
+                    >
+                      <Icon size={24} strokeWidth={2.2} aria-hidden="true" />
+                    </Box>
+                    <Text fontSize="0.83rem" fontWeight="800" color={step.accent} lineHeight="1.25">
+                      {step.title}
+                    </Text>
+                    <Text mt={1} fontSize="0.68rem" fontWeight="700" color={step.accent} opacity={0.8}>
+                      {step.label}
+                    </Text>
+                  </Box>
+                </motion.div>
+              </Box>
+              {index < PLANT_PROCESS_STEPS.length - 1 && (
+                <Text
+                  display={{ base: 'none', md: 'block' }}
+                  color="green.500"
+                  fontSize="1.4rem"
+                  fontWeight="800"
+                  aria-hidden="true"
+                >
+                  →
+                </Text>
+              )}
+            </Box>
+          )
+        })}
+      </Box>
+
+      <Box
+        mt={4}
+        minH={{ base: '82px', md: '72px' }}
+        bg="white"
+        border="1px solid"
+        borderColor={selectedStep === null ? 'green.200' : PLANT_PROCESS_STEPS[selectedStep].border}
+        borderRadius="14px"
+        p={4}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        textAlign="center"
+        boxShadow="sm"
+        overflow="hidden"
+      >
+        <motion.div
+          key={selectedStep ?? 'hint'}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.22, ease: 'easeOut' }}
+        >
+          <Text fontSize="0.75rem" lineHeight="1.5" color="gray.700">
+            {selectedStep === null
+              ? 'Selecione uma etapa para descobrir como a planta fabrica o nosso alimento.'
+              : PLANT_PROCESS_STEPS[selectedStep].explanation}
+          </Text>
+        </motion.div>
+      </Box>
+    </Box>
+  )
 }
 
 function IconCardsGrid({ cards }: { cards: ImageCardData[] }) {
-  const cols = Math.min(cards.length, 4);
+  const cols = Math.min(cards.length, 4)
+
   return (
     <Grid
       templateColumns={{ base: 'repeat(2, 1fr)', md: `repeat(${cols}, 1fr)` }}
@@ -357,10 +537,39 @@ function IconCardsGrid({ cards }: { cards: ImageCardData[] }) {
       my={6}
     >
       {cards.map((card) => (
-        <FlipCard key={card.label} card={card} />
+        <Box
+          key={card.label}
+          bg="white"
+          border="1px solid"
+          borderColor="rgba(46,125,50,0.14)"
+          borderRadius="16px"
+          p="16px 12px"
+          textAlign="center"
+          display="flex"
+          flexDir="column"
+          alignItems="center"
+          gap={2}
+          boxShadow="0 4px 12px rgba(0,0,0,0.08)"
+        >
+          <Image
+            src={card.imageSrc}
+            alt={card.alt}
+            width={card.display === 'full' ? 500 : 52}
+            height={card.display === 'full' ? 180 : 52}
+            style={{
+              objectFit: card.display === 'full' ? 'cover' : 'contain',
+              width: card.display === 'full' ? '100%' : '52px',
+              height: card.display === 'full' ? '120px' : '52px',
+              borderRadius: '12px',
+            }}
+          />
+          <Text fontSize="0.75rem" fontWeight="600" color="#2E7D32" lineHeight="1.3">
+            {card.label}
+          </Text>
+        </Box>
       ))}
     </Grid>
-  );
+  )
 }
 
 
@@ -1015,6 +1224,56 @@ export function PageContent({
 
         {/* Grid dos 4 pilares do aprendizado */}
         <PillarGrid onGoTo={onGoTo} />
+      </Box>
+    )
+  }
+
+  /* Layout exclusivo para a Página 03 — O que é Fitossanidade? */
+  if (data.id === 'p02') {
+    return (
+      <Box>
+        <SectionBadge>{data.badgeLabel}</SectionBadge>
+
+        <PageTitle>
+          {data.title}
+          {data.titleHighlight && <Highlight>{data.titleHighlight}</Highlight>}
+          {data.titleSuffix}
+        </PageTitle>
+
+        <LeadText>{data.leadText}</LeadText>
+
+        <FitossanidadeFlipCards />
+
+        {data.callouts && <CalloutList callouts={data.callouts} startMt={5} />}
+      </Box>
+    )
+  }
+
+  /* Layout exclusivo para a Página 04 — A fábrica de comida */
+  if (data.id === 'p03') {
+    return (
+      <Box>
+        <SectionBadge>{data.badgeLabel}</SectionBadge>
+
+        <PageTitle>
+          {data.title}
+          {data.titleHighlight && <Highlight>{data.titleHighlight}</Highlight>}
+          {data.titleSuffix}
+        </PageTitle>
+
+        <LeadText>{data.leadText}</LeadText>
+
+        <PlantProcessFlow />
+
+        {data.midSectionHeading && (
+          <>
+            <Divider />
+            <SectionHeading>{data.midSectionHeading}</SectionHeading>
+            {data.midSectionText && <LeadText>{data.midSectionText}</LeadText>}
+          </>
+        )}
+
+        {data.callouts && <CalloutList callouts={data.callouts} startMt={5} />}
       </Box>
     )
   }
