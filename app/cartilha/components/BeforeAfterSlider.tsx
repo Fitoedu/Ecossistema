@@ -333,7 +333,7 @@ export default function BeforeAfterSlider({
       <Text
         mt={2}
         fontSize="0.7rem"
-        color="gray.500"
+        color="#1B5E20"
         textAlign="center"
         letterSpacing="0.03em"
         userSelect="none"

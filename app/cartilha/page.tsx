@@ -36,10 +36,11 @@ import {
 function renderPage(
   page: CartilhaPageData,
   onSelectItem: (item: PestGalleryItemData, index: number) => void,
+  onGoTo: (pageIndex: number) => void,
 ) {
   switch (page.type) {
     case 'cover':        return <PageCover data={page} />
-    case 'content':      return <PageContent data={page} />
+    case 'content':      return <PageContent data={page} onGoTo={onGoTo} />
     case 'lapbook':      return <PageLapbook data={page} />
     case 'pest-gallery': return <PagePestGallery data={page} onSelectItem={onSelectItem} />
     case 'hotspot':      return <PageHotspot data={page} />
@@ -123,7 +124,7 @@ export default function CartilhaPage() {
           id="main-content"
         >
           <PageTransitionWrapper pageKey={animKey} direction={direction}>
-            {renderPage(page, handleSelectPest)}
+            {renderPage(page, handleSelectPest, goTo)}
           </PageTransitionWrapper>
 
           <Box as="footer">

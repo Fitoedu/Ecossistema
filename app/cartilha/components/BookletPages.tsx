@@ -719,22 +719,9 @@ function PersonaGreeting() {
               letterSpacing="0.01em"
               fontStyle="normal"
             >
-              Olá, pequeno cientista!{" "}
-              <Text as="span" fontWeight="800" color="#2E7D32">
-                Estão prontos
-              </Text>{" "}
-              para levantar as folhas e descobrir os segredos da{" "}
-              <Text
-                as="span"
-                fontWeight="800"
-                bgGradient="to-r"
-                gradientFrom="#F57F17"
-                gradientTo="#FBC02D"
-                bgClip="text"
-              >
-                fitossanidade
-              </Text>
-              ? 🔬🌿
+              Olá, futuro cientista! Você sabia que as plantas também ficam
+              doentes? Vamos descobrir juntos como identificar, prevenir e
+              proteger nossas lavouras!
             </Text>
           </Box>
         </Box>
@@ -851,31 +838,6 @@ export function PageCover({ data }: { data: PageCoverData }) {
         </Text>
       </motion.div>
 
-      {/* ── Tags ── */}
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, ease: "easeOut", delay: 0.36 }}
-      >
-        <HStack flexWrap="wrap" gap={2} justify="center" mb={{ base: 5, sm: 8 }}>
-          {data.tags.map((tag) => (
-            <Box
-              key={tag.label}
-              bg="rgba(46,125,50,0.1)"
-              color="#2E7D32"
-              border="1px solid rgba(46,125,50,0.2)"
-              borderRadius="999px"
-              fontSize={{ base: '0.68rem', sm: '0.72rem' }}
-              fontWeight="600"
-              px={3}
-              py={1}
-            >
-              {tag.label}
-            </Box>
-          ))}
-        </HStack>
-      </motion.div>
-
       {/* ── Persona ── */}
       <Box w="full" maxW="480px" mx="auto">
         <PersonaGreeting/>
@@ -926,7 +888,14 @@ const PILARES = [
   },
 ] as const
 
-function PillarGrid() {
+function PillarGrid({ onGoTo }: { onGoTo: (pageIndex: number) => void }) {
+  const pageByLabel: Record<(typeof PILARES)[number]['label'], number> = {
+    'O que é Fitossanidade?': 2,
+    'O que são Pragas Agrícolas?': 3,
+    'Casos Reais da Região Norte': 14,
+    'Como Proteger e Evitar': 13,
+  }
+
   return (
     <SimpleGrid columns={{ base: 1, sm: 2 }} gap={3} mt={1}>
       {PILARES.map((p, i) => (
@@ -946,6 +915,18 @@ function PillarGrid() {
             gap={3}
             boxShadow="0 2px 8px rgba(0,0,0,0.05)"
             h="full"
+            cursor="pointer"
+            transition="transform 0.2s ease, box-shadow 0.2s ease"
+            _hover={{ transform: 'translateY(-3px)', shadow: 'md' }}
+            onClick={() => onGoTo(pageByLabel[p.label])}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault()
+                onGoTo(pageByLabel[p.label])
+              }
+            }}
           >
             {/* Símbolo tipográfico como ícone */}
             <Box
@@ -997,7 +978,13 @@ function PillarGrid() {
 
 /* ─── PageContent ────────────────────────────────────────────────────────── */
 
-export function PageContent({ data }: { data: PageContentData }) {
+export function PageContent({
+  data,
+  onGoTo,
+}: {
+  data: PageContentData
+  onGoTo: (pageIndex: number) => void
+}) {
   /* Layout especial para a Página 01 — Apresentação */
   if (data.id === 'p01') {
     return (
@@ -1027,7 +1014,7 @@ export function PageContent({ data }: { data: PageContentData }) {
         <LeadText>{data.leadText}</LeadText>
 
         {/* Grid dos 4 pilares do aprendizado */}
-        <PillarGrid />
+        <PillarGrid onGoTo={onGoTo} />
       </Box>
     )
   }
