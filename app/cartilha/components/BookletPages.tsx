@@ -413,6 +413,7 @@ function PlantProcessFlow() {
         {PLANT_PROCESS_STEPS.map((step, index) => {
           const Icon = step.icon
           const isSelected = selectedStep === index
+          const isActive = activeStep === index
 
           return (
             <Box
@@ -443,6 +444,9 @@ function PlantProcessFlow() {
                     textAlign="center"
                     cursor="pointer"
                     boxShadow={isSelected ? 'md' : 'sm'}
+                    outline={isActive ? '3px solid' : 'none'}
+                    outlineColor={step.accent}
+                    outlineOffset="2px"
                     transition="box-shadow 0.2s ease"
                     onClick={() => setActiveStep(activeStep === index ? null : index)}
                     onMouseEnter={() => setHoveredStep(index)}
