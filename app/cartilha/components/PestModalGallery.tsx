@@ -75,7 +75,7 @@ function PestGalleryCard({ item, accentIndex, onClick }: PestGalleryCardProps) {
     >
       {/* Header do card com gradiente */}
       <Box
-        h={{ base: '110px', sm: '140px' }}
+        h={{ base: '160px', sm: '180px' }}
         position="relative"
         overflow="hidden"
         display="flex"
@@ -84,28 +84,6 @@ function PestGalleryCard({ item, accentIndex, onClick }: PestGalleryCardProps) {
         flexShrink={0}
         style={{ background: accent.gradient }}
       >
-        {/* Círculos decorativos */}
-        <Box
-          position="absolute"
-          w="120px"
-          h="120px"
-          borderRadius="50%"
-          bg="rgba(255,255,255,0.08)"
-          bottom="-40px"
-          right="-30px"
-          aria-hidden="true"
-        />
-        <Box
-          position="absolute"
-          w="80px"
-          h="80px"
-          borderRadius="50%"
-          bg="rgba(255,255,255,0.06)"
-          top="-20px"
-          left="-20px"
-          aria-hidden="true"
-        />
-
         <Box
           position="absolute"
           top="10px"
@@ -127,40 +105,30 @@ function PestGalleryCard({ item, accentIndex, onClick }: PestGalleryCardProps) {
           Ampliar
         </Box>
 
-        {/* Imagem da praga */}
-        <Box
-          position="relative"
-          w={{ base: '100px', sm: '132px' }}
-          h={{ base: '72px', sm: '96px' }}
-          borderRadius="14px"
-          overflow="hidden"
-          border="3px solid rgba(255,255,255,0.35)"
-          boxShadow="0 4px 16px rgba(0,0,0,0.25)"
-          bg="rgba(255,255,255,0.12)"
-        >
-          {hasImageError ? (
-            <Box
-              h="full"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              bg="rgba(255,255,255,0.14)"
-              color="white"
-              fontSize="2rem"
-              aria-label={`Imagem de ${item.name} indisponível`}
-            >
-              🌿
-            </Box>
-          ) : (
-            <Image
-              src={item.imageSrc}
-              alt={`Imagem de ${item.name}`}
-              fill
-              style={{ objectFit: 'cover' }}
-              onError={() => setHasImageError(true)}
-            />
-          )}
-        </Box>
+        {hasImageError ? (
+          <Box
+            h="full"
+            w="full"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            bg="rgba(255,255,255,0.14)"
+            color="white"
+            fontSize="2rem"
+            aria-label={`Imagem de ${item.name} indisponível`}
+          >
+            🌿
+          </Box>
+        ) : (
+          <Image
+            src={item.imageSrc}
+            alt={`Imagem de ${item.name}`}
+            fill
+            sizes="(max-width: 640px) 50vw, 33vw"
+            style={{ objectFit: 'cover' }}
+            onError={() => setHasImageError(true)}
+          />
+        )}
       </Box>
 
       {/* Rodapé do card */}

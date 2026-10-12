@@ -97,70 +97,37 @@ export default function PestDialog({
               <>
                 {/* Cabeçalho visual com imagem */}
                 <Box
-                  h={{ base: '160px', sm: '200px' }}
+                  h={{ base: '200px', sm: '240px' }}
+                  w="full"
                   position="relative"
                   overflow="hidden"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  style={{ background: accent.gradient }}
+                  borderTopRadius={{ base: '20px', sm: '24px' }}
+                  bg={accent.light}
                 >
-                  {/* Círculos decorativos */}
-                  <Box
-                    position="absolute"
-                    w="200px"
-                    h="200px"
-                    borderRadius="50%"
-                    bg="rgba(255,255,255,0.07)"
-                    bottom="-80px"
-                    right="-60px"
-                    aria-hidden="true"
-                  />
-                  <Box
-                    position="absolute"
-                    w="120px"
-                    h="120px"
-                    borderRadius="50%"
-                    bg="rgba(255,255,255,0.05)"
-                    top="-30px"
-                    left="-30px"
-                    aria-hidden="true"
-                  />
-
-                  {/* Imagem da praga */}
-                  <Box
-                    position="relative"
-                    w={{ base: '120px', sm: '140px' }}
-                    h={{ base: '120px', sm: '140px' }}
-                    borderRadius="50%"
-                    overflow="hidden"
-                    border="4px solid rgba(255,255,255,0.40)"
-                    boxShadow="0 8px 32px rgba(0,0,0,0.30)"
-                    bg="rgba(255,255,255,0.15)"
-                  >
-                    {hasImageError ? (
-                      <Box
-                        h="full"
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="center"
-                        color="white"
-                        fontSize="3rem"
-                        bg="rgba(255,255,255,0.12)"
-                        aria-label={`Imagem de ${selectedItem.name} indisponível`}
-                      >
-                        🌿
-                      </Box>
-                    ) : (
-                      <Image
-                        src={selectedItem.imageSrc}
-                        alt={`Imagem de ${selectedItem.name}`}
-                        fill
-                        style={{ objectFit: 'cover' }}
-                        onError={() => setImageErrorId(selectedItem.id)}
-                      />
-                    )}
-                  </Box>
+                  {hasImageError ? (
+                    <Box
+                      h="full"
+                      w="full"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      color="green.800"
+                      fontSize="3rem"
+                      bgGradient="linear(to-br, green.50, yellow.50)"
+                      aria-label={`Imagem de ${selectedItem.name} indisponível`}
+                    >
+                      🌿
+                    </Box>
+                  ) : (
+                    <Image
+                      src={selectedItem.imageSrc}
+                      alt={`Imagem de ${selectedItem.name}`}
+                      fill
+                      sizes="(max-width: 640px) 100vw, 440px"
+                      style={{ objectFit: 'cover' }}
+                      onError={() => setImageErrorId(selectedItem.id)}
+                    />
+                  )}
                 </Box>
 
                 {/* Header do Dialog */}
