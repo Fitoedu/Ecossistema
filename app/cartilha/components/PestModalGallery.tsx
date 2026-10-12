@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import { Search } from 'lucide-react'
+import { motion } from 'framer-motion'
 import { SimpleGrid, Box, Text } from '@chakra-ui/react'
 import type { PestGalleryItemData } from '../data/cartilha-data'
 
@@ -120,14 +121,25 @@ function PestGalleryCard({ item, accentIndex, onClick }: PestGalleryCardProps) {
             🌿
           </Box>
         ) : (
-          <Image
-            src={item.imageSrc}
-            alt={`Imagem de ${item.name}`}
-            fill
-            sizes="(max-width: 640px) 50vw, 33vw"
-            style={{ objectFit: 'cover' }}
-            onError={() => setHasImageError(true)}
-          />
+          <motion.div
+            initial={{ scale: 1 }}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3, ease: 'easeOut' }}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              transformOrigin: 'center',
+            }}
+          >
+            <Image
+              src={item.imageSrc}
+              alt={`Imagem de ${item.name}`}
+              fill
+              sizes="(max-width: 640px) 50vw, 33vw"
+              style={{ objectFit: 'cover' }}
+              onError={() => setHasImageError(true)}
+            />
+          </motion.div>
         )}
       </Box>
 

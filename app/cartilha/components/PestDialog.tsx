@@ -21,6 +21,7 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import {
   Box,
   Text,
@@ -119,14 +120,26 @@ export default function PestDialog({
                       🌿
                     </Box>
                   ) : (
-                    <Image
-                      src={selectedItem.imageSrc}
-                      alt={`Imagem de ${selectedItem.name}`}
-                      fill
-                      sizes="(max-width: 640px) 100vw, 440px"
-                      style={{ objectFit: 'cover' }}
-                      onError={() => setImageErrorId(selectedItem.id)}
-                    />
+                    <motion.div
+                      key={selectedItem.id}
+                      initial={{ scale: 1.1 }}
+                      animate={{ scale: 1 }}
+                      transition={{ duration: 0.6 }}
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        transformOrigin: 'center',
+                      }}
+                    >
+                      <Image
+                        src={selectedItem.imageSrc}
+                        alt={`Imagem de ${selectedItem.name}`}
+                        fill
+                        sizes="(max-width: 640px) 100vw, 440px"
+                        style={{ objectFit: 'cover' }}
+                        onError={() => setImageErrorId(selectedItem.id)}
+                      />
+                    </motion.div>
                   )}
                 </Box>
 
