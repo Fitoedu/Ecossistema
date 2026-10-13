@@ -3332,15 +3332,34 @@ export function PageQuiz({ data }: { data: PageQuizData }) {
 export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
   const [revealed, setRevealed] = useState<Record<string, boolean>>({});
 
-  const handleReveal = (id: string) => {
-    setRevealed((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
+  const discoveredCount = Object.values(revealed).filter(Boolean).length;
+  const allDiscovered = discoveredCount === data.characters.length;
 
   return (
     <Box>
+      <style>{`
+        @keyframes hoverGentle {
+          0%, 100% { transform: rotate(-1deg) scale(1); }
+          50% { transform: rotate(1deg) scale(1.02); }
+        }
+      `}</style>
       <SectionBadge>{data.badgeLabel}</SectionBadge>
       <PageTitle>{data.title}</PageTitle>
       <LeadText>{data.subtitle}</LeadText>
+
+      <Box
+        display="inline-flex"
+        px={3}
+        py={2}
+        borderRadius="full"
+        bg="gray.100"
+        color="gray.700"
+        fontSize="0.75rem"
+        fontWeight="800"
+        mb={4}
+      >
+        Cards Descobertos: {discoveredCount} / {data.characters.length}
+      </Box>
 
       <SimpleGrid columns={{ base: 2, sm: 3 }} gap={{ base: 3, sm: 4, md: 6 }} my={{ base: 5, sm: 8 }}>
         {data.characters.map((char) => {
@@ -3356,91 +3375,126 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
             >
               <Box
                 h="full"
-                p={{ base: 3, sm: 4 }}
-                bg={isRevealed ? (isHero ? 'green.50' : 'red.50') : 'white'}
-                borderRadius={{ base: '16px', sm: '20px' }}
+                minH={{ base: '190px', sm: '260px' }}
+                p={4}
+                bg={isRevealed ? (isHero ? 'green.50' : 'red.50') : undefined}
+                bgGradient={!isRevealed ? 'linear(to-b, green.50, #EBF5EB)' : undefined}
+                borderRadius="xl"
                 border="2px solid"
                 borderColor={
                   isRevealed
                     ? isHero
-                      ? 'green.200'
-                      : 'red.200'
-                    : 'gray.200'
+                      ? 'green.400'
+                      : 'red.400'
+                    : 'green.500'
                 }
                 textAlign="center"
                 cursor="pointer"
-                onClick={() => handleReveal(char.id)}
+                onClick={() => setRevealed((prev) => ({ ...prev, [char.id]: true }))}
                 transition="all 0.3s ease"
-                boxShadow={
-                  isRevealed
-                    ? `0 10px 25px -5px ${
-                        isHero ? 'rgba(67, 160, 71, 0.2)' : 'rgba(229, 57, 53, 0.2)'
-                      }`
-                    : 'sm'
-                }
-                _hover={{
-                  transform: 'translateY(-5px)',
-                  boxShadow: 'xl',
-                }}
+                boxShadow="sm"
+                animation={!isRevealed ? 'hoverGentle 2.5s ease-in-out infinite' : undefined}
+                _hover={{ transform: 'scale(1.05)', rotate: '0deg', shadow: 'xl', cursor: 'pointer', animation: 'none' }}
                 position="relative"
                 overflow="hidden"
               >
-                <motion.div
-                  animate={{ scale: isRevealed ? 1.1 : 1 }}
-                  transition={{ type: 'spring', stiffness: 300, damping: 15 }}
-                >
-                  <Image
-                    src={char.imageSrc}
-                    alt={char.name}
-                    width={100}
-                    height={100}
-                    style={{
-                      margin: '0 auto',
-                      borderRadius: '50%',
-                      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                      border: `4px solid ${
-                        isRevealed
-                          ? isHero
-                            ? '#4CAF50'
-                            : '#F44336'
-                          : 'white'
-                      }`,
-                      width: '100%',
-                      maxWidth: '100px',
-                      height: 'auto',
-                    }}
-                  />
-                </motion.div>
-                <Text fontWeight="700" mt={3} fontSize={{ base: '0.78rem', sm: '1rem' }} color="gray.800">
-                  {char.name}
-                </Text>
-                {isRevealed && (
+                {isRevealed ? (
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, rotateY: -12 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
+                    transition={{ duration: 0.3 }}
                   >
-                    {/* Título herói/vilão */}
+                    <Image
+                      src={char.imageSrc}
+                      alt={char.name}
+                      width={180}
+                      height={150}
+                      style={{
+                        display: 'block',
+                        width: '100px',
+                        height: '100px',
+                        objectFit: 'cover',
+                        borderRadius: '2xl',
+                        margin: '0 auto',
+                        border: '4px solid white',
+                        boxShadow: '0 4px 10px rgba(0,0,0,0.18)',
+                      }}
+                    />
                     <Text
-                      fontSize={{ base: '0.7rem', sm: 'md' }}
+                      mt={3}
+                      px={2}
+                      py={1}
+                      borderRadius="full"
+                      bg={isHero ? 'green.100' : 'red.100'}
+                      fontSize="0.62rem"
+                      fontWeight="extrabold"
                       color={isHero ? 'green.800' : 'red.800'}
-                      fontWeight="black"
                       textTransform="uppercase"
-                      mt={2}
-                      mb={1}
+                      letterSpacing="0.04em"
                     >
-                      {isHero ? 'HERÓI!' : 'VILÃO!'}
+                      {isHero ? ' HERÓI DA LAVOURA' : ' VILÃO DA LAVOURA'}
                     </Text>
-
-                    {/* Texto de revelação */}
-                    <Text
-                      fontSize={{ base: '0.65rem', sm: 'sm' }}
+                    <Text mt={1} fontWeight="800" color="gray.800" fontSize={{ base: '0.8rem', sm: '1rem' }}>
+                      {char.name}
+                    </Text>
+                    <Text mt={2}
+                      fontSize={{ base: '0.65rem', sm: '0.82rem' }}
                       color={isHero ? 'green.700' : 'red.700'}
-                      fontWeight="medium"
+                      fontWeight="600"
                     >
                       {char.revealText}
                     </Text>
                   </motion.div>
+                ) : (
+                  <VStack h="full" justify="space-between" gap={2} py={1}>
+                    <Text
+                      color="green.800"
+                      fontWeight="800"
+                      fontSize="lg"
+                      letterSpacing="0.08em"
+                    >
+                      QUEM SOU EU?
+                    </Text>
+                    <Box
+                      w={{ base: '88px', sm: '104px' }}
+                      h={{ base: '88px', sm: '104px' }}
+                      borderRadius="full"
+                      border="4px solid"
+                      borderColor="green.500"
+                      bg="green.100"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      position="relative"
+                      boxShadow="0 4px 12px rgba(46,125,50,0.22)"
+                    >
+                      <Image
+                        src="/assets/dona_fito_meio_corpo.webp"
+                        alt="Dona Fito Investigadora"
+                        width={70}
+                        height={70}
+                        style={{
+                          width: '70px',
+                          height: '70px',
+                          objectFit: 'contain',
+                        }}
+                      />
+                      <Text position="absolute" top="-3px" left="4px" fontSize="sm" aria-hidden="true">
+                        ✦
+                      </Text>
+                      <Text position="absolute" bottom="0" right="3px" fontSize="sm" aria-hidden="true">
+                        🍃
+                      </Text>
+                    </Box>
+                    <Text
+                      color="gray.700"
+                      fontWeight="600"
+                      fontSize="sm"
+                      letterSpacing="0.02em"
+                    >
+                      Clique para descobrir! 
+                    </Text>
+                  </VStack>
                 )}
               </Box>
             </motion.div>
@@ -3448,7 +3502,18 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
         })}
       </SimpleGrid>
 
-      {data.callouts && <CalloutList callouts={data.callouts} startMt={4} />}
+      {allDiscovered && data.callouts && (
+        <Box
+          bg="green.50"
+          border="2px solid"
+          borderColor="green.400"
+          borderRadius="18px"
+          p={{ base: 4, sm: 5 }}
+          animation="floatIcon 3s ease-in-out infinite"
+        >
+          <CalloutList callouts={data.callouts} startMt={0} />
+        </Box>
+      )}
     </Box>
   );
 }
