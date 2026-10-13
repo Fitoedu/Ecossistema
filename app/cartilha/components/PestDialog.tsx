@@ -158,14 +158,24 @@ export default function PestDialog({
 
                 {/* Botão de fechar */}
                 <DialogCloseTrigger
-                  top={3}
-                  right={3}
-                  bg="rgba(255,255,255,0.25)"
-                  color="white"
-                  borderRadius="50%"
-                  _hover={{ bg: 'rgba(255,255,255,0.40)' }}
-                  _focusVisible={{ boxShadow: '0 0 0 3px rgba(255,255,255,0.5)' }}
-                />
+                  position="absolute"
+                  right="12px"
+                  top="12px"
+                  zIndex={10}
+                  w="36px"
+                  h="36px"
+                  bg="white"
+                  color="gray.800"
+                  borderRadius="full"
+                  shadow="md"
+                  fontSize="1.35rem"
+                  fontWeight="800"
+                  lineHeight="1"
+                  _hover={{ bg: 'gray.100' }}
+                  _focusVisible={{ outline: '3px solid', outlineColor: 'green.300' }}
+                >
+                  ×
+                </DialogCloseTrigger>
 
                 {/* Body do Dialog */}
                 <DialogBody px={{ base: 4, sm: 6 }} pb={{ base: 6, sm: 8 }} pt={2}>

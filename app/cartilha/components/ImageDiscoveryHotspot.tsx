@@ -98,18 +98,21 @@ function InvestigationModal({
                   </DialogTitle>
                 </DialogHeader>
                 <DialogCloseTrigger
-                  top={3}
-                  right={3}
+                  position="absolute"
+                  right="12px"
+                  top="12px"
+                  zIndex={10}
                   w="36px"
                   h="36px"
-                  bg="rgba(0,0,0,0.35)"
-                  color="white"
-                  borderRadius="50%"
+                  bg="white"
+                  color="gray.800"
+                  borderRadius="full"
+                  shadow="md"
                   fontSize="1.35rem"
                   fontWeight="800"
                   lineHeight="1"
-                  _hover={{ bg: 'rgba(0,0,0,0.55)' }}
-                  _focusVisible={{ outline: '3px solid', outlineColor: 'yellow.300' }}
+                  _hover={{ bg: 'gray.100' }}
+                  _focusVisible={{ outline: '3px solid', outlineColor: 'green.300' }}
                 >
                   ×
                 </DialogCloseTrigger>
