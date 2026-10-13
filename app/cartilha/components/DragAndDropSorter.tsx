@@ -24,6 +24,7 @@
 import { useCallback, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Box, SimpleGrid, Text, VStack } from '@chakra-ui/react'
+import { Avatar } from './Avatar'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -101,9 +102,9 @@ const DEFAULT_CARDS: SorterCard[] = [
 // ─── Paletas de cor ───────────────────────────────────────────────────────────
 
 const SAFE_PALETTE = {
-  zone: 'rgba(46,125,50,0.10)',          // fundo sempre visível (verde claro)
-  zoneBg: '#F1F8F1',                      // bg sólido base da zona
-  border: 'rgba(46,125,50,0.35)',
+  zone: 'rgba(46,125,50,0.12)',
+  zoneBg: 'green.50',
+  border: '#66BB6A',
   borderActive: '#2E7D32',
   header: '#2E7D32',
   headerBg: '#E8F5E9',
@@ -113,15 +114,24 @@ const SAFE_PALETTE = {
 }
 
 const RISK_PALETTE = {
-  zone: 'rgba(230,81,0,0.09)',            // fundo sempre visível (laranja claro)
-  zoneBg: '#FFF3EE',                      // bg sólido base da zona
-  border: 'rgba(230,81,0,0.32)',
+  zone: 'rgba(230,81,0,0.12)',
+  zoneBg: 'orange.50',
+  border: '#FF9800',
   borderActive: '#E65100',
   header: '#BF360C',
   headerBg: '#FBE9E7',
   badge: '#BF360C',
   cardCorrect: '#FBE9E7',
   cardBorderCorrect: 'rgba(230,81,0,0.35)',
+}
+
+const CARD_ICONS: Record<string, string> = {
+  c1: '🌾',
+  c2: '🔍',
+  c3: '🧰',
+  c4: '🚚',
+  c5: '🛑',
+  c6: '🧼',
 }
 
 // ─── Utilitários ──────────────────────────────────────────────────────────────
@@ -194,7 +204,7 @@ function SortableCard({
         : RISK_PALETTE.cardBorderCorrect
       : 'rgba(198,40,40,0.45)'
     : isSelected
-    ? '#1565C0'
+    ? 'brand.500'
     : 'rgba(0,0,0,0.10)'
 
   return (
@@ -217,12 +227,14 @@ function SortableCard({
     >
       <Box
         bg={cardBg}
-        border={`1.5px solid ${cardBorder}`}
+        borderWidth={isSelected && !isDone ? '2px' : '1.5px'}
+        borderStyle="solid"
+        borderColor={cardBorder}
         borderRadius="14px"
         p={{ base: '12px 14px', sm: '14px 18px' }}
         boxShadow={
           isSelected
-            ? '0 0 0 3px rgba(21,101,192,0.20), 0 4px 16px rgba(0,0,0,0.08)'
+            ? 'md'
             : isDone
             ? '0 1px 4px rgba(0,0,0,0.06)'
             : '0 2px 10px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.05)'
@@ -249,6 +261,15 @@ function SortableCard({
       >
         {/* Indicador de estado no topo */}
         <Box display="flex" alignItems="flex-start" gap={2}>
+        <Text
+          as="span"
+          fontSize="1.35rem"
+          lineHeight="1.2"
+          flexShrink={0}
+          aria-hidden="true"
+        >
+          {CARD_ICONS[entry.id] ?? '🌱'}
+        </Text>
           {/* Marcador de status */}
           <Box
             w="20px"
@@ -395,7 +416,7 @@ function DropZone({ zone, label, cards, isTargeted, onClick, zoneRef }: DropZone
             letterSpacing="0.07em"
             lineHeight="1"
           >
-            {label}
+            {zone === 'safe' ? '🛡️ ' : '⚠️ '}{label}
           </Text>
         </Box>
         {zoneCards.length > 0 && (
@@ -441,6 +462,9 @@ function DropZone({ zone, label, cards, isTargeted, onClick, zoneRef }: DropZone
             p="10px 14px"
           >
             <Box display="flex" alignItems="flex-start" gap="8px">
+              <Text as="span" fontSize="1.15rem" lineHeight="1.2" flexShrink={0} aria-hidden="true">
+                {CARD_ICONS[c.id] ?? '🌱'}
+              </Text>
               <Box
                 w="18px"
                 h="18px"
@@ -509,19 +533,33 @@ function CompletionBanner({ allCorrect, onReset }: { allCorrect: boolean; onRese
           aria-hidden="true"
         />
 
-        <Text
-          fontSize={{ base: '1rem', sm: '1.1rem' }}
-          fontWeight="800"
-          mb={1}
-          letterSpacing="-0.01em"
-        >
-          {allCorrect ? 'Atividade concluída com sucesso!' : 'Quase lá — revise os itens em vermelho'}
-        </Text>
-        <Text fontSize={{ base: '0.82rem', sm: '0.86rem' }} opacity={0.9} lineHeight="1.65" mb={3}>
-          {allCorrect
-            ? 'Você classificou corretamente todas as práticas fitossanitárias. Bom trabalho! Esse conhecimento faz diferença na lavoura.'
-            : 'Alguns cartões foram classificados na zona incorreta. Leia as explicações em vermelho e tente novamente.'}
-        </Text>
+        <Box display="flex" alignItems="center" gap={3} mb={3}>
+          {allCorrect && (
+            <motion.div
+              initial={{ scale: 0.7, rotate: -8 }}
+              animate={{ scale: [1, 1.08, 1], rotate: [0, 4, 0] }}
+              transition={{ duration: 1.4, ease: 'easeInOut', repeat: 1 }}
+              style={{ flexShrink: 0 }}
+            >
+              <Avatar src="/assets/dona-fito/dona-fito-celebrating.png" />
+            </motion.div>
+          )}
+          <Box>
+            <Text
+              fontSize={{ base: '1rem', sm: '1.1rem' }}
+              fontWeight="800"
+              mb={1}
+              letterSpacing="-0.01em"
+            >
+              {allCorrect ? 'Atividade concluída com sucesso!' : 'Quase lá — revise os itens em vermelho'}
+            </Text>
+            <Text fontSize={{ base: '0.82rem', sm: '0.86rem' }} opacity={0.9} lineHeight="1.65">
+              {allCorrect
+                ? 'A prevenção sempre vence o combate! Você classificou corretamente todas as práticas fitossanitárias.'
+                : 'Alguns cartões foram classificados na zona incorreta. Leia as explicações em vermelho e tente novamente.'}
+            </Text>
+          </Box>
+        </Box>
         <button
           onClick={onReset}
           style={{
@@ -616,29 +654,24 @@ export default function DragAndDropSorter({
           bg="#F8F9FA"
           border="1px solid rgba(0,0,0,0.08)"
           borderRadius="14px"
-          p={{ base: '12px 14px', sm: '14px 18px' }}
+          p={{ base: '10px 14px', sm: '12px 18px' }}
           mb={4}
           display="flex"
-          alignItems="flex-start"
-          gap={3}
+          alignItems="center"
+          justifyContent="center"
         >
-          {/* Indicador de etapas */}
           <Box
-            bg="#1565C0"
-            borderRadius="8px"
-            px="8px"
-            py="4px"
-            flexShrink={0}
+            bg="blue.50"
+            border="1px solid"
+            borderColor="blue.200"
+            borderRadius="999px"
+            px="14px"
+            py="5px"
           >
-            <Text fontSize="0.6rem" fontWeight="800" color="white" textTransform="uppercase" letterSpacing="0.08em" lineHeight="1.4">
-              Atividade
+            <Text fontSize="0.72rem" fontWeight="800" color="blue.800" lineHeight="1.4">
+              Progresso: {entries.length - poolCards.length}/{entries.length} classificados
             </Text>
           </Box>
-          <Text fontSize={{ base: '0.8rem', sm: '0.83rem' }} color="#333" lineHeight="1.65">
-            <Text as="strong" fontWeight="700">Clique</Text> em um cartão para selecioná-lo e depois
-            {' '}<Text as="strong" fontWeight="700">clique na zona correta</Text> para classificá-lo.
-            Em telas maiores, você também pode <Text as="strong" fontWeight="700">arrastar</Text>.
-          </Text>
         </Box>
       </motion.div>
 

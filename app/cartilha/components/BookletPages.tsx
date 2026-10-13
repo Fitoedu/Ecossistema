@@ -1394,13 +1394,33 @@ export function PageLapbook({ data }: { data: PageLapbookData }) {
           subtitle={data.lapbookSubtitle}
         />
 
-        {/* Prompt pedagógico — Dona Fito introduz a atividade */}
+        {/* Instrução pedagógica sem repetir a mascote do callout final */}
         <Box mb={5}>
-          <MascotSpeech
-            speech={
-              <>
-                Agora é a sua vez de praticar! Classifique cada ação
-                abaixo em{' '}
+          <HStack
+            align="flex-start"
+            gap={3}
+            bg="yellow.50"
+            border="1px solid"
+            borderColor="yellow.200"
+            borderRadius="16px"
+            p={{ base: 4, sm: 5 }}
+          >
+            <Text fontSize="1.45rem" lineHeight="1" aria-hidden="true">
+              💡
+            </Text>
+            <Box>
+              <Text
+                fontSize="0.72rem"
+                fontWeight="900"
+                letterSpacing="0.08em"
+                textTransform="uppercase"
+                color="orange.800"
+                mb={1}
+              >
+                Reflita · Desafio fitossanitário
+              </Text>
+              <Text fontSize="0.88rem" color="gray.700" lineHeight="1.65">
+                Agora é a sua vez de praticar! Classifique cada ação abaixo em{' '}
                 <Text as="strong" color="#2E7D32">
                   Prática Segura
                 </Text>{' '}
@@ -1409,11 +1429,9 @@ export function PageLapbook({ data }: { data: PageLapbookData }) {
                   Risco Fitossanitário
                 </Text>
                 . Você pode clicar ou arrastar os cartões!
-              </>
-            }
-            variant="question"
-            delay={0.1}
-          />
+              </Text>
+            </Box>
+          </HStack>
         </Box>
 
         {/* Atividade central de classificação */}
