@@ -99,6 +99,12 @@ export interface InvasivePlantCardData extends ImageCardData {
   impact: string
 }
 
+/** Ficha interativa de um aliado natural da lavoura */
+export interface AllyCardData extends ImageCardData {
+  role: string
+  benefit: string
+}
+
 /** Uma tag de categoria (cover-tags, etc.) */
 export interface TagData {
   label: string
@@ -213,6 +219,7 @@ export interface PageContentData extends PersonaBlock {
   leadText: string
   imageCards?: ImageCardData[]
   invasiveCards?: InvasivePlantCardData[]
+  allyCards?: AllyCardData[]
   callouts?: CalloutData[]
   midSectionHeading?: string
   midSectionText?: string
@@ -897,13 +904,49 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     heroImageSrc: '/assets/cenarios/ecossistema-agricola-equilibrado.png',
     leadText:
       'Nem tudo é vilão na natureza! Existem seres vivos incríveis que ajudam a lavoura ao se alimentar das pragas ou ao polinizar as flores das plantas. São os nossos heróis naturais!',
-    imageCards: [
-      { imageSrc: '/assets/herois/joaninha-icone.png', label: 'Joaninha — come pulgões', alt: 'Joaninha vermelha' },
-      { imageSrc: '/assets/herois/abelha-icone.png', label: 'Abelha — poliniza as flores', alt: 'Abelha voando' },
-      { imageSrc: '/assets/herois/vespinha-icone.png', label: 'Vespinha — parasita pragas', alt: 'Vespinha parasitoide' },
-      { imageSrc: '/assets/herois/aranha-icone.png', label: 'Aranha — predadora de insetos', alt: 'Aranha pequena' },
-      { imageSrc: '/assets/herois/gavião-icone.png', label: 'Gavião — controla roedores', alt: 'Gavião predador' },
-      { imageSrc: '/assets/herois/fungo-bom-icone.png', label: 'Fungos bons — combatem pragas', alt: 'Fungo entomopatogênico' },
+    allyCards: [
+      {
+        imageSrc: '/imagens/aliados/joaninha.jpg',
+        label: 'Joaninha',
+        alt: 'Joaninha predadora de pulgões',
+        role: 'Alimenta-se de pulgões e outros pequenos insetos que sugam a seiva das plantas.',
+        benefit: 'Ajuda a controlar pragas naturalmente, reduzindo a necessidade de inseticidas.',
+      },
+      {
+        imageSrc: '/imagens/aliados/abelha.jpg',
+        label: 'Abelha',
+        alt: 'Abelha polinizando uma flor',
+        role: 'Transporta pólen entre as flores e favorece a formação de frutos e sementes.',
+        benefit: 'Melhora a polinização e a produtividade de culturas, sem depender de produtos químicos.',
+      },
+      {
+        imageSrc: '/imagens/aliados/vespinha.jpg',
+        label: 'Vespinha',
+        alt: 'Vespinha parasitoide',
+        role: 'Parasita ovos e larvas de pragas, impedindo que elas cheguem à fase adulta.',
+        benefit: 'Faz o controle biológico de forma específica e ajuda a preservar a lavoura.',
+      },
+      {
+        imageSrc: '/imagens/aliados/aranha.jpg',
+        label: 'Aranha',
+        alt: 'Aranha predadora de insetos',
+        role: 'Captura e come diversos insetos que circulam entre as folhas e o solo.',
+        benefit: 'Reduz a população de pragas sem custo para o agricultor e sem contaminar o ambiente.',
+      },
+      {
+        imageSrc: '/imagens/aliados/gaviao.jpg',
+        label: 'Gavião',
+        alt: 'Gavião predador de roedores',
+        role: 'Preda roedores e outros animais que podem danificar sementes, raízes e frutos.',
+        benefit: 'Ajuda a manter o equilíbrio da área e diminui perdas sem o uso de venenos.',
+      },
+      {
+        imageSrc: '/imagens/aliados/fungos-bons.jpg',
+        label: 'Fungos Bons',
+        alt: 'Fungo benéfico usado no controle biológico',
+        role: 'Infectam algumas pragas e interrompem seu desenvolvimento, sem atacar a cultura.',
+        benefit: 'Podem substituir parte dos agrotóxicos e tornar o manejo mais seguro e sustentável.',
+      },
     ],
     midSectionHeading: 'O que é Controle Biológico?',
     midSectionText:
@@ -939,7 +982,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     statCards: [
       { gradient: 'linear-gradient(135deg, #C62828, #B71C1C)', imageSrc: '/assets/icones/folha-comida-icone.png', stat: 'Folhas', label: 'Insetos desfolhadores destroem a capacidade da planta de fazer fotossíntese.', textColor: 'white' },
       { gradient: 'linear-gradient(135deg, #F57F17, #E65100)', imageSrc: '/assets/icones/raiz-icone.png', stat: 'Raiz', label: 'Nematoides e larvas subterrâneas atacam as raízes, impedindo a absorção de água.', textColor: 'white' },
-      { gradient: 'linear-gradient(135deg, #1565C0, #0D47A1)', imageSrc: '/assets/icones/seiva-icone.png', stat: 'Seiva', label: 'Pulgões, ácaros e moscas sugam a seiva, enfraquecendo gradativamente a planta.', textColor: 'white' },
+      { gradient: 'linear-gradient(135deg, #2E7D32, #1B5E20)', imageSrc: '/assets/icones/seiva-icone.png', stat: 'Seiva', label: 'Pulgões, ácaros e moscas sugam a seiva, enfraquecendo gradativamente a planta.', textColor: 'white' },
     ],
     impacts: [
       { imageSrc: '/assets/icones/manchas-icone.png', title: 'Manchas e lesões', desc: 'Fungos e bactérias causam manchas que impedem a fotossíntese e deixam a planta feia para venda.' },

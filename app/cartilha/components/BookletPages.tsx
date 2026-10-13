@@ -12,6 +12,7 @@ import PestModalGallery from "./PestModalGallery";
 import Quiz from "./Quiz";
 import { ImageDiscoveryHotspotGrid } from "./ImageDiscoveryHotspot";
 import InvasivePlantGallery from "./InvasivePlantGallery";
+import AllyGallery from "./AllyGallery";
 import type {
   PageCoverData,
   PageContentData,
@@ -1312,6 +1313,35 @@ export function PageContent({
     )
   }
 
+  /* Layout exclusivo para a Página 09 — Aliados da lavoura */
+  if (data.id === 'p08') {
+    return (
+      <Box>
+        <SectionBadge>{data.badgeLabel}</SectionBadge>
+
+        <PageTitle>
+          {data.title}
+          {data.titleHighlight && <Highlight>{data.titleHighlight}</Highlight>}
+          {data.titleSuffix}
+        </PageTitle>
+
+        <LeadText>{data.leadText}</LeadText>
+
+        {data.allyCards && <AllyGallery items={data.allyCards} />}
+
+        {data.midSectionHeading && (
+          <>
+            <Divider />
+            <SectionHeading>{data.midSectionHeading}</SectionHeading>
+            {data.midSectionText && <LeadText>{data.midSectionText}</LeadText>}
+          </>
+        )}
+
+        {data.callouts && <CalloutList callouts={data.callouts} />}
+      </Box>
+    )
+  }
+
   /* Layout padrão para todas as demais páginas de conteúdo */
   return (
     <Box>
@@ -1629,6 +1659,13 @@ const PRAGA_IMPACT_IMAGE_URLS = [
   '/imagens/impactos/mudancas-climaticas.jpg',
 ] as const
 
+const ATTACK_SYMPTOM_IMAGE_URLS = [
+  '/imagens/sintomas/mancha.jpg',
+  '/imagens/sintomas/galha.jpg',
+  '/imagens/sintomas/murcha.jpg',
+  '/imagens/sintomas/transmissao-virus.jpg',
+] as const
+
 function PragaImpactImage({
   imageUrl,
   title,
@@ -1767,6 +1804,240 @@ function PragaImpactAccordion({ impacts }: { impacts: PageImpactData['impacts'] 
   )
 }
 
+function AttackTypeFlipCard({
+  card,
+}: {
+  card: PageImpactData['statCards'][number]
+}) {
+  const [revealed, setRevealed] = useState(false)
+
+  return (
+    <Box
+      h="155px"
+      cursor="pointer"
+      position="relative"
+      style={{ perspective: '1000px' }}
+      onClick={() => setRevealed((current) => !current)}
+      role="button"
+      tabIndex={0}
+      aria-label={`${card.stat}: ${revealed ? card.label : 'revelar detalhes'}`}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault()
+          setRevealed((current) => !current)
+        }
+      }}
+    >
+      <motion.div
+        style={{ width: '100%', height: '100%', transformStyle: 'preserve-3d' }}
+        animate={{ rotateY: revealed ? 180 : 0 }}
+        transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+      >
+        <Box
+          position="absolute"
+          inset={0}
+          style={{ backfaceVisibility: 'hidden' }}
+          bg={card.gradient}
+          color="white"
+          borderRadius="18px"
+          p={4}
+          display="flex"
+          flexDir="column"
+          alignItems="center"
+          justifyContent="center"
+          textAlign="center"
+          boxShadow="0 5px 16px rgba(46,125,50,0.18)"
+        >
+          <Text fontSize="1.5rem" fontWeight="900" lineHeight="1">
+            {card.stat}
+          </Text>
+          <Text mt={3} fontSize="0.76rem" fontWeight="700">
+            Clique para descobrir como ataca
+          </Text>
+        </Box>
+        <Box
+          position="absolute"
+          inset={0}
+          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+          bg={card.gradient}
+          color="white"
+          borderRadius="18px"
+          p={4}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          textAlign="center"
+          boxShadow="0 5px 16px rgba(46,125,50,0.18)"
+        >
+          <Text fontSize="0.8rem" fontWeight="700" lineHeight="1.5">
+            {card.label}
+          </Text>
+        </Box>
+      </motion.div>
+    </Box>
+  )
+}
+
+function AttackSymptomImage({ imageUrl, title }: { imageUrl: string; title: string }) {
+  const [hasError, setHasError] = useState(false)
+
+  return (
+    <Box
+      position="relative"
+      minH={{ base: '150px', md: '180px' }}
+      borderRadius="md"
+      overflow="hidden"
+      border="1px solid"
+      borderColor="green.200"
+      boxShadow="sm"
+      bg="green.50"
+    >
+      {!hasError ? (
+        <Image
+          src={imageUrl}
+          alt={`Fotografia de campo: ${title}`}
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          style={{ objectFit: 'cover' }}
+          onError={() => setHasError(true)}
+        />
+      ) : (
+        <Box
+          minH={{ base: '150px', md: '180px' }}
+          h="full"
+          display="flex"
+          flexDir="column"
+          alignItems="center"
+          justifyContent="center"
+          textAlign="center"
+          px={5}
+          bgGradient="linear(to-br, green.50, yellow.50)"
+        >
+          <Text fontSize="2rem" aria-hidden="true">🌿</Text>
+          <Text mt={2} fontSize="0.72rem" fontWeight="700" color="green.800">
+            Fotografia de campo em breve
+          </Text>
+          <Text mt={1} fontSize="0.65rem" color="green.700">
+            Imagem ilustrativa do sintoma
+          </Text>
+        </Box>
+      )}
+    </Box>
+  )
+}
+
+function AttackSymptomAccordion({ impacts }: { impacts: PageImpactData['impacts'] }) {
+  const [openImpact, setOpenImpact] = useState<number | null>(null)
+
+  return (
+    <VStack gap={3} align="stretch">
+      {impacts.map((item, index) => {
+        const isOpen = openImpact === index
+
+        return (
+          <Box
+            key={item.title}
+            border="1px solid"
+            borderColor={isOpen ? 'green.400' : 'green.100'}
+            borderRadius="16px"
+            bg={isOpen ? 'green.50' : 'white'}
+            overflow="hidden"
+            transition="all 0.2s ease"
+          >
+            <Box
+              as="button"
+              w="full"
+              display="flex"
+              alignItems="center"
+              gap={3}
+              p={{ base: '14px 16px', sm: '16px 20px' }}
+              textAlign="left"
+              cursor="pointer"
+              onClick={() => setOpenImpact(isOpen ? null : index)}
+              aria-expanded={isOpen}
+              _hover={{ bg: 'green.50' }}
+            >
+              <Box
+                w="42px"
+                h="42px"
+                borderRadius="12px"
+                bg="green.600"
+                color="white"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                flexShrink={0}
+                fontSize="1.1rem"
+                fontWeight="800"
+              >
+                {index + 1}
+              </Box>
+              <Text flex="1" fontWeight="700" fontSize="0.88rem" color="green.900">
+                {item.title}
+              </Text>
+              <Text color="green.700" fontSize="1.2rem" aria-hidden="true">
+                {isOpen ? '−' : '+'}
+              </Text>
+            </Box>
+            <AnimatePresence initial={false}>
+              {isOpen && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.22, ease: 'easeOut' }}
+                >
+                  <Box px={{ base: 4, sm: 5 }} pb={4}>
+                    <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: 3, md: 5 }} alignItems="center">
+                      <Box>
+                        <Text fontSize="1.1rem" mb={2} aria-hidden="true">
+                          {index === 0 ? '🔎' : index === 1 ? '🌱' : index === 2 ? '💧' : '🦋'}
+                        </Text>
+                        <Text fontSize="0.8rem" color="gray.700" lineHeight="1.6">
+                          {item.desc}
+                        </Text>
+                      </Box>
+                      <AttackSymptomImage
+                        imageUrl={ATTACK_SYMPTOM_IMAGE_URLS[index]}
+                        title={item.title}
+                      />
+                    </SimpleGrid>
+                  </Box>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </Box>
+        )
+      })}
+    </VStack>
+  )
+}
+
+function AttackInteractivePage({ data }: { data: PageImpactData }) {
+  return (
+    <Box>
+      <SectionBadge>{data.badgeLabel}</SectionBadge>
+      <PageTitle>
+        {data.title}
+        {data.titleHighlight && <Highlight>{data.titleHighlight}</Highlight>}
+      </PageTitle>
+      <LeadText>{data.leadText}</LeadText>
+
+      <Text fontSize="0.78rem" fontWeight="600" color="green.700" textAlign="center" mb={3}>
+        Clique em cada tipo de ataque e sintoma para investigar como as pragas danificam as plantas!
+      </Text>
+      <SimpleGrid columns={{ base: 1, sm: 3 }} gap={{ base: 3, sm: 4 }} mb={7}>
+        {data.statCards.map((card) => (
+          <AttackTypeFlipCard key={card.stat} card={card} />
+        ))}
+      </SimpleGrid>
+
+      <SectionHeading>Principais impactos</SectionHeading>
+      <AttackSymptomAccordion impacts={data.impacts} />
+    </Box>
+  )
+}
+
 function PragaAgricolaInteractivePage({ data }: { data: PageImpactData }) {
   return (
     <Box>
@@ -1801,6 +2072,9 @@ function PragaAgricolaInteractivePage({ data }: { data: PageImpactData }) {
 export function PageImpact({ data }: { data: PageImpactData }) {
   if (data.id === 'p04') {
     return <PragaAgricolaInteractivePage data={data} />
+  }
+  if (data.id === 'p09') {
+    return <AttackInteractivePage data={data} />
   }
 
   return (
