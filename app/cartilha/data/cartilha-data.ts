@@ -93,6 +93,12 @@ export interface ImageCardData {
   display?: 'icon' | 'full'
 }
 
+/** Ficha interativa de uma planta invasora */
+export interface InvasivePlantCardData extends ImageCardData {
+  whatItSteals: string
+  impact: string
+}
+
 /** Uma tag de categoria (cover-tags, etc.) */
 export interface TagData {
   label: string
@@ -206,6 +212,7 @@ export interface PageContentData extends PersonaBlock {
   topCallout?: CalloutData
   leadText: string
   imageCards?: ImageCardData[]
+  invasiveCards?: InvasivePlantCardData[]
   callouts?: CalloutData[]
   midSectionHeading?: string
   midSectionText?: string
@@ -829,11 +836,35 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     heroImageSrc: '/assets/pragas/plantas-invasoras/erva-daninha-lavoura.png',
     leadText:
       'Plantas invasoras (ou ervas daninhas) são plantas que crescem onde não são desejadas e competem com as plantas cultivadas por água, luz e nutrientes do solo. E uma disputa por recursos — e a planta da lavoura quem perde!',
-    imageCards: [
-      { imageSrc: '/assets/pragas/plantas-invasoras/tiririca-icone.png', label: 'Tiririca — muito comum nas roças', alt: 'Tiririca invasora' },
-      { imageSrc: '/assets/pragas/plantas-invasoras/capim-coloniao-icone.png', label: 'Capim-colônia — invade pastagens', alt: 'Capim colônia' },
-      { imageSrc: '/assets/pragas/plantas-invasoras/picao-icone.png', label: 'Picão-preto — ataca diversas culturas', alt: 'Picão preto' },
-      { imageSrc: '/assets/pragas/plantas-invasoras/buva-icone.png', label: 'Buva — resistente a herbicidas', alt: 'Buva resistente' },
+    invasiveCards: [
+      {
+        imageSrc: '/imagens/pragas/tiririca.jpg',
+        label: 'Tiririca',
+        alt: 'Tiririca invasora',
+        whatItSteals: 'Água, luz e nutrientes, graças às raízes e estruturas subterrâneas que ocupam o solo.',
+        impact: 'Forma manchas densas e compete diretamente com a cultura, reduzindo o crescimento e a produtividade.',
+      },
+      {
+        imageSrc: '/imagens/pragas/capim-colonia.jpg',
+        label: 'Capim-colônia',
+        alt: 'Capim-colônia invasor',
+        whatItSteals: 'Água, luz e nutrientes da lavoura e das pastagens ao formar touceiras muito fechadas.',
+        impact: 'Sufoca plantas jovens, dificulta o manejo e reduz o espaço disponível para a cultura se desenvolver.',
+      },
+      {
+        imageSrc: '/imagens/pragas/picao-preto.jpg',
+        label: 'Picão-preto',
+        alt: 'Picão-preto invasor',
+        whatItSteals: 'Água, luz e nutrientes, além de espaço para suas raízes e folhas se espalharem.',
+        impact: 'Pode liberar substâncias que atrapalham outras plantas e competir com diversas culturas anuais.',
+      },
+      {
+        imageSrc: '/imagens/pragas/buva.jpg',
+        label: 'Buva',
+        alt: 'Buva invasora resistente',
+        whatItSteals: 'Água, luz e nutrientes durante todo o ciclo da lavoura, especialmente quando cresce cedo.',
+        impact: 'É difícil de controlar em algumas áreas e pode produzir muitas sementes, comprometendo a colheita.',
+      },
     ],
     midSectionHeading: 'Por que são um problema sério?',
     midSectionText:

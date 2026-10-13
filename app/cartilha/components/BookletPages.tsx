@@ -11,6 +11,7 @@ import { PestCardGrid } from "./PestCard";
 import PestModalGallery from "./PestModalGallery";
 import Quiz from "./Quiz";
 import { ImageDiscoveryHotspotGrid } from "./ImageDiscoveryHotspot";
+import InvasivePlantGallery from "./InvasivePlantGallery";
 import type {
   PageCoverData,
   PageContentData,
@@ -1278,6 +1279,35 @@ export function PageContent({
         )}
 
         {data.callouts && <CalloutList callouts={data.callouts} startMt={5} />}
+      </Box>
+    )
+  }
+
+  /* Layout exclusivo para a Página 08 — Plantas invasoras */
+  if (data.id === 'p07') {
+    return (
+      <Box>
+        <SectionBadge>{data.badgeLabel}</SectionBadge>
+
+        <PageTitle>
+          {data.title}
+          {data.titleHighlight && <Highlight>{data.titleHighlight}</Highlight>}
+          {data.titleSuffix}
+        </PageTitle>
+
+        <LeadText>{data.leadText}</LeadText>
+
+        {data.invasiveCards && <InvasivePlantGallery items={data.invasiveCards} />}
+
+        {data.midSectionHeading && (
+          <>
+            <Divider />
+            <SectionHeading>{data.midSectionHeading}</SectionHeading>
+            {data.midSectionText && <LeadText>{data.midSectionText}</LeadText>}
+          </>
+        )}
+
+        {data.callouts && <CalloutList callouts={data.callouts} />}
       </Box>
     )
   }
