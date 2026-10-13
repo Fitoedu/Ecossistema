@@ -129,11 +129,15 @@ export function Callout({
   title,
   children,
   mt,
+  titleColor,
+  titleFontWeight,
 }: {
   variant?: CalloutData["variant"];
   title: string;
   children: React.ReactNode;
   mt?: number | string;
+  titleColor?: string;
+  titleFontWeight?: string;
 }) {
   const styles = {
     green: {
@@ -173,9 +177,9 @@ export function Callout({
         <Text
           display="block"
           fontSize={{ base: '0.88rem', sm: '0.95rem' }}
-          fontWeight="700"
+          fontWeight={titleFontWeight ?? "700"}
           mb={1}
-          color={s.titleColor}
+          color={titleColor ?? s.titleColor}
         >
           {title}
         </Text>
@@ -3152,6 +3156,8 @@ export function PageCase({ data }: { data: PageCaseData }) {
 }
 
 export function PageChain({ data }: { data: PageChainData }) {
+  const [revealed, setRevealed] = useState<Record<number, boolean>>({});
+
   return (
     <Box>
       <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -3176,20 +3182,6 @@ export function PageChain({ data }: { data: PageChainData }) {
           right="-80px"
           aria-hidden="true"
         />
-        <Box
-          display="inline-block"
-          fontSize="0.72rem"
-          textTransform="uppercase"
-          letterSpacing="0.1em"
-          fontWeight="700"
-          bg="rgba(255,255,255,0.2)"
-          px="14px"
-          py="5px"
-          borderRadius="999px"
-          mb={4}
-        >
-          🌾 Reflexão
-        </Box>
         <Text
           as="h1"
           fontSize="clamp(1.4rem, 3.5vw, 2rem)"
@@ -3198,10 +3190,15 @@ export function PageChain({ data }: { data: PageChainData }) {
           mb={2}
         >
           {data.heroTitle}
-          <Text as="span" color="#FBC02D">
-            {data.heroHighlight}
-          </Text>{" "}
-          na mesa
+          {data.heroHighlight && (
+            <>
+              {' '}
+              <Text as="span" color="#FBC02D">
+                {data.heroHighlight}
+              </Text>{' '}
+              na mesa
+            </>
+          )}
         </Text>
         <Text
           fontSize="0.9rem"
@@ -3218,57 +3215,107 @@ export function PageChain({ data }: { data: PageChainData }) {
       <SectionHeading>{data.sectionHeading}</SectionHeading>
       <LeadText>{data.leadText}</LeadText>
 
-      <VStack gap={0} align="stretch" my={6}>
+      <SimpleGrid
+        columns={{ base: 1, sm: 2, lg: 3 }}
+        gap={4}
+        my={6}
+        alignItems="start"
+      >
         {data.chainItems.map((item, idx) => (
-          <Box key={idx}>
-            <HStack gap={4} py={2} align="center">
-              <VStack gap={0} align="center" w="36px" flexShrink={0}>
-                <Box
-                  w="14px"
-                  h="14px"
-                  borderRadius="50%"
-                  bg="#2E7D32"
-                  flexShrink={0}
-                />
-                {idx < data.chainItems.length - 1 && (
-                  <Box
-                    w="2px"
-                    h="28px"
-                    bg="linear-gradient(to bottom, #2E7D32, #66BB6A)"
-                    mx="auto"
-                  />
-                )}
-              </VStack>
-              <Box w="32px" h="32px" flexShrink={0}>
-                <Image
-                  src={item.imageSrc}
-                  alt={item.text.slice(0, 30)}
-                  width={32}
-                  height={32}
-                  style={{
-                    objectFit: "contain",
-                    width: "100%",
-                    height: "100%",
-                  }}
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = "none";
-                  }}
-                />
+          <Box
+            key={idx}
+            h="auto"
+            bg="white"
+            borderWidth="1px"
+            borderColor="gray.100"
+            borderRadius="lg"
+            overflow="hidden"
+            boxShadow="sm"
+            transition="transform 0.2s, box-shadow 0.2s"
+            _hover={{ transform: 'translateY(-3px)', boxShadow: 'md' }}
+          >
+            <Box
+              position="relative"
+              h="100px"
+              borderTopRadius="md"
+              overflow="hidden"
+            >
+              <Image
+                src={item.imageSrc}
+                alt=""
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                style={{ objectFit: 'cover' }}
+              />
+              <Box
+                position="absolute"
+                top={2}
+                left={2}
+                px={2}
+                py={1}
+                borderRadius="full"
+                bg="brand.500"
+                color="white"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                fontSize="xs"
+                fontWeight="bold"
+              >
+                {String(idx + 1).padStart(2, '0')}
               </Box>
+            </Box>
+            <Box p={4}>
               <Text
-                fontSize="0.88rem"
+                fontSize="0.9rem"
                 color="#212121"
-                lineHeight="1.5"
-                fontWeight="500"
+                lineHeight="1.55"
+                fontWeight="700"
               >
                 {item.text}
               </Text>
-            </HStack>
+              <Box
+                as="button"
+                onClick={() => setRevealed((current) => ({ ...current, [idx]: !current[idx] }))}
+                aria-expanded={Boolean(revealed[idx])}
+                mt={3}
+                border="0"
+                bg="transparent"
+                color="brand.500"
+                fontSize="0.76rem"
+                fontWeight="800"
+                cursor="pointer"
+                p={0}
+                _hover={{ textDecoration: 'underline', color: 'brand.600' }}
+                _focusVisible={{ outline: '2px solid', outlineColor: 'brand.500', outlineOffset: '2px' }}
+              >
+                {revealed[idx] ? 'Ocultar impacto' : 'Descobrir impacto ➔'}
+              </Box>
+              {revealed[idx] && (
+                <Text mt={3} pt={3} borderTop="1px solid" borderColor="gray.100" fontSize="0.8rem" color="gray.600" lineHeight="1.6">
+                  {item.studentImpact}
+                </Text>
+              )}
+            </Box>
           </Box>
         ))}
-      </VStack>
+      </SimpleGrid>
 
-      {data.callouts && <CalloutList callouts={data.callouts} />}
+      {data.callouts && (
+        <VStack gap={4} align="stretch">
+          {data.callouts.map((callout, index) => (
+            <Callout
+              key={index}
+              variant="green"
+              title={callout.title}
+              titleColor="orange.600"
+              titleFontWeight="extrabold"
+            >
+              {callout.text}
+            </Callout>
+          ))}
+        </VStack>
+      )}
     </Box>
   );
 }
