@@ -182,6 +182,9 @@ export interface PragaAlertCardData {
   imageSrc: string
   title: string
   desc: string
+  status: string
+  economicRisk: string
+  howToAct: string
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -1022,9 +1025,33 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       },
     ],
     pragaCards: [
-      { bg: 'linear-gradient(135deg,#B71C1C,#C62828)', imageSrc: '/assets/pragas/quarentenarias/mosca-carambola-card.png', title: 'Mosca-da-carambola', desc: 'Detectada no Amapa, ameaça frutas em todo o territorio nacional. É uma praga quarentenária A1.' },
-      { bg: 'linear-gradient(135deg,#4A148C,#6A1B9A)', imageSrc: '/assets/pragas/quarentenarias/hlb-card.png', title: 'Huanglongbing (HLB)', desc: 'Doença bacteriana devastadora para citros. Sem cura conhecida para as árvores infectadas.' },
-      { bg: 'linear-gradient(135deg,#E65100,#BF360C)', imageSrc: '/assets/pragas/quarentenarias/vespa-velutina-card.png', title: 'Vespa Velutina', desc: 'Predadora de abelhas nativas, risco gravíssimo a polinização e a apicultura.' },
+      {
+        bg: 'linear-gradient(135deg,#B71C1C,#C62828)',
+        imageSrc: '/imagens/quarentenarias/mosca-carambola.jpg',
+        title: 'Mosca-da-carambola',
+        desc: 'Detectada no Amapá, ameaça frutas em todo o território nacional.',
+        status: 'Presente no Amapá — Quarentena A1.',
+        economicRisk: 'Ataca diversas frutas e pode provocar perdas de produção e bloqueios de exportação.',
+        howToAct: 'Não transporte frutas sem origem comprovada. Denuncie suspeitas e aguarde a fiscalização sanitária.',
+      },
+      {
+        bg: 'linear-gradient(135deg,#8B1E1E,#C62828)',
+        imageSrc: '/imagens/quarentenarias/huanglongbing.jpg',
+        title: 'Huanglongbing (HLB)',
+        desc: 'Doença bacteriana devastadora para citros, sem cura conhecida.',
+        status: 'Monitorado no Brasil — risco quarentenário para novas áreas.',
+        economicRisk: 'Reduz a produção de citros, compromete pomares e pode impedir a comercialização e exportação.',
+        howToAct: 'Use mudas certificadas, comunique sintomas e siga as orientações dos órgãos de defesa agropecuária.',
+      },
+      {
+        bg: 'linear-gradient(135deg,#B71C1C,#E65100)',
+        imageSrc: '/imagens/quarentenarias/vespa-velutina.jpg',
+        title: 'Vespa Velutina',
+        desc: 'Predadora de abelhas nativas, com risco à polinização e à apicultura.',
+        status: 'Alerta de vigilância — ocorrência deve ser comunicada às autoridades.',
+        economicRisk: 'Reduz colônias de abelhas, ameaça a polinização e pode afetar a produção de mel e frutas.',
+        howToAct: 'Não manipule ninhos. Registre o local, mantenha distância e denuncie para a fiscalização sanitária.',
+      },
     ],
     personaText:
       'Algumas pragas são tão perigosas que o Brasil tem regras rígidas para impedir sua entrada no país! Aeroportos, portos e fronteiras são fiscalizados para isso. Nunca traga frutas ou plantas de outros países sem verificar!',

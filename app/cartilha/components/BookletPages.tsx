@@ -2,17 +2,17 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
-import { Box, Grid, HStack, Text, VStack, SimpleGrid } from "@chakra-ui/react";
+import { Box, Flex, Grid, HStack, Text, VStack, SimpleGrid } from "@chakra-ui/react";
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Apple, BarChart3, Coins, Droplets, Leaf, Sun, TreePine } from "lucide-react";
 import LiftTheFlap from "./LiftTheFlap";
 import LapbookFolder, { type PocketCard } from "./LapbookFolder";
-import { PestCardGrid } from "./PestCard";
 import PestModalGallery from "./PestModalGallery";
 import Quiz from "./Quiz";
 import { ImageDiscoveryHotspotGrid } from "./ImageDiscoveryHotspot";
 import InvasivePlantGallery from "./InvasivePlantGallery";
 import AllyGallery from "./AllyGallery";
+import BorderInvestigationCases from "./BorderInvestigationCases";
 import type {
   PageCoverData,
   PageContentData,
@@ -2198,21 +2198,19 @@ export function PageImpact({ data }: { data: PageImpactData }) {
 }
 
 export function PageAlert({ data }: { data: PageAlertData }) {
-  const pestCards = data.pragaCards?.map((p) => ({
-    emoji: "🚨",
-    name: p.title,
-    severity: "Praga Quarentenária" as const,
-    description: p.desc,
-    variant: "red" as const,
-    impact: {
-      headline: "Ameaça à Agricultura",
-      items: [
-        { icon: "⚠️", text: p.desc },
-        { icon: "🌾", text: "Controle oficial obrigatório pelo MAPA." },
-        { icon: "🚫", text: "Pode bloquear exportações de frutas e vegetais." },
-      ],
-    },
-  }));
+  if (data.id === 'p10') {
+    return (
+      <Box>
+        <SectionBadge>{data.badgeLabel}</SectionBadge>
+        <PageTitle>
+          {data.title}
+          {data.titleHighlight && <Highlight>{data.titleHighlight}</Highlight>}
+        </PageTitle>
+        <LeadText>{data.leadText}</LeadText>
+        <BorderInvestigationCases data={data} />
+      </Box>
+    )
+  }
 
   return (
     <Box>
@@ -2278,20 +2276,694 @@ export function PageAlert({ data }: { data: PageAlertData }) {
 
       {data.callouts && <CalloutList callouts={data.callouts} />}
 
-      {pestCards && pestCards.length > 0 && (
-        <>
-          <Divider />
-          <SectionHeading>
-            Exemplos no Brasil — clique para ver o impacto!
-          </SectionHeading>
-          <PestCardGrid cards={pestCards} />
-        </>
-      )}
     </Box>
   );
 }
 
+type BorderCargo = {
+  title: string
+  description: string
+  imageSrc: string
+  correctAction: 'block' | 'allow'
+  disease: string
+  successFeedback: string
+  errorFeedback: string
+}
+
+const BORDER_CARGOS: BorderCargo[] = [
+  {
+    title: 'Carga de Carambolas',
+    description: 'Tentando entrar sem certificado sanitário.',
+    imageSrc: '/imagens/quarentenarias/carga-carambolas.jpg',
+    correctAction: 'block',
+    disease: 'Mosca-da-carambola',
+    successFeedback:
+      'Uau! Se essa Mosca-da-carambola entrasse, toda a nossa produção local estaria em risco!',
+    errorFeedback:
+      'Atenção! Sem certificado sanitário, as frutas podem trazer uma praga perigosa. Vamos bloquear para segurança?',
+  },
+  {
+    title: 'Carregamento de Mudas de Laranja',
+    description: 'Mudas trazidas de fora sem comprovação de saúde.',
+    imageSrc: '/imagens/quarentenarias/mudas-laranja-hlb.jpg',
+    correctAction: 'block',
+    disease: 'Huanglongbing (HLB)',
+    successFeedback:
+      'Muito bem! Mudas sem comprovação podem espalhar o HLB e destruir pomares inteiros de laranja.',
+    errorFeedback:
+      'Atenção! Sem o selo de inspeção, essa doença destruiria as laranjeiras. Vamos bloquear para segurança?',
+  },
+  {
+    title: 'Carregamento de Maçãs Certificadas',
+    description: 'Frutas com selo de inspeção e nota fiscal.',
+    imageSrc: '/imagens/quarentenarias/macas-certificadas.jpg',
+    correctAction: 'allow',
+    disease: 'Carga regularizada',
+    successFeedback:
+      'Decisão correta! A documentação confirma que a carga foi inspecionada e pode seguir com segurança.',
+    errorFeedback:
+      'Atenção! Esta carga tem selo de inspeção e nota fiscal. Com a documentação regularizada, ela pode ser permitida.',
+  },
+]
+
+function CargoImage({ cargo }: { cargo: BorderCargo }) {
+  const [hasError, setHasError] = useState(false)
+
+  if (hasError) {
+    return (
+      <Box
+        h="full"
+        w="full"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        bgGradient="linear(to-br, green.100, orange.100)"
+        fontSize="4rem"
+        aria-label={`Ilustração de ${cargo.title}`}
+      >
+        {cargo.correctAction === 'allow' ? '📦' : '🚚'}
+      </Box>
+    )
+  }
+
+  return (
+    <Image
+      src={cargo.imageSrc}
+      alt={`Ilustração da ${cargo.title}`}
+      fill
+      sizes="(max-width: 640px) 100vw, 520px"
+      style={{ objectFit: 'cover' }}
+      onError={() => setHasError(true)}
+    />
+  )
+}
+
+export function BorderRadarGame({ data }: { data: PageAlertData }) {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [inspected, setInspected] = useState(0)
+  const [correctAnswers, setCorrectAnswers] = useState(0)
+  const [selectedAction, setSelectedAction] = useState<'block' | 'allow' | null>(null)
+
+  const cargo = BORDER_CARGOS[currentIndex]
+  const hasFinished = inspected === BORDER_CARGOS.length
+  const isCorrect = selectedAction === cargo?.correctAction
+
+  const handleAction = (action: 'block' | 'allow') => {
+    if (selectedAction || hasFinished) return
+    setSelectedAction(action)
+    setInspected((value) => value + 1)
+    if (action === cargo.correctAction) {
+      setCorrectAnswers((value) => value + 1)
+    }
+  }
+
+  const handleNext = () => {
+    if (currentIndex < BORDER_CARGOS.length - 1) {
+      setCurrentIndex((value) => value + 1)
+      setSelectedAction(null)
+    }
+  }
+
+  const restart = () => {
+    setCurrentIndex(0)
+    setInspected(0)
+    setCorrectAnswers(0)
+    setSelectedAction(null)
+  }
+
+  return (
+    <Box>
+      <SectionBadge>{data.badgeLabel}</SectionBadge>
+      <PageTitle>
+        {data.title}
+        {data.titleHighlight && <Highlight>{data.titleHighlight}</Highlight>}
+      </PageTitle>
+      <LeadText>{data.leadText}</LeadText>
+
+      <Box
+        mt={5}
+        p={{ base: 3, sm: 5 }}
+        borderRadius="24px"
+        bgGradient="linear(to-br, green.950, green.800)"
+        color="white"
+        position="relative"
+        overflow="hidden"
+        boxShadow="0 12px 34px rgba(27,94,32,0.28)"
+      >
+        <Box
+          position="absolute"
+          top="-80px"
+          right="-50px"
+          w="180px"
+          h="180px"
+          borderRadius="full"
+          bg="rgba(255,152,0,0.12)"
+          aria-hidden="true"
+        />
+
+        <Flex align="center" justify="space-between" gap={3} position="relative" zIndex={1}>
+          <Box>
+            <Text fontSize={{ base: '1.05rem', sm: '1.3rem' }} fontWeight="900">
+              Radar de Fronteira
+            </Text>
+            <Text fontSize={{ base: '0.72rem', sm: '0.8rem' }} color="whiteAlpha.800">
+              Bloqueie os Invasores!
+            </Text>
+          </Box>
+          <Box
+            px={3}
+            py={2}
+            borderRadius="full"
+            bg="orange.400"
+            color="orange.950"
+            textAlign="center"
+            minW="112px"
+          >
+            <Text fontSize="0.62rem" fontWeight="800">CARGAS INSPECIONADAS</Text>
+            <Text fontSize="1.15rem" fontWeight="900" lineHeight="1.1">{inspected}/3</Text>
+          </Box>
+        </Flex>
+
+        <Box
+          mt={4}
+          p={{ base: 3, sm: 4 }}
+          borderRadius="18px"
+          bg="rgba(0,0,0,0.2)"
+          border="1px solid"
+          borderColor="whiteAlpha.300"
+          position="relative"
+          zIndex={1}
+        >
+          {!hasFinished && cargo && (
+            <>
+              <Flex align="center" gap={2} mb={3}>
+                <Text fontSize="1.2rem" aria-hidden="true">🛂</Text>
+                <Text fontSize="0.72rem" fontWeight="800" color="orange.200">
+                  MESA DE INSPEÇÃO · CASO {currentIndex + 1} DE 3
+                </Text>
+              </Flex>
+
+              <Box
+                h={{ base: '180px', sm: '230px' }}
+                position="relative"
+                overflow="hidden"
+                borderRadius="14px"
+                bg="green.100"
+                border="3px solid"
+                borderColor="orange.300"
+              >
+                <CargoImage cargo={cargo} />
+                <Box
+                  position="absolute"
+                  top={3}
+                  left={3}
+                  px={2}
+                  py={1}
+                  borderRadius="full"
+                  bg="red.700"
+                  color="white"
+                  fontSize="0.6rem"
+                  fontWeight="900"
+                >
+                  CARGA SUSPEITA
+                </Box>
+              </Box>
+
+              <Text mt={3} fontSize={{ base: '1rem', sm: '1.15rem' }} fontWeight="900">
+                {cargo.title}
+              </Text>
+              <Text mt={1} fontSize="0.78rem" color="whiteAlpha.800" lineHeight="1.5">
+                {cargo.description}
+              </Text>
+
+              {!selectedAction ? (
+                <SimpleGrid columns={{ base: 1, sm: 2 }} gap={3} mt={4}>
+                  <Box
+                    as="button"
+                    onClick={() => handleAction('block')}
+                    p={3}
+                    borderRadius="12px"
+                    bg="red.600"
+                    color="white"
+                    fontWeight="900"
+                    cursor="pointer"
+                    _hover={{ bg: 'red.500', transform: 'translateY(-2px)' }}
+                    transition="all 0.2s ease"
+                  >
+                    ⛔ BLOQUEAR
+                  </Box>
+                  <Box
+                    as="button"
+                    onClick={() => handleAction('allow')}
+                    p={3}
+                    borderRadius="12px"
+                    bg="green.500"
+                    color="white"
+                    fontWeight="900"
+                    cursor="pointer"
+                    _hover={{ bg: 'green.400', transform: 'translateY(-2px)' }}
+                    transition="all 0.2s ease"
+                  >
+                    ✅ PERMITIR
+                  </Box>
+                </SimpleGrid>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Box
+                    mt={4}
+                    p={3}
+                    borderRadius="12px"
+                    bg={isCorrect ? 'green.500' : 'orange.400'}
+                    color={isCorrect ? 'white' : 'orange.950'}
+                  >
+                    <Text fontSize="0.85rem" fontWeight="900">
+                      {isCorrect ? '🎉 Decisão correta!' : '⚠️ Vamos aprender com esta decisão'}
+                    </Text>
+                    <Text mt={1} fontSize="0.78rem" lineHeight="1.55">
+                      {isCorrect ? cargo.successFeedback : cargo.errorFeedback}
+                    </Text>
+                  </Box>
+                  {currentIndex < BORDER_CARGOS.length - 1 && (
+                    <Box
+                      as="button"
+                      onClick={handleNext}
+                      mt={3}
+                      w="full"
+                      p={3}
+                      borderRadius="12px"
+                      bg="orange.300"
+                      color="orange.950"
+                      fontWeight="900"
+                      cursor="pointer"
+                      _hover={{ bg: 'orange.200' }}
+                    >
+                      Próxima carga →
+                    </Box>
+                  )}
+                </motion.div>
+              )}
+            </>
+          )}
+
+          {hasFinished && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Box textAlign="center" py={{ base: 5, sm: 8 }}>
+                <Text fontSize="3rem" aria-hidden="true">🏅</Text>
+                <Text mt={2} fontSize="1.35rem" fontWeight="900" color="orange.200">
+                  Defensor da Lavoura
+                </Text>
+                <Text mt={2} fontSize="0.82rem" color="whiteAlpha.900">
+                  Você acertou {correctAnswers} de 3 decisões e protegeu a fronteira agrícola!
+                </Text>
+                <Box
+                  as="button"
+                  onClick={restart}
+                  mt={5}
+                  px={5}
+                  py={3}
+                  borderRadius="12px"
+                  bg="white"
+                  color="green.800"
+                  fontWeight="900"
+                  cursor="pointer"
+                  _hover={{ bg: 'orange.100' }}
+                >
+                  Jogar novamente
+                </Box>
+              </Box>
+            </motion.div>
+          )}
+        </Box>
+      </Box>
+
+      {data.callouts && <CalloutList callouts={data.callouts} />}
+    </Box>
+  )
+}
+
+const RESEARCH_STATION_IMAGES = [
+  'https://images.unsplash.com/photo-1574943320219-553eb213f72d',
+  'https://images.unsplash.com/photo-1532094349884-543bc11b234d',
+  'https://images.unsplash.com/photo-1523240795612-9a054b0db644',
+  'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc',
+  'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b',
+  '/assets/dona-fito/dona-fito-happy.png',
+]
+
+const RESEARCH_STATION_IMPACTS = [
+  'Ajuda agricultores a produzir mais e com segurança, usando variedades adaptadas ao clima e às pragas da Amazônia.',
+  'Forma profissionais e cria conhecimento para resolver problemas fitossanitários específicos de cada comunidade.',
+  'Prepara técnicos para reconhecer pragas no campo e aplicar práticas de manejo sustentável.',
+  'Protege a biodiversidade do Amapá ao estudar espécies nativas, pragas e aliados naturais.',
+  'Entrega diagnósticos confiáveis para que o agricultor escolha o tratamento correto e evite desperdícios.',
+  'A curiosidade de hoje pode virar a pesquisa que protegerá a lavoura de amanhã. Ciência também começa na escola!',
+]
+
+function StationPhoto({ src, alt, isStudent }: { src: string; alt: string; isStudent: boolean }) {
+  const [hasError, setHasError] = useState(false)
+
+  if (hasError) {
+    return (
+      <Box
+        h="full"
+        w="full"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        bg={isStudent ? 'yellow.100' : 'green.50'}
+        fontSize="3.5rem"
+        aria-label={`Ilustração de ${alt}`}
+      >
+        {isStudent ? '🌱' : '🔬'}
+      </Box>
+    )
+  }
+
+  return (
+    <Image
+      src={src}
+      alt={alt}
+      fill
+      sizes="(max-width: 768px) 100vw, 50vw"
+      style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+      onError={() => setHasError(true)}
+    />
+  )
+}
+
+function ResearchStations({ data }: { data: PageOrgaosData }) {
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
+
+  return (
+    <Box>
+      <Text
+        mb={4}
+        px={3}
+        py={2}
+        borderRadius="full"
+        bg="green.50"
+        color="green.800"
+        fontSize="0.78rem"
+        fontWeight="800"
+        textAlign="center"
+      >
+        🔬 Clique em cada estação científica para descobrir o que os pesquisadores fazem!
+      </Text>
+
+      <SimpleGrid columns={{ base: 1, md: 2 }} gap={4} alignItems="start">
+        {data.items.map((station, index) => {
+          const isExpanded = expandedIndex === index
+          const isStudent = index === data.items.length - 1
+
+          return (
+            <Box
+              key={station.name}
+              as="button"
+              onClick={() => setExpandedIndex(isExpanded ? null : index)}
+              w="100%"
+              textAlign="left"
+              cursor="pointer"
+              overflow="hidden"
+              borderRadius="18px"
+              border="1px solid"
+              borderColor={isExpanded ? 'green.500' : isStudent ? 'yellow.300' : 'green.200'}
+              bg={isStudent ? 'yellow.50' : 'white'}
+              boxShadow={isExpanded ? '0 8px 24px rgba(46,125,50,0.16)' : 'sm'}
+              _hover={{ transform: 'translateY(-3px)', shadow: 'md' }}
+              transition="all 0.25s ease"
+            >
+              <Box h="140px" w="100%" position="relative" overflow="hidden" borderTopRadius="lg" bg={isStudent ? 'yellow.100' : 'green.50'}>
+                {!isStudent && (
+                  <StationPhoto src={RESEARCH_STATION_IMAGES[index]} alt={station.name} isStudent={false} />
+                )}
+                {isStudent && (
+                  <Box
+                    position="absolute"
+                    inset="0"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    bg="rgba(255,193,7,0.28)"
+                  >
+                    <Avatar src="/imagens/dona-fito.png" />
+                  </Box>
+                )}
+                <Box
+                  position="absolute"
+                  left={3}
+                  bottom={3}
+                  px={2}
+                  py={1}
+                  borderRadius="full"
+                  bg={isStudent ? 'yellow.500' : 'green.700'}
+                  color={isStudent ? 'yellow.950' : 'white'}
+                  fontSize="0.62rem"
+                  fontWeight="900"
+                >
+                  {isStudent ? '🌟 Seu futuro na ciência' : `ESTAÇÃO ${index + 1}`}
+                </Box>
+              </Box>
+
+              <Box p={{ base: 4, sm: 5 }}>
+                <Flex align="center" justify="space-between" gap={3}>
+                  <Text fontWeight="800" fontSize="0.95rem" color={isStudent ? 'yellow.900' : 'green.900'}>
+                    {station.name}
+                  </Text>
+                  <Text fontSize="1.1rem" color="green.700" aria-hidden="true">
+                    {isExpanded ? '−' : '+'}
+                  </Text>
+                </Flex>
+                {!isExpanded && (
+                  <Text mt={2} fontSize="0.78rem" color="gray.600" lineHeight="1.55">
+                    {station.desc}
+                  </Text>
+                )}
+                <Text mt={3} fontSize="0.68rem" fontWeight="800" color="green.700">
+                  🔬 Clique para explorar a estação
+                </Text>
+
+                <AnimatePresence initial={false}>
+                  {isExpanded && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.25 }}
+                    >
+                      <Box mt={4} pt={4} borderTop="1px solid" borderColor="green.100">
+                        <Text fontSize="0.7rem" fontWeight="900" color="green.800" textTransform="uppercase">
+                          🔬 O que fazem
+                        </Text>
+                        <Text mt={1} fontSize="0.78rem" color="gray.700" lineHeight="1.55">
+                          {station.desc}
+                        </Text>
+                        <Text mt={3} fontSize="0.7rem" fontWeight="900" color="orange.800" textTransform="uppercase">
+                          🌱 Impacto no Amapá / Lavoura
+                        </Text>
+                        <Text mt={1} fontSize="0.78rem" color="gray.700" lineHeight="1.55">
+                          {RESEARCH_STATION_IMPACTS[index]}
+                        </Text>
+                      </Box>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </Box>
+            </Box>
+          )
+        })}
+      </SimpleGrid>
+    </Box>
+  )
+}
+
+const GUARDIAN_IMAGES = [
+  'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3',
+  'https://images.unsplash.com/photo-1578575437130-527eed3abbec',
+  'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d',
+  'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8',
+  'https://images.unsplash.com/photo-1595974482597-4b8da8879bc5',
+  '/imagens/dona-fito.png',
+]
+
+const GUARDIAN_IMPACTS = [
+  'Cria regras nacionais e coordena ações que reduzem o risco de entrada e disseminação de pragas no país.',
+  'Interrompe cargas ou produtos suspeitos em portos, aeroportos e fronteiras antes que alcancem novas lavouras.',
+  'Protege a produção do Amapá, fiscalizando o trânsito de plantas, sementes e frutos vindos de outras regiões.',
+  'Garante que sementes e mudas saudáveis cheguem ao produtor, evitando doenças desde o início da lavoura.',
+  'Ao identificar e comunicar anomalias, ajuda a interromper rapidamente focos antes que atinjam outras propriedades.',
+  'Ao não transportar plantas, frutos ou terra sem autorização, você fecha uma importante porta para as pragas.',
+]
+
+function GuardianCards({ data }: { data: PageOrgaosData }) {
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
+
+  return (
+    <Box>
+      <Text
+        mb={4}
+        px={3}
+        py={2}
+        borderRadius="full"
+        bg="green.50"
+        color="green.800"
+        fontSize="0.78rem"
+        fontWeight="800"
+        textAlign="center"
+      >
+        🔍 Clique em cada guardião para entender como funciona a fiscalização fitossanitária!
+      </Text>
+
+      <SimpleGrid columns={{ base: 1, md: 2 }} gap={4} alignItems="start">
+        {data.items.map((guardian, index) => {
+          const isExpanded = expandedIndex === index
+          const isConsumer = index === data.items.length - 1
+
+          return (
+            <Box
+              key={guardian.name}
+              as="button"
+              onClick={() => setExpandedIndex(isExpanded ? null : index)}
+              w="100%"
+              textAlign="left"
+              cursor="pointer"
+              overflow="hidden"
+              borderRadius="18px"
+              border="1px solid"
+              borderColor={isExpanded ? 'green.500' : isConsumer ? 'yellow.300' : 'green.200'}
+              bg={isConsumer ? 'yellow.50' : 'white'}
+              boxShadow={isExpanded ? '0 8px 24px rgba(46,125,50,0.16)' : 'sm'}
+              _hover={{ transform: 'translateY(-3px)', shadow: 'md' }}
+              transition="all 0.25s ease"
+            >
+              <Box
+                h="130px"
+                w="100%"
+                position="relative"
+                overflow="hidden"
+                borderTopRadius="lg"
+                bg={isConsumer ? 'yellow.100' : 'green.50'}
+              >
+                {!isConsumer ? (
+                  <StationPhoto src={GUARDIAN_IMAGES[index]} alt={guardian.name} isStudent={false} />
+                ) : (
+                  <Box
+                    position="absolute"
+                    inset="0"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    bg="rgba(255,193,7,0.28)"
+                  >
+                    <Avatar src="/imagens/dona-fito.png" />
+                  </Box>
+                )}
+                <Box
+                  position="absolute"
+                  left={3}
+                  bottom={3}
+                  px={2}
+                  py={1}
+                  borderRadius="full"
+                  bg={isConsumer ? 'yellow.500' : 'green.700'}
+                  color={isConsumer ? 'yellow.950' : 'white'}
+                  fontSize="0.62rem"
+                  fontWeight="900"
+                >
+                  {isConsumer ? '🌟 Faça sua parte' : `GUARDIÃO ${index + 1}`}
+                </Box>
+              </Box>
+
+              <Box p={{ base: 4, sm: 5 }}>
+                <Flex align="center" justify="space-between" gap={3}>
+                  <Text fontWeight="800" fontSize="0.95rem" color={isConsumer ? 'yellow.900' : 'green.900'}>
+                    {guardian.name}
+                  </Text>
+                  <Text fontSize="1.1rem" color="green.700" aria-hidden="true">
+                    {isExpanded ? '−' : '+'}
+                  </Text>
+                </Flex>
+                {!isExpanded && (
+                  <Text mt={2} fontSize="0.78rem" color="gray.600" lineHeight="1.55">
+                    {guardian.desc}
+                  </Text>
+                )}
+                <Text mt={3} fontSize="0.68rem" fontWeight="800" color="green.700">
+                  🔍 Clique para explorar o guardião
+                </Text>
+
+                <AnimatePresence initial={false}>
+                  {isExpanded && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: 'auto' }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.25 }}
+                    >
+                      <Box mt={4} pt={4} borderTop="1px solid" borderColor="green.100">
+                        <Text fontSize="0.7rem" fontWeight="900" color="green.800" textTransform="uppercase">
+                          🛡️ Atuação
+                        </Text>
+                        <Text mt={1} fontSize="0.78rem" color="gray.700" lineHeight="1.55">
+                          {guardian.desc}
+                        </Text>
+                        <Text mt={3} fontSize="0.7rem" fontWeight="900" color="orange.800" textTransform="uppercase">
+                          📍 Impacto
+                        </Text>
+                        <Text mt={1} fontSize="0.78rem" color="gray.700" lineHeight="1.55">
+                          {GUARDIAN_IMPACTS[index]}
+                        </Text>
+                      </Box>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </Box>
+            </Box>
+          )
+        })}
+      </SimpleGrid>
+    </Box>
+  )
+}
+
 export function PageOrgaos({ data }: { data: PageOrgaosData }) {
+  if (data.id === 'p11') {
+    return (
+      <Box>
+        <SectionBadge>{data.badgeLabel}</SectionBadge>
+        <PageTitle>
+          {data.title}
+          {data.titleHighlight && <Highlight>{data.titleHighlight}</Highlight>}
+          {data.titleSuffix}
+        </PageTitle>
+        <LeadText>{data.leadText}</LeadText>
+        <ResearchStations data={data} />
+      </Box>
+    )
+  }
+
+  if (data.id === 'p12') {
+    return (
+      <Box>
+        <SectionBadge>{data.badgeLabel}</SectionBadge>
+        <PageTitle>
+          {data.title}
+          {data.titleHighlight && <Highlight>{data.titleHighlight}</Highlight>}
+          {data.titleSuffix}
+        </PageTitle>
+        <LeadText>{data.leadText}</LeadText>
+        <GuardianCards data={data} />
+      </Box>
+    )
+  }
+
   return (
     <Box>
       <SectionBadge>{data.badgeLabel}</SectionBadge>
