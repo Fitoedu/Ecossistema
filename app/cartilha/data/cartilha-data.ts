@@ -503,10 +503,10 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     leadText:
       'Nesta cartilha, você vai descobrir o mundo fascinante da Fitossanidade — a ciência que cuida da saúde das plantas. Vamos explorar juntos:',
     imageCards: [
-      { imageSrc: '/images/Doenças/Fitoplasma.webp', label: 'O que são pragas e doenças', alt: 'Ilustração de doença de planta causada por Fitoplasma', display: 'full' },
-      { imageSrc: '/images/Agricultura/irrigation.webp', label: 'Como afetam a agricultura', alt: 'Imagem de sistema de irrigação em uma lavoura', display: 'full' },
-      { imageSrc: '/images/Método de Controle/Pulverizacao correta.webp', label: 'Como nos protegemos delas', alt: 'Imagem de um agricultor aplicando defensivos corretamente', display: 'full' },
-      { imageSrc: '/images/Pragas/Mosca da Carambola/1.webp', label: 'Casos reais do Amapá', alt: 'Imagem da Mosca da Carambola, uma praga relevante para o Amapá', display: 'full' },
+      { imageSrc: '/images/doencas/fitoplasma.webp', label: 'O que são pragas e doenças', alt: 'Ilustração de doença de planta causada por Fitoplasma', display: 'full' },
+      { imageSrc: '/images/agricultura/irrigation.webp', label: 'Como afetam a agricultura', alt: 'Imagem de sistema de irrigação em uma lavoura', display: 'full' },
+      { imageSrc: '/images/metodo de controle/pulverizacao correta.webp', label: 'Como nos protegemos delas', alt: 'Imagem de um agricultor aplicando defensivos corretamente', display: 'full' },
+      { imageSrc: '/images/pragas/mosca da carambola/1.webp', label: 'Casos reais do Amapá', alt: 'Imagem da Mosca da Carambola, uma praga relevante para o Amapá', display: 'full' },
     ],
     topCallout: {
       variant: 'green',
@@ -661,7 +661,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       {
         id: 2,
         name: 'Pulgão',
-        imageSrc: '/imagens/pragas/pulgao.jpg',
+        imageSrc: '/images/ameacas/pulgoes/pulgao.webp',
         damageType: 'Suga a seiva e pode transmitir vírus entre plantas.',
         fieldTip: 'Observe colônias pequenas na face inferior das folhas e brotos novos.',
         description:
@@ -670,7 +670,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       {
         id: 3,
         name: 'Mosca-branca',
-        imageSrc: '/imagens/pragas/mosca-branca.jpg',
+        imageSrc: '/images/ameacas/mosca branca/1.webp',
         damageType: 'Suga a seiva, causa clorose e favorece a fumagina nas folhas.',
         fieldTip: 'Toque a planta e observe pequenos insetos brancos levantando voo.',
         description:
@@ -679,7 +679,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       {
         id: 4,
         name: 'Broca',
-        imageSrc: '/imagens/pragas/broca.jpg',
+        imageSrc: '/images/pragas/mosca negra dos citros/1.webp',
         damageType: 'Perfura caules, frutos ou raízes, comprometendo os tecidos por dentro.',
         fieldTip: 'Procure orifícios, serragem e galerias em caules, frutos ou raízes.',
         description:
@@ -688,7 +688,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       {
         id: 5,
         name: 'Ácaro',
-        imageSrc: '/imagens/pragas/acaro.jpg',
+        imageSrc: '/images/ameacas/acaro/1.webp',
         damageType: 'Suga o conteúdo das células e provoca bronzeamento e queda das folhas.',
         fieldTip: 'Verifique pontilhado amarelado, teias finas e folhas bronzeadas em tempo seco.',
         description:
@@ -697,7 +697,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       {
         id: 6,
         name: 'Trips',
-        imageSrc: '/imagens/pragas/trips.jpg',
+        imageSrc: '/images/ameacas/mosca branca/2.webp',
         damageType: 'Raspa e suga células, causando estrias prateadas e transmitindo vírus.',
         fieldTip: 'Observe estrias prateadas em folhas e frutos e insetos muito pequenos e estreitos.',
         description:
@@ -737,7 +737,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         id: 'fungo-ferrugem',
         name: 'Ferrugem',
         category: 'fungo',
-        backgroundImageSrc: '/images/Sintomas/clorose.webp',
+        backgroundImageSrc: '/images/sintomas/clorose.webp',
         concept:
           'A ferrugem é uma doença causada por fungos que deixam manchas alaranjadas ou marrons nas folhas, semelhantes à ferrugem de metal. Ela se espalha pelo vento e pode destruir lavouras de soja ou trigo em poucos dias!',
         spreadText:
@@ -751,7 +751,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         id: 'fungo-antracnose',
         name: 'Antracnose',
         category: 'fungo',
-        backgroundImageSrc: '/images/Sintomas/podridao.webp',
+        backgroundImageSrc: '/images/sintomas/podridao.webp',
         concept:
           'A antracnose é causada por fungos do gênero Colletotrichum. Provoca manchas escuras e afundadas nos frutos de manga, mamão e tomate. Os frutos apodrecem antes de amadurecer, ficando impróprios para venda.',
         spreadText:
@@ -765,7 +765,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         id: 'fungo-requeima',
         name: 'Requeima',
         category: 'fungo',
-        backgroundImageSrc: '/images/Sintomas/necrose.webp',
+        backgroundImageSrc: '/images/sintomas/necrose.webp',
         concept:
           'A requeima, causada pelo oomiceto Phytophthora infestans, foi responsável pela Grande Fome da Irlanda no século XIX! Ela ataca batata, tomate e pimenta, provocando o apodrecimento rápido e total das plantas.',
         spreadText:
@@ -779,7 +779,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         id: 'bacteria-cancro',
         name: 'Cancro Cítrico',
         category: 'bacteria',
-        backgroundImageSrc: '/images/Sintomas/frutos com lesoes.webp',
+        backgroundImageSrc: '/images/sintomas/frutos com lesoes.webp',
         concept:
           'O cancro cítrico é uma doença bacteriana causada por Xanthomonas citri. Ataca laranjas, limões e outras frutas cítricas, causando lesões elevadas nas folhas, frutos e caules. Frutos infectados não podem ser exportados.',
         spreadText:
@@ -793,7 +793,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         id: 'virus-mosaico',
         name: 'Vírus do Mosaico',
         category: 'virus',
-        backgroundImageSrc: '/images/Sintomas/murcha.webp',
+        backgroundImageSrc: '/images/sintomas/murcha.webp',
         concept:
           'O vírus do mosaico (TMV, CMV e outros) deixa as folhas com padrão de manchas claras e escuras, parecendo um mosaico colorido. É transmitido por insetos vetores como pulgões. Afeta tomate, feijão, mandioca e muitas outras culturas.',
         spreadText:
@@ -807,7 +807,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         id: 'fitoplasma',
         name: 'Fitoplasma',
         category: 'fitoplasma',
-        backgroundImageSrc: '/images/Doenças/Fitoplasma.webp',
+        backgroundImageSrc: '/images/doencas/fitoplasma.webp',
         concept:
           'O fitoplasma é um micro-organismo que vive dentro dos vasos condutores da planta (floema). Causa o amarelecimento letal de palmeiras como açaí, coco e dendê — sem cura conhecida! É transmitido por cigarrinhas e outros insetos vetores.',
         spreadText:
@@ -849,28 +849,28 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       'Plantas invasoras (ou ervas daninhas) são plantas que crescem onde não são desejadas e competem com as plantas cultivadas por água, luz e nutrientes do solo. E uma disputa por recursos — e a planta da lavoura quem perde!',
     invasiveCards: [
       {
-        imageSrc: '/imagens/pragas/tiririca.jpg',
+        imageSrc: '/images/ameacas/plantas invasoras/1.webp',
         label: 'Tiririca',
         alt: 'Tiririca invasora',
         whatItSteals: 'Água, luz e nutrientes, graças às raízes e estruturas subterrâneas que ocupam o solo.',
         impact: 'Forma manchas densas e compete diretamente com a cultura, reduzindo o crescimento e a produtividade.',
       },
       {
-        imageSrc: '/imagens/pragas/capim-colonia.jpg',
+        imageSrc: '/images/ameacas/plantas invasoras/2.webp',
         label: 'Capim-colônia',
         alt: 'Capim-colônia invasor',
         whatItSteals: 'Água, luz e nutrientes da lavoura e das pastagens ao formar touceiras muito fechadas.',
         impact: 'Sufoca plantas jovens, dificulta o manejo e reduz o espaço disponível para a cultura se desenvolver.',
       },
       {
-        imageSrc: '/imagens/pragas/picao-preto.jpg',
+        imageSrc: '/images/ameacas/plantas invasoras/1.webp',
         label: 'Picão-preto',
         alt: 'Picão-preto invasor',
         whatItSteals: 'Água, luz e nutrientes, além de espaço para suas raízes e folhas se espalharem.',
         impact: 'Pode liberar substâncias que atrapalham outras plantas e competir com diversas culturas anuais.',
       },
       {
-        imageSrc: '/imagens/pragas/buva.jpg',
+        imageSrc: '/images/ameacas/plantas invasoras/2.webp',
         label: 'Buva',
         alt: 'Buva invasora resistente',
         whatItSteals: 'Água, luz e nutrientes durante todo o ciclo da lavoura, especialmente quando cresce cedo.',
@@ -910,42 +910,42 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       'Nem tudo é vilão na natureza! Existem seres vivos incríveis que ajudam a lavoura ao se alimentar das pragas ou ao polinizar as flores das plantas. São os nossos heróis naturais!',
     allyCards: [
       {
-        imageSrc: '/imagens/aliados/joaninha.jpg',
+        imageSrc: '/images/encontre_herois/joaninha.webp',
         label: 'Joaninha',
         alt: 'Joaninha predadora de pulgões',
         role: 'Alimenta-se de pulgões e outros pequenos insetos que sugam a seiva das plantas.',
         benefit: 'Ajuda a controlar pragas naturalmente, reduzindo a necessidade de inseticidas.',
       },
       {
-        imageSrc: '/imagens/aliados/abelha.jpg',
+        imageSrc: '/images/aliados/abelha.webp',
         label: 'Abelha',
         alt: 'Abelha polinizando uma flor',
         role: 'Transporta pólen entre as flores e favorece a formação de frutos e sementes.',
         benefit: 'Melhora a polinização e a produtividade de culturas, sem depender de produtos químicos.',
       },
       {
-        imageSrc: '/imagens/aliados/vespinha.jpg',
+        imageSrc: '/images/aliados/vespa.webp',
         label: 'Vespinha',
         alt: 'Vespinha parasitoide',
         role: 'Parasita ovos e larvas de pragas, impedindo que elas cheguem à fase adulta.',
         benefit: 'Faz o controle biológico de forma específica e ajuda a preservar a lavoura.',
       },
       {
-        imageSrc: '/imagens/aliados/aranha.jpg',
+        imageSrc: '/images/aliados/larva.webp',
         label: 'Aranha',
         alt: 'Aranha predadora de insetos',
         role: 'Captura e come diversos insetos que circulam entre as folhas e o solo.',
         benefit: 'Reduz a população de pragas sem custo para o agricultor e sem contaminar o ambiente.',
       },
       {
-        imageSrc: '/imagens/aliados/gaviao.jpg',
+        imageSrc: '/images/agricultura/ghabiru-plantation.webp',
         label: 'Gavião',
         alt: 'Gavião predador de roedores',
         role: 'Preda roedores e outros animais que podem danificar sementes, raízes e frutos.',
         benefit: 'Ajuda a manter o equilíbrio da área e diminui perdas sem o uso de venenos.',
       },
       {
-        imageSrc: '/imagens/aliados/fungos-bons.jpg',
+        imageSrc: '/images/fungos/vassoura-da-bruxa-mandioca.webp',
         label: 'Fungos Bons',
         alt: 'Fungo benéfico usado no controle biológico',
         role: 'Infectam algumas pragas e interrompem seu desenvolvimento, sem atacar a cultura.',
@@ -1028,7 +1028,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     pragaCards: [
       {
         bg: 'linear-gradient(135deg,#B71C1C,#C62828)',
-        imageSrc: '/imagens/quarentenarias/mosca-carambola.jpg',
+        imageSrc: '/images/pragas/mosca da carambola/1.webp',
         title: 'Mosca-da-carambola',
         desc: 'Detectada no Amapá, ameaça frutas em todo o território nacional.',
         status: 'Presente no Amapá — Quarentena A1.',
@@ -1037,7 +1037,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       },
       {
         bg: 'linear-gradient(135deg,#8B1E1E,#C62828)',
-        imageSrc: '/imagens/quarentenarias/huanglongbing.jpg',
+        imageSrc: '/images/doencas/fitoplasma.webp',
         title: 'Huanglongbing (HLB)',
         desc: 'Doença bacteriana devastadora para citros, sem cura conhecida.',
         status: 'Monitorado no Brasil — risco quarentenário para novas áreas.',
@@ -1046,7 +1046,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       },
       {
         bg: 'linear-gradient(135deg,#B71C1C,#E65100)',
-        imageSrc: '/imagens/quarentenarias/vespa-velutina.jpg',
+        imageSrc: '/images/pragas/vespa velutina/1.webp',
         title: 'Vespa Velutina',
         desc: 'Predadora de abelhas nativas, com risco à polinização e à apicultura.',
         status: 'Alerta de vigilância — ocorrência deve ser comunicada às autoridades.',
@@ -1403,42 +1403,42 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     characters: [
       {
         id: 'joaninha',
-        imageSrc: '/images/Encontre_Herois/joaninha.webp',
+        imageSrc: '/images/encontre_herois/joaninha.webp',
         name: 'Joaninha',
         isHero: true,
         revealText: 'A joaninha come pulgões e outros insetos praga. Ela é uma das melhores aliadas da lavoura!',
       },
       {
         id: 'pulgao',
-        imageSrc: '/images/Ameaças/Pulgoes/4.webp',
+        imageSrc: '/images/ameacas/pulgoes/4.webp',
         name: 'Pulgão',
         isHero: false,
         revealText: 'O pulgão suga a seiva das plantas e transmite vírus. Um dos mais comuns inimigos da lavoura!',
       },
       {
         id: 'abelha',
-        imageSrc: '/images/Encontre_Herois/abelha.webp',
+        imageSrc: '/images/encontre_herois/abelha.webp',
         name: 'Abelha',
         isHero: true,
         revealText: 'A abelha poliniza as flores das plantas, garantindo que elas produzam frutos. Sem abelhas, sem frutas!',
       },
       {
         id: 'gafanhoto',
-        imageSrc: '/images/Ameaças/Gafanhoto/gafanhoto.webp',
+        imageSrc: '/images/ameacas/gafanhoto/gafanhoto.webp',
         name: 'Gafanhoto',
         isHero: false,
         revealText: 'Em enxames, os gafanhotos podem destruir campos inteiros de plantação em poucas horas!',
       },
       {
         id: 'minhoca',
-        imageSrc: '/images/Encontre_Herois/minhoca.webp',
+        imageSrc: '/images/encontre_herois/minhoca.webp',
         name: 'Minhoca',
         isHero: true,
         revealText: 'A minhoca aerifica o solo e produz húmus, melhorando a saúde do solo e ajudando as raízes das plantas!',
       },
       {
         id: 'fungo-ferrugem',
-        imageSrc: '/images/Encontre_Herois/fungo-ferrugem.webp',
+        imageSrc: '/images/encontre_herois/fungo-ferrugem.webp',
         name: 'Fungo da Ferrugem',
         isHero: false,
         revealText: 'A ferrugem é um fungo que deixa manchas alaranjadas nas folhas e pode destruir lavouras inteiras de soja e trigo!',

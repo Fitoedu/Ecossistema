@@ -29,7 +29,11 @@ interface AppShellProps {
  */
 export function AppShell({ children }: AppShellProps) {
   return (
-    <Box minH="100dvh" bg="bg" color="fg">
+    <Box
+      minH="100dvh"
+      bg="bg"
+      color="fg"
+    >
       {/* Barra superior com hambúrguer — visível apenas em mobile */}
       <MobileHeader />
 

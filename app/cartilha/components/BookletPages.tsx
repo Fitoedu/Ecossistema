@@ -1675,17 +1675,17 @@ function PragaStatRevealCard({
 }
 
 const PRAGA_IMPACT_IMAGE_URLS = [
-  '/imagens/impactos/reducao-producao.jpg',
-  '/imagens/impactos/aumento-custos.jpg',
-  '/imagens/impactos/bloqueio-exportacoes.jpg',
-  '/imagens/impactos/mudancas-climaticas.jpg',
+  '/images/agricultura/ghabiru-plantation.webp',
+  '/images/agricultura/irrigation.webp',
+  '/images/pragas/mosca da carambola/1.webp',
+  '/images/agricultura/irrigation2.webp',
 ] as const
 
 const ATTACK_SYMPTOM_IMAGE_URLS = [
-  '/imagens/sintomas/mancha.jpg',
-  '/imagens/sintomas/galha.jpg',
-  '/imagens/sintomas/murcha.jpg',
-  '/imagens/sintomas/transmissao-virus.jpg',
+  '/images/sintomas/necrose.webp',
+  '/images/sintomas/galhas.webp',
+  '/images/sintomas/murcha.webp',
+  '/images/encontre_herois/mosaico de virus.webp',
 ] as const
 
 function PragaImpactImage({
@@ -2316,7 +2316,7 @@ const BORDER_CARGOS: BorderCargo[] = [
   {
     title: 'Carga de Carambolas',
     description: 'Tentando entrar sem certificado sanitário.',
-    imageSrc: '/imagens/quarentenarias/carga-carambolas.jpg',
+    imageSrc: '/images/pragas/mosca da carambola/1.webp',
     correctAction: 'block',
     disease: 'Mosca-da-carambola',
     successFeedback:
@@ -2327,7 +2327,7 @@ const BORDER_CARGOS: BorderCargo[] = [
   {
     title: 'Carregamento de Mudas de Laranja',
     description: 'Mudas trazidas de fora sem comprovação de saúde.',
-    imageSrc: '/imagens/quarentenarias/mudas-laranja-hlb.jpg',
+    imageSrc: '/images/doencas/fitoplasma.webp',
     correctAction: 'block',
     disease: 'Huanglongbing (HLB)',
     successFeedback:
@@ -2338,7 +2338,7 @@ const BORDER_CARGOS: BorderCargo[] = [
   {
     title: 'Carregamento de Maçãs Certificadas',
     description: 'Frutas com selo de inspeção e nota fiscal.',
-    imageSrc: '/imagens/quarentenarias/macas-certificadas.jpg',
+    imageSrc: '/images/agricultura/ghabiru-plantation.webp',
     correctAction: 'allow',
     disease: 'Carga regularizada',
     successFeedback:
@@ -2735,7 +2735,7 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                     justifyContent="center"
                     bg="rgba(255,193,7,0.28)"
                   >
-                    <Avatar src="/imagens/dona-fito.png" />
+                    <Avatar src="/assets/dona_fito_meio_corpo.webp" />
                   </Box>
                 )}
                 <Box
@@ -2812,7 +2812,7 @@ const GUARDIAN_IMAGES = [
   'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d',
   'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8',
   'https://images.unsplash.com/photo-1595974482597-4b8da8879bc5',
-  '/imagens/dona-fito.png',
+  '/assets/dona_fito_meio_corpo.webp',
 ]
 
 const GUARDIAN_IMPACTS = [
@@ -2884,7 +2884,7 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
                     justifyContent="center"
                     bg="rgba(255,193,7,0.28)"
                   >
-                    <Avatar src="/imagens/dona-fito.png" />
+                    <Avatar src="/assets/dona_fito_meio_corpo.webp" />
                   </Box>
                 )}
                 <Box
