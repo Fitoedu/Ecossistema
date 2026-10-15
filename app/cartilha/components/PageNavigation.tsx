@@ -1,8 +1,9 @@
 'use client'
 
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react'
-import { Box, Text, HStack, VStack } from '@chakra-ui/react'
+import { Box, Input, Text, HStack, VStack } from '@chakra-ui/react'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -243,12 +244,31 @@ function PageInfo({
   currentPage,
   totalPages,
   pageLabel,
+  onGoTo,
 }: {
   currentPage: number
   totalPages: number
   pageLabel?: string
+  onGoTo?: (index: number) => void
 }) {
   const emoji = PAGE_EMOJIS[currentPage] ?? '📄'
+  const [pageInput, setPageInput] = useState(String(currentPage + 1))
+
+  const commitPageInput = () => {
+    const parsedPage = Number(pageInput.trim())
+
+    if (!pageInput.trim() || !Number.isFinite(parsedPage)) {
+      setPageInput(String(currentPage + 1))
+      return
+    }
+
+    const targetPage = Math.min(
+      totalPages,
+      Math.max(1, Math.trunc(parsedPage)),
+    )
+    setPageInput(String(targetPage))
+    onGoTo?.(targetPage - 1)
+  }
 
   return (
     <VStack gap={1} flex="1" align="center" minW={0}>
@@ -293,15 +313,69 @@ function PageInfo({
 
       <ProgressDots currentPage={currentPage} totalPages={totalPages} />
 
-      <Text
-        fontSize="0.62rem"
-        color="rgba(46,125,50,0.65)"
-        fontWeight="500"
+      <HStack
+        gap={1}
+        align="baseline"
+        alignItems="baseline"
+        lineHeight="1"
+        justify="center"
         aria-live="polite"
         aria-atomic="true"
       >
-        {currentPage + 1} / {totalPages}
-      </Text>
+        <Input
+          type="number"
+          inputMode="numeric"
+          min={1}
+          max={totalPages}
+          value={pageInput}
+          onChange={(event) => setPageInput(event.target.value)}
+          onBlur={commitPageInput}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              event.preventDefault()
+              commitPageInput()
+              event.currentTarget.blur()
+            }
+          }}
+          title="Clique ou digite para ir direto para uma página"
+          aria-label="Ir diretamente para uma página"
+          w="28px"
+          h="auto"
+          p={0}
+          m={0}
+          display="inline-block"
+          textAlign="center"
+          verticalAlign="baseline"
+          lineHeight="1"
+          bg="transparent"
+          border="none"
+          outline="none"
+          fontFamily="inherit"
+          fontSize="xs"
+          color="gray.600"
+          fontWeight="semibold"
+          _hover={{
+            bg: 'gray.200',
+            borderRadius: 'xs',
+            cursor: 'pointer',
+          }}
+          _focus={{
+            bg: 'white',
+            borderColor: 'transparent',
+            boxShadow: 'outline',
+            borderRadius: 'xs',
+          }}
+        />
+        <Text
+          fontSize="xs"
+          color="gray.600"
+          fontWeight="semibold"
+          fontFamily="inherit"
+          lineHeight="1"
+        >
+          / {totalPages}
+        </Text>
+      </HStack>
     </VStack>
   )
 }
@@ -377,9 +451,11 @@ export default function PageNavigation({
         />
 
         <PageInfo
+          key={currentPage}
           currentPage={currentPage}
           totalPages={totalPages}
           pageLabel={pageLabel}
+          onGoTo={onGoTo}
         />
 
         <NavButton
