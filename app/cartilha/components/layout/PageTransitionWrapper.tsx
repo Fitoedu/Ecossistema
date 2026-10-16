@@ -60,7 +60,16 @@ export default function PageTransitionWrapper({
   const variants = makeVariants(direction)
 
   return (
-    <div style={{ perspective: '900px', overflow: 'hidden' }}>
+    <div
+      style={{
+        perspective: '900px',
+        overflow: 'hidden',
+        width: '100%',
+        maxWidth: '100%',
+        minWidth: 0,
+        boxSizing: 'border-box',
+      }}
+    >
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={pageKey}
@@ -72,6 +81,9 @@ export default function PageTransitionWrapper({
           style={{
             transformStyle: 'preserve-3d',
             width: '100%',
+            maxWidth: '100%',
+            minWidth: 0,
+            boxSizing: 'border-box',
             willChange: 'transform, opacity',
           }}
         >

@@ -169,6 +169,10 @@ export function Callout({
       mt={mt}
       align="flex-start"
       gap={{ base: 3, sm: 4 }}
+      w="100%"
+      maxW="100%"
+      minW={0}
+      boxSizing="border-box"
     >
       <Box flexShrink={0}>
         <Avatar src={s.src} />

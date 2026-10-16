@@ -170,14 +170,30 @@ export default function CartilhaPage() {
           borderRadius="2xl"
           boxShadow="0 20px 45px -10px rgba(20, 50, 20, 0.3)"
           overflow="hidden"
-          p={{ base: 4, sm: 6 }}
+          boxSizing="border-box"
+          w="100%"
+          p={{ base: 4, md: 8 }}
+          minW={0}
           id="main-content"
         >
-          <PageTransitionWrapper pageKey={animKey} direction={direction}>
-            {renderPage(page, handleSelectPest, goTo)}
-          </PageTransitionWrapper>
+          <Box
+            w="100%"
+            maxW="100%"
+            minW={0}
+            boxSizing="border-box"
+            css={{
+              "&, & *": {
+                boxSizing: "border-box",
+                maxWidth: "100%",
+              },
+            }}
+          >
+            <PageTransitionWrapper pageKey={animKey} direction={direction}>
+              {renderPage(page, handleSelectPest, goTo)}
+            </PageTransitionWrapper>
+          </Box>
 
-          <Box as="footer">
+          <Box as="footer" w="100%" maxW="100%" minW={0} boxSizing="border-box">
             <PageController
               currentPage={currentPage}
               totalPages={TOTAL_PAGES}

@@ -372,6 +372,10 @@ function DropZone({ zone, label, cards, isTargeted, onClick, zoneRef }: DropZone
     <Box
       ref={zoneRef}
       minH="140px"
+      w="100%"
+      maxW="100%"
+      minW={0}
+      boxSizing="border-box"
       bg={isTargeted ? pal.zone : pal.zoneBg}
       border={`2px dashed ${isTargeted ? pal.borderActive : pal.border}`}
       borderRadius="18px"
@@ -495,7 +499,7 @@ function DropZone({ zone, label, cards, isTargeted, onClick, zoneRef }: DropZone
                   )}
                 </svg>
               </Box>
-              <Box>
+              <Box w="100%" maxW="100%" minW={0} boxSizing="border-box">
                 <Text fontSize="0.8rem" fontWeight="500" color="#212121" lineHeight="1.5">
                   {c.text}
                 </Text>
@@ -519,6 +523,7 @@ function CompletionBanner({ allCorrect, onReset }: { allCorrect: boolean; onRese
       initial={{ opacity: 0, scale: 0.94, y: 12 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+      style={{ width: '100%', maxWidth: '100%', boxSizing: 'border-box' }}
     >
       <Box
         bg={allCorrect ? 'linear-gradient(135deg, #1B5E20, #2E7D32)' : 'linear-gradient(135deg, #BF360C, #E64A19)'}
@@ -528,6 +533,9 @@ function CompletionBanner({ allCorrect, onReset }: { allCorrect: boolean; onRese
         position="relative"
         overflow="hidden"
         mt={4}
+        w="100%"
+        maxW="100%"
+        boxSizing="border-box"
       >
         {/* Círculo decorativo */}
         <Box
@@ -552,7 +560,7 @@ function CompletionBanner({ allCorrect, onReset }: { allCorrect: boolean; onRese
               <Avatar src="/assets/dona-fito/dona-fito-celebrating.png" />
             </motion.div>
           )}
-          <Box>
+          <Box w="100%" maxW="100%" minW={0} boxSizing="border-box">
             <Text
               fontSize={{ base: '1rem', sm: '1.1rem' }}
               fontWeight="800"
@@ -667,6 +675,9 @@ export default function DragAndDropSorter({
           display="flex"
           alignItems="center"
           justifyContent="center"
+          w="100%"
+          maxW="100%"
+          boxSizing="border-box"
         >
           <Box
             bg="blue.50"
@@ -692,7 +703,7 @@ export default function DragAndDropSorter({
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.35 }}
           >
-            <Box mb={4}>
+            <Box mb={4} w="100%" maxW="100%" boxSizing="border-box">
               <Text
                 fontSize="0.65rem"
                 fontWeight="700"
@@ -722,7 +733,15 @@ export default function DragAndDropSorter({
       </AnimatePresence>
 
       {/* ── Zonas de classificação ────────────────────────────────────────── */}
-      <SimpleGrid columns={{ base: 1, sm: 2 }} gap={3}>
+      <SimpleGrid
+        columns={{ base: 1, sm: 2 }}
+        gap={4}
+        px={2}
+        w="100%"
+        maxW="100%"
+        minW={0}
+        boxSizing="border-box"
+      >
         <DropZone
           zone="safe"
           label={safeLabel}
