@@ -20,7 +20,7 @@
 
 import { Box, Text } from '@chakra-ui/react'
 import { motion } from 'framer-motion'
-import { Avatar } from './Avatar'
+import { Avatar } from '../layout/Avatar'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

@@ -17,7 +17,7 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react'
-import type { PragaAlertCardData } from '../data/cartilha-data'
+import type { PragaAlertCardData } from '../../../data/cartilha-data'
 
 function AlertImage({ item, modal = false }: { item: PragaAlertCardData; modal?: boolean }) {
   const [hasError, setHasError] = useState(false)

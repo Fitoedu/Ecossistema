@@ -18,7 +18,7 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import { Search } from 'lucide-react'
-import type { InvasivePlantCardData } from '../data/cartilha-data'
+import type { InvasivePlantCardData } from '../../../data/cartilha-data'
 
 function PlantImage({
   item,

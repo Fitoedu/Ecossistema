@@ -9,8 +9,8 @@ import {
   SimpleGrid,
   Text,
 } from '@chakra-ui/react'
-import type { PageAlertData } from '../data/cartilha-data'
-import { Avatar } from './Avatar'
+import type { PageAlertData } from '../../../data/cartilha-data'
+import { Avatar } from '../../layout/Avatar'
 
 type InvestigationCase = {
   id: number

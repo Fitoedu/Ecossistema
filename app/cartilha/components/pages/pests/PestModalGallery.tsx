@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { Search } from 'lucide-react'
 import { motion } from 'framer-motion'
 import { SimpleGrid, Box, Text } from '@chakra-ui/react'
-import type { PestGalleryItemData } from '../data/cartilha-data'
+import type { PestGalleryItemData } from '../../../data/cartilha-data'
 
 // ─── Paleta de acentos ────────────────────────────────────────────────────────
 

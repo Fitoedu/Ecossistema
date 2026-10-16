@@ -18,7 +18,7 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import { Search } from 'lucide-react'
-import type { AllyCardData } from '../data/cartilha-data'
+import type { AllyCardData } from '../../../data/cartilha-data'
 
 function AllyImage({ item, modal = false }: { item: AllyCardData; modal?: boolean }) {
   const [hasImageError, setHasImageError] = useState(false)

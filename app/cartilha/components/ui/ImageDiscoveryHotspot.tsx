@@ -20,7 +20,7 @@ import {
   VStack,
 } from '@chakra-ui/react'
 import { Search } from 'lucide-react'
-import type { HotspotItemData, MicroorgCategory } from '../data/cartilha-data'
+import type { HotspotItemData, MicroorgCategory } from '../../data/cartilha-data'
 
 const CATEGORY_META: Record<
   MicroorgCategory,

@@ -1,6 +1,6 @@
 'use client'
 
-import { CARTILHA_PAGES } from '../data/cartilha-data'
+import { CARTILHA_PAGES } from '../../data/cartilha-data'
 import PageNavigation from './PageNavigation'
 
 interface PageControllerProps {

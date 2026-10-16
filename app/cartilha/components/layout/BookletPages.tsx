@@ -5,14 +5,14 @@ import Image from "next/image";
 import { Box, Flex, Grid, HStack, Text, VStack, SimpleGrid } from "@chakra-ui/react";
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { Apple, BarChart3, Bug, Coins, Droplets, Leaf, MapPin, ShieldCheck, Sun, TreePine } from "lucide-react";
-import LiftTheFlap from "./LiftTheFlap";
-import LapbookFolder, { type PocketCard } from "./LapbookFolder";
-import PestModalGallery from "./PestModalGallery";
-import Quiz from "./Quiz";
-import { ImageDiscoveryHotspotGrid } from "./ImageDiscoveryHotspot";
-import InvasivePlantGallery from "./InvasivePlantGallery";
-import AllyGallery from "./AllyGallery";
-import BorderInvestigationCases from "./BorderInvestigationCases";
+import LiftTheFlap from "../ui/LiftTheFlap";
+import LapbookFolder, { type PocketCard } from "../ui/LapbookFolder";
+import PestModalGallery from "../pages/pests/PestModalGallery";
+import Quiz from "../pages/quiz/Quiz";
+import { ImageDiscoveryHotspotGrid } from "../ui/ImageDiscoveryHotspot";
+import InvasivePlantGallery from "../pages/cases/InvasivePlantGallery";
+import AllyGallery from "../pages/allies/AllyGallery";
+import BorderInvestigationCases from "../pages/cases/BorderInvestigationCases";
 import type {
   PageCoverData,
   PageContentData,
@@ -29,11 +29,11 @@ import type {
   PageClosingData,
   CalloutData,
   ImageCardData,
-} from "../data/cartilha-data";
+} from "../../data/cartilha-data";
 import { Avatar } from "./Avatar";
-import BeforeAfterSlider from "./BeforeAfterSlider";
-import MascotSpeech from "./MascotSpeech";
-import DragAndDropSorter from "./DragAndDropSorter";
+import BeforeAfterSlider from "../ui/BeforeAfterSlider";
+import MascotSpeech from "../ui/MascotSpeech";
+import DragAndDropSorter from "../ui/DragAndDropSorter";
 
 function SectionBadge({ children }: { children: React.ReactNode }) {
   return (
@@ -1472,7 +1472,7 @@ export function PagePestGallery({
   onSelectItem,
 }: {
   data: PagePestGalleryData
-  onSelectItem: (item: import('../data/cartilha-data').PestGalleryItemData, index: number) => void
+  onSelectItem: (item: import('../../data/cartilha-data').PestGalleryItemData, index: number) => void
 }) {
   return (
     <Box>

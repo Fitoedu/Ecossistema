@@ -24,7 +24,7 @@
 import { useCallback, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Box, SimpleGrid, Text, VStack } from '@chakra-ui/react'
-import { Avatar } from './Avatar'
+import { Avatar } from '../layout/Avatar'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

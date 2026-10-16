@@ -3,8 +3,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { Box } from "@chakra-ui/react";
 import { AppShell } from "@/components/layout/AppShell";
-import PageController from "./components/PageController";
-import PageTransitionWrapper from "./components/PageTransitionWrapper";
+import PageController from "./components/layout/PageController";
+import PageTransitionWrapper from "./components/layout/PageTransitionWrapper";
 import {
   PageCover,
   PageContent,
@@ -19,8 +19,8 @@ import {
   PageQuiz,
   PageFindTheHero,
   PageClosing,
-} from "./components/BookletPages";
-import PestDialog from "./components/PestDialog";
+} from "./components/layout/BookletPages";
+import PestDialog from "./components/pages/pests/PestDialog";
 import {
   getPage,
   TOTAL_PAGES,

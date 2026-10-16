@@ -37,7 +37,7 @@ import {
   Portal,
 } from '@chakra-ui/react'
 import { PEST_ACCENT_PALETTE } from './PestModalGallery'
-import type { PestGalleryItemData } from '../data/cartilha-data'
+import type { PestGalleryItemData } from '../../../data/cartilha-data'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
