@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { Box, Flex, Grid, HStack, Text, VStack, SimpleGrid } from "@chakra-ui/react";
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Apple, BadgeCheck, BarChart3, Bug, Coins, Droplets, Leaf, MapPin, ShieldCheck, Sprout, Sun, Telescope, TreePine, Users } from "lucide-react";
+import { Apple, BadgeCheck, BarChart3, Bug, Coins, Droplets, Leaf, Lightbulb, MapPin, ShieldCheck, Sprout, Sun, Telescope, TreePine, Users } from "lucide-react";
 import LiftTheFlap from "../ui/LiftTheFlap";
 import LapbookFolder, { type PocketCard } from "../ui/LapbookFolder";
 import PestModalGallery from "../pages/pests/PestModalGallery";
@@ -1389,9 +1389,7 @@ export function PageLapbook({ data }: { data: PageLapbookData }) {
             borderRadius="16px"
             p={{ base: 4, sm: 5 }}
           >
-            <Text fontSize="1.45rem" lineHeight="1" aria-hidden="true">
-              💡
-            </Text>
+            <Lightbulb size={26} strokeWidth={2} color="#F57C00" aria-hidden="true" />
             <Box>
               <Text
                 fontSize="0.72rem"

@@ -125,28 +125,16 @@ const RISK_PALETTE = {
   cardBorderCorrect: 'rgba(230,81,0,0.35)',
 }
 
-const CARD_ICONS: Record<string, string> = {
-  c1: '🌾',
-  c2: '🔍',
-  c3: '🧰',
-  c4: '🚚',
-  c5: '🛑',
-  c6: '🧼',
-}
-
 // ─── Utilitários ──────────────────────────────────────────────────────────────
 
-function shuffle<T>(arr: T[]): T[] {
-  const a = [...arr]
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[a[i], a[j]] = [a[j], a[i]]
-  }
-  return a
+function initCards(cards: SorterCard[]): CardEntry[] {
+  return [...cards]
+    .sort((a, b) => getCardNumber(a.id).localeCompare(getCardNumber(b.id), undefined, { numeric: true }))
+    .map((c) => ({ ...c, state: 'pool', verdict: null }))
 }
 
-function initCards(cards: SorterCard[]): CardEntry[] {
-  return shuffle(cards).map((c) => ({ ...c, state: 'pool', verdict: null }))
+function getCardNumber(id: string): string {
+  return id.replace(/^c/, '')
 }
 
 // ─── SortableCard ─────────────────────────────────────────────────────────────
@@ -259,17 +247,25 @@ function SortableCard({
         _focusVisible={{ outline: '3px solid #1565C0', outlineOffset: '2px' }}
         userSelect="none"
       >
-        {/* Indicador de estado no topo */}
+        {/* Indicador numerico e estado no topo */}
         <Box display="flex" alignItems="flex-start" gap={2}>
-        <Text
-          as="span"
-          fontSize="1.35rem"
-          lineHeight="1.2"
+        <Box
+          boxSize="24px"
+          borderRadius="full"
+          bg="green.50"
+          color="green.800"
+          border="1px solid"
+          borderColor="green.200"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
           flexShrink={0}
-          aria-hidden="true"
+          fontSize="xs"
+          fontWeight="bold"
+          aria-label={`Cartao ${getCardNumber(entry.id)}`}
         >
-          {CARD_ICONS[entry.id] ?? '🌱'}
-        </Text>
+          {getCardNumber(entry.id)}
+        </Box>
           {/* Marcador de status */}
           <Box
             w="20px"
@@ -462,9 +458,21 @@ function DropZone({ zone, label, cards, isTargeted, onClick, zoneRef }: DropZone
             p="10px 14px"
           >
             <Box display="flex" alignItems="flex-start" gap="8px">
-              <Text as="span" fontSize="1.15rem" lineHeight="1.2" flexShrink={0} aria-hidden="true">
-                {CARD_ICONS[c.id] ?? '🌱'}
-              </Text>
+              <Box
+                boxSize="24px"
+                borderRadius="full"
+                bg={c.correct === 'safe' ? 'green.50' : 'orange.50'}
+                color={c.correct === 'safe' ? 'green.800' : 'orange.900'}
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+                flexShrink={0}
+                fontSize="xs"
+                fontWeight="bold"
+                aria-label={`Cartao ${getCardNumber(c.id)}`}
+              >
+                {getCardNumber(c.id)}
+              </Box>
               <Box
                 w="18px"
                 h="18px"
