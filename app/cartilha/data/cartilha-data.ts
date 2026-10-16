@@ -842,7 +842,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     label: 'Plantas Invasoras',
     badgeLabel: 'Ervas Daninhas',
     title: 'As plantas que ',
-    titleHighlight: 'roubam espaco',
+    titleHighlight: 'roubam espaço',
     titleSuffix: ' das outras!',
     heroImageSrc: '/assets/pragas/plantas-invasoras/erva-daninha-lavoura.png',
     leadText:

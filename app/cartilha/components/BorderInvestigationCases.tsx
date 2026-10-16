@@ -115,7 +115,7 @@ export default function BorderInvestigationCases({ data }: { data: PageAlertData
         </Box>
         <Box bg="yellow.50" border="1px solid" borderColor="yellow.200" borderRadius="18px" p={{ base: 4, sm: 5 }}>
           <HStack align="flex-start" gap={3}>
-            <Avatar src="/assets/joaninha_corpo_todo.png" />
+            <Avatar src="/images/dona-fito.webp" />
             <Box>
               <Text fontSize="0.78rem" fontWeight="900" color="yellow.800" mb={2}>
                 Curiosidade: por que o nome “Quarentenária”?

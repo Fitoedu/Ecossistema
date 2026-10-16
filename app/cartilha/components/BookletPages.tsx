@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { Box, Flex, Grid, HStack, Text, VStack, SimpleGrid } from "@chakra-ui/react";
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Apple, BarChart3, Coins, Droplets, Leaf, Sun, TreePine } from "lucide-react";
+import { Apple, BarChart3, Bug, Coins, Droplets, Leaf, MapPin, ShieldCheck, Sun, TreePine } from "lucide-react";
 import LiftTheFlap from "./LiftTheFlap";
 import LapbookFolder, { type PocketCard } from "./LapbookFolder";
 import PestModalGallery from "./PestModalGallery";
@@ -1067,43 +1067,29 @@ export function PageCover({ data }: { data: PageCoverData }) {
 }
 
 /* ─── Pilares de aprendizado — grid exclusivo da Página 01 ──────────────────
-   Renderiza 4 cards semânticos com ícone textual, título e fundo suave.
-   Sem emojis inline — os ícones são renderizados como texto tipográfico
-   dentro de um Box com fundo de acento, mantendo o visual académico.
+   Renderiza 4 cards semânticos com badges arredondados e título.
 ──────────────────────────────────────────────────────────────────────────── */
 
 const PILARES = [
   {
-    symbol: '\u03A6',  // Φ — representa Fito / ciência vegetal
+    icon: Leaf,
     label: 'O que é Fitossanidade?',
     desc: 'A ciência que cuida da saúde das plantas e garante colheitas saudáveis.',
-    accentBg: '#E8F5E9',
-    accentColor: '#2E7D32',
-    borderColor: 'rgba(46,125,50,0.18)',
   },
   {
-    symbol: '\u25B2',  // ▲ — triângulo de alerta/atenção
+    icon: Bug,
     label: 'O que são Pragas Agrícolas?',
     desc: 'Organismos que atacam plantas e causam perdas na produção de alimentos.',
-    accentBg: '#FFF3E0',
-    accentColor: '#E65100',
-    borderColor: 'rgba(230,81,0,0.18)',
   },
   {
-    symbol: '\u25CE',  // ◎ — alvo/localização
+    icon: MapPin,
     label: 'Casos Reais da Região Norte',
     desc: 'Pragas e doenças que já afetaram lavouras do Amapá e da Amazônia.',
-    accentBg: '#E3F2FD',
-    accentColor: '#1565C0',
-    borderColor: 'rgba(21,101,192,0.18)',
   },
   {
-    symbol: '\u25A0',  // ■ — bloco/proteção/escudo
+    icon: ShieldCheck,
     label: 'Como Proteger e Evitar',
     desc: 'Técnicas e boas práticas para prevenir e controlar pragas com segurança.',
-    accentBg: '#F3E5F5',
-    accentColor: '#6A1B9A',
-    borderColor: 'rgba(106,27,154,0.18)',
   },
 ] as const
 
@@ -1125,18 +1111,18 @@ function PillarGrid({ onGoTo }: { onGoTo: (pageIndex: number) => void }) {
           transition={{ duration: 0.4, ease: 'easeOut', delay: 0.12 + i * 0.07 }}
         >
           <Box
-            bg="white"
-            border={`1.5px solid ${p.borderColor}`}
-            borderRadius="16px"
-            p={{ base: '14px 16px', sm: '16px 18px' }}
+            bg="green.50"
+            border="1.5px solid"
+            borderColor="green.200"
+            borderRadius="xl"
+            p={4}
             display="flex"
             alignItems="flex-start"
             gap={3}
-            boxShadow="0 2px 8px rgba(0,0,0,0.05)"
             h="full"
             cursor="pointer"
-            transition="transform 0.2s ease, box-shadow 0.2s ease"
-            _hover={{ transform: 'translateY(-3px)', shadow: 'md' }}
+            transition="all 0.2s ease"
+            _hover={{ bg: 'green.100', borderColor: 'green.400', transform: 'translateY(-2px)', boxShadow: 'sm' }}
             onClick={() => onGoTo(pageByLabel[p.label])}
             role="button"
             tabIndex={0}
@@ -1147,27 +1133,19 @@ function PillarGrid({ onGoTo }: { onGoTo: (pageIndex: number) => void }) {
               }
             }}
           >
-            {/* Símbolo tipográfico como ícone */}
             <Box
-              w="36px"
-              h="36px"
-              borderRadius="10px"
-              bg={p.accentBg}
+              w="40px"
+              h="40px"
+              borderRadius="full"
+              bg="green.50"
+              color="green.700"
               display="flex"
               alignItems="center"
               justifyContent="center"
               flexShrink={0}
               aria-hidden="true"
             >
-              <Text
-                fontSize="1.1rem"
-                fontWeight="800"
-                color={p.accentColor}
-                lineHeight="1"
-                userSelect="none"
-              >
-                {p.symbol}
-              </Text>
+              <p.icon size={20} strokeWidth={2.2} />
             </Box>
 
             <Box flex="1" minW={0}>
@@ -1208,7 +1186,9 @@ export function PageContent({
   if (data.id === 'p01') {
     return (
       <Box>
-        <SectionBadge>{data.badgeLabel}</SectionBadge>
+        <Box mt={2}>
+          <SectionBadge>{data.badgeLabel}</SectionBadge>
+        </Box>
 
         {/* Título principal */}
         <PageTitle>

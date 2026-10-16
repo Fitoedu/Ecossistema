@@ -139,36 +139,38 @@ export default function CartilhaPage() {
         minH="100vh"
         position="relative"
         overflow="hidden"
-        bg="#F4F7F2"
         py={8}
         px={4}
       >
         <Box
           position="absolute"
           inset={0}
-          opacity={0.5}
-          mixBlendMode="multiply"
-          pointerEvents="none"
           zIndex={0}
-          backgroundImage="radial-gradient(ellipse at 6% 8%, rgba(107, 132, 74, 0.45) 0 7%, transparent 18%), radial-gradient(ellipse at 94% 8%, rgba(142, 155, 89, 0.4) 0 7%, transparent 18%), radial-gradient(ellipse at 7% 92%, rgba(122, 97, 63, 0.32) 0 7%, transparent 18%), radial-gradient(ellipse at 93% 92%, rgba(94, 118, 60, 0.38) 0 7%, transparent 18%)"
+          backgroundImage="url('/images/fundo-floresta.jpg')"
           backgroundSize="cover"
           backgroundPosition="center"
           backgroundRepeat="no-repeat"
+          filter="blur(4px)"
+          transform="scale(1.05)"
+          pointerEvents="none"
         />
         <Box
           as="main"
-          maxW="780px"
+          maxW="1000px"
+          minH="85vh"
           mx="auto"
           my={6}
+          display="flex"
+          flexDirection="column"
+          justifyContent="space-between"
           position="relative"
           zIndex={1}
           bg="white"
-          border="1px solid"
-          borderColor="rgba(46, 125, 50, 0.15)"
+          border="2px solid rgba(255, 255, 255, 0.8)"
           borderRadius="2xl"
-          boxShadow="0 20px 45px -10px rgba(35, 65, 30, 0.18)"
+          boxShadow="0 20px 45px -10px rgba(20, 50, 20, 0.3)"
           overflow="hidden"
-          px={{ base: 4, sm: 0 }}
+          p={{ base: 4, sm: 6 }}
           id="main-content"
         >
           <PageTransitionWrapper pageKey={animKey} direction={direction}>
