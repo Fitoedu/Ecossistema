@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { Box, Flex, Grid, HStack, Text, VStack, SimpleGrid } from "@chakra-ui/react";
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Apple, BarChart3, Bug, Coins, Droplets, Leaf, MapPin, ShieldCheck, Sun, TreePine } from "lucide-react";
+import { Apple, BadgeCheck, BarChart3, Bug, Coins, Droplets, Leaf, MapPin, ShieldCheck, Sprout, Sun, Telescope, TreePine, Users } from "lucide-react";
 import LiftTheFlap from "../ui/LiftTheFlap";
 import LapbookFolder, { type PocketCard } from "../ui/LapbookFolder";
 import PestModalGallery from "../pages/pests/PestModalGallery";
@@ -3499,6 +3499,8 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
 }
 
 export function PageClosing({ data }: { data: PageClosingData }) {
+  const pillarIcons = [Leaf, Sprout, Users, Telescope] as const
+
   return (
     <Box textAlign="center">
       <SectionBadge>🎓 Encerramento</SectionBadge>
@@ -3523,24 +3525,49 @@ export function PageClosing({ data }: { data: PageClosingData }) {
           aria-hidden="true"
         />
         <Box
-          w="80px"
-          h="80px"
+          position="relative"
+          w="110px"
+          h="110px"
           mb={4}
           mx="auto"
-          borderRadius="20px"
-          overflow="hidden"
           style={{ animation: "floatIcon 3s ease-in-out infinite" }}
         >
           <Image
-            src={data.heroImageSrc}
-            alt={data.heroTitle}
-            width={80}
-            height={80}
-            style={{ objectFit: "cover", width: "100%", height: "100%" }}
+            src="/images/dona-fito.webp"
+            alt="Dona Fito, Guardiã da Fitossanidade"
+            width={96}
+            height={96}
+            style={{
+              objectFit: "contain",
+              width: "96px",
+              height: "96px",
+              display: "block",
+              margin: "0 auto",
+            }}
             onError={(e) => {
               (e.target as HTMLImageElement).style.display = "none";
             }}
           />
+          <Box
+            position="absolute"
+            right="-4px"
+            bottom="2px"
+            display="flex"
+            alignItems="center"
+            gap={1}
+            px={2}
+            py={1}
+            borderRadius="full"
+            bg="yellow.300"
+            color="green.900"
+            fontSize="0.58rem"
+            fontWeight="900"
+            boxShadow="0 3px 10px rgba(0,0,0,0.2)"
+            whiteSpace="nowrap"
+          >
+            <BadgeCheck size={14} strokeWidth={2.5} />
+            Guardião da Fitossanidade
+          </Box>
         </Box>
         <Text
           as="h1"
@@ -3550,7 +3577,7 @@ export function PageClosing({ data }: { data: PageClosingData }) {
           mb={3}
           style={{ whiteSpace: "pre-line" }}
         >
-          {data.heroTitle}
+          Parabéns, Jovem Cientista! Agora você é um Guardião Oficial da Fitossanidade!
         </Text>
         <Text
           fontSize="0.9rem"
@@ -3564,38 +3591,38 @@ export function PageClosing({ data }: { data: PageClosingData }) {
       </Box>
 
       <SimpleGrid columns={{ base: 2, sm: 2, md: 4 }} gap={{ base: 3, sm: 4 }} mb={{ base: 5, sm: 7 }}>
-        {data.pillars.map((p) => (
+        {data.pillars.map((p, index) => {
+          const PillarIcon = pillarIcons[index] ?? Leaf
+
+          return (
           <Box
             key={p.label}
-            bg="white"
-            borderRadius="16px"
-            p="20px 14px"
+            bg="green.50"
+            border="1.5px solid"
+            borderColor="green.200"
+            borderRadius="xl"
+            p={4}
             textAlign="center"
-            border="1px solid rgba(46,125,50,0.14)"
             _hover={{
-              transform: "translateY(-4px)",
-              boxShadow: "0 4px 24px rgba(46,125,50,0.12)",
+              borderColor: "green.400",
+              transform: "translateY(-3px)",
+              boxShadow: "md",
             }}
-            transition="all 0.25s ease"
+            transition="all 0.2s ease"
           >
             <Box
               w="40px"
               h="40px"
               mb={2}
               mx="auto"
-              borderRadius="10px"
-              overflow="hidden"
+              borderRadius="full"
+              bg="white"
+              color="green.700"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
             >
-              <Image
-                src={p.imageSrc}
-                alt={p.label}
-                width={40}
-                height={40}
-                style={{ objectFit: "contain", width: "100%", height: "100%" }}
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = "none";
-                }}
-              />
+              <PillarIcon size={20} strokeWidth={2.2} aria-hidden="true" />
             </Box>
             <Text fontSize="0.78rem" fontWeight="700" color="#1B5E20">
               {p.label}
@@ -3604,7 +3631,8 @@ export function PageClosing({ data }: { data: PageClosingData }) {
               {p.sub}
             </Text>
           </Box>
-        ))}
+          )
+        })}
       </SimpleGrid>
 
       <Box
@@ -3633,12 +3661,12 @@ export function PageClosing({ data }: { data: PageClosingData }) {
       </Callout>
 
       <Box textAlign="center" mt={8} pb={5}>
-        <Text fontSize="40px">🌿🍃🌾🫐🌴</Text>
+        <Box w="80px" h="2px" bg="green.200" mx="auto" borderRadius="full" />
         <Text
           fontSize="0.78rem"
           color="#2E7D32"
           fontWeight="600"
-          mt={3}
+          mt={4}
           letterSpacing="0.05em"
         >
           {data.footerText}

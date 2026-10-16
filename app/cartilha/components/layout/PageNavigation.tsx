@@ -55,7 +55,7 @@ function NavButton({ onClick, disabled, direction, isLast, id, label }: NavButto
     justifyContent: 'center',
     gap: '4px',
     borderRadius: '14px',
-    fontWeight: 700,
+    fontWeight: isLast ? 'bold' : 700,
     fontSize: '0.78rem',
     letterSpacing: '-0.01em',
     cursor: disabled ? 'not-allowed' : 'pointer',
@@ -84,7 +84,7 @@ function NavButton({ onClick, disabled, direction, isLast, id, label }: NavButto
         }
       : isLast
       ? {
-          background: 'linear-gradient(135deg, #1B5E20, #2E7D32)',
+          background: '#2E7D32',
           color: '#fff',
           border: 'none',
           boxShadow: [
@@ -126,7 +126,15 @@ function NavButton({ onClick, disabled, direction, isLast, id, label }: NavButto
       aria-disabled={disabled}
       type="button"
       style={baseStyle}
-      whileHover={disabled ? undefined : { y: -2, scale: 1.02 }}
+      whileHover={
+        disabled
+          ? undefined
+          : {
+              y: -2,
+              scale: 1.02,
+              ...(isLast ? { background: '#388E3C', scale: 1.03 } : {}),
+            }
+      }
       whileTap={tapStyle}
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
     >
