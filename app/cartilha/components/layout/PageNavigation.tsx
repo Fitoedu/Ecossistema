@@ -61,7 +61,7 @@ function NavButton({ onClick, disabled, direction, isLast, id, label }: NavButto
     cursor: disabled ? 'not-allowed' : 'pointer',
     outline: 'none',
     // Touch target mínimo de 44px (altura) em mobile
-    padding: isPrev ? '12px 14px' : '12px 18px',
+    padding: isPrev ? '8px 12px' : '8px 14px',
     minWidth: isPrev ? '44px' : '100px',
     minHeight: '44px',
     transition: 'opacity 0.2s ease',
@@ -279,7 +279,15 @@ function PageInfo({
   }
 
   return (
-    <VStack gap={1} align="center" minW={0}>
+    <VStack
+      gap={1}
+      align="center"
+      minW={0}
+      order={{ base: 0, sm: 0 }}
+      flex={{ base: '1 0 100%', sm: '1 1 0' }}
+      w={{ base: '100%', sm: 'auto' }}
+      flexBasis={{ base: '100%', sm: 'auto' }}
+    >
       <AnimatePresence mode="wait">
         <motion.div
           key={currentPage}
@@ -418,7 +426,8 @@ export default function PageNavigation({
       }}
       borderTop="1px solid rgba(46,125,50,0.10)"
       boxShadow="0 -4px 24px rgba(0,0,0,0.06), 0 -1px 0 rgba(46,125,50,0.08)"
-      pt="10px"
+      mt={{ base: 6, md: 4 }}
+      pt={4}
       pb="max(16px, env(safe-area-inset-bottom))"
       px={{ base: 2, sm: 4 }}
     >
@@ -447,11 +456,20 @@ export default function PageNavigation({
       <Flex
         w="100%"
         display="flex"
+        flexDirection={{ base: 'row', sm: 'row' }}
+        flexWrap={{ base: 'wrap', sm: 'nowrap' }}
         justifyContent="space-between"
         alignItems="center"
-        gap={{ base: 2, sm: 3 }}
+        gap={3}
       >
-        <Box flex="1" display="flex" justifyContent="flex-start" minW={0}>
+        <Box
+          order={{ base: 1, sm: 0 }}
+          flex={{ base: '1 1 calc(50% - 12px)', sm: '1 1 0' }}
+          w={{ base: 'calc(50% - 12px)', sm: 'auto' }}
+          display="flex"
+          justifyContent="flex-start"
+          minW={0}
+        >
           <NavButton
             id="nav-btn-prev"
             direction="prev"
@@ -469,7 +487,14 @@ export default function PageNavigation({
           onGoTo={onGoTo}
         />
 
-        <Box flex="1" display="flex" justifyContent="flex-end" minW={0}>
+        <Box
+          order={{ base: 1, sm: 0 }}
+          flex={{ base: '1 1 calc(50% - 12px)', sm: '1 1 0' }}
+          w={{ base: 'calc(50% - 12px)', sm: 'auto' }}
+          display="flex"
+          justifyContent="flex-end"
+          minW={0}
+        >
           <NavButton
             id="nav-btn-next"
             direction="next"
