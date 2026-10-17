@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react'
-import { Box, Input, Text, HStack, VStack } from '@chakra-ui/react'
+import { Box, Flex, Input, Text, HStack, VStack } from '@chakra-ui/react'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -279,7 +279,7 @@ function PageInfo({
   }
 
   return (
-    <VStack gap={1} flex="1" align="center" minW={0}>
+    <VStack gap={1} align="center" minW={0}>
       <AnimatePresence mode="wait">
         <motion.div
           key={currentPage}
@@ -420,7 +420,7 @@ export default function PageNavigation({
       boxShadow="0 -4px 24px rgba(0,0,0,0.06), 0 -1px 0 rgba(46,125,50,0.08)"
       pt="10px"
       pb="max(16px, env(safe-area-inset-bottom))"
-      px={{ base: '12px', sm: '16px' }}
+      px={{ base: 2, sm: 4 }}
     >
       {/* Barra de progresso */}
       <Box
@@ -444,19 +444,22 @@ export default function PageNavigation({
         />
       </Box>
 
-      <HStack
-        maxW="780px"
-        mx="auto"
+      <Flex
+        w="100%"
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
         gap={{ base: 2, sm: 3 }}
-        align="center"
       >
-        <NavButton
-          id="nav-btn-prev"
-          direction="prev"
-          onClick={onPrev}
-          disabled={isFirst}
-          label="Página anterior"
-        />
+        <Box flex="1" display="flex" justifyContent="flex-start" minW={0}>
+          <NavButton
+            id="nav-btn-prev"
+            direction="prev"
+            onClick={onPrev}
+            disabled={isFirst}
+            label="Página anterior"
+          />
+        </Box>
 
         <PageInfo
           key={currentPage}
@@ -466,15 +469,17 @@ export default function PageNavigation({
           onGoTo={onGoTo}
         />
 
-        <NavButton
-          id="nav-btn-next"
-          direction="next"
-          onClick={onNext}
-          disabled={isLast}
-          isLast={isLast}
-          label={isLast ? 'Última página — cartilha concluída' : 'Próxima página'}
-        />
-      </HStack>
+        <Box flex="1" display="flex" justifyContent="flex-end" minW={0}>
+          <NavButton
+            id="nav-btn-next"
+            direction="next"
+            onClick={onNext}
+            disabled={isLast}
+            isLast={isLast}
+            label={isLast ? 'Última página — cartilha concluída' : 'Próxima página'}
+          />
+        </Box>
+      </Flex>
     </Box>
   )
 }
