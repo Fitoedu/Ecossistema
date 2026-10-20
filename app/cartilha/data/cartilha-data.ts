@@ -5,6 +5,8 @@
 ══════════════════════════════════════════════════════════════════════════ */
 
 import { Avatar } from "@chakra-ui/react"
+import { ElementType } from "react"
+import { Droplet, Leaf, Sprout } from "lucide-react"
 
 /* ─────────────────────────────────────────────────────────────────────────
    PRIMITIVOS COMPARTILHADOS
@@ -113,7 +115,8 @@ export interface TagData {
 /** Card de estatística para páginas de impacto */
 export interface StatCardData {
   gradient: string
-  imageSrc: string
+  icon?: ElementType
+  imageSrc?: string
   stat: string
   label: string
   textColor: string
@@ -619,9 +622,9 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     leadText:
       'Uma praga agrícola é qualquer organismo vivo — inseto, fungo, bactéria, vírus, planta invasora — que cause dano econômico a uma lavoura. Nem todo bichinho é uma praga! Só é praga quando causa prejuízo real ao agricultor.',
     statCards: [
-      { gradient: 'linear-gradient(135deg, #2E7D32, #388E3C)', imageSrc: '/assets/icones/perda-colheita-icone.png', stat: '40%', label: 'das colheitas mundiais são perdidas por pragas, segundo a FAO.', textColor: 'white' },
-      { gradient: 'linear-gradient(135deg, #F57F17, #FBC02D)', imageSrc: '/assets/icones/dinheiro-icone.png', stat: 'R$ Bilhões', label: 'de prejuízo anual para o agronegócio brasileiro.', textColor: '#212121' },
-      { gradient: 'linear-gradient(135deg, #37474F, #546E7A)', imageSrc: '/assets/icones/ecossistema-icone.png', stat: 'Ecossistema', label: 'em risco por introdução de espécies invasoras exóticas.', textColor: 'white' },
+      { gradient: 'linear-gradient(135deg, #2E7D32, #388E3C)', stat: '40%', label: 'das colheitas mundiais são perdidas por pragas, segundo a FAO.', textColor: 'white' },
+      { gradient: 'linear-gradient(135deg, #F57F17, #FBC02D)', stat: 'R$ Bilhões', label: 'de prejuízo anual para o agronegócio brasileiro.', textColor: '#212121' },
+      { gradient: 'linear-gradient(135deg, #37474F, #546E7A)', stat: 'Ecossistema', label: 'em risco por introdução de espécies invasoras exóticas.', textColor: 'white' },
     ],
     impacts: [
       { imageSrc: '/assets/icones/caixa-icone.png', title: 'Redução da produção', desc: 'Pragas destroem partes ou toda a plantação, reduzindo drasticamente o volume colhido.' },
@@ -984,10 +987,28 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     leadText:
       'Cada tipo de praga tem uma forma diferente de atacar as plantas. Conhecer essas estratégias nos ajuda a identificar o problema cedo e agir rapidamente, salvando a colheita!',
     statCards: [
-      { gradient: 'linear-gradient(135deg, #C62828, #B71C1C)', imageSrc: '/assets/icones/folha-comida-icone.png', stat: 'Folhas', label: 'Insetos desfolhadores destroem a capacidade da planta de fazer fotossíntese.', textColor: 'white' },
-      { gradient: 'linear-gradient(135deg, #F57F17, #E65100)', imageSrc: '/assets/icones/raiz-icone.png', stat: 'Raiz', label: 'Nematoides e larvas subterrâneas atacam as raízes, impedindo a absorção de água.', textColor: 'white' },
-      { gradient: 'linear-gradient(135deg, #2E7D32, #1B5E20)', imageSrc: '/assets/icones/seiva-icone.png', stat: 'Seiva', label: 'Pulgões, ácaros e moscas sugam a seiva, enfraquecendo gradativamente a planta.', textColor: 'white' },
-    ],
+  { 
+    gradient: 'linear-gradient(135deg, #2E7D32, #388E3C)', 
+    icon: Leaf, 
+    stat: 'Folhas', 
+    label: 'Insetos desfolhadores destroem a capacidade da planta de fazer fotossíntese.', 
+    textColor: 'white' 
+  },
+  { 
+    gradient: 'linear-gradient(135deg, #E65100, #EF6C00)', 
+    icon: Sprout, 
+    stat: 'Raiz', 
+    label: 'Nematoides e larvas subterrâneas atacam as raízes, impedindo a absorção de água.', 
+    textColor: 'white' 
+  },
+  { 
+    gradient: 'linear-gradient(135deg, #37474F, #546E7A)', 
+    icon: Droplet, 
+    stat: 'Seiva', 
+    label: 'Pulgões, ácaros e moscas sugam a seiva, enfraquecendo gradativamente a planta.', 
+    textColor: 'white' 
+  },
+],
     impacts: [
       { imageSrc: '/assets/icones/manchas-icone.png', title: 'Manchas e lesões', desc: 'Fungos e bactérias causam manchas que impedem a fotossíntese e deixam a planta feia para venda.' },
       { imageSrc: '/assets/icones/galha-icone.png', title: 'Deformações e galhas', desc: 'Alguns insetos injetam substâncias que deformam folhas, caules e frutos, tornando-os inúteis.' },

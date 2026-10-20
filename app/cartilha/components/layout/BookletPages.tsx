@@ -2,9 +2,9 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
-import { Box, Flex, Grid, HStack, Text, VStack, SimpleGrid } from "@chakra-ui/react";
+import { Box, Flex, Grid, HStack, Text, VStack, SimpleGrid, Icon} from "@chakra-ui/react";
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Apple, BadgeCheck, BarChart3, Bug, Coins, Droplets, Leaf, Lightbulb, MapPin, ShieldCheck, Sprout, Sun, Telescope, TreePine, Users } from "lucide-react";
+import { Apple, BadgeCheck, BarChart3, Bug, Coins, Droplets, Leaf, RotateCw, Lightbulb, MapPin, ShieldCheck, Sprout, Sun, Telescope, TreePine, Users } from "lucide-react";
 import LiftTheFlap from "../ui/LiftTheFlap";
 import LapbookFolder, { type PocketCard } from "../ui/LapbookFolder";
 import PestModalGallery from "../pages/pests/PestModalGallery";
@@ -1852,12 +1852,29 @@ function AttackTypeFlipCard({
           textAlign="center"
           boxShadow="0 5px 16px rgba(46,125,50,0.18)"
         >
+          {card.icon && (
+  <Icon as={card.icon} boxSize={10} strokeWidth={2.5} color="white" mb={3} />
+)}
           <Text fontSize="1.5rem" fontWeight="900" lineHeight="1">
             {card.stat}
           </Text>
-          <Text mt={3} fontSize="0.76rem" fontWeight="700">
-            Clique para descobrir como ataca
-          </Text>
+ <Box
+  display="flex"
+  alignItems="center"
+  justifyContent="center"
+  gap="6px"
+  bg="whiteAlpha.25"
+  px={3}
+  py={1}
+  borderRadius="full"
+  mt={2}
+  style={{ backdropFilter: "blur(4px)" }}
+>
+  <Icon as={RotateCw as React.ElementType} boxSize="12px" color="white" />
+  <Text fontSize="0.7rem" fontWeight="bold" color="white" letterSpacing="wide">
+    CLIQUE PARA REVELAR
+  </Text>
+</Box>
         </Box>
         <Box
           position="absolute"
@@ -1866,15 +1883,15 @@ function AttackTypeFlipCard({
           bg={card.gradient}
           color="white"
           borderRadius="18px"
-          p={4}
+          p={3}
           display="flex"
           alignItems="center"
           justifyContent="center"
           textAlign="center"
           boxShadow="0 5px 16px rgba(46,125,50,0.18)"
         >
-          <Text fontSize="0.8rem" fontWeight="700" lineHeight="1.5">
-            {card.label}
+          <Text fontSize="0.78rem" fontWeight="600" lineHeight="1.4" px={2}>
+             {card.label}
           </Text>
         </Box>
       </motion.div>
@@ -2110,18 +2127,19 @@ export function PageImpact({ data }: { data: PageImpactData }) {
               right="-20px"
               aria-hidden="true"
             />
-            <Box w="40px" h="40px" mb={2} mx="auto">
-              <Image
-                src={card.imageSrc}
-                alt={card.label}
-                width={40}
-                height={40}
-                style={{ objectFit: "contain", width: "100%", height: "100%" }}
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = "none";
-                }}
-              />
-            </Box>
+           <Box w="40px" h="40px" mb={2} mx="auto" display="flex" alignItems="center" justifyContent="center">
+  {card.icon ? (
+  <Icon as={card.icon} boxSize={8} color="white" />
+) : card.imageSrc ? (
+  <Image
+    src={card.imageSrc}
+    alt={card.label}
+    width={40}
+    height={40}
+    style={{ objectFit: 'contain', width: '100%', height: '100%' }}
+  />
+) : null}
+</Box>
             <Text
               fontSize="1.8rem"
               fontWeight="900"
