@@ -2,9 +2,41 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
-import { Box, Flex, Grid, HStack, Text, VStack, SimpleGrid, Icon} from "@chakra-ui/react";
-import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import { Apple, BadgeCheck, BarChart3, Bug, Coins, Droplets, Leaf, RotateCw, Lightbulb, MapPin, ShieldCheck, Sprout, Sun, Telescope, TreePine, Users } from "lucide-react";
+import {
+  Box,
+  Flex,
+  Grid,
+  HStack,
+  Text,
+  VStack,
+  SimpleGrid,
+  Icon,
+} from "@chakra-ui/react";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+} from "framer-motion";
+import {
+  Apple,
+  BadgeCheck,
+  BarChart3,
+  Bug,
+  Coins,
+  Droplets,
+  Leaf,
+  RotateCw,
+  Lightbulb,
+  MapPin,
+  ShieldCheck,
+  Sprout,
+  Sun,
+  Telescope,
+  TreePine,
+  Users,
+} from "lucide-react";
 import LiftTheFlap from "../ui/LiftTheFlap";
 import LapbookFolder, { type PocketCard } from "../ui/LapbookFolder";
 import PestModalGallery from "../pages/pests/PestModalGallery";
@@ -144,19 +176,19 @@ export function Callout({
       bg: "#E8F5E9",
       border: "rgba(46,125,50,0.2)",
       titleColor: "#1B5E20",
-      src: "/assets/dona_fito_meio_corpo.png"
+      src: "/assets/dona_fito_meio_corpo.png",
     },
     yellow: {
       bg: "#FFF9C4",
       border: "rgba(251,192,45,0.4)",
       titleColor: "#F57F17",
-      src: "/assets/joaninha_corpo_todo.png"
+      src: "/assets/joaninha_corpo_todo.png",
     },
     red: {
       bg: "#FFEBEE",
       border: "rgba(198,40,40,0.2)",
       titleColor: "#C62828",
-      src: "/assets/dona_fito_meio_corpo.png"
+      src: "/assets/dona_fito_meio_corpo.png",
     },
   };
   const s = styles[variant];
@@ -165,7 +197,7 @@ export function Callout({
       bg={s.bg}
       border={`1px solid ${s.border}`}
       borderRadius="16px"
-      p={{ base: '16px 18px', sm: '20px 24px' }}
+      p={{ base: "16px 18px", sm: "20px 24px" }}
       mt={mt}
       align="flex-start"
       gap={{ base: 3, sm: 4 }}
@@ -180,14 +212,18 @@ export function Callout({
       <Box flex="1" minW={0}>
         <Text
           display="block"
-          fontSize={{ base: '0.88rem', sm: '0.95rem' }}
+          fontSize={{ base: "0.88rem", sm: "0.95rem" }}
           fontWeight={titleFontWeight ?? "700"}
           mb={1}
           color={titleColor ?? s.titleColor}
         >
           {title}
         </Text>
-        <Text fontSize={{ base: '0.85rem', sm: '0.9rem' }} lineHeight="1.65" color="#212121">
+        <Text
+          fontSize={{ base: "0.85rem", sm: "0.9rem" }}
+          lineHeight="1.65"
+          color="#212121"
+        >
           {children}
         </Text>
       </Box>
@@ -226,76 +262,80 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
 
 const FITOSSANIDADE_CARDS = [
   {
-    title: 'Phyton',
-    subtitle: 'Origem da Palavra',
-    explanation: 'Termo grego para PLANTA. Estuda a saúde e proteção do reino vegetal.',
-    bg: 'green.50',
-    border: 'green.200',
-    accent: 'green.700',
+    title: "Phyton",
+    subtitle: "Origem da Palavra",
+    explanation:
+      "Termo grego para PLANTA. Estuda a saúde e proteção do reino vegetal.",
+    bg: "green.50",
+    border: "green.200",
+    accent: "green.700",
   },
   {
-    title: 'Sanitas',
-    subtitle: 'Significado de Saúde',
-    explanation: 'Termo latim para SAÚDE. Previne a entrada de fungos, vírus e insetos.',
-    bg: 'yellow.50',
-    border: 'yellow.300',
-    accent: 'yellow.700',
+    title: "Sanitas",
+    subtitle: "Significado de Saúde",
+    explanation:
+      "Termo latim para SAÚDE. Previne a entrada de fungos, vírus e insetos.",
+    bg: "yellow.50",
+    border: "yellow.300",
+    accent: "yellow.700",
   },
   {
-    title: 'Segurança Alimentar',
-    subtitle: 'Alimento para todos',
-    explanation: 'Garante alimentos saudáveis e sem contaminação para a população.',
-    bg: 'orange.50',
-    border: 'orange.300',
-    accent: 'orange.700',
+    title: "Segurança Alimentar",
+    subtitle: "Alimento para todos",
+    explanation:
+      "Garante alimentos saudáveis e sem contaminação para a população.",
+    bg: "orange.50",
+    border: "orange.300",
+    accent: "orange.700",
   },
   {
-    title: 'Agricultura Familiar',
-    subtitle: 'Força da nossa região',
-    explanation: 'Protege a renda e a produção dos pequenos agricultores da nossa região.',
-    bg: 'teal.50',
-    border: 'teal.200',
-    accent: 'teal.700',
+    title: "Agricultura Familiar",
+    subtitle: "Força da nossa região",
+    explanation:
+      "Protege a renda e a produção dos pequenos agricultores da nossa região.",
+    bg: "teal.50",
+    border: "teal.200",
+    accent: "teal.700",
   },
-] as const
+] as const;
 
 function FitossanidadeFlipCard({
   card,
 }: {
-  card: (typeof FITOSSANIDADE_CARDS)[number]
+  card: (typeof FITOSSANIDADE_CARDS)[number];
 }) {
-  const [isFlipped, setIsFlipped] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
-  const showingBack = isFlipped || isHovered
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const showingBack = isFlipped || isHovered;
 
   return (
     <Box
-      h={{ base: '190px', sm: '205px' }}
+      h={{ base: "190px", sm: "205px" }}
       cursor="pointer"
       position="relative"
-      style={{ perspective: '1000px' }}
+      style={{ perspective: "1000px" }}
       onClick={() => setIsFlipped((current) => !current)}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       role="button"
       tabIndex={0}
-      aria-label={`${card.title}: ${showingBack ? 'explicação' : 'ver explicação'}`}
+      aria-label={`${card.title}: ${showingBack ? "explicação" : "ver explicação"}`}
       onKeyDown={(event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault()
-          setIsFlipped((current) => !current)
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          setIsFlipped((current) => !current);
         }
       }}
     >
       <motion.div
-        style={{ width: '100%', height: '100%', transformStyle: 'preserve-3d' }}
+        style={{ width: "100%", height: "100%", transformStyle: "preserve-3d" }}
         animate={{ rotateY: showingBack ? 180 : 0 }}
-        transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+        transition={{ type: "spring", stiffness: 260, damping: 22 }}
       >
         <Box
           position="absolute"
           inset={0}
-          style={{ backfaceVisibility: 'hidden' }}
+          style={{ backfaceVisibility: "hidden" }}
           bg={card.bg}
           border="1px solid"
           borderColor={card.border}
@@ -308,10 +348,20 @@ function FitossanidadeFlipCard({
           textAlign="center"
           boxShadow="0 4px 12px rgba(0,0,0,0.08)"
         >
-          <Text fontSize={{ base: '1rem', sm: '1.1rem' }} fontWeight="800" color={card.accent}>
+          <Text
+            fontSize={{ base: "1rem", sm: "1.1rem" }}
+            fontWeight="800"
+            color={card.accent}
+          >
             {card.title}
           </Text>
-          <Text mt={2} fontSize="0.72rem" fontWeight="700" color={card.accent} opacity={0.8}>
+          <Text
+            mt={2}
+            fontSize="0.72rem"
+            fontWeight="700"
+            color={card.accent}
+            opacity={0.8}
+          >
             {card.subtitle}
           </Text>
         </Box>
@@ -319,7 +369,7 @@ function FitossanidadeFlipCard({
         <Box
           position="absolute"
           inset={0}
-          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
           bg={card.accent}
           borderRadius="16px"
           p={{ base: 4, sm: 5 }}
@@ -329,13 +379,18 @@ function FitossanidadeFlipCard({
           textAlign="center"
           boxShadow="0 4px 12px rgba(0,0,0,0.12)"
         >
-          <Text fontSize={{ base: '0.8rem', sm: '0.85rem' }} lineHeight="1.55" color="white" fontWeight="600">
+          <Text
+            fontSize={{ base: "0.8rem", sm: "0.85rem" }}
+            lineHeight="1.55"
+            color="white"
+            fontWeight="600"
+          >
             {card.explanation}
           </Text>
         </Box>
       </motion.div>
     </Box>
-  )
+  );
 }
 
 function FitossanidadeFlipCards() {
@@ -356,52 +411,56 @@ function FitossanidadeFlipCards() {
         ))}
       </SimpleGrid>
     </Box>
-  )
+  );
 }
 
 const PLANT_PROCESS_STEPS = [
   {
-    title: 'Luz Solar',
-    label: 'Energia',
-    explanation: 'A luz do sol fornece a energia que a planta precisa para começar a produzir seu alimento.',
+    title: "Luz Solar",
+    label: "Energia",
+    explanation:
+      "A luz do sol fornece a energia que a planta precisa para começar a produzir seu alimento.",
     icon: Sun,
-    bg: 'yellow.50',
-    border: 'yellow.300',
-    accent: 'orange.600',
+    bg: "yellow.50",
+    border: "yellow.300",
+    accent: "orange.600",
   },
   {
-    title: 'Água e Solo',
-    label: 'Nutrientes',
-    explanation: 'As raízes absorvem água e nutrientes do solo para manter a planta forte e saudável.',
+    title: "Água e Solo",
+    label: "Nutrientes",
+    explanation:
+      "As raízes absorvem água e nutrientes do solo para manter a planta forte e saudável.",
     icon: Droplets,
-    bg: 'green.50',
-    border: 'green.200',
-    accent: 'green.700',
+    bg: "green.50",
+    border: "green.200",
+    accent: "green.700",
   },
   {
-    title: 'A Máquina (Folha)',
-    label: 'Transformação',
-    explanation: 'Nas folhas, a planta transforma luz, água e nutrientes em energia e matéria para crescer.',
+    title: "A Máquina (Folha)",
+    label: "Transformação",
+    explanation:
+      "Nas folhas, a planta transforma luz, água e nutrientes em energia e matéria para crescer.",
     icon: Leaf,
-    bg: 'orange.50',
-    border: 'orange.300',
-    accent: 'orange.700',
+    bg: "orange.50",
+    border: "orange.300",
+    accent: "orange.700",
   },
   {
-    title: 'Produto Final',
-    label: 'Alimento Gostoso!',
-    explanation: 'O resultado são frutos, sementes, raízes e folhas que chegam à nossa mesa.',
+    title: "Produto Final",
+    label: "Alimento Gostoso!",
+    explanation:
+      "O resultado são frutos, sementes, raízes e folhas que chegam à nossa mesa.",
     icon: Apple,
-    bg: 'green.50',
-    border: 'green.200',
-    accent: 'green.800',
+    bg: "green.50",
+    border: "green.200",
+    accent: "green.800",
   },
-] as const
+] as const;
 
 function PlantProcessFlow() {
-  const [activeStep, setActiveStep] = useState<number | null>(null)
-  const [hoveredStep, setHoveredStep] = useState<number | null>(null)
-  const selectedStep = hoveredStep ?? activeStep
+  const [activeStep, setActiveStep] = useState<number | null>(null);
+  const [hoveredStep, setHoveredStep] = useState<number | null>(null);
+  const selectedStep = hoveredStep ?? activeStep;
 
   return (
     <Box my={6}>
@@ -412,18 +471,19 @@ function PlantProcessFlow() {
         textAlign="center"
         mb={4}
       >
-        Clique em cada etapa do processo para ver como a planta fabrica o nosso alimento!
+        Clique em cada etapa do processo para ver como a planta fabrica o nosso
+        alimento!
       </Text>
       <Box
         display="flex"
-        flexDir={{ base: 'column', md: 'row' }}
-        alignItems={{ base: 'stretch', md: 'flex-start' }}
+        flexDir={{ base: "column", md: "row" }}
+        alignItems={{ base: "stretch", md: "flex-start" }}
         gap={{ base: 3, md: 2 }}
       >
         {PLANT_PROCESS_STEPS.map((step, index) => {
-          const Icon = step.icon
-          const isSelected = selectedStep === index
-          const isActive = activeStep === index
+          const Icon = step.icon;
+          const isSelected = selectedStep === index;
+          const isActive = activeStep === index;
 
           return (
             <Box
@@ -432,13 +492,13 @@ function PlantProcessFlow() {
               flex={{ md: 1 }}
               alignItems="center"
               gap={{ base: 3, md: 2 }}
-              flexDir={{ base: 'column', md: 'row' }}
+              flexDir={{ base: "column", md: "row" }}
               w="full"
             >
               <Box flex="1" w="full">
                 <motion.div
                   whileHover={{ y: -4 }}
-                  transition={{ type: 'spring', stiffness: 320, damping: 20 }}
+                  transition={{ type: "spring", stiffness: 320, damping: 20 }}
                 >
                   <Box
                     bg={step.bg}
@@ -446,28 +506,30 @@ function PlantProcessFlow() {
                     borderColor={step.border}
                     borderRadius="16px"
                     p={{ base: 4, md: 3 }}
-                    minH={{ base: '125px', md: '145px' }}
+                    minH={{ base: "125px", md: "145px" }}
                     display="flex"
                     flexDir="column"
                     alignItems="center"
                     justifyContent="center"
                     textAlign="center"
                     cursor="pointer"
-                    boxShadow={isSelected ? 'md' : 'sm'}
-                    outline={isActive ? '3px solid' : 'none'}
+                    boxShadow={isSelected ? "md" : "sm"}
+                    outline={isActive ? "3px solid" : "none"}
                     outlineColor={step.accent}
                     outlineOffset="2px"
                     transition="box-shadow 0.2s ease"
-                    onClick={() => setActiveStep(activeStep === index ? null : index)}
+                    onClick={() =>
+                      setActiveStep(activeStep === index ? null : index)
+                    }
                     onMouseEnter={() => setHoveredStep(index)}
                     onMouseLeave={() => setHoveredStep(null)}
                     role="button"
                     tabIndex={0}
                     aria-expanded={isSelected}
                     onKeyDown={(event) => {
-                      if (event.key === 'Enter' || event.key === ' ') {
-                        event.preventDefault()
-                        setActiveStep(activeStep === index ? null : index)
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        setActiveStep(activeStep === index ? null : index);
                       }
                     }}
                   >
@@ -484,10 +546,21 @@ function PlantProcessFlow() {
                     >
                       <Icon size={24} strokeWidth={2.2} aria-hidden="true" />
                     </Box>
-                    <Text fontSize="0.83rem" fontWeight="800" color={step.accent} lineHeight="1.25">
+                    <Text
+                      fontSize="0.83rem"
+                      fontWeight="800"
+                      color={step.accent}
+                      lineHeight="1.25"
+                    >
                       {step.title}
                     </Text>
-                    <Text mt={1} fontSize="0.68rem" fontWeight="700" color={step.accent} opacity={0.8}>
+                    <Text
+                      mt={1}
+                      fontSize="0.68rem"
+                      fontWeight="700"
+                      color={step.accent}
+                      opacity={0.8}
+                    >
                       {step.label}
                     </Text>
                   </Box>
@@ -495,7 +568,7 @@ function PlantProcessFlow() {
               </Box>
               {index < PLANT_PROCESS_STEPS.length - 1 && (
                 <Text
-                  display={{ base: 'none', md: 'block' }}
+                  display={{ base: "none", md: "block" }}
                   color="green.500"
                   fontSize="1.4rem"
                   fontWeight="800"
@@ -505,16 +578,20 @@ function PlantProcessFlow() {
                 </Text>
               )}
             </Box>
-          )
+          );
         })}
       </Box>
 
       <Box
         mt={4}
-        minH={{ base: '82px', md: '72px' }}
+        minH={{ base: "82px", md: "72px" }}
         bg="white"
         border="1px solid"
-        borderColor={selectedStep === null ? 'green.200' : PLANT_PROCESS_STEPS[selectedStep].border}
+        borderColor={
+          selectedStep === null
+            ? "green.200"
+            : PLANT_PROCESS_STEPS[selectedStep].border
+        }
         borderRadius="14px"
         p={4}
         display="flex"
@@ -525,28 +602,28 @@ function PlantProcessFlow() {
         overflow="hidden"
       >
         <motion.div
-          key={selectedStep ?? 'hint'}
+          key={selectedStep ?? "hint"}
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.22, ease: 'easeOut' }}
+          transition={{ duration: 0.22, ease: "easeOut" }}
         >
           <Text fontSize="0.75rem" lineHeight="1.5" color="gray.700">
             {selectedStep === null
-              ? 'Selecione uma etapa para descobrir como a planta fabrica o nosso alimento.'
+              ? "Selecione uma etapa para descobrir como a planta fabrica o nosso alimento."
               : PLANT_PROCESS_STEPS[selectedStep].explanation}
           </Text>
         </motion.div>
       </Box>
     </Box>
-  )
+  );
 }
 
 function IconCardsGrid({ cards }: { cards: ImageCardData[] }) {
-  const cols = Math.min(cards.length, 4)
+  const cols = Math.min(cards.length, 4);
 
   return (
     <Grid
-      templateColumns={{ base: 'repeat(2, 1fr)', md: `repeat(${cols}, 1fr)` }}
+      templateColumns={{ base: "repeat(2, 1fr)", md: `repeat(${cols}, 1fr)` }}
       gap={{ base: 4, sm: 6 }}
       my={6}
     >
@@ -568,24 +645,28 @@ function IconCardsGrid({ cards }: { cards: ImageCardData[] }) {
           <Image
             src={card.imageSrc}
             alt={card.alt}
-            width={card.display === 'full' ? 500 : 52}
-            height={card.display === 'full' ? 180 : 52}
+            width={card.display === "full" ? 500 : 52}
+            height={card.display === "full" ? 180 : 52}
             style={{
-              objectFit: card.display === 'full' ? 'cover' : 'contain',
-              width: card.display === 'full' ? '100%' : '52px',
-              height: card.display === 'full' ? '120px' : '52px',
-              borderRadius: '12px',
+              objectFit: card.display === "full" ? "cover" : "contain",
+              width: card.display === "full" ? "100%" : "52px",
+              height: card.display === "full" ? "120px" : "52px",
+              borderRadius: "12px",
             }}
           />
-          <Text fontSize="0.75rem" fontWeight="600" color="#2E7D32" lineHeight="1.3">
+          <Text
+            fontSize="0.75rem"
+            fontWeight="600"
+            color="#2E7D32"
+            lineHeight="1.3"
+          >
             {card.label}
           </Text>
         </Box>
       ))}
     </Grid>
-  )
+  );
 }
-
 
 function CalloutList({
   callouts,
@@ -623,7 +704,7 @@ function LapbookHeader({
     <Box
       bg="linear-gradient(135deg, #1B5E20, #2E7D32)"
       borderRadius="20px"
-      p={{ base: '20px 18px', sm: '28px 24px' }}
+      p={{ base: "20px 18px", sm: "28px 24px" }}
       color="white"
       mb={6}
       position="relative"
@@ -665,7 +746,11 @@ function LapbookHeader({
       >
         {title}
       </Text>
-      <Text fontSize={{ base: '0.8rem', sm: '0.85rem' }} opacity={0.85} lineHeight="1.65">
+      <Text
+        fontSize={{ base: "0.8rem", sm: "0.85rem" }}
+        opacity={0.85}
+        lineHeight="1.65"
+      >
         {subtitle}
       </Text>
     </Box>
@@ -773,7 +858,7 @@ function PlantCard({
 
         <VStack
           gap={3}
-          p={{ base: '20px 16px 18px', sm: '28px 20px 24px' }}
+          p={{ base: "20px 16px 18px", sm: "28px 20px 24px" }}
           align="center"
           position="relative"
           zIndex={1}
@@ -870,7 +955,7 @@ function PersonaGreeting() {
           "0 4px 12px rgba(0,0,0,0.08)",
         ].join(", ")}
         border="1.5px solid rgba(46,125,50,0.15)"
-        p={{ base: '16px', sm: '20px' }}
+        p={{ base: "16px", sm: "20px" }}
         display="flex"
         gap={{ base: 3, sm: 4 }}
         alignItems="flex-start"
@@ -958,7 +1043,12 @@ export function PageCover({ data }: { data: PageCoverData }) {
   const titleLines = data.title.split("\n");
 
   return (
-    <VStack gap={0} textAlign="center" py={{ base: 1, sm: 2 }} pb={{ base: 4, sm: 6 }}>
+    <VStack
+      gap={0}
+      textAlign="center"
+      py={{ base: 1, sm: 2 }}
+      pb={{ base: 4, sm: 6 }}
+    >
       {/* ── Badge ── */}
       <motion.div
         initial={{ opacity: 0, y: -12 }}
@@ -1063,9 +1153,8 @@ export function PageCover({ data }: { data: PageCoverData }) {
 
       {/* ── Persona ── */}
       <Box w="full" maxW="480px" mx="auto">
-        <PersonaGreeting/>
+        <PersonaGreeting />
       </Box>
-
     </VStack>
   );
 }
@@ -1077,33 +1166,33 @@ export function PageCover({ data }: { data: PageCoverData }) {
 const PILARES = [
   {
     icon: Leaf,
-    label: 'O que é Fitossanidade?',
-    desc: 'A ciência que cuida da saúde das plantas e garante colheitas saudáveis.',
+    label: "O que é Fitossanidade?",
+    desc: "A ciência que cuida da saúde das plantas e garante colheitas saudáveis.",
   },
   {
     icon: Bug,
-    label: 'O que são Pragas Agrícolas?',
-    desc: 'Organismos que atacam plantas e causam perdas na produção de alimentos.',
+    label: "O que são Pragas Agrícolas?",
+    desc: "Organismos que atacam plantas e causam perdas na produção de alimentos.",
   },
   {
     icon: MapPin,
-    label: 'Casos Reais da Região Norte',
-    desc: 'Pragas e doenças que já afetaram lavouras do Amapá e da Amazônia.',
+    label: "Casos Reais da Região Norte",
+    desc: "Pragas e doenças que já afetaram lavouras do Amapá e da Amazônia.",
   },
   {
     icon: ShieldCheck,
-    label: 'Como Proteger e Evitar',
-    desc: 'Técnicas e boas práticas para prevenir e controlar pragas com segurança.',
+    label: "Como Proteger e Evitar",
+    desc: "Técnicas e boas práticas para prevenir e controlar pragas com segurança.",
   },
-] as const
+] as const;
 
 function PillarGrid({ onGoTo }: { onGoTo: (pageIndex: number) => void }) {
-  const pageByLabel: Record<(typeof PILARES)[number]['label'], number> = {
-    'O que é Fitossanidade?': 2,
-    'O que são Pragas Agrícolas?': 3,
-    'Casos Reais da Região Norte': 14,
-    'Como Proteger e Evitar': 13,
-  }
+  const pageByLabel: Record<(typeof PILARES)[number]["label"], number> = {
+    "O que é Fitossanidade?": 2,
+    "O que são Pragas Agrícolas?": 3,
+    "Casos Reais da Região Norte": 14,
+    "Como Proteger e Evitar": 13,
+  };
 
   return (
     <SimpleGrid columns={{ base: 1, sm: 2 }} gap={3} mt={1}>
@@ -1112,7 +1201,11 @@ function PillarGrid({ onGoTo }: { onGoTo: (pageIndex: number) => void }) {
           key={p.label}
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, ease: 'easeOut', delay: 0.12 + i * 0.07 }}
+          transition={{
+            duration: 0.4,
+            ease: "easeOut",
+            delay: 0.12 + i * 0.07,
+          }}
         >
           <Box
             bg="green.50"
@@ -1126,14 +1219,19 @@ function PillarGrid({ onGoTo }: { onGoTo: (pageIndex: number) => void }) {
             h="full"
             cursor="pointer"
             transition="all 0.2s ease"
-            _hover={{ bg: 'green.100', borderColor: 'green.400', transform: 'translateY(-2px)', boxShadow: 'sm' }}
+            _hover={{
+              bg: "green.100",
+              borderColor: "green.400",
+              transform: "translateY(-2px)",
+              boxShadow: "sm",
+            }}
             onClick={() => onGoTo(pageByLabel[p.label])}
             role="button"
             tabIndex={0}
             onKeyDown={(event) => {
-              if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault()
-                onGoTo(pageByLabel[p.label])
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                onGoTo(pageByLabel[p.label]);
               }
             }}
           >
@@ -1154,7 +1252,7 @@ function PillarGrid({ onGoTo }: { onGoTo: (pageIndex: number) => void }) {
 
             <Box flex="1" minW={0}>
               <Text
-                fontSize={{ base: '0.8rem', sm: '0.83rem' }}
+                fontSize={{ base: "0.8rem", sm: "0.83rem" }}
                 fontWeight="700"
                 color="#1a2e1a"
                 lineHeight="1.35"
@@ -1163,7 +1261,7 @@ function PillarGrid({ onGoTo }: { onGoTo: (pageIndex: number) => void }) {
                 {p.label}
               </Text>
               <Text
-                fontSize={{ base: '0.74rem', sm: '0.77rem' }}
+                fontSize={{ base: "0.74rem", sm: "0.77rem" }}
                 color="#555"
                 lineHeight="1.55"
               >
@@ -1174,7 +1272,7 @@ function PillarGrid({ onGoTo }: { onGoTo: (pageIndex: number) => void }) {
         </motion.div>
       ))}
     </SimpleGrid>
-  )
+  );
 }
 
 /* ─── PageContent ────────────────────────────────────────────────────────── */
@@ -1183,11 +1281,11 @@ export function PageContent({
   data,
   onGoTo,
 }: {
-  data: PageContentData
-  onGoTo: (pageIndex: number) => void
+  data: PageContentData;
+  onGoTo: (pageIndex: number) => void;
 }) {
   /* Layout especial para a Página 01 — Apresentação */
-  if (data.id === 'p01') {
+  if (data.id === "p01") {
     return (
       <Box>
         <Box mt={2}>
@@ -1219,11 +1317,11 @@ export function PageContent({
         {/* Grid dos 4 pilares do aprendizado */}
         <PillarGrid onGoTo={onGoTo} />
       </Box>
-    )
+    );
   }
 
   /* Layout exclusivo para a Página 03 — O que é Fitossanidade? */
-  if (data.id === 'p02') {
+  if (data.id === "p02") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -1240,11 +1338,11 @@ export function PageContent({
 
         {data.callouts && <CalloutList callouts={data.callouts} startMt={5} />}
       </Box>
-    )
+    );
   }
 
   /* Layout exclusivo para a Página 04 — A fábrica de comida */
-  if (data.id === 'p03') {
+  if (data.id === "p03") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -1269,11 +1367,11 @@ export function PageContent({
 
         {data.callouts && <CalloutList callouts={data.callouts} startMt={5} />}
       </Box>
-    )
+    );
   }
 
   /* Layout exclusivo para a Página 08 — Plantas invasoras */
-  if (data.id === 'p07') {
+  if (data.id === "p07") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -1286,7 +1384,9 @@ export function PageContent({
 
         <LeadText>{data.leadText}</LeadText>
 
-        {data.invasiveCards && <InvasivePlantGallery items={data.invasiveCards} />}
+        {data.invasiveCards && (
+          <InvasivePlantGallery items={data.invasiveCards} />
+        )}
 
         {data.midSectionHeading && (
           <>
@@ -1298,11 +1398,11 @@ export function PageContent({
 
         {data.callouts && <CalloutList callouts={data.callouts} />}
       </Box>
-    )
+    );
   }
 
   /* Layout exclusivo para a Página 09 — Aliados da lavoura */
-  if (data.id === 'p08') {
+  if (data.id === "p08") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -1327,7 +1427,7 @@ export function PageContent({
 
         {data.callouts && <CalloutList callouts={data.callouts} />}
       </Box>
-    )
+    );
   }
 
   /* Layout padrão para todas as demais páginas de conteúdo */
@@ -1370,7 +1470,7 @@ export function PageContent({
 
 export function PageLapbook({ data }: { data: PageLapbookData }) {
   /* ── Layout exclusivo da Página 13 — O Escudo Protetor ── */
-  if (data.id === 'p13') {
+  if (data.id === "p13") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -1393,7 +1493,12 @@ export function PageLapbook({ data }: { data: PageLapbookData }) {
             borderRadius="16px"
             p={{ base: 4, sm: 5 }}
           >
-            <Lightbulb size={26} strokeWidth={2} color="#F57C00" aria-hidden="true" />
+            <Lightbulb
+              size={26}
+              strokeWidth={2}
+              color="#F57C00"
+              aria-hidden="true"
+            />
             <Box>
               <Text
                 fontSize="0.72rem"
@@ -1406,11 +1511,11 @@ export function PageLapbook({ data }: { data: PageLapbookData }) {
                 Reflita · Desafio fitossanitário
               </Text>
               <Text fontSize="0.88rem" color="gray.700" lineHeight="1.65">
-                Agora é a sua vez de praticar! Classifique cada ação abaixo em{' '}
+                Agora é a sua vez de praticar! Classifique cada ação abaixo em{" "}
                 <Text as="strong" color="#2E7D32">
                   Prática Segura
-                </Text>{' '}
-                ou{' '}
+                </Text>{" "}
+                ou{" "}
                 <Text as="strong" color="#BF360C">
                   Risco Fitossanitário
                 </Text>
@@ -1433,7 +1538,7 @@ export function PageLapbook({ data }: { data: PageLapbookData }) {
           </Box>
         )}
       </Box>
-    )
+    );
   }
 
   /* ── Layout padrão para todas as demais páginas do tipo lapbook ── */
@@ -1473,8 +1578,11 @@ export function PagePestGallery({
   data,
   onSelectItem,
 }: {
-  data: PagePestGalleryData
-  onSelectItem: (item: import('../../data/cartilha-data').PestGalleryItemData, index: number) => void
+  data: PagePestGalleryData;
+  onSelectItem: (
+    item: import("../../data/cartilha-data").PestGalleryItemData,
+    index: number,
+  ) => void;
 }) {
   return (
     <Box>
@@ -1497,7 +1605,6 @@ export function PagePestGallery({
     </Box>
   );
 }
-
 
 export function PageHotspot({ data }: { data: PageHotspotData }) {
   return (
@@ -1547,7 +1654,14 @@ export function PageHotspot({ data }: { data: PageHotspotData }) {
             🔬
           </Text>
         </Box>
-        <Text fontSize="0.82rem" color="white" lineHeight="1.55" fontWeight="500" position="relative" zIndex={1}>
+        <Text
+          fontSize="0.82rem"
+          color="white"
+          lineHeight="1.55"
+          fontWeight="500"
+          position="relative"
+          zIndex={1}
+        >
           {data.leadText}
         </Text>
       </Box>
@@ -1562,61 +1676,61 @@ export function PageHotspot({ data }: { data: PageHotspotData }) {
 
 const PRAGA_STAT_CARDS = [
   {
-    front: 'Perdas Mundiais (FAO)',
-    back: '40% das colheitas perdidas por pragas',
+    front: "Perdas Mundiais (FAO)",
+    back: "40% das colheitas perdidas por pragas",
     icon: BarChart3,
-    bg: 'green.500',
+    bg: "green.500",
   },
   {
-    front: 'Prejuízo Econômico',
-    back: 'R$ Bilhões perdidos anualmente no Brasil',
+    front: "Prejuízo Econômico",
+    back: "R$ Bilhões perdidos anualmente no Brasil",
     icon: Coins,
-    bg: 'orange.400',
+    bg: "orange.400",
   },
   {
-    front: 'Risco Ambiental',
-    back: 'Ameaça ao ecossistema local por espécies invasoras',
+    front: "Risco Ambiental",
+    back: "Ameaça ao ecossistema local por espécies invasoras",
     icon: TreePine,
-    bg: 'green.800',
+    bg: "green.800",
   },
-] as const
+] as const;
 
 function PragaStatRevealCard({
   card,
 }: {
-  card: (typeof PRAGA_STAT_CARDS)[number]
+  card: (typeof PRAGA_STAT_CARDS)[number];
 }) {
-  const [revealed, setRevealed] = useState(false)
-  const Icon = card.icon
+  const [revealed, setRevealed] = useState(false);
+  const Icon = card.icon;
 
   return (
     <Box
       h="150px"
       cursor="pointer"
       position="relative"
-      style={{ perspective: '1000px' }}
+      style={{ perspective: "1000px" }}
       onClick={() => setRevealed((current) => !current)}
       onMouseEnter={() => setRevealed(true)}
       onMouseLeave={() => setRevealed(false)}
       role="button"
       tabIndex={0}
-      aria-label={`${card.front}: ${revealed ? card.back : 'revelar informação'}`}
+      aria-label={`${card.front}: ${revealed ? card.back : "revelar informação"}`}
       onKeyDown={(event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault()
-          setRevealed((current) => !current)
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          setRevealed((current) => !current);
         }
       }}
     >
       <motion.div
-        style={{ width: '100%', height: '100%', transformStyle: 'preserve-3d' }}
+        style={{ width: "100%", height: "100%", transformStyle: "preserve-3d" }}
         animate={{ rotateY: revealed ? 180 : 0 }}
-        transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+        transition={{ type: "spring", stiffness: 260, damping: 22 }}
       >
         <Box
           position="absolute"
           inset={0}
-          style={{ backfaceVisibility: 'hidden' }}
+          style={{ backfaceVisibility: "hidden" }}
           bg={card.bg}
           color="white"
           borderRadius="18px"
@@ -1636,7 +1750,7 @@ function PragaStatRevealCard({
         <Box
           position="absolute"
           inset={0}
-          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
           bg={card.bg}
           color="white"
           borderRadius="18px"
@@ -1653,36 +1767,36 @@ function PragaStatRevealCard({
         </Box>
       </motion.div>
     </Box>
-  )
+  );
 }
 
 const PRAGA_IMPACT_IMAGE_URLS = [
-  '/images/agricultura/ghabiru-plantation.webp',
-  '/images/agricultura/irrigation.webp',
-  '/images/pragas/mosca da carambola/1.webp',
-  '/images/agricultura/irrigation2.webp',
-] as const
+  "/images/agricultura/ghabiru-plantation.webp",
+  "/images/agricultura/irrigation.webp",
+  "/images/pragas/mosca da carambola/1.webp",
+  "/images/agricultura/irrigation2.webp",
+] as const;
 
 const ATTACK_SYMPTOM_IMAGE_URLS = [
-  '/images/sintomas/necrose.webp',
-  '/images/sintomas/galhas.webp',
-  '/images/sintomas/murcha.webp',
-  '/images/encontre_herois/mosaico de virus.webp',
-] as const
+  "/images/sintomas/necrose.webp",
+  "/images/sintomas/galhas.webp",
+  "/images/sintomas/murcha.webp",
+  "/images/encontre_herois/mosaico de virus.webp",
+] as const;
 
 function PragaImpactImage({
   imageUrl,
   title,
 }: {
-  imageUrl: string
-  title: string
+  imageUrl: string;
+  title: string;
 }) {
-  const [hasError, setHasError] = useState(false)
+  const [hasError, setHasError] = useState(false);
 
   return (
     <Box
       position="relative"
-      minH={{ base: '150px', md: '170px' }}
+      minH={{ base: "150px", md: "170px" }}
       borderRadius="lg"
       overflow="hidden"
       border="1px solid"
@@ -1696,13 +1810,13 @@ function PragaImpactImage({
           alt={`Fotografia ilustrativa: ${title}`}
           fill
           sizes="(max-width: 768px) 100vw, 50vw"
-          style={{ objectFit: 'cover' }}
+          style={{ objectFit: "cover" }}
           onError={() => setHasError(true)}
         />
       ) : (
         <Box
           h="full"
-          minH={{ base: '150px', md: '170px' }}
+          minH={{ base: "150px", md: "170px" }}
           display="flex"
           flexDir="column"
           alignItems="center"
@@ -1723,24 +1837,28 @@ function PragaImpactImage({
         </Box>
       )}
     </Box>
-  )
+  );
 }
 
-function PragaImpactAccordion({ impacts }: { impacts: PageImpactData['impacts'] }) {
-  const [openImpact, setOpenImpact] = useState<number | null>(null)
+function PragaImpactAccordion({
+  impacts,
+}: {
+  impacts: PageImpactData["impacts"];
+}) {
+  const [openImpact, setOpenImpact] = useState<number | null>(null);
 
   return (
     <VStack gap={3} align="stretch">
       {impacts.map((item, index) => {
-        const isOpen = openImpact === index
+        const isOpen = openImpact === index;
 
         return (
           <Box
             key={item.title}
             border="1px solid"
-            borderColor={isOpen ? 'green.400' : 'green.100'}
+            borderColor={isOpen ? "green.400" : "green.100"}
             borderRadius="16px"
-            bg={isOpen ? 'green.50' : 'white'}
+            bg={isOpen ? "green.50" : "white"}
             overflow="hidden"
             transition="all 0.2s ease"
           >
@@ -1750,12 +1868,12 @@ function PragaImpactAccordion({ impacts }: { impacts: PageImpactData['impacts'] 
               display="flex"
               alignItems="center"
               gap={{ base: 3, sm: 4 }}
-              p={{ base: '14px 16px', sm: '16px 20px' }}
+              p={{ base: "14px 16px", sm: "16px 20px" }}
               textAlign="left"
               cursor="pointer"
               onClick={() => setOpenImpact(isOpen ? null : index)}
               aria-expanded={isOpen}
-              _hover={{ bg: 'green.50' }}
+              _hover={{ bg: "green.50" }}
             >
               <Box
                 w="44px"
@@ -1772,24 +1890,37 @@ function PragaImpactAccordion({ impacts }: { impacts: PageImpactData['impacts'] 
               >
                 {index + 1}
               </Box>
-              <Text flex="1" fontWeight="700" fontSize="0.9rem" color="green.900">
+              <Text
+                flex="1"
+                fontWeight="700"
+                fontSize="0.9rem"
+                color="green.900"
+              >
                 {item.title}
               </Text>
               <Text color="green.700" fontSize="1.2rem" aria-hidden="true">
-                {isOpen ? '−' : '+'}
+                {isOpen ? "−" : "+"}
               </Text>
             </Box>
             <AnimatePresence initial={false}>
               {isOpen && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
+                  animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.22, ease: 'easeOut' }}
+                  transition={{ duration: 0.22, ease: "easeOut" }}
                 >
                   <Box px={{ base: 4, sm: 5 }} pb={4} pl={{ base: 4, sm: 5 }}>
-                    <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: 3, md: 5 }} alignItems="center">
-                      <Text fontSize="0.78rem" color="gray.700" lineHeight="1.55">
+                    <SimpleGrid
+                      columns={{ base: 1, md: 2 }}
+                      gap={{ base: 3, md: 5 }}
+                      alignItems="center"
+                    >
+                      <Text
+                        fontSize="0.78rem"
+                        color="gray.700"
+                        lineHeight="1.55"
+                      >
                         {item.desc}
                       </Text>
                       <PragaImpactImage
@@ -1802,45 +1933,45 @@ function PragaImpactAccordion({ impacts }: { impacts: PageImpactData['impacts'] 
               )}
             </AnimatePresence>
           </Box>
-        )
+        );
       })}
     </VStack>
-  )
+  );
 }
 
 function AttackTypeFlipCard({
   card,
 }: {
-  card: PageImpactData['statCards'][number]
+  card: PageImpactData["statCards"][number];
 }) {
-  const [revealed, setRevealed] = useState(false)
+  const [revealed, setRevealed] = useState(false);
 
   return (
     <Box
       h="155px"
       cursor="pointer"
       position="relative"
-      style={{ perspective: '1000px' }}
+      style={{ perspective: "1000px" }}
       onClick={() => setRevealed((current) => !current)}
       role="button"
       tabIndex={0}
-      aria-label={`${card.stat}: ${revealed ? card.label : 'revelar detalhes'}`}
+      aria-label={`${card.stat}: ${revealed ? card.label : "revelar detalhes"}`}
       onKeyDown={(event) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault()
-          setRevealed((current) => !current)
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          setRevealed((current) => !current);
         }
       }}
     >
       <motion.div
-        style={{ width: '100%', height: '100%', transformStyle: 'preserve-3d' }}
+        style={{ width: "100%", height: "100%", transformStyle: "preserve-3d" }}
         animate={{ rotateY: revealed ? 180 : 0 }}
-        transition={{ type: 'spring', stiffness: 260, damping: 22 }}
+        transition={{ type: "spring", stiffness: 260, damping: 22 }}
       >
         <Box
           position="absolute"
           inset={0}
-          style={{ backfaceVisibility: 'hidden' }}
+          style={{ backfaceVisibility: "hidden" }}
           bg={card.gradient}
           color="white"
           borderRadius="18px"
@@ -1853,33 +1984,48 @@ function AttackTypeFlipCard({
           boxShadow="0 5px 16px rgba(46,125,50,0.18)"
         >
           {card.icon && (
-  <Icon as={card.icon} boxSize={10} strokeWidth={2.5} color="white" mb={3} />
-)}
+            <Icon
+              as={card.icon}
+              boxSize={10}
+              strokeWidth={2.5}
+              color="white"
+              mb={3}
+            />
+          )}
           <Text fontSize="1.5rem" fontWeight="900" lineHeight="1">
             {card.stat}
           </Text>
- <Box
-  display="flex"
-  alignItems="center"
-  justifyContent="center"
-  gap="6px"
-  bg="whiteAlpha.25"
-  px={3}
-  py={1}
-  borderRadius="full"
-  mt={2}
-  style={{ backdropFilter: "blur(4px)" }}
->
-  <Icon as={RotateCw as React.ElementType} boxSize="12px" color="white" />
-  <Text fontSize="0.7rem" fontWeight="bold" color="white" letterSpacing="wide">
-    CLIQUE PARA REVELAR
-  </Text>
-</Box>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            gap="6px"
+            bg="whiteAlpha.25"
+            px={3}
+            py={1}
+            borderRadius="full"
+            mt={2}
+            style={{ backdropFilter: "blur(4px)" }}
+          >
+            <Icon
+              as={RotateCw as React.ElementType}
+              boxSize="12px"
+              color="white"
+            />
+            <Text
+              fontSize="0.7rem"
+              fontWeight="bold"
+              color="white"
+              letterSpacing="wide"
+            >
+              CLIQUE PARA REVELAR
+            </Text>
+          </Box>
         </Box>
         <Box
           position="absolute"
           inset={0}
-          style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+          style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
           bg={card.gradient}
           color="white"
           borderRadius="18px"
@@ -1891,21 +2037,27 @@ function AttackTypeFlipCard({
           boxShadow="0 5px 16px rgba(46,125,50,0.18)"
         >
           <Text fontSize="0.78rem" fontWeight="600" lineHeight="1.4" px={2}>
-             {card.label}
+            {card.label}
           </Text>
         </Box>
       </motion.div>
     </Box>
-  )
+  );
 }
 
-function AttackSymptomImage({ imageUrl, title }: { imageUrl: string; title: string }) {
-  const [hasError, setHasError] = useState(false)
+function AttackSymptomImage({
+  imageUrl,
+  title,
+}: {
+  imageUrl: string;
+  title: string;
+}) {
+  const [hasError, setHasError] = useState(false);
 
   return (
     <Box
       position="relative"
-      minH={{ base: '150px', md: '180px' }}
+      minH={{ base: "150px", md: "180px" }}
       borderRadius="md"
       overflow="hidden"
       border="1px solid"
@@ -1919,12 +2071,12 @@ function AttackSymptomImage({ imageUrl, title }: { imageUrl: string; title: stri
           alt={`Fotografia de campo: ${title}`}
           fill
           sizes="(max-width: 768px) 100vw, 50vw"
-          style={{ objectFit: 'cover' }}
+          style={{ objectFit: "cover" }}
           onError={() => setHasError(true)}
         />
       ) : (
         <Box
-          minH={{ base: '150px', md: '180px' }}
+          minH={{ base: "150px", md: "180px" }}
           h="full"
           display="flex"
           flexDir="column"
@@ -1934,7 +2086,9 @@ function AttackSymptomImage({ imageUrl, title }: { imageUrl: string; title: stri
           px={5}
           bgGradient="linear(to-br, green.50, yellow.50)"
         >
-          <Text fontSize="2rem" aria-hidden="true">🌿</Text>
+          <Text fontSize="2rem" aria-hidden="true">
+            🌿
+          </Text>
           <Text mt={2} fontSize="0.72rem" fontWeight="700" color="green.800">
             Fotografia de campo em breve
           </Text>
@@ -1944,24 +2098,28 @@ function AttackSymptomImage({ imageUrl, title }: { imageUrl: string; title: stri
         </Box>
       )}
     </Box>
-  )
+  );
 }
 
-function AttackSymptomAccordion({ impacts }: { impacts: PageImpactData['impacts'] }) {
-  const [openImpact, setOpenImpact] = useState<number | null>(null)
+function AttackSymptomAccordion({
+  impacts,
+}: {
+  impacts: PageImpactData["impacts"];
+}) {
+  const [openImpact, setOpenImpact] = useState<number | null>(null);
 
   return (
     <VStack gap={3} align="stretch">
       {impacts.map((item, index) => {
-        const isOpen = openImpact === index
+        const isOpen = openImpact === index;
 
         return (
           <Box
             key={item.title}
             border="1px solid"
-            borderColor={isOpen ? 'green.400' : 'green.100'}
+            borderColor={isOpen ? "green.400" : "green.100"}
             borderRadius="16px"
-            bg={isOpen ? 'green.50' : 'white'}
+            bg={isOpen ? "green.50" : "white"}
             overflow="hidden"
             transition="all 0.2s ease"
           >
@@ -1971,12 +2129,12 @@ function AttackSymptomAccordion({ impacts }: { impacts: PageImpactData['impacts'
               display="flex"
               alignItems="center"
               gap={3}
-              p={{ base: '14px 16px', sm: '16px 20px' }}
+              p={{ base: "14px 16px", sm: "16px 20px" }}
               textAlign="left"
               cursor="pointer"
               onClick={() => setOpenImpact(isOpen ? null : index)}
               aria-expanded={isOpen}
-              _hover={{ bg: 'green.50' }}
+              _hover={{ bg: "green.50" }}
             >
               <Box
                 w="42px"
@@ -1993,28 +2151,47 @@ function AttackSymptomAccordion({ impacts }: { impacts: PageImpactData['impacts'
               >
                 {index + 1}
               </Box>
-              <Text flex="1" fontWeight="700" fontSize="0.88rem" color="green.900">
+              <Text
+                flex="1"
+                fontWeight="700"
+                fontSize="0.88rem"
+                color="green.900"
+              >
                 {item.title}
               </Text>
               <Text color="green.700" fontSize="1.2rem" aria-hidden="true">
-                {isOpen ? '−' : '+'}
+                {isOpen ? "−" : "+"}
               </Text>
             </Box>
             <AnimatePresence initial={false}>
               {isOpen && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
+                  animate={{ height: "auto", opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.22, ease: 'easeOut' }}
+                  transition={{ duration: 0.22, ease: "easeOut" }}
                 >
                   <Box px={{ base: 4, sm: 5 }} pb={4}>
-                    <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: 3, md: 5 }} alignItems="center">
+                    <SimpleGrid
+                      columns={{ base: 1, md: 2 }}
+                      gap={{ base: 3, md: 5 }}
+                      alignItems="center"
+                    >
                       <Box>
                         <Text fontSize="1.1rem" mb={2} aria-hidden="true">
-                          {index === 0 ? '🔎' : index === 1 ? '🌱' : index === 2 ? '💧' : '🦋'}
+                          {index === 0
+                            ? "🔎"
+                            : index === 1
+                              ? "🌱"
+                              : index === 2
+                                ? "💧"
+                                : "🦋"}
                         </Text>
-                        <Text fontSize="0.8rem" color="gray.700" lineHeight="1.6">
+                        <Text
+                          fontSize="0.8rem"
+                          color="gray.700"
+                          lineHeight="1.6"
+                        >
                           {item.desc}
                         </Text>
                       </Box>
@@ -2028,10 +2205,10 @@ function AttackSymptomAccordion({ impacts }: { impacts: PageImpactData['impacts'
               )}
             </AnimatePresence>
           </Box>
-        )
+        );
       })}
     </VStack>
-  )
+  );
 }
 
 function AttackInteractivePage({ data }: { data: PageImpactData }) {
@@ -2044,8 +2221,15 @@ function AttackInteractivePage({ data }: { data: PageImpactData }) {
       </PageTitle>
       <LeadText>{data.leadText}</LeadText>
 
-      <Text fontSize="0.78rem" fontWeight="600" color="green.700" textAlign="center" mb={3}>
-        Clique em cada tipo de ataque e sintoma para investigar como as pragas danificam as plantas!
+      <Text
+        fontSize="0.78rem"
+        fontWeight="600"
+        color="green.700"
+        textAlign="center"
+        mb={3}
+      >
+        Clique em cada tipo de ataque e sintoma para investigar como as pragas
+        danificam as plantas!
       </Text>
       <SimpleGrid columns={{ base: 1, sm: 3 }} gap={{ base: 3, sm: 4 }} mb={7}>
         {data.statCards.map((card) => (
@@ -2056,7 +2240,7 @@ function AttackInteractivePage({ data }: { data: PageImpactData }) {
       <SectionHeading>Principais impactos</SectionHeading>
       <AttackSymptomAccordion impacts={data.impacts} />
     </Box>
-  )
+  );
 }
 
 function PragaAgricolaInteractivePage({ data }: { data: PageImpactData }) {
@@ -2076,7 +2260,8 @@ function PragaAgricolaInteractivePage({ data }: { data: PageImpactData }) {
         textAlign="center"
         mb={3}
       >
-        Clique nas estatísticas do topo para revelar os números e selecione os impactos para explorar!
+        Clique nas estatísticas do topo para revelar os números e selecione os
+        impactos para explorar!
       </Text>
       <SimpleGrid columns={{ base: 1, sm: 3 }} gap={{ base: 3, sm: 4 }} mb={7}>
         {PRAGA_STAT_CARDS.map((card) => (
@@ -2087,15 +2272,15 @@ function PragaAgricolaInteractivePage({ data }: { data: PageImpactData }) {
       <SectionHeading>Principais impactos</SectionHeading>
       <PragaImpactAccordion impacts={data.impacts} />
     </Box>
-  )
+  );
 }
 
 export function PageImpact({ data }: { data: PageImpactData }) {
-  if (data.id === 'p04') {
-    return <PragaAgricolaInteractivePage data={data} />
+  if (data.id === "p04") {
+    return <PragaAgricolaInteractivePage data={data} />;
   }
-  if (data.id === 'p09') {
-    return <AttackInteractivePage data={data} />
+  if (data.id === "p09") {
+    return <AttackInteractivePage data={data} />;
   }
 
   return (
@@ -2107,7 +2292,11 @@ export function PageImpact({ data }: { data: PageImpactData }) {
       </PageTitle>
       <LeadText>{data.leadText}</LeadText>
 
-      <SimpleGrid columns={{ base: 1, sm: 2, md: 3 }} gap={{ base: 3, sm: 4 }} my={6}>
+      <SimpleGrid
+        columns={{ base: 1, sm: 2, md: 3 }}
+        gap={{ base: 3, sm: 4 }}
+        my={6}
+      >
         {data.statCards.map((card) => (
           <Box
             key={card.stat}
@@ -2127,19 +2316,31 @@ export function PageImpact({ data }: { data: PageImpactData }) {
               right="-20px"
               aria-hidden="true"
             />
-           <Box w="40px" h="40px" mb={2} mx="auto" display="flex" alignItems="center" justifyContent="center">
-  {card.icon ? (
-  <Icon as={card.icon} boxSize={8} color="white" />
-) : card.imageSrc ? (
-  <Image
-    src={card.imageSrc}
-    alt={card.label}
-    width={40}
-    height={40}
-    style={{ objectFit: 'contain', width: '100%', height: '100%' }}
-  />
-) : null}
-</Box>
+            <Box
+              w="40px"
+              h="40px"
+              mb={2}
+              mx="auto"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              {card.icon ? (
+                <Icon as={card.icon} boxSize={8} color="white" />
+              ) : card.imageSrc ? (
+                <Image
+                  src={card.imageSrc}
+                  alt={card.label}
+                  width={40}
+                  height={40}
+                  style={{
+                    objectFit: "contain",
+                    width: "100%",
+                    height: "100%",
+                  }}
+                />
+              ) : null}
+            </Box>
             <Text
               fontSize="1.8rem"
               fontWeight="900"
@@ -2170,7 +2371,7 @@ export function PageImpact({ data }: { data: PageImpactData }) {
             bg="white"
             border="1px solid rgba(46,125,50,0.14)"
             borderRadius="16px"
-            p={{ base: '14px 16px', sm: '16px 20px' }}
+            p={{ base: "14px 16px", sm: "16px 20px" }}
             gap={{ base: 3, sm: 4 }}
             align="flex-start"
             _hover={{
@@ -2220,7 +2421,7 @@ export function PageImpact({ data }: { data: PageImpactData }) {
 }
 
 export function PageAlert({ data }: { data: PageAlertData }) {
-  if (data.id === 'p10') {
+  if (data.id === "p10") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -2231,7 +2432,7 @@ export function PageAlert({ data }: { data: PageAlertData }) {
         <LeadText>{data.leadText}</LeadText>
         <BorderInvestigationCases data={data} />
       </Box>
-    )
+    );
   }
 
   return (
@@ -2248,7 +2449,7 @@ export function PageAlert({ data }: { data: PageAlertData }) {
         bg="linear-gradient(135deg, #B71C1C, #C62828)"
         color="white"
         borderRadius="18px"
-        p={{ base: '20px 18px', sm: 6 }}
+        p={{ base: "20px 18px", sm: 6 }}
         my={6}
         display="flex"
         gap={{ base: 3, sm: 4 }}
@@ -2268,8 +2469,8 @@ export function PageAlert({ data }: { data: PageAlertData }) {
           aria-hidden="true"
         />
         <Box
-          w={{ base: '36px', sm: '48px' }}
-          h={{ base: '36px', sm: '48px' }}
+          w={{ base: "36px", sm: "48px" }}
+          h={{ base: "36px", sm: "48px" }}
           flexShrink={0}
           display="flex"
           alignItems="center"
@@ -2287,69 +2488,76 @@ export function PageAlert({ data }: { data: PageAlertData }) {
           />
         </Box>
         <Box flex="1" minW={0}>
-          <Text fontSize={{ base: '0.9rem', sm: '1rem' }} fontWeight="800" mb={1}>
+          <Text
+            fontSize={{ base: "0.9rem", sm: "1rem" }}
+            fontWeight="800"
+            mb={1}
+          >
             {data.alertTitle}
           </Text>
-          <Text fontSize={{ base: '0.82rem', sm: '0.85rem' }} lineHeight="1.65" opacity={0.93}>
+          <Text
+            fontSize={{ base: "0.82rem", sm: "0.85rem" }}
+            lineHeight="1.65"
+            opacity={0.93}
+          >
             {data.alertText}
           </Text>
         </Box>
       </Box>
 
       {data.callouts && <CalloutList callouts={data.callouts} />}
-
     </Box>
   );
 }
 
 type BorderCargo = {
-  title: string
-  description: string
-  imageSrc: string
-  correctAction: 'block' | 'allow'
-  disease: string
-  successFeedback: string
-  errorFeedback: string
-}
+  title: string;
+  description: string;
+  imageSrc: string;
+  correctAction: "block" | "allow";
+  disease: string;
+  successFeedback: string;
+  errorFeedback: string;
+};
 
 const BORDER_CARGOS: BorderCargo[] = [
   {
-    title: 'Carga de Carambolas',
-    description: 'Tentando entrar sem certificado sanitário.',
-    imageSrc: '/images/pragas/mosca da carambola/1.webp',
-    correctAction: 'block',
-    disease: 'Mosca-da-carambola',
+    title: "Carga de Carambolas",
+    description: "Tentando entrar sem certificado sanitário.",
+    imageSrc: "/images/pragas/mosca da carambola/1.webp",
+    correctAction: "block",
+    disease: "Mosca-da-carambola",
     successFeedback:
-      'Uau! Se essa Mosca-da-carambola entrasse, toda a nossa produção local estaria em risco!',
+      "Uau! Se essa Mosca-da-carambola entrasse, toda a nossa produção local estaria em risco!",
     errorFeedback:
-      'Atenção! Sem certificado sanitário, as frutas podem trazer uma praga perigosa. Vamos bloquear para segurança?',
+      "Atenção! Sem certificado sanitário, as frutas podem trazer uma praga perigosa. Vamos bloquear para segurança?",
   },
   {
-    title: 'Carregamento de Mudas de Laranja',
-    description: 'Mudas trazidas de fora sem comprovação de saúde.',
-    imageSrc: '/images/doencas/fitoplasma.webp',
-    correctAction: 'block',
-    disease: 'Huanglongbing (HLB)',
+    title: "Carregamento de Mudas de Laranja",
+    description: "Mudas trazidas de fora sem comprovação de saúde.",
+    imageSrc: "/images/doencas/fitoplasma.webp",
+    correctAction: "block",
+    disease: "Huanglongbing (HLB)",
     successFeedback:
-      'Muito bem! Mudas sem comprovação podem espalhar o HLB e destruir pomares inteiros de laranja.',
+      "Muito bem! Mudas sem comprovação podem espalhar o HLB e destruir pomares inteiros de laranja.",
     errorFeedback:
-      'Atenção! Sem o selo de inspeção, essa doença destruiria as laranjeiras. Vamos bloquear para segurança?',
+      "Atenção! Sem o selo de inspeção, essa doença destruiria as laranjeiras. Vamos bloquear para segurança?",
   },
   {
-    title: 'Carregamento de Maçãs Certificadas',
-    description: 'Frutas com selo de inspeção e nota fiscal.',
-    imageSrc: '/images/agricultura/ghabiru-plantation.webp',
-    correctAction: 'allow',
-    disease: 'Carga regularizada',
+    title: "Carregamento de Maçãs Certificadas",
+    description: "Frutas com selo de inspeção e nota fiscal.",
+    imageSrc: "/images/agricultura/ghabiru-plantation.webp",
+    correctAction: "allow",
+    disease: "Carga regularizada",
     successFeedback:
-      'Decisão correta! A documentação confirma que a carga foi inspecionada e pode seguir com segurança.',
+      "Decisão correta! A documentação confirma que a carga foi inspecionada e pode seguir com segurança.",
     errorFeedback:
-      'Atenção! Esta carga tem selo de inspeção e nota fiscal. Com a documentação regularizada, ela pode ser permitida.',
+      "Atenção! Esta carga tem selo de inspeção e nota fiscal. Com a documentação regularizada, ela pode ser permitida.",
   },
-]
+];
 
 function CargoImage({ cargo }: { cargo: BorderCargo }) {
-  const [hasError, setHasError] = useState(false)
+  const [hasError, setHasError] = useState(false);
 
   if (hasError) {
     return (
@@ -2363,9 +2571,9 @@ function CargoImage({ cargo }: { cargo: BorderCargo }) {
         fontSize="4rem"
         aria-label={`Ilustração de ${cargo.title}`}
       >
-        {cargo.correctAction === 'allow' ? '📦' : '🚚'}
+        {cargo.correctAction === "allow" ? "📦" : "🚚"}
       </Box>
-    )
+    );
   }
 
   return (
@@ -2374,44 +2582,46 @@ function CargoImage({ cargo }: { cargo: BorderCargo }) {
       alt={`Ilustração da ${cargo.title}`}
       fill
       sizes="(max-width: 640px) 100vw, 520px"
-      style={{ objectFit: 'cover' }}
+      style={{ objectFit: "cover" }}
       onError={() => setHasError(true)}
     />
-  )
+  );
 }
 
 export function BorderRadarGame({ data }: { data: PageAlertData }) {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [inspected, setInspected] = useState(0)
-  const [correctAnswers, setCorrectAnswers] = useState(0)
-  const [selectedAction, setSelectedAction] = useState<'block' | 'allow' | null>(null)
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [inspected, setInspected] = useState(0);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [selectedAction, setSelectedAction] = useState<
+    "block" | "allow" | null
+  >(null);
 
-  const cargo = BORDER_CARGOS[currentIndex]
-  const hasFinished = inspected === BORDER_CARGOS.length
-  const isCorrect = selectedAction === cargo?.correctAction
+  const cargo = BORDER_CARGOS[currentIndex];
+  const hasFinished = inspected === BORDER_CARGOS.length;
+  const isCorrect = selectedAction === cargo?.correctAction;
 
-  const handleAction = (action: 'block' | 'allow') => {
-    if (selectedAction || hasFinished) return
-    setSelectedAction(action)
-    setInspected((value) => value + 1)
+  const handleAction = (action: "block" | "allow") => {
+    if (selectedAction || hasFinished) return;
+    setSelectedAction(action);
+    setInspected((value) => value + 1);
     if (action === cargo.correctAction) {
-      setCorrectAnswers((value) => value + 1)
+      setCorrectAnswers((value) => value + 1);
     }
-  }
+  };
 
   const handleNext = () => {
     if (currentIndex < BORDER_CARGOS.length - 1) {
-      setCurrentIndex((value) => value + 1)
-      setSelectedAction(null)
+      setCurrentIndex((value) => value + 1);
+      setSelectedAction(null);
     }
-  }
+  };
 
   const restart = () => {
-    setCurrentIndex(0)
-    setInspected(0)
-    setCorrectAnswers(0)
-    setSelectedAction(null)
-  }
+    setCurrentIndex(0);
+    setInspected(0);
+    setCorrectAnswers(0);
+    setSelectedAction(null);
+  };
 
   return (
     <Box>
@@ -2443,12 +2653,21 @@ export function BorderRadarGame({ data }: { data: PageAlertData }) {
           aria-hidden="true"
         />
 
-        <Flex align="center" justify="space-between" gap={3} position="relative" zIndex={1}>
+        <Flex
+          align="center"
+          justify="space-between"
+          gap={3}
+          position="relative"
+          zIndex={1}
+        >
           <Box>
-            <Text fontSize={{ base: '1.05rem', sm: '1.3rem' }} fontWeight="900">
+            <Text fontSize={{ base: "1.05rem", sm: "1.3rem" }} fontWeight="900">
               Radar de Fronteira
             </Text>
-            <Text fontSize={{ base: '0.72rem', sm: '0.8rem' }} color="whiteAlpha.800">
+            <Text
+              fontSize={{ base: "0.72rem", sm: "0.8rem" }}
+              color="whiteAlpha.800"
+            >
               Bloqueie os Invasores!
             </Text>
           </Box>
@@ -2461,8 +2680,12 @@ export function BorderRadarGame({ data }: { data: PageAlertData }) {
             textAlign="center"
             minW="112px"
           >
-            <Text fontSize="0.62rem" fontWeight="800">CARGAS INSPECIONADAS</Text>
-            <Text fontSize="1.15rem" fontWeight="900" lineHeight="1.1">{inspected}/3</Text>
+            <Text fontSize="0.62rem" fontWeight="800">
+              CARGAS INSPECIONADAS
+            </Text>
+            <Text fontSize="1.15rem" fontWeight="900" lineHeight="1.1">
+              {inspected}/3
+            </Text>
           </Box>
         </Flex>
 
@@ -2479,14 +2702,16 @@ export function BorderRadarGame({ data }: { data: PageAlertData }) {
           {!hasFinished && cargo && (
             <>
               <Flex align="center" gap={2} mb={3}>
-                <Text fontSize="1.2rem" aria-hidden="true">🛂</Text>
+                <Text fontSize="1.2rem" aria-hidden="true">
+                  🛂
+                </Text>
                 <Text fontSize="0.72rem" fontWeight="800" color="orange.200">
                   MESA DE INSPEÇÃO · CASO {currentIndex + 1} DE 3
                 </Text>
               </Flex>
 
               <Box
-                h={{ base: '180px', sm: '230px' }}
+                h={{ base: "180px", sm: "230px" }}
                 position="relative"
                 overflow="hidden"
                 borderRadius="14px"
@@ -2511,10 +2736,19 @@ export function BorderRadarGame({ data }: { data: PageAlertData }) {
                 </Box>
               </Box>
 
-              <Text mt={3} fontSize={{ base: '1rem', sm: '1.15rem' }} fontWeight="900">
+              <Text
+                mt={3}
+                fontSize={{ base: "1rem", sm: "1.15rem" }}
+                fontWeight="900"
+              >
                 {cargo.title}
               </Text>
-              <Text mt={1} fontSize="0.78rem" color="whiteAlpha.800" lineHeight="1.5">
+              <Text
+                mt={1}
+                fontSize="0.78rem"
+                color="whiteAlpha.800"
+                lineHeight="1.5"
+              >
                 {cargo.description}
               </Text>
 
@@ -2522,28 +2756,28 @@ export function BorderRadarGame({ data }: { data: PageAlertData }) {
                 <SimpleGrid columns={{ base: 1, sm: 2 }} gap={3} mt={4}>
                   <Box
                     as="button"
-                    onClick={() => handleAction('block')}
+                    onClick={() => handleAction("block")}
                     p={3}
                     borderRadius="12px"
                     bg="red.600"
                     color="white"
                     fontWeight="900"
                     cursor="pointer"
-                    _hover={{ bg: 'red.500', transform: 'translateY(-2px)' }}
+                    _hover={{ bg: "red.500", transform: "translateY(-2px)" }}
                     transition="all 0.2s ease"
                   >
                     ⛔ BLOQUEAR
                   </Box>
                   <Box
                     as="button"
-                    onClick={() => handleAction('allow')}
+                    onClick={() => handleAction("allow")}
                     p={3}
                     borderRadius="12px"
                     bg="green.500"
                     color="white"
                     fontWeight="900"
                     cursor="pointer"
-                    _hover={{ bg: 'green.400', transform: 'translateY(-2px)' }}
+                    _hover={{ bg: "green.400", transform: "translateY(-2px)" }}
                     transition="all 0.2s ease"
                   >
                     ✅ PERMITIR
@@ -2559,11 +2793,13 @@ export function BorderRadarGame({ data }: { data: PageAlertData }) {
                     mt={4}
                     p={3}
                     borderRadius="12px"
-                    bg={isCorrect ? 'green.500' : 'orange.400'}
-                    color={isCorrect ? 'white' : 'orange.950'}
+                    bg={isCorrect ? "green.500" : "orange.400"}
+                    color={isCorrect ? "white" : "orange.950"}
                   >
                     <Text fontSize="0.85rem" fontWeight="900">
-                      {isCorrect ? '🎉 Decisão correta!' : '⚠️ Vamos aprender com esta decisão'}
+                      {isCorrect
+                        ? "🎉 Decisão correta!"
+                        : "⚠️ Vamos aprender com esta decisão"}
                     </Text>
                     <Text mt={1} fontSize="0.78rem" lineHeight="1.55">
                       {isCorrect ? cargo.successFeedback : cargo.errorFeedback}
@@ -2581,7 +2817,7 @@ export function BorderRadarGame({ data }: { data: PageAlertData }) {
                       color="orange.950"
                       fontWeight="900"
                       cursor="pointer"
-                      _hover={{ bg: 'orange.200' }}
+                      _hover={{ bg: "orange.200" }}
                     >
                       Próxima carga →
                     </Box>
@@ -2598,12 +2834,20 @@ export function BorderRadarGame({ data }: { data: PageAlertData }) {
               transition={{ duration: 0.5 }}
             >
               <Box textAlign="center" py={{ base: 5, sm: 8 }}>
-                <Text fontSize="3rem" aria-hidden="true">🏅</Text>
-                <Text mt={2} fontSize="1.35rem" fontWeight="900" color="orange.200">
+                <Text fontSize="3rem" aria-hidden="true">
+                  🏅
+                </Text>
+                <Text
+                  mt={2}
+                  fontSize="1.35rem"
+                  fontWeight="900"
+                  color="orange.200"
+                >
                   Defensor da Lavoura
                 </Text>
                 <Text mt={2} fontSize="0.82rem" color="whiteAlpha.900">
-                  Você acertou {correctAnswers} de 3 decisões e protegeu a fronteira agrícola!
+                  Você acertou {correctAnswers} de 3 decisões e protegeu a
+                  fronteira agrícola!
                 </Text>
                 <Box
                   as="button"
@@ -2616,7 +2860,7 @@ export function BorderRadarGame({ data }: { data: PageAlertData }) {
                   color="green.800"
                   fontWeight="900"
                   cursor="pointer"
-                  _hover={{ bg: 'orange.100' }}
+                  _hover={{ bg: "orange.100" }}
                 >
                   Jogar novamente
                 </Box>
@@ -2628,29 +2872,37 @@ export function BorderRadarGame({ data }: { data: PageAlertData }) {
 
       {data.callouts && <CalloutList callouts={data.callouts} />}
     </Box>
-  )
+  );
 }
 
 const RESEARCH_STATION_IMAGES = [
-  'https://images.unsplash.com/photo-1574943320219-553eb213f72d',
-  'https://images.unsplash.com/photo-1532094349884-543bc11b234d',
-  'https://images.unsplash.com/photo-1523240795612-9a054b0db644',
-  'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc',
-  'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b',
-  '/assets/dona-fito/dona-fito-happy.png',
-]
+  "https://images.unsplash.com/photo-1574943320219-553eb213f72d",
+  "https://images.unsplash.com/photo-1532094349884-543bc11b234d",
+  "https://images.unsplash.com/photo-1523240795612-9a054b0db644",
+  "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc",
+  "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b",
+  "/assets/dona-fito/dona-fito-happy.png",
+];
 
 const RESEARCH_STATION_IMPACTS = [
-  'Ajuda agricultores a produzir mais e com segurança, usando variedades adaptadas ao clima e às pragas da Amazônia.',
-  'Forma profissionais e cria conhecimento para resolver problemas fitossanitários específicos de cada comunidade.',
-  'Prepara técnicos para reconhecer pragas no campo e aplicar práticas de manejo sustentável.',
-  'Protege a biodiversidade do Amapá ao estudar espécies nativas, pragas e aliados naturais.',
-  'Entrega diagnósticos confiáveis para que o agricultor escolha o tratamento correto e evite desperdícios.',
-  'A curiosidade de hoje pode virar a pesquisa que protegerá a lavoura de amanhã. Ciência também começa na escola!',
-]
+  "Ajuda agricultores a produzir mais e com segurança, usando variedades adaptadas ao clima e às pragas da Amazônia.",
+  "Forma profissionais e cria conhecimento para resolver problemas fitossanitários específicos de cada comunidade.",
+  "Prepara técnicos para reconhecer pragas no campo e aplicar práticas de manejo sustentável.",
+  "Protege a biodiversidade do Amapá ao estudar espécies nativas, pragas e aliados naturais.",
+  "Entrega diagnósticos confiáveis para que o agricultor escolha o tratamento correto e evite desperdícios.",
+  "A curiosidade de hoje pode virar a pesquisa que protegerá a lavoura de amanhã. Ciência também começa na escola!",
+];
 
-function StationPhoto({ src, alt, isStudent }: { src: string; alt: string; isStudent: boolean }) {
-  const [hasError, setHasError] = useState(false)
+function StationPhoto({
+  src,
+  alt,
+  isStudent,
+}: {
+  src: string;
+  alt: string;
+  isStudent: boolean;
+}) {
+  const [hasError, setHasError] = useState(false);
 
   if (hasError) {
     return (
@@ -2660,13 +2912,13 @@ function StationPhoto({ src, alt, isStudent }: { src: string; alt: string; isStu
         display="flex"
         alignItems="center"
         justifyContent="center"
-        bg={isStudent ? 'yellow.100' : 'green.50'}
+        bg={isStudent ? "yellow.100" : "green.50"}
         fontSize="3.5rem"
         aria-label={`Ilustração de ${alt}`}
       >
-        {isStudent ? '🌱' : '🔬'}
+        {isStudent ? "🌱" : "🔬"}
       </Box>
-    )
+    );
   }
 
   return (
@@ -2675,14 +2927,14 @@ function StationPhoto({ src, alt, isStudent }: { src: string; alt: string; isStu
       alt={alt}
       fill
       sizes="(max-width: 768px) 100vw, 50vw"
-      style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+      style={{ objectFit: "cover", width: "100%", height: "100%" }}
       onError={() => setHasError(true)}
     />
-  )
+  );
 }
 
 function ResearchStations({ data }: { data: PageOrgaosData }) {
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   return (
     <Box>
@@ -2697,13 +2949,14 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
         fontWeight="800"
         textAlign="center"
       >
-        🔬 Clique em cada estação científica para descobrir o que os pesquisadores fazem!
+        🔬 Clique em cada estação científica para descobrir o que os
+        pesquisadores fazem!
       </Text>
 
       <SimpleGrid columns={{ base: 1, md: 2 }} gap={4} alignItems="start">
         {data.items.map((station, index) => {
-          const isExpanded = expandedIndex === index
-          const isStudent = index === data.items.length - 1
+          const isExpanded = expandedIndex === index;
+          const isStudent = index === data.items.length - 1;
 
           return (
             <Box
@@ -2716,15 +2969,32 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
               overflow="hidden"
               borderRadius="18px"
               border="1px solid"
-              borderColor={isExpanded ? 'green.500' : isStudent ? 'yellow.300' : 'green.200'}
-              bg={isStudent ? 'yellow.50' : 'white'}
-              boxShadow={isExpanded ? '0 8px 24px rgba(46,125,50,0.16)' : 'sm'}
-              _hover={{ transform: 'translateY(-3px)', shadow: 'md' }}
+              borderColor={
+                isExpanded
+                  ? "green.500"
+                  : isStudent
+                    ? "yellow.300"
+                    : "green.200"
+              }
+              bg={isStudent ? "yellow.50" : "white"}
+              boxShadow={isExpanded ? "0 8px 24px rgba(46,125,50,0.16)" : "sm"}
+              _hover={{ transform: "translateY(-3px)", shadow: "md" }}
               transition="all 0.25s ease"
             >
-              <Box h="140px" w="100%" position="relative" overflow="hidden" borderTopRadius="lg" bg={isStudent ? 'yellow.100' : 'green.50'}>
+              <Box
+                h="140px"
+                w="100%"
+                position="relative"
+                overflow="hidden"
+                borderTopRadius="lg"
+                bg={isStudent ? "yellow.100" : "green.50"}
+              >
                 {!isStudent && (
-                  <StationPhoto src={RESEARCH_STATION_IMAGES[index]} alt={station.name} isStudent={false} />
+                  <StationPhoto
+                    src={RESEARCH_STATION_IMAGES[index]}
+                    alt={station.name}
+                    isStudent={false}
+                  />
                 )}
                 {isStudent && (
                   <Box
@@ -2745,30 +3015,46 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                   px={2}
                   py={1}
                   borderRadius="full"
-                  bg={isStudent ? 'yellow.500' : 'green.700'}
-                  color={isStudent ? 'yellow.950' : 'white'}
+                  bg={isStudent ? "yellow.500" : "green.700"}
+                  color={isStudent ? "yellow.950" : "white"}
                   fontSize="0.62rem"
                   fontWeight="900"
                 >
-                  {isStudent ? '🌟 Seu futuro na ciência' : `ESTAÇÃO ${index + 1}`}
+                  {isStudent
+                    ? "🌟 Seu futuro na ciência"
+                    : `ESTAÇÃO ${index + 1}`}
                 </Box>
               </Box>
 
               <Box p={{ base: 4, sm: 5 }}>
                 <Flex align="center" justify="space-between" gap={3}>
-                  <Text fontWeight="800" fontSize="0.95rem" color={isStudent ? 'yellow.900' : 'green.900'}>
+                  <Text
+                    fontWeight="800"
+                    fontSize="0.95rem"
+                    color={isStudent ? "yellow.900" : "green.900"}
+                  >
                     {station.name}
                   </Text>
                   <Text fontSize="1.1rem" color="green.700" aria-hidden="true">
-                    {isExpanded ? '−' : '+'}
+                    {isExpanded ? "−" : "+"}
                   </Text>
                 </Flex>
                 {!isExpanded && (
-                  <Text mt={2} fontSize="0.78rem" color="gray.600" lineHeight="1.55">
+                  <Text
+                    mt={2}
+                    fontSize="0.78rem"
+                    color="gray.600"
+                    lineHeight="1.55"
+                  >
                     {station.desc}
                   </Text>
                 )}
-                <Text mt={3} fontSize="0.68rem" fontWeight="800" color="green.700">
+                <Text
+                  mt={3}
+                  fontSize="0.68rem"
+                  fontWeight="800"
+                  color="green.700"
+                >
                   🔬 Clique para explorar a estação
                 </Text>
 
@@ -2776,21 +3062,47 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                   {isExpanded && (
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
+                      animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.25 }}
                     >
-                      <Box mt={4} pt={4} borderTop="1px solid" borderColor="green.100">
-                        <Text fontSize="0.7rem" fontWeight="900" color="green.800" textTransform="uppercase">
+                      <Box
+                        mt={4}
+                        pt={4}
+                        borderTop="1px solid"
+                        borderColor="green.100"
+                      >
+                        <Text
+                          fontSize="0.7rem"
+                          fontWeight="900"
+                          color="green.800"
+                          textTransform="uppercase"
+                        >
                           🔬 O que fazem
                         </Text>
-                        <Text mt={1} fontSize="0.78rem" color="gray.700" lineHeight="1.55">
+                        <Text
+                          mt={1}
+                          fontSize="0.78rem"
+                          color="gray.700"
+                          lineHeight="1.55"
+                        >
                           {station.desc}
                         </Text>
-                        <Text mt={3} fontSize="0.7rem" fontWeight="900" color="orange.800" textTransform="uppercase">
+                        <Text
+                          mt={3}
+                          fontSize="0.7rem"
+                          fontWeight="900"
+                          color="orange.800"
+                          textTransform="uppercase"
+                        >
                           🌱 Impacto no Amapá / Lavoura
                         </Text>
-                        <Text mt={1} fontSize="0.78rem" color="gray.700" lineHeight="1.55">
+                        <Text
+                          mt={1}
+                          fontSize="0.78rem"
+                          color="gray.700"
+                          lineHeight="1.55"
+                        >
                           {RESEARCH_STATION_IMPACTS[index]}
                         </Text>
                       </Box>
@@ -2799,33 +3111,33 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                 </AnimatePresence>
               </Box>
             </Box>
-          )
+          );
         })}
       </SimpleGrid>
     </Box>
-  )
+  );
 }
 
 const GUARDIAN_IMAGES = [
-  'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3',
-  'https://images.unsplash.com/photo-1578575437130-527eed3abbec',
-  'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d',
-  'https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8',
-  'https://images.unsplash.com/photo-1595974482597-4b8da8879bc5',
-  '/assets/dona_fito_meio_corpo.webp',
-]
+  "https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3",
+  "https://images.unsplash.com/photo-1578575437130-527eed3abbec",
+  "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d",
+  "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8",
+  "https://images.unsplash.com/photo-1595974482597-4b8da8879bc5",
+  "/assets/dona_fito_meio_corpo.webp",
+];
 
 const GUARDIAN_IMPACTS = [
-  'Cria regras nacionais e coordena ações que reduzem o risco de entrada e disseminação de pragas no país.',
-  'Interrompe cargas ou produtos suspeitos em portos, aeroportos e fronteiras antes que alcancem novas lavouras.',
-  'Protege a produção do Amapá, fiscalizando o trânsito de plantas, sementes e frutos vindos de outras regiões.',
-  'Garante que sementes e mudas saudáveis cheguem ao produtor, evitando doenças desde o início da lavoura.',
-  'Ao identificar e comunicar anomalias, ajuda a interromper rapidamente focos antes que atinjam outras propriedades.',
-  'Ao não transportar plantas, frutos ou terra sem autorização, você fecha uma importante porta para as pragas.',
-]
+  "Cria regras nacionais e coordena ações que reduzem o risco de entrada e disseminação de pragas no país.",
+  "Interrompe cargas ou produtos suspeitos em portos, aeroportos e fronteiras antes que alcancem novas lavouras.",
+  "Protege a produção do Amapá, fiscalizando o trânsito de plantas, sementes e frutos vindos de outras regiões.",
+  "Garante que sementes e mudas saudáveis cheguem ao produtor, evitando doenças desde o início da lavoura.",
+  "Ao identificar e comunicar anomalias, ajuda a interromper rapidamente focos antes que atinjam outras propriedades.",
+  "Ao não transportar plantas, frutos ou terra sem autorização, você fecha uma importante porta para as pragas.",
+];
 
 function GuardianCards({ data }: { data: PageOrgaosData }) {
-  const [expandedIndex, setExpandedIndex] = useState<number | null>(null)
+  const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
 
   return (
     <Box>
@@ -2840,13 +3152,14 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
         fontWeight="800"
         textAlign="center"
       >
-        🔍 Clique em cada guardião para entender como funciona a fiscalização fitossanitária!
+        🔍 Clique em cada guardião para entender como funciona a fiscalização
+        fitossanitária!
       </Text>
 
       <SimpleGrid columns={{ base: 1, md: 2 }} gap={4} alignItems="start">
         {data.items.map((guardian, index) => {
-          const isExpanded = expandedIndex === index
-          const isConsumer = index === data.items.length - 1
+          const isExpanded = expandedIndex === index;
+          const isConsumer = index === data.items.length - 1;
 
           return (
             <Box
@@ -2859,10 +3172,16 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
               overflow="hidden"
               borderRadius="18px"
               border="1px solid"
-              borderColor={isExpanded ? 'green.500' : isConsumer ? 'yellow.300' : 'green.200'}
-              bg={isConsumer ? 'yellow.50' : 'white'}
-              boxShadow={isExpanded ? '0 8px 24px rgba(46,125,50,0.16)' : 'sm'}
-              _hover={{ transform: 'translateY(-3px)', shadow: 'md' }}
+              borderColor={
+                isExpanded
+                  ? "green.500"
+                  : isConsumer
+                    ? "yellow.300"
+                    : "green.200"
+              }
+              bg={isConsumer ? "yellow.50" : "white"}
+              boxShadow={isExpanded ? "0 8px 24px rgba(46,125,50,0.16)" : "sm"}
+              _hover={{ transform: "translateY(-3px)", shadow: "md" }}
               transition="all 0.25s ease"
             >
               <Box
@@ -2871,10 +3190,14 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
                 position="relative"
                 overflow="hidden"
                 borderTopRadius="lg"
-                bg={isConsumer ? 'yellow.100' : 'green.50'}
+                bg={isConsumer ? "yellow.100" : "green.50"}
               >
                 {!isConsumer ? (
-                  <StationPhoto src={GUARDIAN_IMAGES[index]} alt={guardian.name} isStudent={false} />
+                  <StationPhoto
+                    src={GUARDIAN_IMAGES[index]}
+                    alt={guardian.name}
+                    isStudent={false}
+                  />
                 ) : (
                   <Box
                     position="absolute"
@@ -2894,30 +3217,44 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
                   px={2}
                   py={1}
                   borderRadius="full"
-                  bg={isConsumer ? 'yellow.500' : 'green.700'}
-                  color={isConsumer ? 'yellow.950' : 'white'}
+                  bg={isConsumer ? "yellow.500" : "green.700"}
+                  color={isConsumer ? "yellow.950" : "white"}
                   fontSize="0.62rem"
                   fontWeight="900"
                 >
-                  {isConsumer ? '🌟 Faça sua parte' : `GUARDIÃO ${index + 1}`}
+                  {isConsumer ? "🌟 Faça sua parte" : `GUARDIÃO ${index + 1}`}
                 </Box>
               </Box>
 
               <Box p={{ base: 4, sm: 5 }}>
                 <Flex align="center" justify="space-between" gap={3}>
-                  <Text fontWeight="800" fontSize="0.95rem" color={isConsumer ? 'yellow.900' : 'green.900'}>
+                  <Text
+                    fontWeight="800"
+                    fontSize="0.95rem"
+                    color={isConsumer ? "yellow.900" : "green.900"}
+                  >
                     {guardian.name}
                   </Text>
                   <Text fontSize="1.1rem" color="green.700" aria-hidden="true">
-                    {isExpanded ? '−' : '+'}
+                    {isExpanded ? "−" : "+"}
                   </Text>
                 </Flex>
                 {!isExpanded && (
-                  <Text mt={2} fontSize="0.78rem" color="gray.600" lineHeight="1.55">
+                  <Text
+                    mt={2}
+                    fontSize="0.78rem"
+                    color="gray.600"
+                    lineHeight="1.55"
+                  >
                     {guardian.desc}
                   </Text>
                 )}
-                <Text mt={3} fontSize="0.68rem" fontWeight="800" color="green.700">
+                <Text
+                  mt={3}
+                  fontSize="0.68rem"
+                  fontWeight="800"
+                  color="green.700"
+                >
                   🔍 Clique para explorar o guardião
                 </Text>
 
@@ -2925,21 +3262,47 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
                   {isExpanded && (
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
+                      animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
                       transition={{ duration: 0.25 }}
                     >
-                      <Box mt={4} pt={4} borderTop="1px solid" borderColor="green.100">
-                        <Text fontSize="0.7rem" fontWeight="900" color="green.800" textTransform="uppercase">
+                      <Box
+                        mt={4}
+                        pt={4}
+                        borderTop="1px solid"
+                        borderColor="green.100"
+                      >
+                        <Text
+                          fontSize="0.7rem"
+                          fontWeight="900"
+                          color="green.800"
+                          textTransform="uppercase"
+                        >
                           🛡️ Atuação
                         </Text>
-                        <Text mt={1} fontSize="0.78rem" color="gray.700" lineHeight="1.55">
+                        <Text
+                          mt={1}
+                          fontSize="0.78rem"
+                          color="gray.700"
+                          lineHeight="1.55"
+                        >
                           {guardian.desc}
                         </Text>
-                        <Text mt={3} fontSize="0.7rem" fontWeight="900" color="orange.800" textTransform="uppercase">
+                        <Text
+                          mt={3}
+                          fontSize="0.7rem"
+                          fontWeight="900"
+                          color="orange.800"
+                          textTransform="uppercase"
+                        >
                           📍 Impacto
                         </Text>
-                        <Text mt={1} fontSize="0.78rem" color="gray.700" lineHeight="1.55">
+                        <Text
+                          mt={1}
+                          fontSize="0.78rem"
+                          color="gray.700"
+                          lineHeight="1.55"
+                        >
                           {GUARDIAN_IMPACTS[index]}
                         </Text>
                       </Box>
@@ -2948,15 +3311,15 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
                 </AnimatePresence>
               </Box>
             </Box>
-          )
+          );
         })}
       </SimpleGrid>
     </Box>
-  )
+  );
 }
 
 export function PageOrgaos({ data }: { data: PageOrgaosData }) {
-  if (data.id === 'p11') {
+  if (data.id === "p11") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -2968,10 +3331,10 @@ export function PageOrgaos({ data }: { data: PageOrgaosData }) {
         <LeadText>{data.leadText}</LeadText>
         <ResearchStations data={data} />
       </Box>
-    )
+    );
   }
 
-  if (data.id === 'p12') {
+  if (data.id === "p12") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -2983,7 +3346,7 @@ export function PageOrgaos({ data }: { data: PageOrgaosData }) {
         <LeadText>{data.leadText}</LeadText>
         <GuardianCards data={data} />
       </Box>
-    )
+    );
   }
 
   return (
@@ -3003,7 +3366,7 @@ export function PageOrgaos({ data }: { data: PageOrgaosData }) {
             bg="white"
             border="1px solid rgba(46,125,50,0.14)"
             borderRadius="16px"
-            p={{ base: '14px 16px', sm: '16px 20px' }}
+            p={{ base: "14px 16px", sm: "16px 20px" }}
             gap={{ base: 3, sm: 4 }}
             align="flex-start"
             _hover={{
@@ -3164,8 +3527,8 @@ export function PageChain({ data }: { data: PageChainData }) {
 
       <Box
         bg="linear-gradient(135deg, #1B5E20, #2E7D32)"
-        borderRadius={{ base: '20px', sm: '24px' }}
-        p={{ base: '28px 20px', sm: '40px 32px' }}
+        borderRadius={{ base: "20px", sm: "24px" }}
+        p={{ base: "28px 20px", sm: "40px 32px" }}
         textAlign="center"
         color="white"
         mb={6}
@@ -3192,10 +3555,10 @@ export function PageChain({ data }: { data: PageChainData }) {
           {data.heroTitle}
           {data.heroHighlight && (
             <>
-              {' '}
+              {" "}
               <Text as="span" color="#FBC02D">
                 {data.heroHighlight}
-              </Text>{' '}
+              </Text>{" "}
               na mesa
             </>
           )}
@@ -3232,7 +3595,7 @@ export function PageChain({ data }: { data: PageChainData }) {
             overflow="hidden"
             boxShadow="sm"
             transition="transform 0.2s, box-shadow 0.2s"
-            _hover={{ transform: 'translateY(-3px)', boxShadow: 'md' }}
+            _hover={{ transform: "translateY(-3px)", boxShadow: "md" }}
           >
             <Box
               position="relative"
@@ -3245,7 +3608,7 @@ export function PageChain({ data }: { data: PageChainData }) {
                 alt=""
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                style={{ objectFit: 'cover' }}
+                style={{ objectFit: "cover" }}
               />
               <Box
                 position="absolute"
@@ -3262,7 +3625,7 @@ export function PageChain({ data }: { data: PageChainData }) {
                 fontSize="xs"
                 fontWeight="bold"
               >
-                {String(idx + 1).padStart(2, '0')}
+                {String(idx + 1).padStart(2, "0")}
               </Box>
             </Box>
             <Box p={4}>
@@ -3276,7 +3639,12 @@ export function PageChain({ data }: { data: PageChainData }) {
               </Text>
               <Box
                 as="button"
-                onClick={() => setRevealed((current) => ({ ...current, [idx]: !current[idx] }))}
+                onClick={() =>
+                  setRevealed((current) => ({
+                    ...current,
+                    [idx]: !current[idx],
+                  }))
+                }
                 aria-expanded={Boolean(revealed[idx])}
                 mt={3}
                 border="0"
@@ -3286,13 +3654,25 @@ export function PageChain({ data }: { data: PageChainData }) {
                 fontWeight="800"
                 cursor="pointer"
                 p={0}
-                _hover={{ textDecoration: 'underline', color: 'brand.600' }}
-                _focusVisible={{ outline: '2px solid', outlineColor: 'brand.500', outlineOffset: '2px' }}
+                _hover={{ textDecoration: "underline", color: "brand.600" }}
+                _focusVisible={{
+                  outline: "2px solid",
+                  outlineColor: "brand.500",
+                  outlineOffset: "2px",
+                }}
               >
-                {revealed[idx] ? 'Ocultar impacto' : 'Descobrir impacto ➔'}
+                {revealed[idx] ? "Ocultar impacto" : "Descobrir impacto ➔"}
               </Box>
               {revealed[idx] && (
-                <Text mt={3} pt={3} borderTop="1px solid" borderColor="gray.100" fontSize="0.8rem" color="gray.600" lineHeight="1.6">
+                <Text
+                  mt={3}
+                  pt={3}
+                  borderTop="1px solid"
+                  borderColor="gray.100"
+                  fontSize="0.8rem"
+                  color="gray.600"
+                  lineHeight="1.6"
+                >
                   {item.studentImpact}
                 </Text>
               )}
@@ -3361,7 +3741,11 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
         Cards Descobertos: {discoveredCount} / {data.characters.length}
       </Box>
 
-      <SimpleGrid columns={{ base: 2, sm: 3 }} gap={{ base: 3, sm: 4, md: 6 }} my={{ base: 5, sm: 8 }}>
+      <SimpleGrid
+        columns={{ base: 2, sm: 3 }}
+        gap={{ base: 3, sm: 4, md: 6 }}
+        my={{ base: 5, sm: 8 }}
+      >
         {data.characters.map((char) => {
           const isRevealed = revealed[char.id];
           const isHero = char.isHero;
@@ -3371,30 +3755,40 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
               key={char.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: 'easeOut' }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
             >
               <Box
                 h="full"
-                minH={{ base: '190px', sm: '260px' }}
+                minH={{ base: "190px", sm: "260px" }}
                 p={4}
-                bg={isRevealed ? (isHero ? 'green.50' : 'red.50') : undefined}
-                bgGradient={!isRevealed ? 'linear(to-b, green.50, #EBF5EB)' : undefined}
+                bg={isRevealed ? (isHero ? "green.50" : "red.50") : undefined}
+                bgGradient={
+                  !isRevealed ? "linear(to-b, green.50, #EBF5EB)" : undefined
+                }
                 borderRadius="xl"
                 border="2px solid"
                 borderColor={
-                  isRevealed
-                    ? isHero
-                      ? 'green.400'
-                      : 'red.400'
-                    : 'green.500'
+                  isRevealed ? (isHero ? "green.400" : "red.400") : "green.500"
                 }
                 textAlign="center"
                 cursor="pointer"
-                onClick={() => setRevealed((prev) => ({ ...prev, [char.id]: true }))}
+                onClick={() =>
+                  setRevealed((prev) => ({ ...prev, [char.id]: true }))
+                }
                 transition="all 0.3s ease"
                 boxShadow="sm"
-                animation={!isRevealed ? 'hoverGentle 2.5s ease-in-out infinite' : undefined}
-                _hover={{ transform: 'scale(1.05)', rotate: '0deg', shadow: 'xl', cursor: 'pointer', animation: 'none' }}
+                animation={
+                  !isRevealed
+                    ? "hoverGentle 2.5s ease-in-out infinite"
+                    : undefined
+                }
+                _hover={{
+                  transform: "scale(1.05)",
+                  rotate: "0deg",
+                  shadow: "xl",
+                  cursor: "pointer",
+                  animation: "none",
+                }}
                 position="relative"
                 overflow="hidden"
               >
@@ -3410,14 +3804,14 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                       width={180}
                       height={150}
                       style={{
-                        display: 'block',
-                        width: '100px',
-                        height: '100px',
-                        objectFit: 'cover',
-                        borderRadius: '2xl',
-                        margin: '0 auto',
-                        border: '4px solid white',
-                        boxShadow: '0 4px 10px rgba(0,0,0,0.18)',
+                        display: "block",
+                        width: "100px",
+                        height: "100px",
+                        objectFit: "cover",
+                        borderRadius: "2xl",
+                        margin: "0 auto",
+                        border: "4px solid white",
+                        boxShadow: "0 4px 10px rgba(0,0,0,0.18)",
                       }}
                     />
                     <Text
@@ -3425,21 +3819,27 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                       px={2}
                       py={1}
                       borderRadius="full"
-                      bg={isHero ? 'green.100' : 'red.100'}
+                      bg={isHero ? "green.100" : "red.100"}
                       fontSize="0.62rem"
                       fontWeight="extrabold"
-                      color={isHero ? 'green.800' : 'red.800'}
+                      color={isHero ? "green.800" : "red.800"}
                       textTransform="uppercase"
                       letterSpacing="0.04em"
                     >
-                      {isHero ? ' HERÓI DA LAVOURA' : ' VILÃO DA LAVOURA'}
+                      {isHero ? " HERÓI DA LAVOURA" : " VILÃO DA LAVOURA"}
                     </Text>
-                    <Text mt={1} fontWeight="800" color="gray.800" fontSize={{ base: '0.8rem', sm: '1rem' }}>
+                    <Text
+                      mt={1}
+                      fontWeight="800"
+                      color="gray.800"
+                      fontSize={{ base: "0.8rem", sm: "1rem" }}
+                    >
                       {char.name}
                     </Text>
-                    <Text mt={2}
-                      fontSize={{ base: '0.65rem', sm: '0.82rem' }}
-                      color={isHero ? 'green.700' : 'red.700'}
+                    <Text
+                      mt={2}
+                      fontSize={{ base: "0.65rem", sm: "0.82rem" }}
+                      color={isHero ? "green.700" : "red.700"}
                       fontWeight="600"
                     >
                       {char.revealText}
@@ -3456,8 +3856,8 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                       QUEM SOU EU?
                     </Text>
                     <Box
-                      w={{ base: '88px', sm: '104px' }}
-                      h={{ base: '88px', sm: '104px' }}
+                      w={{ base: "88px", sm: "104px" }}
+                      h={{ base: "88px", sm: "104px" }}
                       borderRadius="full"
                       border="4px solid"
                       borderColor="green.500"
@@ -3474,15 +3874,27 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                         width={70}
                         height={70}
                         style={{
-                          width: '70px',
-                          height: '70px',
-                          objectFit: 'contain',
+                          width: "70px",
+                          height: "70px",
+                          objectFit: "contain",
                         }}
                       />
-                      <Text position="absolute" top="-3px" left="4px" fontSize="sm" aria-hidden="true">
+                      <Text
+                        position="absolute"
+                        top="-3px"
+                        left="4px"
+                        fontSize="sm"
+                        aria-hidden="true"
+                      >
                         ✦
                       </Text>
-                      <Text position="absolute" bottom="0" right="3px" fontSize="sm" aria-hidden="true">
+                      <Text
+                        position="absolute"
+                        bottom="0"
+                        right="3px"
+                        fontSize="sm"
+                        aria-hidden="true"
+                      >
                         🍃
                       </Text>
                     </Box>
@@ -3492,7 +3904,7 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                       fontSize="sm"
                       letterSpacing="0.02em"
                     >
-                      Clique para descobrir! 
+                      Clique para descobrir!
                     </Text>
                   </VStack>
                 )}
@@ -3519,7 +3931,7 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
 }
 
 export function PageClosing({ data }: { data: PageClosingData }) {
-  const pillarIcons = [Leaf, Sprout, Users, Telescope] as const
+  const pillarIcons = [Leaf, Sprout, Users, Telescope] as const;
 
   return (
     <Box textAlign="center">
@@ -3527,8 +3939,8 @@ export function PageClosing({ data }: { data: PageClosingData }) {
 
       <Box
         bg="linear-gradient(160deg, #1B5E20, #2E7D32, #66BB6A)"
-        borderRadius={{ base: '20px', sm: '24px' }}
-        p={{ base: '32px 20px', sm: '48px 32px' }}
+        borderRadius={{ base: "20px", sm: "24px" }}
+        p={{ base: "32px 20px", sm: "48px 32px" }}
         color="white"
         mb={{ base: 5, sm: 7 }}
         position="relative"
@@ -3597,7 +4009,8 @@ export function PageClosing({ data }: { data: PageClosingData }) {
           mb={3}
           style={{ whiteSpace: "pre-line" }}
         >
-          Parabéns, Jovem Cientista! Agora você é um Guardião Oficial da Fitossanidade!
+          Parabéns, Jovem Cientista! Agora você é um Guardião Oficial da
+          Fitossanidade!
         </Text>
         <Text
           fontSize="0.9rem"
@@ -3610,48 +4023,52 @@ export function PageClosing({ data }: { data: PageClosingData }) {
         </Text>
       </Box>
 
-      <SimpleGrid columns={{ base: 2, sm: 2, md: 4 }} gap={{ base: 3, sm: 4 }} mb={{ base: 5, sm: 7 }}>
+      <SimpleGrid
+        columns={{ base: 2, sm: 2, md: 4 }}
+        gap={{ base: 3, sm: 4 }}
+        mb={{ base: 5, sm: 7 }}
+      >
         {data.pillars.map((p, index) => {
-          const PillarIcon = pillarIcons[index] ?? Leaf
+          const PillarIcon = pillarIcons[index] ?? Leaf;
 
           return (
-          <Box
-            key={p.label}
-            bg="green.50"
-            border="1.5px solid"
-            borderColor="green.200"
-            borderRadius="xl"
-            p={4}
-            textAlign="center"
-            _hover={{
-              borderColor: "green.400",
-              transform: "translateY(-3px)",
-              boxShadow: "md",
-            }}
-            transition="all 0.2s ease"
-          >
             <Box
-              w="40px"
-              h="40px"
-              mb={2}
-              mx="auto"
-              borderRadius="full"
-              bg="white"
-              color="green.700"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
+              key={p.label}
+              bg="green.50"
+              border="1.5px solid"
+              borderColor="green.200"
+              borderRadius="xl"
+              p={4}
+              textAlign="center"
+              _hover={{
+                borderColor: "green.400",
+                transform: "translateY(-3px)",
+                boxShadow: "md",
+              }}
+              transition="all 0.2s ease"
             >
-              <PillarIcon size={20} strokeWidth={2.2} aria-hidden="true" />
+              <Box
+                w="40px"
+                h="40px"
+                mb={2}
+                mx="auto"
+                borderRadius="full"
+                bg="white"
+                color="green.700"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <PillarIcon size={20} strokeWidth={2.2} aria-hidden="true" />
+              </Box>
+              <Text fontSize="0.78rem" fontWeight="700" color="#1B5E20">
+                {p.label}
+              </Text>
+              <Text fontSize="0.68rem" color="gray.600" mt={1} lineHeight="1.4">
+                {p.sub}
+              </Text>
             </Box>
-            <Text fontSize="0.78rem" fontWeight="700" color="#1B5E20">
-              {p.label}
-            </Text>
-            <Text fontSize="0.68rem" color="gray.600" mt={1} lineHeight="1.4">
-              {p.sub}
-            </Text>
-          </Box>
-          )
+          );
         })}
       </SimpleGrid>
 
@@ -3673,10 +4090,7 @@ export function PageClosing({ data }: { data: PageClosingData }) {
         </Text>
       </Box>
 
-      <Callout
-        variant={data.callout.variant}
-        title={data.callout.title}
-      >
+      <Callout variant={data.callout.variant} title={data.callout.title}>
         {data.callout.text}
       </Callout>
 
