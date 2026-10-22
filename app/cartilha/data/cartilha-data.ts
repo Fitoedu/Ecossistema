@@ -1418,7 +1418,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     interactionType: 'find-the-hero',
     id: 'p19',
     label: 'Jogo: Encontre o Herói!',
-    badgeLabel: 'Mini-Jogo Interativo',
+    badgeLabel: 'ATIVIDADE INTERATIVA',
     title: 'Descubra os Heróis e Vilões!',
     subtitle: 'Todo ser vivo tem um papel. Clique nos cards e descubra as características dos nossos heróis e vilões na natureza.',
     characters: [
