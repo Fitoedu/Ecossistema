@@ -48,6 +48,16 @@ const nextConfig: NextConfig = {
         ],
       },
     ];
+=========
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+        pathname: "/**",
+      },
+    ],
+>>>>>>>>> Temporary merge branch 2
   },
 };
 
