@@ -4,6 +4,8 @@ import { useState, useRef, useCallback } from 'react'
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion'
 import { Box, Text, VStack, HStack } from '@chakra-ui/react'
 
+// ─── Types ────────────────────────────────────────────────────────────────────
+
 export type SeverityTag =
   | 'Praga Quarentenária'
   | 'Praga Regulamentada'
@@ -28,6 +30,8 @@ export interface PestCardProps {
   }
 }
 
+// ─── Constantes de cores ──────────────────────────────────────────────────────
+
 const VARIANT_COLORS = {
   red:    { gradient: 'linear-gradient(135deg, #B71C1C, #C62828)', light: '#FFEBEE', border: '#EF5350', tag: '#C62828', tagBg: '#FFCDD2' },
   amber:  { gradient: 'linear-gradient(135deg, #E65100, #F57C00)', light: '#FFF3E0', border: '#FFA726', tag: '#E65100', tagBg: '#FFE0B2' },
@@ -43,6 +47,8 @@ const SEVERITY_COLORS: Record<SeverityTag, { bg: string; text: string }> = {
   'Risco Moderado':      { bg: '#1565C0', text: '#fff' },
   'Em Monitoramento':    { bg: '#2E7D32', text: '#fff' },
 }
+
+// ─── Hook de efeito tilt ──────────────────────────────────────────────────────
 
 function useTilt(strength = 12) {
   const ref = useRef<HTMLDivElement>(null)
@@ -72,6 +78,8 @@ function useTilt(strength = 12) {
   return { ref, rotateX, rotateY, handleMouseMove, handleMouseLeave }
 }
 
+// ─── FrontFace ────────────────────────────────────────────────────────────────
+
 function FrontFace({
   emoji,
   name,
@@ -81,7 +89,7 @@ function FrontFace({
   variant,
   onFlip,
 }: PestCardProps & { onFlip: () => void }) {
-  const colors = VARIANT_COLORS[variant ?? 'red']
+  const colors    = VARIANT_COLORS[variant ?? 'red']
   const sevColors = SEVERITY_COLORS[severity]
   const { ref, rotateX, rotateY, handleMouseMove, handleMouseLeave } = useTilt()
 
@@ -109,10 +117,11 @@ function FrontFace({
         display="flex"
         flexDir="column"
       >
+        {/* Cabeçalho com emoji flutuante */}
         <Box
           bg={colors.gradient}
-          py="28px"
-          px="24px"
+          py={{ base: '20px', sm: '28px' }}
+          px={{ base: '16px', sm: '24px' }}
           display="flex"
           flexDir="column"
           alignItems="center"
@@ -132,38 +141,48 @@ function FrontFace({
             right="-40px"
             aria-hidden="true"
           />
+          {/* Badge de severidade */}
           <Box
             position="absolute"
-            top="14px"
-            right="14px"
+            top="10px"
+            right="10px"
             bg={sevColors.bg}
             color={sevColors.text}
-            fontSize="0.6rem"
+            fontSize={{ base: '0.52rem', sm: '0.6rem' }}
             fontWeight="800"
-            px="10px"
+            px={{ base: '7px', sm: '10px' }}
             py="4px"
             borderRadius="999px"
             letterSpacing="0.06em"
             textTransform="uppercase"
             boxShadow="0 2px 8px rgba(0,0,0,0.25)"
+            maxW="calc(100% - 20px)"
+            overflow="hidden"
+            style={{
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis',
+              display: 'block',
+            }}
           >
             {severity}
           </Box>
 
+          {/* Emoji animado */}
           <motion.div
             animate={{ y: [0, -6, 0] }}
             transition={{ repeat: Infinity, duration: 3.2, ease: 'easeInOut' }}
-            style={{ fontSize: '64px', lineHeight: '1', filter: 'drop-shadow(0 6px 14px rgba(0,0,0,0.3))' }}
+            style={{ fontSize: '56px', lineHeight: '1', filter: 'drop-shadow(0 6px 14px rgba(0,0,0,0.3))' }}
             aria-hidden="true"
           >
             {emoji}
           </motion.div>
         </Box>
 
-        <VStack gap={2} p="20px 22px" align="flex-start" flex="1">
+        {/* Corpo do card */}
+        <VStack gap={2} p={{ base: '14px 16px', sm: '20px 22px' }} align="flex-start" flex="1">
           <Box>
             <Text
-              fontSize="1.05rem"
+              fontSize={{ base: '0.95rem', sm: '1.05rem' }}
               fontWeight="800"
               color="#1a1a1a"
               lineHeight="1.25"
@@ -177,12 +196,13 @@ function FrontFace({
               </Text>
             )}
           </Box>
-          <Text fontSize="0.82rem" color="#444" lineHeight="1.65" flex="1">
+          <Text fontSize={{ base: '0.78rem', sm: '0.82rem' }} color="#444" lineHeight="1.65" flex="1">
             {description}
           </Text>
         </VStack>
 
-        <Box px="22px" pb="18px" pt={0}>
+        {/* Botão Ver Impacto */}
+        <Box px={{ base: '16px', sm: '22px' }} pb={{ base: '14px', sm: '18px' }} pt={0}>
           <motion.button
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
@@ -204,6 +224,7 @@ function FrontFace({
               gap: '8px',
               letterSpacing: '0.01em',
               boxShadow: '0 4px 14px rgba(0,0,0,0.18)',
+              minHeight: '44px',
             }}
           >
             <span aria-hidden="true">📊</span>
@@ -215,6 +236,8 @@ function FrontFace({
     </motion.div>
   )
 }
+
+// ─── BackFace ─────────────────────────────────────────────────────────────────
 
 function BackFace({
   emoji,
@@ -245,9 +268,10 @@ function BackFace({
         display="flex"
         flexDir="column"
       >
+        {/* Cabeçalho colorido */}
         <Box
           bg={colors.gradient}
-          px={5}
+          px={{ base: 4, sm: 5 }}
           py={4}
           display="flex"
           alignItems="center"
@@ -265,7 +289,7 @@ function BackFace({
             right="-20px"
             aria-hidden="true"
           />
-          <Text fontSize="32px" aria-hidden="true" style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.25))' }}>
+          <Text fontSize="28px" aria-hidden="true" style={{ filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.25))' }}>
             {emoji}
           </Text>
           <Box>
@@ -279,12 +303,13 @@ function BackFace({
           </Box>
         </Box>
 
-        <VStack gap={3} p="18px 22px" align="stretch" flex="1" overflowY="auto">
+        {/* Conteúdo com scroll */}
+        <VStack gap={3} p={{ base: '14px 16px', sm: '18px 22px' }} align="stretch" flex="1" overflowY="auto">
           {economicStat && (
             <Box
               bg={colors.gradient}
               borderRadius="14px"
-              p="14px 18px"
+              p={{ base: '10px 14px', sm: '14px 18px' }}
               display="flex"
               alignItems="center"
               gap={3}
@@ -312,16 +337,17 @@ function BackFace({
               align="flex-start"
               bg="rgba(255,255,255,0.65)"
               borderRadius="12px"
-              p="10px 14px"
+              p={{ base: '8px 12px', sm: '10px 14px' }}
               border={`1px solid ${colors.border}44`}
             >
               <Text fontSize="18px" flexShrink={0} mt="1px" aria-hidden="true">{item.icon}</Text>
-              <Text fontSize="0.8rem" color="#212121" lineHeight="1.6">{item.text}</Text>
+              <Text fontSize={{ base: '0.75rem', sm: '0.8rem' }} color="#212121" lineHeight="1.6">{item.text}</Text>
             </HStack>
           ))}
         </VStack>
 
-        <Box px="22px" pb="18px" pt="8px">
+        {/* Botão Voltar */}
+        <Box px={{ base: '16px', sm: '22px' }} pb={{ base: '14px', sm: '18px' }} pt="8px">
           <motion.button
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
@@ -341,6 +367,7 @@ function BackFace({
               alignItems: 'center',
               justifyContent: 'center',
               gap: '8px',
+              minHeight: '44px',
             }}
           >
             <span aria-hidden="true">←</span>
@@ -352,6 +379,8 @@ function BackFace({
   )
 }
 
+// ─── PestCard ─────────────────────────────────────────────────────────────────
+
 export default function PestCard(props: PestCardProps) {
   const [isFlipped, setIsFlipped] = useState(false)
 
@@ -359,7 +388,7 @@ export default function PestCard(props: PestCardProps) {
     <Box
       position="relative"
       w="full"
-      minH="380px"
+      minH={{ base: '340px', sm: '380px' }}
       style={{ perspective: '1200px' }}
     >
       <motion.div
@@ -370,7 +399,7 @@ export default function PestCard(props: PestCardProps) {
           position: 'relative',
           width: '100%',
           height: '100%',
-          minHeight: '380px',
+          minHeight: '100%',
         }}
       >
         <FrontFace {...props} onFlip={() => setIsFlipped(true)} />
@@ -380,12 +409,14 @@ export default function PestCard(props: PestCardProps) {
   )
 }
 
+// ─── PestCardGrid ─────────────────────────────────────────────────────────────
+
 export function PestCardGrid({ cards }: { cards: PestCardProps[] }) {
   return (
     <Box
       display="grid"
       gridTemplateColumns={{ base: '1fr', sm: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }}
-      gap={5}
+      gap={{ base: 4, sm: 5 }}
       my={6}
     >
       {cards.map((card) => (

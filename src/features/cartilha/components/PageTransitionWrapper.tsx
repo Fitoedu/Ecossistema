@@ -3,8 +3,12 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import React from 'react'
 
+// ─── Constantes de animação ──────────────────────────────────────────────────
+
 const SPRING = { type: 'spring' as const, stiffness: 260, damping: 28, mass: 0.9 }
 const EASE   = [0.4, 0, 0.2, 1] as const
+
+// ─── Helpers ─────────────────────────────────────────────────────────────────
 
 function makeVariants(direction: 'next' | 'prev') {
   const sign = direction === 'next' ? 1 : -1
@@ -36,12 +40,16 @@ function makeVariants(direction: 'next' | 'prev') {
   }
 }
 
+// ─── Types ────────────────────────────────────────────────────────────────────
+
 interface PageTransitionWrapperProps {
   pageKey: number | string
   direction?: 'next' | 'prev'
   children: React.ReactNode
   className?: string
 }
+
+// ─── Componente ───────────────────────────────────────────────────────────────
 
 export default function PageTransitionWrapper({
   pageKey,
@@ -52,7 +60,16 @@ export default function PageTransitionWrapper({
   const variants = makeVariants(direction)
 
   return (
-    <div style={{ perspective: '900px', overflow: 'hidden' }}>
+    <div
+      style={{
+        perspective: '900px',
+        overflow: 'hidden',
+        width: '100%',
+        maxWidth: '100%',
+        minWidth: 0,
+        boxSizing: 'border-box',
+      }}
+    >
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={pageKey}
@@ -64,6 +81,9 @@ export default function PageTransitionWrapper({
           style={{
             transformStyle: 'preserve-3d',
             width: '100%',
+            maxWidth: '100%',
+            minWidth: 0,
+            boxSizing: 'border-box',
             willChange: 'transform, opacity',
           }}
         >

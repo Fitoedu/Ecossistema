@@ -1,8 +1,11 @@
 'use client'
 
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react'
-import { Box, Text, HStack, VStack } from '@chakra-ui/react'
+import { Box, Flex, Input, Text, HStack, VStack } from '@chakra-ui/react'
+
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 interface PageNavigationProps {
   currentPage: number
@@ -12,6 +15,8 @@ interface PageNavigationProps {
   onNext: () => void
   onGoTo?: (index: number) => void
 }
+
+// ─── Constantes ───────────────────────────────────────────────────────────────
 
 const PAGE_EMOJIS: Record<number, string> = {
   0:  '📗', // Capa
@@ -30,40 +35,40 @@ const PAGE_EMOJIS: Record<number, string> = {
   13: '🎓', // Encerramento
 }
 
-function NavButton({
-  onClick,
-  disabled,
-  direction,
-  isLast,
-  id,
-  label,
-}: {
+// ─── NavButton ────────────────────────────────────────────────────────────────
+
+interface NavButtonProps {
   onClick: () => void
   disabled: boolean
   direction: 'prev' | 'next'
   isLast?: boolean
   id: string
   label: string
-}) {
+}
+
+function NavButton({ onClick, disabled, direction, isLast, id, label }: NavButtonProps) {
   const isPrev = direction === 'prev'
 
   const baseStyle: React.CSSProperties = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: '6px',
-    borderRadius: '16px',
-    fontWeight: 700,
-    fontSize: '0.82rem',
+    gap: '4px',
+    borderRadius: '14px',
+    fontWeight: isLast ? 'bold' : 700,
+    fontSize: '0.78rem',
     letterSpacing: '-0.01em',
     cursor: disabled ? 'not-allowed' : 'pointer',
     outline: 'none',
-    padding: isPrev ? '12px 18px' : '12px 22px',
-    minWidth: isPrev ? '52px' : '120px',
+    // Touch target mínimo de 44px (altura) em mobile
+    padding: isPrev ? '8px 12px' : '8px 14px',
+    minWidth: isPrev ? '44px' : '100px',
+    minHeight: '44px',
     transition: 'opacity 0.2s ease',
     opacity: disabled ? 0.35 : 1,
     userSelect: 'none',
     WebkitUserSelect: 'none',
+    flexShrink: 0,
     ...(isPrev
       ? {
           background: 'linear-gradient(180deg, #ffffff 0%, #f0f7f1 100%)',
@@ -79,7 +84,7 @@ function NavButton({
         }
       : isLast
       ? {
-          background: 'linear-gradient(135deg, #1B5E20, #2E7D32)',
+          background: '#2E7D32',
           color: '#fff',
           border: 'none',
           boxShadow: [
@@ -101,7 +106,7 @@ function NavButton({
         }),
   }
 
-    const tapStyle = disabled
+  const tapStyle = disabled
     ? undefined
     : {
         scale: 0.95,
@@ -121,7 +126,15 @@ function NavButton({
       aria-disabled={disabled}
       type="button"
       style={baseStyle}
-            whileHover={disabled ? undefined : { y: -2, scale: 1.02 }}
+      whileHover={
+        disabled
+          ? undefined
+          : {
+              y: -2,
+              scale: 1.02,
+              ...(isLast ? { background: '#388E3C', scale: 1.03 } : {}),
+            }
+      }
       whileTap={tapStyle}
       transition={{ type: 'spring', stiffness: 400, damping: 25 }}
     >
@@ -142,6 +155,8 @@ function NavButton({
     </motion.button>
   )
 }
+
+// ─── ProgressDots ─────────────────────────────────────────────────────────────
 
 function ProgressDots({
   currentPage,
@@ -165,7 +180,7 @@ function ProgressDots({
   )
 
   return (
-    <HStack gap="5px" align="center" justify="center" aria-hidden="true">
+    <HStack gap="4px" align="center" justify="center" aria-hidden="true">
       {start > 0 && (
         <Box w="4px" h="4px" borderRadius="50%" bg="rgba(46,125,50,0.25)" />
       )}
@@ -179,6 +194,7 @@ function ProgressDots({
             type="button"
             title={`Ir para página ${i + 1}`}
             onClick={() => onGoTo?.(i)}
+            // Touch target mínimo de 24px garantido via padding implícito do animate
             style={{
               background: isCurrent
                 ? 'linear-gradient(135deg, #2E7D32, #66BB6A)'
@@ -198,7 +214,7 @@ function ProgressDots({
               scale:  isCurrent ? 1 : isPast ? 0.9 : 0.8,
             }}
             transition={{ type: 'spring', stiffness: 360, damping: 28 }}
-                        whileHover={onGoTo ? { scale: 1.3 } : undefined}
+            whileHover={onGoTo ? { scale: 1.3 } : undefined}
             whileTap={onGoTo ? { scale: 0.85 } : undefined}
           >
             {isCurrent && (
@@ -217,7 +233,7 @@ function ProgressDots({
                 }}
                 aria-hidden="true"
               >
-                                {PAGE_EMOJIS[currentPage] ? PAGE_EMOJIS[currentPage] : '●'}
+                {PAGE_EMOJIS[currentPage] ?? '●'}
               </motion.span>
             )}
           </motion.button>
@@ -230,19 +246,48 @@ function ProgressDots({
   )
 }
 
+// ─── PageInfo ─────────────────────────────────────────────────────────────────
+
 function PageInfo({
   currentPage,
   totalPages,
   pageLabel,
+  onGoTo,
 }: {
   currentPage: number
   totalPages: number
   pageLabel?: string
+  onGoTo?: (index: number) => void
 }) {
   const emoji = PAGE_EMOJIS[currentPage] ?? '📄'
+  const [pageInput, setPageInput] = useState(String(currentPage + 1))
+
+  const commitPageInput = () => {
+    const parsedPage = Number(pageInput.trim())
+
+    if (!pageInput.trim() || !Number.isFinite(parsedPage)) {
+      setPageInput(String(currentPage + 1))
+      return
+    }
+
+    const targetPage = Math.min(
+      totalPages,
+      Math.max(1, Math.trunc(parsedPage)),
+    )
+    setPageInput(String(targetPage))
+    onGoTo?.(targetPage - 1)
+  }
 
   return (
-    <VStack gap={1} flex="1" align="center" minW={0}>
+    <VStack
+      gap={1}
+      align="center"
+      minW={0}
+      order={{ base: 0, sm: 0 }}
+      flex={{ base: '1 0 100%', sm: '1 1 0' }}
+      w={{ base: '100%', sm: 'auto' }}
+      flexBasis={{ base: '100%', sm: 'auto' }}
+    >
       <AnimatePresence mode="wait">
         <motion.div
           key={currentPage}
@@ -263,12 +308,12 @@ function PageInfo({
             </Text>
             {pageLabel && (
               <Text
-                fontSize="0.7rem"
+                fontSize={{ base: '0.62rem', sm: '0.7rem' }}
                 fontWeight="700"
                 color="#1B5E20"
                 lineHeight="1.25"
                 style={{
-                  maxWidth: '140px',
+                  maxWidth: '130px',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
                   whiteSpace: 'nowrap',
@@ -284,18 +329,74 @@ function PageInfo({
 
       <ProgressDots currentPage={currentPage} totalPages={totalPages} />
 
-      <Text
-        fontSize="0.62rem"
-        color="rgba(46,125,50,0.65)"
-        fontWeight="500"
+      <HStack
+        gap={1}
+        align="baseline"
+        alignItems="baseline"
+        lineHeight="1"
+        justify="center"
         aria-live="polite"
         aria-atomic="true"
       >
-        {currentPage + 1} / {totalPages}
-      </Text>
+        <Input
+          type="number"
+          inputMode="numeric"
+          min={1}
+          max={totalPages}
+          value={pageInput}
+          onChange={(event) => setPageInput(event.target.value)}
+          onBlur={commitPageInput}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              event.preventDefault()
+              commitPageInput()
+              event.currentTarget.blur()
+            }
+          }}
+          title="Clique ou digite para ir direto para uma página"
+          aria-label="Ir diretamente para uma página"
+          w="28px"
+          h="auto"
+          p={0}
+          m={0}
+          display="inline-block"
+          textAlign="center"
+          verticalAlign="baseline"
+          lineHeight="1"
+          bg="transparent"
+          border="none"
+          outline="none"
+          fontFamily="inherit"
+          fontSize="xs"
+          color="gray.600"
+          fontWeight="semibold"
+          _hover={{
+            bg: 'gray.200',
+            borderRadius: 'xs',
+            cursor: 'pointer',
+          }}
+          _focus={{
+            bg: 'white',
+            borderColor: 'transparent',
+            boxShadow: 'outline',
+            borderRadius: 'xs',
+          }}
+        />
+        <Text
+          fontSize="xs"
+          color="gray.600"
+          fontWeight="semibold"
+          fontFamily="inherit"
+          lineHeight="1"
+        >
+          / {totalPages}
+        </Text>
+      </HStack>
     </VStack>
   )
 }
+
+// ─── PageNavigation (exportação padrão) ───────────────────────────────────────
 
 export default function PageNavigation({
   currentPage,
@@ -312,11 +413,9 @@ export default function PageNavigation({
     <Box
       as="nav"
       aria-label="Navegação da cartilha"
-      position="fixed"
+      position="sticky"
       bottom={0}
-      left={0}
-      right={0}
-      zIndex={50}
+      zIndex={10}
       style={{
         background: [
           'linear-gradient(180deg, rgba(248,252,249,0) 0%, rgba(248,252,249,0.96) 18%)',
@@ -327,10 +426,12 @@ export default function PageNavigation({
       }}
       borderTop="1px solid rgba(46,125,50,0.10)"
       boxShadow="0 -4px 24px rgba(0,0,0,0.06), 0 -1px 0 rgba(46,125,50,0.08)"
-      pt="10px"
-      pb="max(18px, env(safe-area-inset-bottom))"
-      px="16px"
+      mt={{ base: 6, md: 4 }}
+      pt={4}
+      pb="max(16px, env(safe-area-inset-bottom))"
+      px={{ base: 2, sm: 4 }}
     >
+      {/* Barra de progresso */}
       <Box
         position="absolute"
         top={0}
@@ -352,35 +453,58 @@ export default function PageNavigation({
         />
       </Box>
 
-      <HStack
-        maxW="780px"
-        mx="auto"
+      <Flex
+        w="100%"
+        display="flex"
+        flexDirection={{ base: 'row', sm: 'row' }}
+        flexWrap={{ base: 'wrap', sm: 'nowrap' }}
+        justifyContent="space-between"
+        alignItems="center"
         gap={3}
-        align="center"
       >
-        <NavButton
-          id="nav-btn-prev"
-          direction="prev"
-          onClick={onPrev}
-          disabled={isFirst}
-          label="Página anterior"
-        />
+        <Box
+          order={{ base: 1, sm: 0 }}
+          flex={{ base: '1 1 calc(50% - 12px)', sm: '1 1 0' }}
+          w={{ base: 'calc(50% - 12px)', sm: 'auto' }}
+          display="flex"
+          justifyContent="flex-start"
+          minW={0}
+        >
+          <NavButton
+            id="nav-btn-prev"
+            direction="prev"
+            onClick={onPrev}
+            disabled={isFirst}
+            label="Página anterior"
+          />
+        </Box>
 
         <PageInfo
+          key={currentPage}
           currentPage={currentPage}
           totalPages={totalPages}
           pageLabel={pageLabel}
+          onGoTo={onGoTo}
         />
 
-        <NavButton
-          id="nav-btn-next"
-          direction="next"
-          onClick={onNext}
-          disabled={isLast}
-          isLast={isLast}
-          label={isLast ? 'Última página — cartilha concluída' : 'Próxima página'}
-        />
-      </HStack>
+        <Box
+          order={{ base: 1, sm: 0 }}
+          flex={{ base: '1 1 calc(50% - 12px)', sm: '1 1 0' }}
+          w={{ base: 'calc(50% - 12px)', sm: 'auto' }}
+          display="flex"
+          justifyContent="flex-end"
+          minW={0}
+        >
+          <NavButton
+            id="nav-btn-next"
+            direction="next"
+            onClick={onNext}
+            disabled={isLast}
+            isLast={isLast}
+            label={isLast ? 'Última página — cartilha concluída' : 'Próxima página'}
+          />
+        </Box>
+      </Flex>
     </Box>
   )
 }
