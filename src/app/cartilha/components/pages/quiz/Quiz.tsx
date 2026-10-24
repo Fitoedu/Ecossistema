@@ -1,12 +1,23 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence, useAnimationControls } from 'framer-motion'
 import { Box, Text, VStack, HStack } from '@chakra-ui/react'
 import { CheckCircle, XCircle, ChevronRight, Trophy, RotateCcw, Lightbulb } from 'lucide-react'
 
+// ─── Types ────────────────────────────────────────────────────────────────────
+
 interface Option   { id: string; text: string }
-interface Question { id: number; text: string; options: Option[]; correctId: string; explanation: string; emoji: string }
+interface Question {
+  id: number
+  text: string
+  options: Option[]
+  correctId: string
+  explanation: string
+  emoji: string
+}
+
+// ─── Dados das perguntas ──────────────────────────────────────────────────────
 
 const QUESTIONS: Question[] = [
   {
@@ -19,7 +30,7 @@ const QUESTIONS: Question[] = [
       { id: 'c', text: 'Um tipo de plantação orgânica sem uso de qualquer produto.' },
       { id: 'd', text: 'O processo de irrigação dos campos agrícolas.' },
     ],
-    correctId: 'b',
+    correctId: 'c',
     explanation: 'Fitossanidade zela pela saúde das plantas, prevenindo e controlando pragas, doenças e plantas invasoras para garantir colheitas saudáveis.',
   },
   {
@@ -76,17 +87,22 @@ const QUESTIONS: Question[] = [
   },
 ]
 
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
 function getResultTier(score: number, total: number) {
   const pct = score / total
-  if (pct === 1)    return { emoji: '🏆', grade: 'A+', label: 'Expert em Fitossanidade!',        color: '#2E7D32', bg: 'linear-gradient(135deg,#1B5E20,#2E7D32)', stars: 5 }
-  if (pct >= 0.8)   return { emoji: '🌟', grade: 'A',  label: 'Excelente! Quase perfeito.',       color: '#00695C', bg: 'linear-gradient(135deg,#004D40,#00897B)', stars: 4 }
-  if (pct >= 0.6)   return { emoji: '🌱', grade: 'B',  label: 'Muito bem! No caminho certo.',     color: '#F57F17', bg: 'linear-gradient(135deg,#E65100,#F57C00)', stars: 3 }
-  if (pct >= 0.4)   return { emoji: '📖', grade: 'C',  label: 'Continue estudando!',              color: '#1565C0', bg: 'linear-gradient(135deg,#0D47A1,#1565C0)', stars: 2 }
-  return              { emoji: '🌿', grade: 'D',  label: 'Todo especialista foi iniciante!', color: '#C62828', bg: 'linear-gradient(135deg,#B71C1C,#C62828)', stars: 1 }
+  if (pct === 1)   return { emoji: '🏆', grade: 'A+', label: 'Expert em Fitossanidade!',        color: '#2E7D32', bg: 'linear-gradient(135deg,#1B5E20,#2E7D32)', stars: 5 }
+  if (pct >= 0.8)  return { emoji: '🌟', grade: 'A',  label: 'Excelente! Quase perfeito.',       color: '#00695C', bg: 'linear-gradient(135deg,#004D40,#00897B)', stars: 4 }
+  if (pct >= 0.6)  return { emoji: '🌱', grade: 'B',  label: 'Muito bem! No caminho certo.',     color: '#F57F17', bg: 'linear-gradient(135deg,#E65100,#F57C00)', stars: 3 }
+  if (pct >= 0.4)  return { emoji: '📖', grade: 'C',  label: 'Continue estudando!',              color: '#1565C0', bg: 'linear-gradient(135deg,#0D47A1,#1565C0)', stars: 2 }
+  return             { emoji: '🌿', grade: 'D',  label: 'Todo especialista foi iniciante!', color: '#C62828', bg: 'linear-gradient(135deg,#B71C1C,#C62828)', stars: 1 }
 }
+
+// ─── QuizProgress ─────────────────────────────────────────────────────────────
 
 function QuizProgress({ current, total }: { current: number; total: number }) {
   const pct = ((current + 1) / total) * 100
+
   return (
     <Box w="full">
       <HStack justify="space-between" mb="6px">
@@ -114,6 +130,24 @@ function QuizProgress({ current, total }: { current: number; total: number }) {
   )
 }
 
+// ─── AnswerCard ───────────────────────────────────────────────────────────────
+
+type AnswerStatus = 'idle' | 'selected' | 'correct' | 'wrong' | 'dim'
+
+const ANSWER_STYLES: Record<AnswerStatus, {
+  bg: string
+  border: string
+  letterBg: string
+  letterColor: string
+  shadow: string
+}> = {
+  idle:     { bg: '#FFFFFF',  border: '2px solid #E8EDE9', letterBg: 'rgba(46,125,50,0.08)', letterColor: '#2E7D32', shadow: '0 2px 8px rgba(0,0,0,0.06), 0 1px 0 rgba(255,255,255,0.9) inset' },
+  selected: { bg: '#F1F8F2',  border: '2px solid #2E7D32',  letterBg: '#2E7D32',             letterColor: '#FFF',    shadow: '0 4px 16px rgba(46,125,50,0.18), 0 1px 0 rgba(255,255,255,0.9) inset' },
+  correct:  { bg: '#E8F5E9',  border: '2px solid #2E7D32',  letterBg: '#2E7D32',             letterColor: '#FFF',    shadow: '0 4px 20px rgba(46,125,50,0.25)' },
+  wrong:    { bg: '#FFEBEE',  border: '2px solid #C62828',  letterBg: '#C62828',             letterColor: '#FFF',    shadow: '0 4px 20px rgba(198,40,40,0.2)' },
+  dim:      { bg: '#FAFAFA',  border: '2px solid #F0F0F0',  letterBg: '#E0E0E0',             letterColor: '#9E9E9E', shadow: 'none' },
+}
+
 function AnswerCard({
   opt,
   status,
@@ -121,11 +155,12 @@ function AnswerCard({
   onSelect,
 }: {
   opt: Option
-  status: 'idle' | 'selected' | 'correct' | 'wrong' | 'dim'
+  status: AnswerStatus
   isRevealed: boolean
   onSelect: () => void
 }) {
   const controls = useAnimationControls()
+  const s = ANSWER_STYLES[status]
 
   const handleClick = useCallback(async () => {
     if (isRevealed) return
@@ -139,18 +174,9 @@ function AnswerCard({
     })
   }, [controls])
 
-  useState(() => {
+  useEffect(() => {
     if (status === 'wrong') shake()
-  })
-
-  const styles = {
-    idle:     { bg: '#FFFFFF',  border: '2px solid #E8EDE9', letterBg: 'rgba(46,125,50,0.08)', letterColor: '#2E7D32', shadow: '0 2px 8px rgba(0,0,0,0.06), 0 1px 0 rgba(255,255,255,0.9) inset' },
-    selected: { bg: '#F1F8F2',  border: '2px solid #2E7D32',  letterBg: '#2E7D32',             letterColor: '#FFF',    shadow: '0 4px 16px rgba(46,125,50,0.18), 0 1px 0 rgba(255,255,255,0.9) inset' },
-    correct:  { bg: '#E8F5E9',  border: '2px solid #2E7D32',  letterBg: '#2E7D32',             letterColor: '#FFF',    shadow: '0 4px 20px rgba(46,125,50,0.25)' },
-    wrong:    { bg: '#FFEBEE',  border: '2px solid #C62828',  letterBg: '#C62828',             letterColor: '#FFF',    shadow: '0 4px 20px rgba(198,40,40,0.2)' },
-    dim:      { bg: '#FAFAFA',  border: '2px solid #F0F0F0',  letterBg: '#E0E0E0',             letterColor: '#9E9E9E', shadow: 'none' },
-  }
-  const s = styles[status]
+  }, [status, shake])
 
   return (
     <motion.div
@@ -165,7 +191,7 @@ function AnswerCard({
         bg={s.bg}
         border={s.border}
         borderRadius="16px"
-        p="14px 18px"
+        p={{ base: '12px 14px', sm: '14px 18px' }}
         display="flex"
         alignItems="center"
         gap={3}
@@ -173,16 +199,18 @@ function AnswerCard({
         transition="background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease"
         role="button"
         aria-pressed={status === 'selected' || status === 'correct' || status === 'wrong'}
+        // Touch target mínimo
+        minH="48px"
       >
         <Box
-          w="32px"
-          h="32px"
+          w={{ base: '28px', sm: '32px' }}
+          h={{ base: '28px', sm: '32px' }}
           borderRadius="50%"
           bg={s.letterBg}
           display="flex"
           alignItems="center"
           justifyContent="center"
-          fontSize="0.78rem"
+          fontSize={{ base: '0.72rem', sm: '0.78rem' }}
           fontWeight="800"
           color={s.letterColor}
           flexShrink={0}
@@ -193,7 +221,7 @@ function AnswerCard({
 
         <Text
           flex="1"
-          fontSize="0.86rem"
+          fontSize={{ base: '0.82rem', sm: '0.86rem' }}
           fontWeight={status === 'selected' || status === 'correct' || status === 'wrong' ? 600 : 400}
           color={status === 'dim' ? '#9E9E9E' : '#1a1a1a'}
           lineHeight="1.55"
@@ -229,6 +257,8 @@ function AnswerCard({
   )
 }
 
+// ─── ResultScreen ─────────────────────────────────────────────────────────────
+
 function ResultScreen({
   score,
   total,
@@ -249,16 +279,18 @@ function ResultScreen({
       transition={{ type: 'spring', stiffness: 220, damping: 24 }}
     >
       <VStack gap={5} pb={6}>
+        {/* Card de resultado */}
         <Box
           w="full"
           borderRadius="24px"
           overflow="hidden"
           boxShadow="0 16px 48px rgba(0,0,0,0.18)"
         >
+          {/* Banner de tier */}
           <Box
             bg={tier.bg}
-            py="36px"
-            px={6}
+            py={{ base: '28px', sm: '36px' }}
+            px={{ base: 4, sm: 6 }}
             textAlign="center"
             position="relative"
             overflow="hidden"
@@ -271,7 +303,7 @@ function ResultScreen({
             <motion.div
               animate={{ y: [0, -8, 0], rotate: [0, 4, -4, 0] }}
               transition={{ repeat: Infinity, duration: 3.5, ease: 'easeInOut' }}
-              style={{ fontSize: '64px', lineHeight: 1, marginBottom: '16px', display: 'block' }}
+              style={{ fontSize: '56px', lineHeight: 1, marginBottom: '16px', display: 'block' }}
               aria-hidden="true"
             >
               {tier.emoji}
@@ -284,7 +316,7 @@ function ResultScreen({
                   initial={{ opacity: 0, scale: 0, rotate: -30 }}
                   animate={{ opacity: i < tier.stars ? 1 : 0.2, scale: 1, rotate: 0 }}
                   transition={{ delay: 0.3 + i * 0.1, type: 'spring', stiffness: 300, damping: 18 }}
-                  style={{ fontSize: '24px', display: 'inline-block' }}
+                  style={{ fontSize: '22px', display: 'inline-block' }}
                   aria-hidden="true"
                 >
                   ⭐
@@ -292,26 +324,27 @@ function ResultScreen({
               ))}
             </HStack>
 
-            <Text as="h2" fontSize="clamp(1.2rem,3.5vw,1.6rem)" fontWeight="900" color="white" mb={1} lineHeight="1.2">
+            <Text as="h2" fontSize="clamp(1.1rem,3.5vw,1.6rem)" fontWeight="900" color="white" mb={1} lineHeight="1.2">
               {tier.label}
             </Text>
-            <Text fontSize="0.85rem" color="rgba(255,255,255,0.8)" lineHeight="1.6" maxW="320px" mx="auto">
+            <Text fontSize={{ base: '0.8rem', sm: '0.85rem' }} color="rgba(255,255,255,0.8)" lineHeight="1.6" maxW="320px" mx="auto">
               Fitossanidade é responsabilidade de todos. Compartilhe o que aprendeu!
             </Text>
           </Box>
 
+          {/* Pontuação numérica */}
           <Box
             bg="white"
             py={5}
-            px={6}
+            px={{ base: 4, sm: 6 }}
             display="flex"
             alignItems="center"
             justifyContent="center"
             gap={5}
           >
             <Box
-              w="90px"
-              h="90px"
+              w={{ base: '76px', sm: '90px' }}
+              h={{ base: '76px', sm: '90px' }}
               borderRadius="50%"
               border="6px solid #E8F5E9"
               boxShadow={`0 0 0 3px ${tier.color}, 0 8px 24px rgba(0,0,0,0.1)`}
@@ -320,7 +353,7 @@ function ResultScreen({
               alignItems="center"
               justifyContent="center"
             >
-              <Text fontSize="1.6rem" fontWeight="900" color={tier.color} lineHeight="1">
+              <Text fontSize={{ base: '1.4rem', sm: '1.6rem' }} fontWeight="900" color={tier.color} lineHeight="1">
                 {score}
               </Text>
               <Text fontSize="0.6rem" fontWeight="700" color="gray.400" textTransform="uppercase" letterSpacing="0.05em">
@@ -333,7 +366,7 @@ function ResultScreen({
                 Pontuação Final
               </Text>
               <HStack gap={1} align="baseline">
-                <Text fontSize="2.4rem" fontWeight="900" color={tier.color} lineHeight="1">
+                <Text fontSize={{ base: '2rem', sm: '2.4rem' }} fontWeight="900" color={tier.color} lineHeight="1">
                   {tier.grade}
                 </Text>
                 <Text fontSize="0.8rem" fontWeight="600" color="gray.500" mb="4px">
@@ -344,6 +377,7 @@ function ResultScreen({
           </Box>
         </Box>
 
+        {/* Revisão das respostas */}
         <Box w="full">
           <Text fontSize="0.65rem" fontWeight="700" textTransform="uppercase"
             letterSpacing="0.1em" color="#2E7D32" mb={3}>
@@ -359,14 +393,14 @@ function ResultScreen({
                   bg={isCorrect ? '#F1F8F2' : '#FFF5F5'}
                   border={`1.5px solid ${isCorrect ? '#A5D6A7' : '#EF9A9A'}`}
                   borderRadius="16px"
-                  p="16px 18px"
+                  p={{ base: '12px 14px', sm: '16px 18px' }}
                 >
                   <HStack gap={2} align="flex-start" mb="6px">
                     {isCorrect
                       ? <CheckCircle size={16} color="#2E7D32" strokeWidth={2.5} style={{ flexShrink: 0, marginTop: 2 }} />
                       : <XCircle    size={16} color="#C62828" strokeWidth={2.5} style={{ flexShrink: 0, marginTop: 2 }} />
                     }
-                    <Text fontSize="0.82rem" fontWeight="600" color="#212121" lineHeight="1.4">
+                    <Text fontSize={{ base: '0.78rem', sm: '0.82rem' }} fontWeight="600" color="#212121" lineHeight="1.4">
                       {q.text}
                     </Text>
                   </HStack>
@@ -377,7 +411,7 @@ function ResultScreen({
                   )}
                   <HStack gap="6px" align="flex-start" ml="24px">
                     <Lightbulb size={13} color="#F57F17" strokeWidth={2} style={{ flexShrink: 0, marginTop: 2 }} />
-                    <Text fontSize="0.73rem" color="#616161" lineHeight="1.55">
+                    <Text fontSize={{ base: '0.7rem', sm: '0.73rem' }} color="#616161" lineHeight="1.55">
                       {q.explanation}
                     </Text>
                   </HStack>
@@ -387,6 +421,7 @@ function ResultScreen({
           </VStack>
         </Box>
 
+        {/* Botão de tentar novamente */}
         <VStack gap={3} w="full">
           <motion.button
             whileHover={{ scale: 1.02, y: -2 }}
@@ -408,6 +443,7 @@ function ResultScreen({
               justifyContent: 'center',
               gap: '8px',
               boxShadow: '0 4px 0 rgba(15,60,20,0.5), 0 8px 24px rgba(46,125,50,0.3)',
+              minHeight: '48px',
             }}
           >
             <RotateCcw size={16} strokeWidth={2.5} />
@@ -418,6 +454,8 @@ function ResultScreen({
     </motion.div>
   )
 }
+
+// ─── QuizGamificado (exportação padrão) ───────────────────────────────────────
 
 export default function QuizGamificado() {
   const [currentQ,  setCurrentQ]  = useState(0)
@@ -485,7 +523,8 @@ export default function QuizGamificado() {
 
   return (
     <Box>
-      <VStack textAlign="center" gap={2} mb={7}>
+      {/* Cabeçalho do Quiz */}
+      <VStack textAlign="center" gap={2} mb={{ base: 5, sm: 7 }}>
         <Box
           display="inline-flex"
           alignItems="center"
@@ -506,7 +545,7 @@ export default function QuizGamificado() {
 
         <Text
           as="h1"
-          fontSize="clamp(1.5rem, 4vw, 2rem)"
+          fontSize="clamp(1.4rem, 4vw, 2rem)"
           fontWeight="900"
           color="#1B5E20"
           lineHeight="1.15"
@@ -514,7 +553,7 @@ export default function QuizGamificado() {
         >
           Teste seus conhecimentos
         </Text>
-        <Text fontSize="0.88rem" color="gray.500" lineHeight="1.65" maxW="380px">
+        <Text fontSize={{ base: '0.82rem', sm: '0.88rem' }} color="gray.500" lineHeight="1.65" maxW="380px">
           5 perguntas sobre Fitossanidade e Proteção de Plantas
         </Text>
       </VStack>
@@ -523,6 +562,7 @@ export default function QuizGamificado() {
         <QuizProgress current={currentQ} total={QUESTIONS.length} />
       </Box>
 
+      {/* Card da pergunta */}
       <AnimatePresence mode="wait">
         <motion.div
           key={currentQ}
@@ -539,9 +579,10 @@ export default function QuizGamificado() {
             overflow="hidden"
             mb={4}
           >
+            {/* Cabeçalho verde da pergunta */}
             <Box
               bg="linear-gradient(135deg, #2E7D32, #43A047)"
-              px={5}
+              px={{ base: 4, sm: 5 }}
               py={4}
               display="flex"
               alignItems="center"
@@ -552,13 +593,14 @@ export default function QuizGamificado() {
               <Box position="absolute" w="80px" h="80px" borderRadius="50%"
                 bg="rgba(255,255,255,0.08)" bottom="-30px" right="-20px" aria-hidden="true" />
               <Box
-                w="38px" h="38px"
+                w={{ base: '34px', sm: '38px' }}
+                h={{ base: '34px', sm: '38px' }}
                 bg="rgba(255,255,255,0.15)"
                 borderRadius="12px"
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
-                fontSize="22px"
+                fontSize={{ base: '18px', sm: '22px' }}
                 flexShrink={0}
                 aria-hidden="true"
               >
@@ -569,21 +611,27 @@ export default function QuizGamificado() {
                   letterSpacing="0.1em" color="rgba(255,255,255,0.7)" mb="2px">
                   Pergunta {currentQ + 1}
                 </Text>
-                <Text fontSize="0.95rem" fontWeight="700" color="white" lineHeight="1.35">
+                <Text
+                  fontSize={{ base: '0.88rem', sm: '0.95rem' }}
+                  fontWeight="700"
+                  color="white"
+                  lineHeight="1.35"
+                >
                   {question.text}
                 </Text>
               </Box>
             </Box>
 
-            <VStack gap="10px" p={5} align="stretch">
+            {/* Opções de resposta */}
+            <VStack gap="10px" p={{ base: 4, sm: 5 }} align="stretch">
               {question.options.map((opt) => {
-                let status: 'idle' | 'selected' | 'correct' | 'wrong' | 'dim' = 'idle'
+                let status: AnswerStatus = 'idle'
                 if (revealed) {
-                  if (opt.id === question.correctId)               status = 'correct'
-                  else if (opt.id === selected)                    status = 'wrong'
-                  else                                             status = 'dim'
+                  if (opt.id === question.correctId)     status = 'correct'
+                  else if (opt.id === selected)          status = 'wrong'
+                  else                                   status = 'dim'
                 } else {
-                  if (opt.id === selected)                         status = 'selected'
+                  if (opt.id === selected)               status = 'selected'
                 }
 
                 return (
@@ -598,6 +646,7 @@ export default function QuizGamificado() {
               })}
             </VStack>
 
+            {/* Painel de explicação */}
             <AnimatePresence>
               {revealed && (
                 <motion.div
@@ -608,12 +657,12 @@ export default function QuizGamificado() {
                   style={{ overflow: 'hidden' }}
                 >
                   <Box
-                    mx={5}
-                    mb={5}
+                    mx={{ base: 4, sm: 5 }}
+                    mb={{ base: 4, sm: 5 }}
                     bg={selected === question.correctId ? '#E8F5E9' : '#FFF3E0'}
                     border={`1.5px solid ${selected === question.correctId ? '#A5D6A7' : '#FFCC80'}`}
                     borderRadius="16px"
-                    p="16px 20px"
+                    p={{ base: '12px 16px', sm: '16px 20px' }}
                     display="flex"
                     alignItems="flex-start"
                     gap={3}
@@ -629,7 +678,7 @@ export default function QuizGamificado() {
                         textTransform="uppercase" letterSpacing="0.06em">
                         Explicação
                       </Text>
-                      <Text fontSize="0.85rem" color="#212121" lineHeight="1.65">
+                      <Text fontSize={{ base: '0.82rem', sm: '0.85rem' }} color="#212121" lineHeight="1.65">
                         {question.explanation}
                       </Text>
                     </Box>
@@ -641,6 +690,7 @@ export default function QuizGamificado() {
         </motion.div>
       </AnimatePresence>
 
+      {/* Botões de ação */}
       <AnimatePresence mode="wait">
         {!revealed ? (
           <motion.div
@@ -677,6 +727,7 @@ export default function QuizGamificado() {
                   ? '0 4px 0 rgba(15,60,20,0.45), 0 8px 24px rgba(46,125,50,0.25)'
                   : 'none',
                 transition: 'all 0.2s ease',
+                minHeight: '48px',
               }}
             >
               Confirmar resposta
@@ -716,6 +767,7 @@ export default function QuizGamificado() {
                 boxShadow: isLast
                   ? '0 4px 0 rgba(200,100,0,0.45), 0 8px 24px rgba(245,127,23,0.3)'
                   : '0 4px 0 rgba(15,60,20,0.45), 0 8px 24px rgba(46,125,50,0.25)',
+                minHeight: '48px',
               }}
             >
               {isLast ? (

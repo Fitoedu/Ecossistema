@@ -1,8 +1,10 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Box, Grid, Text, HStack, VStack, SimpleGrid } from '@chakra-ui/react'
+
+// ─── Types ────────────────────────────────────────────────────────────────────
 
 export interface PocketCard {
   id: string
@@ -29,6 +31,8 @@ interface LapbookFolderProps {
   footerNote?: string
 }
 
+// ─── Constantes ───────────────────────────────────────────────────────────────
+
 const VARIANT_COLORS = {
   green:  { tab: '#2E7D32', tabLight: '#43A047', bg: '#E8F5E9', border: '#66BB6A', tag: '#1B5E20' },
   amber:  { tab: '#E65100', tabLight: '#F57C00', bg: '#FFF3E0', border: '#FFA726', tag: '#BF360C' },
@@ -38,6 +42,8 @@ const VARIANT_COLORS = {
 }
 
 const KRAFT_TEXTURE = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0.6  0 0 0 0 0.45  0 0 0 0 0.3  0 0 0 0.08 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E")`
+
+// ─── PocketTab ────────────────────────────────────────────────────────────────
 
 function PocketTab({
   card,
@@ -74,16 +80,17 @@ function PocketTab({
         transition="box-shadow 0.25s ease"
         _hover={{ boxShadow: `0 12px 32px rgba(0,0,0,0.18), 0 0 0 2px ${colors.border}` }}
       >
+        {/* Cabeçalho colorido */}
         <Box
           bg={`linear-gradient(135deg, ${colors.tab}, ${colors.tabLight})`}
-          px={4}
-          py={3}
+          px={{ base: 3, sm: 4 }}
+          py={{ base: '10px', sm: 3 }}
           display="flex"
           alignItems="center"
           gap={3}
         >
           <Text
-            fontSize="28px"
+            fontSize={{ base: '24px', sm: '28px' }}
             lineHeight="1"
             flexShrink={0}
             style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.25))' }}
@@ -91,31 +98,48 @@ function PocketTab({
           >
             {card.emoji}
           </Text>
-          <Box flex="1">
+          <Box flex="1" minW={0}>
             <Text
-              fontSize="0.78rem"
+              fontSize={{ base: '0.72rem', sm: '0.78rem' }}
               fontWeight="800"
               color="white"
               lineHeight="1.3"
               letterSpacing="-0.01em"
+              style={{
+                overflow: 'hidden',
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+              }}
             >
               {card.title}
             </Text>
-            <Text fontSize="0.68rem" color="rgba(255,255,255,0.8)" lineHeight="1.4" mt="2px">
+            <Text
+              fontSize={{ base: '0.64rem', sm: '0.68rem' }}
+              color="rgba(255,255,255,0.8)"
+              lineHeight="1.4"
+              mt="2px"
+              style={{
+                overflow: 'hidden',
+                whiteSpace: 'nowrap',
+                textOverflow: 'ellipsis',
+              }}
+            >
               {card.subtitle}
             </Text>
           </Box>
         </Box>
 
+        {/* Rodapé da aba */}
         <Box
-          px={4}
+          px={{ base: 3, sm: 4 }}
           py="10px"
           display="flex"
           alignItems="center"
           justifyContent="space-between"
           bg="rgba(255,255,255,0.85)"
         >
-          <Text fontSize="0.7rem" color={colors.tag} fontWeight="600" fontStyle="italic">
+          <Text fontSize={{ base: '0.65rem', sm: '0.7rem' }} color={colors.tag} fontWeight="600" fontStyle="italic">
             Clique para puxar a ficha
           </Text>
           <Box display="flex" gap="3px" aria-hidden="true">
@@ -135,6 +159,8 @@ function PocketTab({
     </motion.div>
   )
 }
+
+// ─── DetailCard ───────────────────────────────────────────────────────────────
 
 function DetailCard({
   card,
@@ -162,6 +188,7 @@ function DetailCard({
         padding: '0 8px 8px',
       }}
     >
+      {/* Backdrop */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -175,25 +202,29 @@ function DetailCard({
         onClick={onClose}
       />
 
+      {/* Conteúdo do card */}
       <Box
         position="relative"
         zIndex={1}
         w="full"
-        maxW="520px"
-        borderRadius="24px"
+        maxW={{ base: '100%', sm: '520px' }}
+        borderRadius={{ base: '20px', sm: '24px' }}
         overflow="hidden"
         boxShadow="0 32px 80px rgba(0,0,0,0.4)"
         style={{ backgroundImage: KRAFT_TEXTURE }}
         bg="white"
+        mx={{ base: 2, sm: 0 }}
       >
+        {/* Cabeçalho do card */}
         <Box
           bg={`linear-gradient(135deg, ${colors.tab}, ${colors.tabLight})`}
-          px={6}
-          py={5}
+          px={{ base: 4, sm: 6 }}
+          py={{ base: 4, sm: 5 }}
           display="flex"
           alignItems="center"
           gap={4}
           position="relative"
+          overflow="hidden"
         >
           <Box
             position="absolute"
@@ -206,7 +237,7 @@ function DetailCard({
             aria-hidden="true"
           />
           <Text
-            fontSize="52px"
+            fontSize={{ base: '40px', sm: '52px' }}
             lineHeight="1"
             flexShrink={0}
             style={{ filter: 'drop-shadow(0 4px 12px rgba(0,0,0,0.3))' }}
@@ -214,7 +245,7 @@ function DetailCard({
           >
             {card.emoji}
           </Text>
-          <Box flex="1">
+          <Box flex="1" minW={0}>
             <Text
               as="h2"
               fontSize="clamp(1rem, 3vw, 1.3rem)"
@@ -225,10 +256,22 @@ function DetailCard({
             >
               {card.title}
             </Text>
-            <Text fontSize="0.82rem" color="rgba(255,255,255,0.85)" lineHeight="1.5">
+            <Text
+              fontSize={{ base: '0.78rem', sm: '0.82rem' }}
+              color="rgba(255,255,255,0.85)"
+              lineHeight="1.5"
+              style={{
+                overflow: 'hidden',
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+              }}
+            >
               {card.subtitle}
             </Text>
           </Box>
+
+          {/* Botão Fechar */}
           <button
             onClick={onClose}
             aria-label="Fechar ficha"
@@ -240,8 +283,8 @@ function DetailCard({
               background: 'rgba(255,255,255,0.2)',
               border: '1.5px solid rgba(255,255,255,0.35)',
               borderRadius: '50%',
-              width: '32px',
-              height: '32px',
+              width: '36px',
+              height: '36px',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -249,13 +292,17 @@ function DetailCard({
               color: 'white',
               fontSize: '16px',
               lineHeight: '1',
+              // Touch target adequado
+              minWidth: '36px',
+              minHeight: '36px',
             }}
           >
             ✕
           </button>
         </Box>
 
-        <Box px={6} py={5}>
+        {/* Corpo do card */}
+        <Box px={{ base: 4, sm: 6 }} py={{ base: 4, sm: 5 }}>
           <Text
             fontSize="0.65rem"
             textTransform="uppercase"
@@ -272,7 +319,7 @@ function DetailCard({
                 key={i}
                 gap={3}
                 align="flex-start"
-                fontSize="0.83rem"
+                fontSize={{ base: '0.8rem', sm: '0.83rem' }}
                 lineHeight="1.55"
                 color="#212121"
               >
@@ -289,7 +336,7 @@ function DetailCard({
               bg={colors.bg}
               border={`1.5px solid ${colors.border}`}
               borderRadius="14px"
-              px={4}
+              px={{ base: 3, sm: 4 }}
               py={3}
               display="flex"
               alignItems="flex-start"
@@ -298,7 +345,7 @@ function DetailCard({
               <Text fontSize="20px" flexShrink={0} mt="1px" aria-hidden="true">
                 {card.callout.icon}
               </Text>
-              <Text fontSize="0.82rem" color="#212121" lineHeight="1.65">
+              <Text fontSize={{ base: '0.78rem', sm: '0.82rem' }} color="#212121" lineHeight="1.65">
                 {card.callout.text}
               </Text>
             </Box>
@@ -308,6 +355,8 @@ function DetailCard({
     </motion.div>
   )
 }
+
+// ─── LapbookFolder (exportação padrão) ────────────────────────────────────────
 
 export default function LapbookFolder({
   title,
@@ -330,13 +379,14 @@ export default function LapbookFolder({
         bg="#f5efe0"
         mb={5}
       >
+        {/* Cabeçalho da pasta */}
         <Box
           bg="linear-gradient(135deg, #5D4037, #795548)"
-          px={{ base: 5, md: 7 }}
+          px={{ base: 4, sm: 5, md: 7 }}
           py={5}
           display="flex"
           alignItems="center"
-          gap={5}
+          gap={{ base: 3, sm: 5 }}
           position="relative"
           overflow="hidden"
         >
@@ -345,22 +395,24 @@ export default function LapbookFolder({
           <Box position="absolute" right="40px" bottom="-40px" w="80px" h="80px"
             borderRadius="50%" bg="rgba(255,255,255,0.04)" aria-hidden="true" />
 
+          {/* Ícone de pasta */}
           <Box
-            w="52px"
-            h="52px"
+            w={{ base: '44px', sm: '52px' }}
+            h={{ base: '44px', sm: '52px' }}
             borderRadius="14px"
             bg="rgba(255,255,255,0.15)"
             border="2px solid rgba(255,255,255,0.25)"
             display="flex"
             alignItems="center"
             justifyContent="center"
-            fontSize="28px"
+            fontSize={{ base: '22px', sm: '28px' }}
             flexShrink={0}
             aria-hidden="true"
           >
             📁
           </Box>
-          <Box flex="1">
+
+          <Box flex="1" minW={0}>
             {badge && (
               <Box
                 display="inline-flex"
@@ -386,20 +438,36 @@ export default function LapbookFolder({
             >
               {title}
             </Text>
-            <Text fontSize="0.78rem" color="rgba(255,255,255,0.75)" lineHeight="1.5">
+            <Text
+              fontSize={{ base: '0.72rem', sm: '0.78rem' }}
+              color="rgba(255,255,255,0.75)"
+              lineHeight="1.5"
+              style={{
+                overflow: 'hidden',
+                display: '-webkit-box',
+                WebkitLineClamp: 2,
+                WebkitBoxOrient: 'vertical',
+              }}
+            >
               {subtitle}
             </Text>
           </Box>
         </Box>
 
-        <Box p={{ base: 4, md: 6 }} bg="rgba(245,239,224,0.85)">
+        {/* Corpo da pasta com grid de fichas */}
+        <Box
+          p={{ base: 3, sm: 4, md: 6 }}
+          bg="rgba(245,239,224,0.85)"
+          position="relative"
+        >
+          {/* Espiral decorativa — apenas em telas maiores para não poluir mobile */}
           <Box
             position="absolute"
             left="28px"
             top="0"
             bottom="0"
             w="24px"
-            display="flex"
+            display={{ base: 'none', md: 'flex' }}
             flexDir="column"
             justifyContent="space-evenly"
             aria-hidden="true"
@@ -418,7 +486,11 @@ export default function LapbookFolder({
             ))}
           </Box>
 
-          <SimpleGrid columns={{ base: 1, sm: 2 }} gap={4} pl={{ base: 0, md: 2 }}>
+          <SimpleGrid
+            columns={{ base: 1, sm: 2 }}
+            gap={{ base: 3, sm: 4 }}
+            pl={{ base: 0, md: 2 }}
+          >
             {cards.map((card, index) => (
               <PocketTab
                 key={card.id}
@@ -430,10 +502,11 @@ export default function LapbookFolder({
           </SimpleGrid>
         </Box>
 
+        {/* Rodapé com nota */}
         {footerNote && (
           <Box
             borderTop="2px dashed rgba(120,80,30,0.2)"
-            px={{ base: 5, md: 7 }}
+            px={{ base: 4, sm: 5, md: 7 }}
             py={3}
             bg="rgba(245,239,224,0.6)"
             display="flex"
@@ -441,13 +514,20 @@ export default function LapbookFolder({
             gap={3}
           >
             <Text fontSize="16px" aria-hidden="true">📌</Text>
-            <Text fontSize="0.76rem" color="#5D4037" fontWeight="500" lineHeight="1.55" fontStyle="italic">
+            <Text
+              fontSize={{ base: '0.72rem', sm: '0.76rem' }}
+              color="#5D4037"
+              fontWeight="500"
+              lineHeight="1.55"
+              fontStyle="italic"
+            >
               {footerNote}
             </Text>
           </Box>
         )}
       </Box>
 
+      {/* Card de detalhe em overlay */}
       <AnimatePresence>
         {openCard && (
           <DetailCard

@@ -2,6 +2,8 @@ import { Box, Flex } from '@chakra-ui/react'
 import { Sidebar, MOBILE_NAV_HEIGHT } from './Sidebar'
 
 interface AppShellProps {
+  title?: string
+  description?: string
   children: React.ReactNode
 }
 
