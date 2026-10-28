@@ -140,7 +140,7 @@ export default function MascotSpeech({
           base: 'column',
           sm: isRight ? 'row-reverse' : 'row',
         }}
-        alignItems={{ base: 'flex-start', sm: 'flex-start' }}
+        alignItems={{ base: 'flex-start', sm: 'center' }}
         gap={{ base: 3, sm: 4 }}
         position="relative"
       >
