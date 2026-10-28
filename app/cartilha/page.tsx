@@ -19,6 +19,7 @@ import {
   PageQuiz,
   PageFindTheHero,
   PageClosing,
+  PageAmapaCases,
 } from "./components/layout/BookletPages";
 import PestDialog from "./components/pages/pests/PestDialog";
 import {
@@ -26,6 +27,7 @@ import {
   TOTAL_PAGES,
   type CartilhaPageData,
   type PestGalleryItemData,
+  type PageAmapaCasesData,
 } from "./data/cartilha-data";
 
 /* ─────────────────────────────────────────────────────────────────────────
@@ -63,6 +65,8 @@ function renderPage(
       return <PageQuiz data={page} />;
     case "find-the-hero":
       return <PageFindTheHero data={page} />;
+    case "amapa-cases":
+      return <PageAmapaCases data={page as PageAmapaCasesData} />;
     case "closing":
       return <PageClosing data={page} />;
   }

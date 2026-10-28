@@ -45,6 +45,7 @@ import { ImageDiscoveryHotspotGrid } from "../ui/ImageDiscoveryHotspot";
 import InvasivePlantGallery from "../pages/cases/InvasivePlantGallery";
 import AllyGallery from "../pages/allies/AllyGallery";
 import BorderInvestigationCases from "../pages/cases/BorderInvestigationCases";
+import AmapaCasesSection from "../pages/cases/AmapaCasesSection";
 import type {
   PageCoverData,
   PageContentData,
@@ -59,6 +60,7 @@ import type {
   PageQuizData,
   PageFindTheHeroData,
   PageClosingData,
+  PageAmapaCasesData,
   CalloutData,
   ImageCardData,
 } from "../../data/cartilha-data";
@@ -3514,6 +3516,22 @@ export function PageCase({ data }: { data: PageCaseData }) {
         cards={[...pocketCards, ...calloutPockets]}
         footerNote="Fonte: Embrapa Amapá e MAPA — dados para fins educativos."
       />
+    </Box>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────────────
+   AMAPA CASES — Dossie Investigativo 3D
+───────────────────────────────────────────────────────────────────────────────────── */
+
+export function PageAmapaCases({ data }: { data: PageAmapaCasesData }) {
+  return (
+    <Box>
+      <AmapaCasesSection />
+      {/* Fala da Dona Fito */}
+      <Box mt={6}>
+        <MascotSpeech speech={data.personaText} avatarSrc={data.personaImageSrc} />
+      </Box>
     </Box>
   );
 }

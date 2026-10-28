@@ -443,6 +443,18 @@ export interface PagePestGalleryData extends PersonaBlock {
   callouts?: CalloutData[]
 }
 
+/**
+ * AMAPA CASES — Pagina dos Casos Reais do Amapa com design Dossie Investigativo 3D.
+ * Renderiza o AmapaCasesSection (Antigravity + Glassmorphism).
+ */
+export interface PageAmapaCasesData extends PersonaBlock {
+  type: 'amapa-cases'
+  interactionType: 'standard'
+  id: string
+  label: string
+  badgeLabel: string
+}
+
 /** Union type de todos os tipos de página */
 export type CartilhaPageData =
   | PageCoverData
@@ -458,6 +470,7 @@ export type CartilhaPageData =
   | PageQuizData
   | PageFindTheHeroData
   | PageClosingData
+  | PageAmapaCasesData
 
 /* ══════════════════════════════════════════════════════════════════════════
    DADOS — 22 ENTRADAS (Capa + 21 páginas)
@@ -1223,151 +1236,15 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 14 — O MISTÉRIO DA MANDIOCA (VASSOURA-DE-BRUXA)
+     PÁGINA 13.5 — CASOS REAIS DO AMAPÁ (DOSSIE 3D)
   ───────────────────────────────────────────────────── */
   {
-    type: 'case',
+    type: 'amapa-cases',
     interactionType: 'standard',
-    id: 'p14',
-    label: 'O Mistério da Mandioca',
-    heroVariant: 'green',
-    heroImageSrc: '/assets/pragas/vassoura-de-bruxa/vassoura-bruxa-mandioca-hero.png',
-    heroTitle: 'Vassoura-de-bruxa na Mandioca',
-    heroSubtitle: 'O fungo que ameaça a raiz mais consumida da Região Norte',
-    details: [
-      { imageSrc: '/assets/icones/fungo-icone.png', label: 'Agente causador', value: 'Fungo Moniliophthora perniciosa (e outros patogenos similares)' },
-      { imageSrc: '/assets/icones/mandioca-icone.png', label: 'Cultura afetada', value: 'Mandioca (Manihot esculenta) — base alimentar da Região Norte' },
-      { imageSrc: '/assets/icones/sintoma-icone.png', label: 'Sintomas', value: 'Brotamentos anormais em forma de vassoura, engrossamento de ramos e aborto de frutos' },
-      { imageSrc: '/assets/icones/localizacao-icone.png', label: 'Ocorrencia', value: 'Amazonia, Amapa, Para, Maranhao e estados do Nordeste brasileiro' },
-      { imageSrc: '/assets/icones/prejuizo-icone.png', label: 'Impacto', value: 'Redução de até 90% na produtividade em areas infestadas' },
-    ],
-    callouts: [
-      {
-        variant: 'yellow',
-        imageSrc: '/assets/icones/solucao-icone.png',
-        title: 'Controle recomendado',
-        text: 'Uso de variedades resistentes desenvolvidas pela Embrapa, poda e destruição de partes infectadas e monitoramento constante das roças. A farinha de mandioca é a base da alimentação no Amapá — protegê-la é proteger nossa cultura!',
-      },
-    ],
-    personaText:
-      'Por isso chamam de vassoura-de-bruxa! Os galhos infectados crescem tortos em formato de vassoura. É uma doença muito triste para os agricultores. Mas a ciência está trabalhando para criar variedades de mandioca resistentes!',
-    personaEmotion: 'thinking',
-    personaImageSrc: '/assets/dona-fito/dona-fito-thinking.png',
-  },
-
-  /* ─────────────────────────────────────────────────────
-     PÁGINA 15 — O NOSSO AÇAÍ EM RISCO
-  ───────────────────────────────────────────────────── */
-  {
-    type: 'case',
-    interactionType: 'standard',
-    id: 'p15',
-    label: 'O Nosso Açaí em Risco',
-    heroVariant: 'purple',
-    heroImageSrc: '/assets/pragas/amarelecimento-letal/acai-em-risco-hero.png',
-    heroTitle: 'Açaí em Risco: Amarelecimento Letal das Palmeiras',
-    heroSubtitle: 'A doença invisível que ameaça o símbolo do Amapá',
-    details: [
-      { imageSrc: '/assets/icones/fitoplasma-icone.png', label: 'Agente causador', value: 'Fitoplasma (Candidatus Phytoplasma sp.) transmitido por insetos vetores' },
-      { imageSrc: '/assets/icones/palmeira-icone.png', label: 'Culturas afetadas', value: 'Palmeiras em geral: acai, coco, dende, babacu' },
-      { imageSrc: '/assets/icones/sintoma-icone.png', label: 'Sintomas', value: 'Amarelamento progressivo das folhas, aborto de frutos e morte da palmeira' },
-      { imageSrc: '/assets/icones/localizacao-icone.png', label: 'Ocorrencia', value: 'Detectado no Amapa, Para e Maranhao; presente nas Americas e Africa' },
-      { imageSrc: '/assets/icones/prejuizo-icone.png', label: 'Impacto', value: 'Devastador — o acai e um dos principais produtos de exportacao do Amapa' },
-    ],
-    callouts: [
-      {
-        variant: 'red',
-        imageSrc: '/assets/icones/sem-cura-icone.png',
-        title: 'Sem cura conhecida!',
-        text: 'Até o momento não existe cura para palmeiras infectadas. O controle é feito pelo manejo dos insetos vetores e pela remoção e destruição das palmeiras doentes para evitar a propagação.',
-      },
-      {
-        variant: 'green',
-        imageSrc: '/assets/icones/acai-icone.png',
-        title: 'Importância econômica e cultural',
-        text: 'O açaí é símbolo cultural e econômico do Amapá. Sua produção gera renda para milhares de famílias ribeirinhas. Protegê-lo é essencial para a economia local e para a segurança alimentar da região!',
-      },
-    ],
-    personaText:
-      'O açaí é o nosso tesouro! Não só é gostoso — ele é a fonte de renda de muitas famílias do Amapá. Por isso o amarelecimento letal das palmeiras nos preocupa tanto. Precisamos proteger o nosso açaí!',
-    personaEmotion: 'alert',
-    personaImageSrc: '/assets/dona-fito/dona-fito-alert.png',
-  },
-
-  /* ─────────────────────────────────────────────────────
-     PÁGINA 16 — A INVASORA DOS POMARES (MOSCA DA FRUTA)
-  ───────────────────────────────────────────────────── */
-  {
-    type: 'case',
-    interactionType: 'standard',
-    id: 'p16',
-    label: 'A Invasora dos Pomares',
-    heroVariant: 'amber',
-    heroImageSrc: '/assets/pragas/mosca-fruta/mosca-fruta-hero.png',
-    heroTitle: 'Mosca da Fruta: Um Inimigo Pequeno com Grandes Consequencias',
-    heroSubtitle: 'A viloa que arruina as frutas por dentro — sem que a gente perceba!',
-    details: [
-      { imageSrc: '/assets/icones/inseto-icone.png', label: 'Especies de destaque', value: 'Ceratitis capitata (mosca-do-mediterraneo) e Anastrepha spp. (especies nativas)' },
-      { imageSrc: '/assets/icones/fruta-icone.png', label: 'Culturas afetadas', value: 'Manga, goiaba, laranja, maracuja, acerola e dezenas de outras frutas tropicais' },
-      { imageSrc: '/assets/icones/sintoma-icone.png', label: 'Sintomas', value: 'Frutos caem prematuramente, apodrecem por dentro e larvas brancas aparecem no interior' },
-      { imageSrc: '/assets/icones/localizacao-icone.png', label: 'Ocorrencia', value: 'Todo o Brasil; no Amapa afeta principalmente a fruticultura de subsistencia e exportacao' },
-      { imageSrc: '/assets/icones/exportacao-icone.png', label: 'Impacto economico', value: 'Barreiras sanitarias em mercados internacionais impedem a exportacao de frutas frescas' },
-    ],
-    callouts: [
-      {
-        variant: 'yellow',
-        imageSrc: '/assets/icones/aviao-icone.png',
-        title: 'Barreira de Exportação',
-        text: 'Países importadores exigem certificados fitossanitários comprovando que os frutos estão livres de moscas da fruta. Sem esses certificados, o Brasil perde milhões de dólares em exportações de frutas tropicais.',
-      },
-      {
-        variant: 'green',
-        imageSrc: '/assets/icones/ciencia-icone.png',
-        title: 'Controle Biológico — a Técnica do Inseto Estéril!',
-        text: 'A Embrapa utiliza a TIE (Tecnica do Inseto Estéril): machos de mosca são esterilizados por irradiação e liberados na natureza. Ao cruzar com fêmeas, não produzem descendentes — redução da população sem agrotoxicos!',
-      },
-    ],
-    personaText:
-      'A mosca da fruta é uma verdadeira traicoeira! Por fora, a fruta parece linda. Por dentro, a larva já comeu tudo. Por isso é tão importante inspecionar as frutas antes de vendê-las ou transportá-las!',
-    personaEmotion: 'alert',
-    personaImageSrc: '/assets/dona-fito/dona-fito-alert.png',
-  },
-
-  /* ─────────────────────────────────────────────────────
-     PÁGINA 17 — A MOSCA-DA-CARAMBOLA
-  ───────────────────────────────────────────────────── */
-  {
-    type: 'case',
-    interactionType: 'standard',
-    id: 'p17',
-    label: 'A Mosca-da-Carambola',
-    heroVariant: 'red',
-    heroImageSrc: '/assets/pragas/mosca-carambola/mosca-carambola-hero.png',
-    heroTitle: 'Mosca-da-Carambola: A Praga Quarentenária do Amapá',
-    heroSubtitle: 'O maior alerta fitossanitário da nossa região',
-    details: [
-      { imageSrc: '/assets/icones/inseto-icone.png', label: 'Nome cientifico', value: 'Bactrocera carambolae Drew e Hancock, 1994' },
-      { imageSrc: '/assets/icones/fruta-icone.png', label: 'Culturas afetadas', value: 'Carambola, goiaba, manga, maracuja, acerola e mais de 100 especies de frutas' },
-      { imageSrc: '/assets/icones/sintoma-icone.png', label: 'Sintomas', value: 'Frutos com picadas de oviposicao, queda precoce e larvas no interior dos frutos' },
-      { imageSrc: '/assets/icones/localizacao-icone.png', label: 'Situacao no Brasil', value: 'Presente no Amapa desde 1996 — area sob quarentena e controle oficial rigoroso do MAPA' },
-      { imageSrc: '/assets/icones/prejuizo-icone.png', label: 'Risco', value: 'Se se espalhar pelo Brasil, pode causar bilhoes em prejuizos e fechar mercados de exportacao' },
-    ],
-    callouts: [
-      {
-        variant: 'red',
-        imageSrc: '/assets/icones/alerta-icone.png',
-        title: 'Área sob controle oficial!',
-        text: 'O Amapá tem barreiras fitossanitárias oficiais para impedir que a mosca-da-carambola se espalhe para outros estados. Não transportar frutas frescas do Amapá sem autorização é uma obrigação legal!',
-      },
-      {
-        variant: 'green',
-        imageSrc: '/assets/icones/pesquisa-icone.png',
-        title: 'Pesquisa em andamento',
-        text: 'A Embrapa e o MAPA trabalham juntos em programas de controle biológico e da Técnica do Inseto Estéril para reduzir a população da mosca-da-carambola no Amapá, protegendo a fruticultura regional.',
-      },
-    ],
-    personaText:
-      'A mosca-da-carambola é a mais famosa praga do Amapá! Ela chegou aqui de outros países e hoje é nosso maior desafio fitossanitário. Por isso o Amapá tem regras especiais: não podemos levar frutas frescas daqui para outros estados sem autorização!',
+    id: 'p13b',
+    label: 'Casos Reais do Amapá',
+    badgeLabel: 'Dossie Fitossanitário',
+    personaText: 'Investigue os detalhes de cada ameaça acima e veja como podemos defender o nosso Amapá!',
     personaEmotion: 'alert',
     personaImageSrc: '/assets/dona-fito/dona-fito-alert.png',
   },
