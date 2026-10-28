@@ -239,7 +239,12 @@ function TabInvasor({ item, mc }: { item: AmapaCaseData; mc: ReturnType<typeof g
         >
           {item.invasorHeadline}
         </Text>
-        <Text fontSize={{ base: '0.83rem', sm: '0.88rem' }} color="gray.600" lineHeight="1.8">
+        <Text
+          fontSize={{ base: '0.83rem', sm: '0.88rem' }}
+          color="gray.900"
+          fontWeight="500"
+          lineHeight="1.6"
+        >
           {item.invasorDescription}
         </Text>
       </Box>
@@ -275,7 +280,7 @@ function TabInvasor({ item, mc }: { item: AmapaCaseData; mc: ReturnType<typeof g
             Situação na Região Norte / Amapá
           </Text>
         </HStack>
-        <Text fontSize="0.82rem" color="gray.700" lineHeight="1.8">
+        <Text fontSize="0.82rem" color="gray.900" fontWeight="500" lineHeight="1.6">
           {item.invasorRegionText}
         </Text>
       </Box>
@@ -288,7 +293,13 @@ function TabInvasor({ item, mc }: { item: AmapaCaseData; mc: ReturnType<typeof g
 function TabDiagnostico({ item, mc }: { item: AmapaCaseData; mc: ReturnType<typeof getModalColors> }) {
   return (
     <VStack align="stretch" gap={3}>
-      <Text fontSize="0.7rem" color="gray.500" letterSpacing="0.08em" textTransform="uppercase">
+      <Text
+        fontSize="0.7rem"
+        color="gray.700"
+        fontWeight="bold"
+        letterSpacing="0.08em"
+        textTransform="uppercase"
+      >
         Identifique os danos causados às plantas
       </Text>
 
@@ -327,7 +338,7 @@ function TabDiagnostico({ item, mc }: { item: AmapaCaseData; mc: ReturnType<type
                   <Text fontSize="0.85rem" fontWeight="800" color="gray.800" mb={0.5} lineHeight="1.3">
                     {symptom.title}
                   </Text>
-                  <Text fontSize="0.78rem" color="gray.600" lineHeight="1.75">
+                  <Text fontSize="0.78rem" color="gray.900" fontWeight="500" lineHeight="1.6">
                     {symptom.description}
                   </Text>
                 </Box>
@@ -428,7 +439,7 @@ function CombatActorCard({
         </Text>
       </HStack>
 
-      <VStack align="stretch" gap={1.5}>
+      <VStack align="stretch" gap={2.5}>
         {actor.actions.map((action, idx) => (
           <HStack key={idx} align="flex-start" gap={2}>
             <Box
@@ -440,7 +451,7 @@ function CombatActorCard({
               bg={rs.iconColor}
               aria-hidden="true"
             />
-            <Text fontSize="0.78rem" color="gray.700" lineHeight="1.75">
+            <Text fontSize="0.78rem" color="gray.900" fontWeight="500" lineHeight="1.6">
               {action}
             </Text>
           </HStack>
@@ -453,7 +464,13 @@ function CombatActorCard({
 function TabCombate({ item }: { item: AmapaCaseData }) {
   return (
     <VStack align="stretch" gap={3}>
-      <Text fontSize="0.7rem" color="gray.500" letterSpacing="0.08em" textTransform="uppercase">
+      <Text
+        fontSize="0.7rem"
+        color="gray.700"
+        fontWeight="bold"
+        letterSpacing="0.08em"
+        textTransform="uppercase"
+      >
         Quem age e como agir
       </Text>
 
@@ -792,7 +809,7 @@ export default function AmapaDossierModal({ item, onClose }: AmapaDossierModalPr
                       <Text fontSize="0.65rem" fontWeight="800" color="green.800" mb={0.5}>
                         Fontes Científicas e Institucionais
                       </Text>
-                      <Text fontSize="0.65rem" color="gray.500" lineHeight="1.6">
+                      <Text fontSize="0.65rem" color="gray.700" fontWeight="500" lineHeight="1.6">
                         Dados baseados em informações do MAPA, Embrapa Amapá, DIAGRO
                         (Agência de Defesa Agropecuária do Amapá) e literatura científica
                         revisada por pares. Região Norte — Brasil.
