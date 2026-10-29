@@ -3953,7 +3953,7 @@ export function PageClosing({ data }: { data: PageClosingData }) {
 
   return (
     <Box textAlign="center">
-      <SectionBadge>🎓 Encerramento</SectionBadge>
+      <SectionBadge>Encerramento</SectionBadge>
 
       <Box
         bg="linear-gradient(160deg, #1B5E20, #2E7D32, #66BB6A)"
