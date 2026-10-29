@@ -3887,7 +3887,7 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                       boxShadow="0 4px 12px rgba(46,125,50,0.22)"
                     >
                       <Image
-                        src="/assets/dona_fito_meio_corpo.webp"
+                        src="/assets/dona_fito_meio_corpo.png"
                         alt="Dona Fito Investigadora"
                         width={70}
                         height={70}

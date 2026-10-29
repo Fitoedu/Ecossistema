@@ -1102,7 +1102,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     interactionType: 'standard',
     id: 'p11',
     label: 'Quem Cuida? Pesquisadores',
-    badgeLabel: 'Herois da Ciencia',
+    badgeLabel: 'Heróis da Ciencia',
     title: 'Os Cientistas que ',
     titleHighlight: 'protegem',
     titleSuffix: ' nossas plantas!',
@@ -1120,7 +1120,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       'Os pesquisadores são os verdadeiros super-heróis da fitossanidade! Eles passam anos estudando para nos ajudar. Quem sabe um dia você não vai trabalhar na Embrapa ou numa universidade pesquisando pragas do Amapá?',
     personaEmotion: 'happy',
-    personaImageSrc: '/assets/dona-fito/dona-fito-happy.png',
+    personaImageSrc: '/dona_fito_meio_corpo.png',
   },
 
   /* ─────────────────────────────────────────────────────
@@ -1149,7 +1149,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       'Imagina o trabalho desses fiscais! Eles inspecionam cada bagagem, cada caixa de fruta, cada muda de planta que chega ao Amapá. É um trabalho de heroi — silencioso mas muito importante para nossa segurança alimentar!',
     personaEmotion: 'pointing',
-    personaImageSrc: '/assets/dona-fito/dona-fito-pointing.png',
+    personaImageSrc: '/dona_fito_meio_corpo.png',
   },
 
   /* ─────────────────────────────────────────────────────
@@ -1246,7 +1246,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     badgeLabel: 'Dossie Fitossanitário',
     personaText: 'Investigue os detalhes de cada ameaça acima e veja como podemos defender o nosso Amapá!',
     personaEmotion: 'alert',
-    personaImageSrc: '/assets/dona-fito/dona-fito-alert.png',
+    personaImageSrc: '/assets/dona_fito_meio_corpo.png',
   },
 
   /* ─────────────────────────────────────────────────────
@@ -1401,7 +1401,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       'Parabéns, jovem cientista! Você completou a cartilha EducaFito! Agora você é parte da rede de proteção das nossas plantas. Lembre-se: cada atitude nossa conta para proteger a natureza e garantir comida na mesa de todos!',
     personaEmotion: 'celebrating',
-    personaImageSrc: '/assets/dona-fito/dona-fito-celebrating.png',
+    personaImageSrc: '/assets/dona_fito_meio_corpo.png',
   },
 ]
 
