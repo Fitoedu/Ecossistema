@@ -526,7 +526,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     ],
     topCallout: {
       variant: 'green',
-      imageSrc: '/dona_fito_meio_corpo.webp',
+      imageSrc: '/dona_fito_meio_corpo.png',
       title: 'Olá, futuro cientista!',
       text: 'Assim como nós, humanos, podemos ficar gripados ou com febre, as plantas também podem ser atacadas por "vilões" que as deixam fracas, feias e improdutivas. Esses vilões se chamam pragas e doenças.',
     },
@@ -572,7 +572,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'green',
-        imageSrc: '/dona_fito_meio_corpo.webp',
+        imageSrc: '/dona_fito_meio_corpo.png',
         title: 'Curiosidade!',
         text: 'O Brasil é um dos maiores exportadores agrícolas do mundo. Por isso, cuidar da saúde das plantas é também cuidar da economia de milhões de famílias brasileiras!',
       },
@@ -609,7 +609,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'yellow',
-        imageSrc: '/joaninha_corpo_todo.webp',
+        imageSrc: '/joaninha_corpo_todo.png',
         title: 'Sabia que...',
         text: 'A mandioca e o açaí são duas das principais "fábricas de comida" do Amapá! Milhares de famílias dependem dessas plantas para viver e para vender seus produtos.',
       },
@@ -723,7 +723,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'yellow',
-        imageSrc: '/joaninha_corpo_todo.webp',
+        imageSrc: '/joaninha_corpo_todo.png',
         title: 'Atenção!',
         text: 'Nem todo inseto é praga! Abelhas, joaninhas e vespinhas parasitoides são aliadas da lavoura. Conhecer os benefícios e os prejudiciais é essencial para um manejo agrícola responsável.',
       },
@@ -837,7 +837,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'green',
-        imageSrc: '/dona_fito_meio_corpo.webp',
+        imageSrc: '/dona_fito_meio_corpo.png',
         title: 'A prevenção é sempre melhor!',
         text: 'Fungos e bactérias se espalham pela água, pelo vento e por ferramentas contaminadas. Higienizar os instrumentos agrícolas, usar sementes certificadas e evitar o excesso de água são formas simples de prevenir essas doenças!',
       },
@@ -899,7 +899,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'yellow',
-        imageSrc: '/joaninha_corpo_todo.webp',
+        imageSrc: '/joaninha_corpo_todo.png',
         title: 'Curiosidade!',
         text: 'O aguapé (jacinto-d’água) é uma planta invasora aquática que bloqueia rios e lagos no Amapá, prejudicando a pesca e a navegação. Até plantas podem ser pragas em locais errados!',
       },
@@ -974,7 +974,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'green',
-        imageSrc: '/dona_fito_meio_corpo.webp',
+        imageSrc: '/dona_fito_meio_corpo.png',
         title: 'A natureza é sábia!',
         text: 'Quando preservamos a biodiversidade ao redor das lavouras — matas, rios, bosques — estamos protegendo o lar dos nossos aliados naturais. Fazenda sustentavel e fazenda saudavel!',
       },
