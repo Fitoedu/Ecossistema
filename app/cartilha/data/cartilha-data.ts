@@ -1120,7 +1120,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       'Os pesquisadores são os verdadeiros super-heróis da fitossanidade! Eles passam anos estudando para nos ajudar. Quem sabe um dia você não vai trabalhar na Embrapa ou numa universidade pesquisando pragas do Amapá?',
     personaEmotion: 'happy',
-    personaImageSrc: '/assets/dona_fito_meio_corpo.png',
+    personaImageSrc: '/dona_fito_meio_corpo.png',
   },
 
   /* ─────────────────────────────────────────────────────
@@ -1149,7 +1149,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       'Imagina o trabalho desses fiscais! Eles inspecionam cada bagagem, cada caixa de fruta, cada muda de planta que chega ao Amapá. É um trabalho de heroi — silencioso mas muito importante para nossa segurança alimentar!',
     personaEmotion: 'pointing',
-    personaImageSrc: '/assets/dona_fito_meio_corpo.png',
+    personaImageSrc: '/dona_fito_meio_corpo.png',
   },
 
   /* ─────────────────────────────────────────────────────
