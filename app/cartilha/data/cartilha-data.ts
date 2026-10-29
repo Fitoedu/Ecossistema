@@ -526,7 +526,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     ],
     topCallout: {
       variant: 'green',
-      imageSrc: '/assets/dona_fito_meio_corpo.png',
+      imageSrc: '/assets/dona_fito_meio_corpo.webp',
       title: 'Olá, futuro cientista!',
       text: 'Assim como nós, humanos, podemos ficar gripados ou com febre, as plantas também podem ser atacadas por "vilões" que as deixam fracas, feias e improdutivas. Esses vilões se chamam pragas e doenças.',
     },

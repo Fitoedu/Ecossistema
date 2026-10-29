@@ -978,7 +978,7 @@ function PersonaGreeting() {
 
         {/* Avatar */}
         <Box flexShrink={0}>
-          <Avatar src="/assets/dona_fito_meio_corpo.png" />
+          <Avatar src="/assets/dona_fito_meio_corpo.webp" />
           {/* Name tag below avatar */}
           <Box
             mt={1}
