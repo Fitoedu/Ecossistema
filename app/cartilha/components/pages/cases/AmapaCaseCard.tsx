@@ -12,7 +12,7 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
 import { Box, Text, HStack } from '@chakra-ui/react'
 import { ShieldAlert, Search, MapPin } from 'lucide-react'
 import type { AmapaCaseData } from '../../../data/amapa-cases-data'
-import { getThreatLabel, getThreatColors } from '../../../data/amapa-cases-data'
+import { getThreatLabel } from '../../../data/amapa-cases-data'
 
 /* ─── Paleta light dos níveis de ameaça ──────────────────────────────────── */
 
@@ -38,7 +38,6 @@ function getLightColors(level: AmapaCaseData['threatLevel']) {
       cardHoverShadow:
         '0 20px 48px rgba(225, 29, 72, 0.11), 0 4px 12px rgba(225, 29, 72, 0.07)',
       accentLine: 'linear-gradient(90deg, #FECDD3, #FB7185, #FECDD3)',
-      pulseColor: 'rgba(225, 29, 72, 0.4)',
     }
   }
   if (level === 'alerta-critico') {
@@ -52,7 +51,6 @@ function getLightColors(level: AmapaCaseData['threatLevel']) {
       cardHoverShadow:
         '0 20px 48px rgba(251, 192, 45, 0.14), 0 4px 12px rgba(251, 192, 45, 0.08)',
       accentLine: 'linear-gradient(90deg, #FDE68A, #FBC02D, #FDE68A)',
-      pulseColor: 'rgba(251, 192, 45, 0.45)',
     }
   }
   // Monitorada — verde botânico pleno
@@ -66,7 +64,6 @@ function getLightColors(level: AmapaCaseData['threatLevel']) {
     cardHoverShadow:
       '0 20px 48px rgba(22, 163, 74, 0.12), 0 4px 12px rgba(22, 163, 74, 0.07)',
     accentLine: 'linear-gradient(90deg, #BBF7D0, #4ADE80, #BBF7D0)',
-    pulseColor: 'rgba(22, 163, 74, 0.4)',
   }
 }
 
@@ -108,11 +105,10 @@ function CardImage({ item }: { item: AmapaCaseData }) {
   )
 }
 
-/* ─── Badge de nível de ameaça com pulso ─────────────────────────────────── */
+/* ─── Badge de nível de ameaça ───────────────────────────────────────────── */
 
 function ThreatBadge({ item }: { item: AmapaCaseData }) {
   const lc = getLightColors(item.threatLevel)
-  const isPulse = item.threatLevel === 'quarentenaria'
 
   return (
     <Box
@@ -130,23 +126,7 @@ function ThreatBadge({ item }: { item: AmapaCaseData }) {
       fontWeight="900"
       letterSpacing="0.06em"
       textTransform="uppercase"
-      position="relative"
-      boxShadow="0 1px 4px rgba(0,0,0,0.08)"
     >
-      {/* Anel de pulso — apenas Quarentenária */}
-      {isPulse && (
-        <motion.span
-          aria-hidden="true"
-          style={{
-            position: 'absolute',
-            inset: 0,
-            borderRadius: '9999px',
-            border: `2px solid ${lc.pulseColor}`,
-          }}
-          animate={{ scale: [1, 1.55, 1], opacity: [0.9, 0, 0.9] }}
-          transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-        />
-      )}
       <ShieldAlert size={11} aria-hidden="true" />
       <span>{getThreatLabel(item.threatLevel)}</span>
     </Box>
