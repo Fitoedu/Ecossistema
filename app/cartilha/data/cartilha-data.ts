@@ -1023,8 +1023,8 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 ],
     impacts: [
-      { imageSrc: '/assets/icones/manchas-icone.png', title: 'Manchas e lesões', desc: 'Fungos e bactérias causam manchas que impedem a fotossíntese e deixam a planta feia para venda.' },
-      { imageSrc: '/assets/icones/galha-icone.png', title: 'Deformações e galhas', desc: 'Alguns insetos injetam substâncias que deformam folhas, caules e frutos, tornando-os inúteis.' },
+      { imageSrc: '/assets/icones/manchas-icone.png', title: 'Manchas e lesões', desc: 'Fungos e bactérias causam manchas que reduzem a fotossíntese e desvalorizam o produto no mercado.' },
+      { imageSrc: '/assets/icones/galha-icone.png', title: 'Deformações e galhas', desc: 'Alguns insetos injetam substâncias que deformam folhas, caules e frutos, inviabilizando a sua comercialização.' },
       { imageSrc: '/assets/icones/murcha-icone.png', title: 'Murcha e morte subita', desc: 'Doenças vasculares bloqueiam o transporte de água dentro da planta, causando murcha repentina.' },
       { imageSrc: '/assets/icones/virus-transmissao.png', title: 'Transmissão de vírus', desc: 'Insetos como pulgões e moscas-brancas são vetores de vírus que enfraquecem ou matam as plantas.' },
     ],

@@ -33,13 +33,13 @@ const CASES: InvestigationCase[] = [
     id: 1,
     title: "Caso 1: Carga de Carambolas",
     description:
-      "A ausência de certificado impede confirmar a origem e a sanidade da carga. Larvas da Mosca-da-carambola poderiam se espalhar para pomares locais.",
+      "Sem documentação sanitária de origem, a carga oferece alto risco: larvas da Mosca-da-carambola poderiam se espalhar e devastar os pomares locais.",
     imageSrc: "https://images.unsplash.com/photo-1619566636858-adf3ef46400b",
     correctAction: "block",
     alertLabel: "ALERTA: Mosca-da-carambola",
     status: "Origem não certificada · Entrada deve ser bloqueada",
     threat:
-      "A carga não apresenta documentação sanitária para confirmar sua origem e segurança.",
+      "",
     blockFeedback:
       "Uau! Se essa Mosca-da-carambola entrasse, toda a nossa produção local estaria em risco!",
     allowFeedback:
@@ -49,13 +49,13 @@ const CASES: InvestigationCase[] = [
     id: 2,
     title: "Caso 2: Mudas de Laranja",
     description:
-      "A ausência de certificação impede confirmar a origem. Essas mudas de citros vindas de fora podem trazer o temido Greening, uma doença sem cura para laranjeiras.",
+      "Mudas cítricas sem certificação de origem podem introduzir o Greening (HLB) — uma doença incurável e devastadora para os pomares de citros da região.",
     imageSrc: "https://images.unsplash.com/photo-1590502160462-2200234771a3",
     correctAction: "block",
     alertLabel: "ALERTA: Doença HLB",
     status: "Mudas suspeitas de Greening (HLB) · Entrada proibida",
     threat:
-      "Mudas de citros sem certificação podem carregar o Huanglongbing (HLB), doença sem cura que compromete árvores cítricas e pode afetar toda a região.",
+      "",
     blockFeedback:
       "Muito bem! Mudas sem comprovação podem espalhar o HLB e destruir pomares inteiros de laranja.",
     allowFeedback:
@@ -65,13 +65,13 @@ const CASES: InvestigationCase[] = [
     id: 3,
     title: "Caso 3: Maçãs Certificadas",
     description:
-      "Carga com nota fiscal e certificado de inspeção sanitária de área livre de pragas. Tudo regularizado e seguro para trânsito.",
+      "A presença de nota fiscal e selo de inspeção sanitária comprova a origem segura da carga proveniente de área livre de pragas..",
     imageSrc: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6",
     correctAction: "allow",
     alertLabel: "SEGURO: Carga Certificada",
     status: "Carga regularizada com certificação · Permitir entrada",
     threat:
-      "O selo de inspeção e a nota fiscal permitem rastrear a origem e comprovam que a carga passou pelos controles sanitários.",
+      "",
     blockFeedback:
       "Atenção! Esta carga está regularizada. Bloqueá-la sem motivo atrasa uma remessa segura e dificulta o trabalho de fiscalização.",
     allowFeedback:
@@ -169,7 +169,7 @@ export default function BorderInvestigationCases({
               >
                 Curiosidade: por que o nome “Quarentenária”?
               </Text>
-              <Text fontSize="0.82rem" color="gray.700" lineHeight="1.65">
+              <Text fontSize="0.82rem" color="gray.900" lineHeight="1.65">
                 O termo vem de “quarentena”: um período de isolamento para
                 evitar a propagação. Na agricultura, a quarentena fitossanitária
                 protege as plantas e a produção.
@@ -253,7 +253,7 @@ export default function BorderInvestigationCases({
               </Box>
             )}
           </Box>
-          <Box>
+          <Box display="flex" flexDirection="column" justifyContent="center" py={4}>
             <Text fontSize="1.15rem" fontWeight="900" color="green.900">
               {item.title}
             </Text>
@@ -273,14 +273,14 @@ export default function BorderInvestigationCases({
               >
                 Status sanitário
               </Text>
-              <Text fontSize="0.82rem" color="gray.700" lineHeight="1.55">
+              <Text fontSize="0.82rem" color="gray.900" fontWeight="500" lineHeight="1.55">
                 {item.status}
               </Text>
             </Box>
-            <Text mt={3} fontSize="0.82rem" color="gray.700" lineHeight="1.65">
+            <Text mt={3} fontSize="md" color="gray.900" fontWeight="500" lineHeight="1.65">
               {item.threat}
             </Text>
-            <Text mt={2} fontSize="0.72rem" color="gray.600">
+            <Text mt={2} fontSize="md" color="gray.700" fontWeight="500" lineHeight="1.6">
               {item.description}
             </Text>
           </Box>

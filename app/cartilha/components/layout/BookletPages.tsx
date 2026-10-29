@@ -1919,9 +1919,10 @@ function PragaImpactAccordion({
                       alignItems="center"
                     >
                       <Text
-                        fontSize="0.78rem"
-                        color="gray.700"
-                        lineHeight="1.55"
+                        fontSize="md"
+                        fontWeight="500"
+                        color="gray.900"
+                        lineHeight="1.6"
                       >
                         {item.desc}
                       </Text>
@@ -2181,13 +2182,7 @@ function AttackSymptomAccordion({
                     >
                       <Box>
                         <Text fontSize="1.1rem" mb={2} aria-hidden="true">
-                          {index === 0
-                            ? "🔎"
-                            : index === 1
-                              ? "🌱"
-                              : index === 2
-                                ? "💧"
-                                : "🦋"}
+                          {""}
                         </Text>
                         <Text
                           fontSize="0.8rem"
