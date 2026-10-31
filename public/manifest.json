@@ -1,0 +1,25 @@
+{
+  "name": "EducaFito",
+  "short_name": "EducaFito",
+  "description": "Plataforma educativa sobre plantas medicinais e praticas agricolas.",
+  "lang": "pt-BR",
+  "start_url": "/home",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F5F7F4",
+  "theme_color": "#2E7D32",
+  "icons": [
+    {
+      "src": "/assets/joaninha_corpo_todo.webp",
+      "sizes": "192x192",
+      "type": "image/webp",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/dona_fito_meio_corpo.webp",
+      "sizes": "512x512",
+      "type": "image/webp",
+      "purpose": "any"
+    }
+  ]
+}
