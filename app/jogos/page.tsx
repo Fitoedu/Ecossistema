@@ -60,14 +60,14 @@ const games: Game[] = [
     icon: Layers,
     emoji: '🃏',
     title: 'Jogo da Memória',
-    desc: 'Encontre os pares de plantas e seus nomes científicos virando as cartas com concentração.',
+    desc: 'Encontre os pares de pragas da Região Norte e as plantas que elas atacam, virando as cartas com concentração.',
     tag: 'Memória',
     tagColor: '#7c3aed',
     gradient: 'linear-gradient(145deg, #f0ebff 0%, #e0d4fd 100%)',
     iconBg: '#7c3aed',
     accentColor: '#7c3aed',
     href: '/jogos/memoria',
-    available: false,
+    available: true,
   },
   {
     id: 'bingo',
@@ -150,7 +150,6 @@ export default function JogosPage() {
         boxShadow="0 24px 80px rgba(15, 42, 26, 0.12)"
         backdropFilter="blur(10px)"
       >
-        {/* Header */}
         <Flex
           as="header"
           px={{ base: 4, md: 6 }}
