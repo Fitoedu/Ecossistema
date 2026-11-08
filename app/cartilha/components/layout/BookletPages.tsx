@@ -1161,7 +1161,7 @@ export function PageCover({ data }: { data: PageCoverData }) {
   );
 }
 
-/* ─── Pilares de aprendizado — grid exclusivo da Página 01 ──────────────────
+/* ─── Pilares de aprendizado — grid exclusivo da Página 02 ──────────────────
    Renderiza 4 cards semânticos com badges arredondados e título.
 ──────────────────────────────────────────────────────────────────────────── */
 
@@ -1286,8 +1286,8 @@ export function PageContent({
   data: PageContentData;
   onGoTo: (pageIndex: number) => void;
 }) {
-  /* Layout especial para a Página 01 — Apresentação */
-  if (data.id === "p01") {
+  /* Layout especial para a Página 02 — Apresentação */
+  if (data.id === "p2") {
     return (
       <Box>
         <Box mt={2}>
@@ -1323,7 +1323,7 @@ export function PageContent({
   }
 
   /* Layout exclusivo para a Página 03 — O que é Fitossanidade? */
-  if (data.id === "p02") {
+  if (data.id === "p3") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -1344,7 +1344,7 @@ export function PageContent({
   }
 
   /* Layout exclusivo para a Página 04 — A fábrica de comida */
-  if (data.id === "p03") {
+  if (data.id === "p4") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -1373,7 +1373,7 @@ export function PageContent({
   }
 
   /* Layout exclusivo para a Página 08 — Plantas invasoras */
-  if (data.id === "p07") {
+  if (data.id === "p8") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -1404,7 +1404,7 @@ export function PageContent({
   }
 
   /* Layout exclusivo para a Página 09 — Aliados da lavoura */
-  if (data.id === "p08") {
+  if (data.id === "p9") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -1472,7 +1472,7 @@ export function PageContent({
 
 export function PageLapbook({ data }: { data: PageLapbookData }) {
   /* ── Layout exclusivo da Página 13 — O Escudo Protetor ── */
-  if (data.id === "p13") {
+  if (data.id === "p14") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -2273,10 +2273,10 @@ function PragaAgricolaInteractivePage({ data }: { data: PageImpactData }) {
 }
 
 export function PageImpact({ data }: { data: PageImpactData }) {
-  if (data.id === "p04") {
+  if (data.id === "p5") {
     return <PragaAgricolaInteractivePage data={data} />;
   }
-  if (data.id === "p09") {
+  if (data.id === "p10") {
     return <AttackInteractivePage data={data} />;
   }
 
@@ -2418,7 +2418,7 @@ export function PageImpact({ data }: { data: PageImpactData }) {
 }
 
 export function PageAlert({ data }: { data: PageAlertData }) {
-  if (data.id === "p10") {
+  if (data.id === "p11") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -3316,7 +3316,7 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
 }
 
 export function PageOrgaos({ data }: { data: PageOrgaosData }) {
-  if (data.id === "p11") {
+  if (data.id === "p12") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -3331,7 +3331,7 @@ export function PageOrgaos({ data }: { data: PageOrgaosData }) {
     );
   }
 
-  if (data.id === "p12") {
+  if (data.id === "p13") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>

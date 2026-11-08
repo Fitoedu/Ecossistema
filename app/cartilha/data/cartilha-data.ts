@@ -1,6 +1,6 @@
 /* ══════════════════════════════════════════════════════════════════════════
    cartilha-data.ts — EducaFito
-   Refatoração completa: 21 páginas | Persona Dona Fito | imageSrc | Flaps
+   Refatoração completa: 18 páginas | Persona Dona Fito | imageSrc | Flaps
    Versão: 2.0.0
 ══════════════════════════════════════════════════════════════════════════ */
 
@@ -196,7 +196,7 @@ export interface PragaAlertCardData {
 ══════════════════════════════════════════════════════════════════════════ */
 
 /**
- * CAPA — Página 0
+ * CAPA — Página 1
  */
 export interface PageCoverData extends PersonaBlock {
   type: 'cover'
@@ -426,7 +426,7 @@ export interface PestGalleryItemData {
 }
 
 /**
- * GALERIA DE PRAGAS — Página 05 (substitui Lapbook)
+ * GALERIA DE PRAGAS — Página 06 (substitui Lapbook)
  * Grid de cards clicáveis que abrem modais informativos via Chakra UI.
  */
 export interface PagePestGalleryData extends PersonaBlock {
@@ -473,18 +473,18 @@ export type CartilhaPageData =
   | PageAmapaCasesData
 
 /* ══════════════════════════════════════════════════════════════════════════
-   DADOS — 22 ENTRADAS (Capa + 21 páginas)
+   DADOS — 19 ENTRADAS (Capa + 18 páginas)
 ══════════════════════════════════════════════════════════════════════════ */
 
 export const CARTILHA_PAGES: CartilhaPageData[] = [
 
   /* ─────────────────────────────────────────────────────
-     CAPA — Página 0
+     CAPA — Página 1
   ───────────────────────────────────────────────────── */
   {
     type: 'cover',
     interactionType: 'cover',
-    id: 'cover',
+    id: 'p1',
     label: 'Capa',
     title: 'Educação Fitossanitária\npara o Ensino Básico',
     highlight: 'Fitossanitária',
@@ -505,12 +505,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 01 — APRESENTAÇÃO
+     PÁGINA 2 — APRESENTAÇÃO
   ───────────────────────────────────────────────────── */
   {
     type: 'content',
     interactionType: 'standard',
-    id: 'p01',
+    id: 'p2',
     label: 'Apresentação',
     badgeLabel: 'Apresentação',
     title: 'Você sabia que ',
@@ -545,12 +545,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 02 — O QUE É FITOSSANIDADE?
+     PÁGINA 3 — O QUE É FITOSSANIDADE?
   ───────────────────────────────────────────────────── */
   {
     type: 'content',
     interactionType: 'standard',
-    id: 'p02',
+    id: 'p3',
     label: 'O que é Fitossanidade?',
     badgeLabel: 'Conceito Base',
     title: 'O que é ',
@@ -584,12 +584,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 03 — A FÁBRICA DE COMIDA
+     PÁGINA 4 — A FÁBRICA DE COMIDA
   ───────────────────────────────────────────────────── */
   {
     type: 'content',
     interactionType: 'standard',
-    id: 'p03',
+    id: 'p4',
     label: 'A Fábrica de Comida',
     badgeLabel: 'Agricultura',
     title: 'As plantas são a nossa ',
@@ -621,12 +621,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 04 — O QUE É UMA PRAGA AGRÍCOLA?
+     PÁGINA 5 — O QUE É UMA PRAGA AGRÍCOLA?
   ───────────────────────────────────────────────────── */
   {
     type: 'impact',
     interactionType: 'standard',
-    id: 'p04',
+    id: 'p5',
     label: 'O que é uma Praga Agrícola?',
     badgeLabel: 'Conceito de Praga',
     title: 'O que é uma ',
@@ -652,12 +652,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 05 — INSETOS E ÁCAROS (GALERIA DE CARDS COM MODAIS)
+     PÁGINA 6 — INSETOS E ÁCAROS (GALERIA DE CARDS COM MODAIS)
   ───────────────────────────────────────────────────── */
   {
     type: 'pest-gallery',
     interactionType: 'standard',
-    id: 'p05',
+    id: 'p6',
     label: 'Insetos e Ácaros',
     badgeLabel: 'Galeria Interativa',
     title: 'Insetos e Ácaros: ',
@@ -735,12 +735,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 06 — FUNGOS, BACTÉRIAS E VÍRUS (HOTSPOT INTERATIVO)
+     PÁGINA 7 — FUNGOS, BACTÉRIAS E VÍRUS (HOTSPOT INTERATIVO)
   ───────────────────────────────────────────────────── */
   {
     type: 'hotspot',
     interactionType: 'hotspot',
-    id: 'p06',
+    id: 'p7',
     label: 'Fungos, Bactérias e Vírus',
     badgeLabel: 'Lente de Investigação',
     title: 'Os Invasores ',
@@ -849,12 +849,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 07 — PLANTAS INVASORAS
+     PÁGINA 8 — PLANTAS INVASORAS
   ───────────────────────────────────────────────────── */
   {
     type: 'content',
     interactionType: 'standard',
-    id: 'p07',
+    id: 'p8',
     label: 'Plantas Invasoras',
     badgeLabel: 'Ervas Daninhas',
     title: 'As plantas que ',
@@ -911,12 +911,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 08 — TODO MUNDO TEM UM PAPEL!
+     PÁGINA 9 — TODO MUNDO TEM UM PAPEL!
   ───────────────────────────────────────────────────── */
   {
     type: 'content',
     interactionType: 'standard',
-    id: 'p08',
+    id: 'p9',
     label: 'O Lado Bom da Natureza',
     badgeLabel: 'Aliados da Lavoura',
     title: 'Na natureza, todo mundo tem ',
@@ -986,12 +986,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 09 — O ATAQUE NA LAVOURA
+     PÁGINA 10 — O ATAQUE NA LAVOURA
   ───────────────────────────────────────────────────── */
   {
     type: 'impact',
     interactionType: 'standard',
-    id: 'p09',
+    id: 'p10',
     label: 'O Ataque na Lavoura',
     badgeLabel: 'Como as Pragas Atacam',
     title: 'Como as pragas ',
@@ -1035,12 +1035,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 10 — PRAGAS QUARENTENÁRIAS
+     PÁGINA 11 — PRAGAS QUARENTENÁRIAS
   ───────────────────────────────────────────────────── */
   {
     type: 'alert',
     interactionType: 'standard',
-    id: 'p10',
+    id: 'p11',
     label: 'Pragas Quarentenárias',
     badgeLabel: 'Alerta Especial',
     title: 'O que são ',
@@ -1095,12 +1095,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 11 — QUEM CUIDA? PESQUISADORES
+     PÁGINA 12 — QUEM CUIDA? PESQUISADORES
   ───────────────────────────────────────────────────── */
   {
     type: 'orgaos',
     interactionType: 'standard',
-    id: 'p11',
+    id: 'p12',
     label: 'Quem Cuida? Pesquisadores',
     badgeLabel: 'Heróis da Ciencia',
     title: 'Os Cientistas que ',
@@ -1124,12 +1124,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 12 — QUEM CUIDA? FISCALIZAÇÃO
+     PÁGINA 13 — QUEM CUIDA? FISCALIZAÇÃO
   ───────────────────────────────────────────────────── */
   {
     type: 'orgaos',
     interactionType: 'standard',
-    id: 'p12',
+    id: 'p13',
     label: 'Quem Cuida? Fiscalização',
     badgeLabel: 'Guardioes das Fronteiras',
     title: 'Os guardiões que ',
@@ -1153,12 +1153,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 13 — O ESCUDO PROTETOR (BOAS PRÁTICAS — LIFT-THE-FLAP)
+     PÁGINA 14 — O ESCUDO PROTETOR (BOAS PRÁTICAS — LIFT-THE-FLAP)
   ───────────────────────────────────────────────────── */
   {
     type: 'lapbook',
     interactionType: 'lift-the-flap',
-    id: 'p13',
+    id: 'p14',
     label: 'O Escudo Protetor',
     badgeLabel: 'Boas Práticas',
     lapbookBadge: 'PREVENÇÃO E MANEJO',
@@ -1236,12 +1236,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 13.5 — CASOS REAIS DO AMAPÁ (DOSSIE 3D)
+     PÁGINA 15 — CASOS REAIS DO AMAPÁ (DOSSIE 3D)
   ───────────────────────────────────────────────────── */
   {
     type: 'amapa-cases',
     interactionType: 'standard',
-    id: 'p13b',
+    id: 'p15',
     label: 'Casos Reais do Amapá',
     badgeLabel: 'Dossie Fitossanitário',
     personaText: 'Investigue os detalhes de cada ameaça acima e veja como podemos defender o nosso Amapá!',
@@ -1250,12 +1250,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 18 — O IMPACTO NA SUA VIDA
+     PÁGINA 16 — O IMPACTO NA SUA VIDA
   ───────────────────────────────────────────────────── */
   {
     type: 'chain',
     interactionType: 'standard',
-    id: 'p18',
+    id: 'p16',
     label: 'O Impacto na Sua Vida',
     badgeLabel: 'Conexão com a vida real',
     heroImageSrc: '/assets/cenarios/familia-mesa-comida.png',
@@ -1288,12 +1288,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 19 — JOGO RÁPIDO: ENCONTRE O HERÓI!
+     PÁGINA 17 — JOGO RÁPIDO: ENCONTRE O HERÓI!
   ───────────────────────────────────────────────────── */
   {
     type: 'find-the-hero',
     interactionType: 'find-the-hero',
-    id: 'p19',
+    id: 'p17',
     label: 'Jogo: Encontre o Herói!',
     badgeLabel: 'ATIVIDADE INTERATIVA',
     title: 'Descubra os Heróis e Vilões!',
@@ -1357,12 +1357,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 20 — QUIZ FINAL
+     PÁGINA 18 — QUIZ FINAL
   ───────────────────────────────────────────────────── */
   {
     type: 'quiz',
     interactionType: 'quiz',
-    id: 'p20',
+    id: 'p18',
     label: 'Quiz Final',
     badgeLabel: 'Avaliação de Aprendizagem',
     personaText:
@@ -1372,12 +1372,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 21 — MENSAGEM FINAL
+     PÁGINA 19 — MENSAGEM FINAL
   ───────────────────────────────────────────────────── */
   {
     type: 'closing',
     interactionType: 'closing',
-    id: 'p21',
+    id: 'p19',
     label: 'Mensagem Final',
     heroImageSrc: '/assets/cenarios/paisagem-amapa-sustentavel.png',
     heroTitle: 'Ciencia, Sustentabilidade\ne Você!',

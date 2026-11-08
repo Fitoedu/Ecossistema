@@ -22,17 +22,22 @@ const PAGE_EMOJIS: Record<number, string> = {
   0:  '📗', // Capa
   1:  '📖', // Apresentação
   2:  '🔬', // Fitossanidade
-  3:  '🐛', // Pragas
-  4:  '📉', // Impacto
-  5:  '🚨', // Alerta
-  6:  '🏛️', // Órgãos
-  7:  '✅', // Como Evitar
-  8:  '🌿', // Vassoura
-  9:  '🫐', // Açaí
-  10: '🦟', // Mosca da Fruta
-  11: '💡', // Cadeia
-  12: '🧠', // Quiz
-  13: '🎓', // Encerramento
+  3:  '🐛', // Fábrica de comida
+  4:  '🌱', // Praga agrícola
+  5:  '🦟', // Insetos e ácaros
+  6:  '🔎', // Fungos, bactérias e vírus
+  7:  '🌿', // Plantas invasoras
+  8:  '🤝', // Todo mundo tem um papel
+  9:  '🚨', // Ataque na lavoura
+  10: '🛂', // Pragas quarentenárias
+  11: '🔬', // Pesquisadores
+  12: '🏛️', // Fiscalização
+  13: '🛡️', // Boas práticas
+  14: '🗺️', // Casos reais do Amapá
+  15: '📉', // Impacto
+  16: '🏆', // Encontre o herói
+  17: '🧠', // Quiz
+  18: '🎓', // Encerramento
 }
 
 // ─── NavButton ────────────────────────────────────────────────────────────────
