@@ -28,7 +28,6 @@ import {
   Users,
   X,
 } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
 
 // ─── Dados de navegação ────────────────────────────────────────────────────────
 
