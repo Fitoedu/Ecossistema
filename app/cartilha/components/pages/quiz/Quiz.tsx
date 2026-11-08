@@ -463,7 +463,6 @@ export default function QuizGamificado() {
   const [revealed,  setRevealed]  = useState(false)
   const [answers,   setAnswers]   = useState<(string | null)[]>(Array(QUESTIONS.length).fill(null))
   const [finished,  setFinished]  = useState(false)
-  const [wrongAnim, setWrongAnim] = useState(false)
 
   const question = QUESTIONS[currentQ]
   const isLast   = currentQ === QUESTIONS.length - 1
@@ -485,8 +484,6 @@ export default function QuizGamificado() {
     setAnswers(newAnswers)
     setRevealed(true)
     if (selected !== question.correctId) {
-      setWrongAnim(true)
-      setTimeout(() => setWrongAnim(false), 600)
     }
   }, [selected, answers, currentQ, question.correctId])
 
@@ -497,7 +494,6 @@ export default function QuizGamificado() {
       setCurrentQ(q => q + 1)
       setSelected(null)
       setRevealed(false)
-      setWrongAnim(false)
     }
   }, [isLast])
 
@@ -507,7 +503,6 @@ export default function QuizGamificado() {
     setRevealed(false)
     setAnswers(Array(QUESTIONS.length).fill(null))
     setFinished(false)
-    setWrongAnim(false)
   }, [])
 
   if (finished) {

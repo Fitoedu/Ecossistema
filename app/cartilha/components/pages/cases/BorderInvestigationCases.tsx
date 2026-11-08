@@ -6,7 +6,6 @@ import { motion } from "framer-motion";
 import { Box, HStack, SimpleGrid, Text } from "@chakra-ui/react";
 import type { PageAlertData } from "../../../data/cartilha-data";
 import { Avatar } from "../../layout/Avatar";
-import { Icon } from "@chakra-ui/react";
 import {
   AlertTriangle,
   CheckCircle2,

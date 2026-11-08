@@ -37,7 +37,7 @@ import {
   FileText,
 } from 'lucide-react'
 import type { AmapaCaseData, SymptomItem, CombatAction } from '../../../data/amapa-cases-data'
-import { getThreatLabel, getThreatColors } from '../../../data/amapa-cases-data'
+import { getThreatLabel } from '../../../data/amapa-cases-data'
 
 /* ─── Tipos ───────────────────────────────────────────────────────────────── */
 

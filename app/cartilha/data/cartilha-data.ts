@@ -1,10 +1,9 @@
 /* ══════════════════════════════════════════════════════════════════════════
    cartilha-data.ts — EducaFito
-   Refatoração completa: 18 páginas | Persona Dona Fito | imageSrc | Flaps
+   Refatoração completa: 19 páginas | Persona Dona Fito | imageSrc
    Versão: 2.0.0
 ══════════════════════════════════════════════════════════════════════════ */
 
-import { Avatar } from "@chakra-ui/react"
 import { ElementType } from "react"
 import { Droplet, Leaf, Sprout } from "lucide-react"
 
@@ -15,21 +14,8 @@ import { Droplet, Leaf, Sprout } from "lucide-react"
 /** Variantes de callout/alerta disponíveis no design system */
 export type CalloutVariant = 'green' | 'yellow' | 'red'
 
-/** Variante de acento das abas interativas */
-export type FlapAccent = 'green' | 'yellow' | 'red' | 'teal'
-
 /** Categoria de microorganismo para o hotspot */
 export type MicroorgCategory = 'fungo' | 'bacteria' | 'virus' | 'fitoplasma'
-
-/** Tipo de interação da página — usado para selecionar o layout correto */
-export type InteractionType =
-  | 'standard'       // Página de conteúdo textual clássico
-  | 'lift-the-flap'  // Abas interativas
-  | 'hotspot'        // Lente de Investigação (Hotspot Interativo)
-  | 'quiz'           // Quiz auto-contido
-  | 'find-the-hero'  // Mini-jogo: Encontre o Herói
-  | 'cover'          // Capa da cartilha
-  | 'closing'        // Página de encerramento
 
 /** Emoções possíveis da persona Dona Fito */
 export type PersonaEmotion =
@@ -55,34 +41,8 @@ export interface PersonaBlock {
 /** Um item de callout (caixa de destaque informativo) */
 export interface CalloutData {
   variant: CalloutVariant
-  /**
-   * Substituímos icon: string (emoji) por imageSrc: string.
-   * Recebe o caminho para ícone SVG/PNG do design system.
-   */
-  imageSrc: string
   title: string
   text: string
-  imageSize?: number
-  imageCircular?: boolean
-}
-
-/**
- * Uma aba do lapbook interativo.
- * frontEmoji/frontText foram substituídos por coverTitle + coverImageSrc.
- */
-export interface FlapData {
-  id: string
-  /** Título exibido na capa da aba (frente) */
-  coverTitle: string
-  /** Imagem exibida na frente da aba (substituiu frontEmoji) */
-  coverImageSrc: string
-  /** Texto de apoio na capa da aba (ex.: "Clique para descobrir!") */
-  coverHint?: string
-  /** Conteúdo textual revelado ao "levantar" a aba */
-  content: string
-  /** Imagem opcional revelada no verso da aba */
-  contentImageSrc?: string
-  backAccent?: FlapAccent
 }
 
 /** Card de imagem do grid visual — usa imageSrc em vez de emoji */
@@ -107,11 +67,6 @@ export interface AllyCardData extends ImageCardData {
   benefit: string
 }
 
-/** Uma tag de categoria (cover-tags, etc.) */
-export interface TagData {
-  label: string
-}
-
 /** Card de estatística para páginas de impacto */
 export interface StatCardData {
   gradient: string
@@ -134,13 +89,6 @@ export interface OrgaoItemData {
   imageSrc: string
   name: string
   desc: string
-}
-
-/** Detalhe de uma ficha técnica de praga */
-export interface CaseDetailData {
-  imageSrc: string
-  label: string
-  value: string
 }
 
 /** Item da cadeia de impacto */
@@ -180,17 +128,6 @@ export interface HotspotItemData {
   preventionText?: string
 }
 
-/** Card de alerta de praga quarentenária */
-export interface PragaAlertCardData {
-  bg: string
-  imageSrc: string
-  title: string
-  desc: string
-  status: string
-  economicRisk: string
-  howToAct: string
-}
-
 /* ══════════════════════════════════════════════════════════════════════════
    TIPOS DE PÁGINA — cada type + interactionType mapeia para um layout
 ══════════════════════════════════════════════════════════════════════════ */
@@ -206,8 +143,6 @@ export interface PageCoverData extends PersonaBlock {
   title: string
   highlight: string
   subtitle: string
-  coverImageSrc: string
-  tags: TagData[]
 }
 
 /**
@@ -230,7 +165,6 @@ export interface PageContentData extends PersonaBlock {
   callouts?: CalloutData[]
   midSectionHeading?: string
   midSectionText?: string
-  heroImageSrc?: string
 }
 
 /**
@@ -245,10 +179,7 @@ export interface PageLapbookData extends PersonaBlock {
   lapbookBadge: string
   lapbookTitle: string
   lapbookSubtitle: string
-  flaps: FlapData[]
-  columns?: 2 | 3
   callouts?: CalloutData[]
-  backgroundImageSrc?: string
 }
 
 /**
@@ -265,7 +196,6 @@ export interface PageImpactData extends PersonaBlock {
   leadText: string
   statCards: StatCardData[]
   impacts: ImpactItemData[]
-  heroImageSrc?: string
 }
 
 /**
@@ -284,7 +214,6 @@ export interface PageAlertData extends PersonaBlock {
   alertTitle: string
   alertText: string
   callouts?: CalloutData[]
-  pragaCards?: PragaAlertCardData[]
 }
 
 /**
@@ -301,23 +230,6 @@ export interface PageOrgaosData extends PersonaBlock {
   titleSuffix?: string
   leadText: string
   items: OrgaoItemData[]
-  heroImageSrc?: string
-}
-
-/**
- * CASO REAL — Fichas técnicas de pragas regionais
- */
-export interface PageCaseData extends PersonaBlock {
-  type: 'case'
-  interactionType: 'standard'
-  id: string
-  label: string
-  heroVariant: 'green' | 'amber' | 'teal' | 'red' | 'purple'
-  heroImageSrc: string
-  heroTitle: string
-  heroSubtitle: string
-  details: CaseDetailData[]
-  callouts: CalloutData[]
 }
 
 /**
@@ -336,7 +248,6 @@ export interface PageChainData extends PersonaBlock {
   leadText: string
   chainItems: ChainItemData[]
   callouts?: CalloutData[]
-  heroImageSrc?: string
 }
 
 /**
@@ -465,7 +376,6 @@ export type CartilhaPageData =
   | PageImpactData
   | PageAlertData
   | PageOrgaosData
-  | PageCaseData
   | PageChainData
   | PageQuizData
   | PageFindTheHeroData
@@ -490,14 +400,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     highlight: 'Fitossanitária',
     subtitle:
       'Aprenda de forma fácil e divertida como proteger as plantas, garantir nossa alimentação e preservar a natureza.',
-    coverImageSrc: '/assets/cenarios/capa-planta-saudavel-vs-doente.png',
-    tags: [
-      { label: 'Fitossanidade' },
-      { label: 'Ciência' },
-      { label: 'Agricultura' },
-      { label: 'Pragas' },
-      { label: 'Amapá' },
-    ],
     personaText:
       'Olá! Eu sou a Dona Fito, sua guia nessa aventura! Seja bem-vindo a nossa cartilha! Vamos aprender juntos como cuidar das plantas e proteger nossa comida!',
     personaEmotion: 'happy',
@@ -515,7 +417,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     badgeLabel: 'Apresentação',
     title: 'Você sabia que ',
     titleHighlight: 'plantas também ficam doentes?',
-    heroImageSrc: '/assets/cenarios/planta-saudavel-e-doente.png',
     leadText:
       'Nesta cartilha, você vai descobrir o mundo fascinante da Fitossanidade — a ciência que cuida da saúde das plantas. Vamos explorar juntos:',
     imageCards: [
@@ -526,14 +427,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     ],
     topCallout: {
       variant: 'green',
-      imageSrc: '/dona_fito_meio_corpo.png',
       title: 'Olá, futuro cientista!',
       text: 'Assim como nós, humanos, podemos ficar gripados ou com febre, as plantas também podem ser atacadas por "vilões" que as deixam fracas, feias e improdutivas. Esses vilões se chamam pragas e doenças.',
     },
     callouts: [
       {
         variant: 'yellow',
-        imageSrc: '/assets/joaninha_corpo_todo.png',
         title: 'Linguagem fácil para todos!',
         text: 'Esta cartilha foi criada especialmente para estudantes como você. Não precisamos ser cientistas para entender e ajudar a proteger as plantas da nossa região!',
       },
@@ -555,7 +454,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     badgeLabel: 'Conceito Base',
     title: 'O que é ',
     titleHighlight: 'Fitossanidade?',
-    heroImageSrc: '/assets/cenarios/cientista-observando-planta.png',
     leadText:
       'A palavra Fitossânidade vem do grego phyton (planta) e do latim sanitas (saúde). É a área da ciência que cuida da saúde das plantas e garante que elas cresçam fortes e produtivas.',
     imageCards: [
@@ -572,7 +470,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'green',
-        imageSrc: '/dona_fito_meio_corpo.png',
         title: 'Curiosidade!',
         text: 'O Brasil é um dos maiores exportadores agrícolas do mundo. Por isso, cuidar da saúde das plantas é também cuidar da economia de milhões de famílias brasileiras!',
       },
@@ -594,7 +491,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     badgeLabel: 'Agricultura',
     title: 'As plantas são a nossa ',
     titleHighlight: 'fábrica de comida!',
-    heroImageSrc: '/assets/cenarios/lavoura-produtiva-amapa.png',
     leadText:
       'Tudo o que comemos — arroz, feijão, fruta, farinha — começou como uma semente ou muda numa lavoura. As plantas transformam água, luz do sol e nutrientes do solo em alimento para nós. Por isso, cuidar delas é cuidar de nós mesmos!',
     imageCards: [
@@ -609,7 +505,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'yellow',
-        imageSrc: '/joaninha_corpo_todo.png',
         title: 'Sabia que...',
         text: 'A mandioca e o açaí são duas das principais "fábricas de comida" do Amapá! Milhares de famílias dependem dessas plantas para viver e para vender seus produtos.',
       },
@@ -631,7 +526,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     badgeLabel: 'Conceito de Praga',
     title: 'O que é uma ',
     titleHighlight: 'Praga Agrícola?',
-    heroImageSrc: '/assets/pragas/praga-agricola-visao-geral.png',
     leadText:
       'Uma praga agrícola é qualquer organismo vivo — inseto, fungo, bactéria, vírus, planta invasora — que cause dano econômico a uma lavoura. Nem todo bichinho é uma praga! Só é praga quando causa prejuízo real ao agricultor.',
     statCards: [
@@ -723,7 +617,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'yellow',
-        imageSrc: '/joaninha_corpo_todo.png',
         title: 'Atenção!',
         text: 'Nem todo inseto é praga! Abelhas, joaninhas e vespinhas parasitoides são aliadas da lavoura. Conhecer os benefícios e os prejudiciais é essencial para um manejo agrícola responsável.',
       },
@@ -837,7 +730,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'green',
-        imageSrc: '/dona_fito_meio_corpo.png',
         title: 'A prevenção é sempre melhor!',
         text: 'Fungos e bactérias se espalham pela água, pelo vento e por ferramentas contaminadas. Higienizar os instrumentos agrícolas, usar sementes certificadas e evitar o excesso de água são formas simples de prevenir essas doenças!',
       },
@@ -860,7 +752,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     title: 'As plantas que ',
     titleHighlight: 'roubam espaço',
     titleSuffix: ' das outras!',
-    heroImageSrc: '/assets/pragas/plantas-invasoras/erva-daninha-lavoura.png',
     leadText:
       'Plantas invasoras (ou ervas daninhas) são plantas que crescem onde não são desejadas e competem com as plantas cultivadas por água, luz e nutrientes do solo. E uma disputa por recursos — e a planta da lavoura quem perde!',
     invasiveCards: [
@@ -899,7 +790,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'yellow',
-        imageSrc: '/joaninha_corpo_todo.png',
         title: 'Curiosidade!',
         text: 'O aguapé (jacinto-d’água) é uma planta invasora aquática que bloqueia rios e lagos no Amapá, prejudicando a pesca e a navegação. Até plantas podem ser pragas em locais errados!',
       },
@@ -921,7 +811,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     badgeLabel: 'Aliados da Lavoura',
     title: 'Na natureza, todo mundo tem ',
     titleHighlight: 'um papel!',
-    heroImageSrc: '/assets/cenarios/ecossistema-agricola-equilibrado.png',
     leadText:
       'Nem tudo é vilão na natureza! Existem seres vivos incríveis que ajudam a lavoura ao se alimentar das pragas ou ao polinizar as flores das plantas. São os nossos heróis naturais!',
     allyCards: [
@@ -974,7 +863,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'green',
-        imageSrc: '/dona_fito_meio_corpo.png',
         title: 'A natureza é sábia!',
         text: 'Quando preservamos a biodiversidade ao redor das lavouras — matas, rios, bosques — estamos protegendo o lar dos nossos aliados naturais. Fazenda sustentavel e fazenda saudavel!',
       },
@@ -996,7 +884,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     badgeLabel: 'Como as Pragas Atacam',
     title: 'Como as pragas ',
     titleHighlight: 'atacam a lavoura?',
-    heroImageSrc: '/assets/cenarios/lavoura-atacada-por-praga.png',
     leadText:
       'Cada tipo de praga tem uma forma diferente de atacar as plantas. Conhecer essas estratégias nos ajuda a identificar o problema cedo e agir rapidamente, salvando a colheita!',
     statCards: [
@@ -1054,38 +941,8 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'yellow',
-        imageSrc: '/assets/joaninha_corpo_todo.png',
         title: 'Por que o nome "Quarentenária"?',
         text: 'O termo vem de "quarentena" — o periodo de isolamento usado para evitar a propagação de doenças. Assim como fazemos quarentena para proteger as pessoas, fazemos quarentena fitossanitária para proteger as plantas!',
-      },
-    ],
-    pragaCards: [
-      {
-        bg: 'linear-gradient(135deg,#B71C1C,#C62828)',
-        imageSrc: '/images/pragas/mosca da carambola/1.webp',
-        title: 'Mosca-da-carambola',
-        desc: 'Detectada no Amapá, ameaça frutas em todo o território nacional.',
-        status: 'Presente no Amapá — Quarentena A1.',
-        economicRisk: 'Ataca diversas frutas e pode provocar perdas de produção e bloqueios de exportação.',
-        howToAct: 'Não transporte frutas sem origem comprovada. Denuncie suspeitas e aguarde a fiscalização sanitária.',
-      },
-      {
-        bg: 'linear-gradient(135deg,#8B1E1E,#C62828)',
-        imageSrc: '/images/doencas/fitoplasma.webp',
-        title: 'Huanglongbing (HLB)',
-        desc: 'Doença bacteriana devastadora para citros, sem cura conhecida.',
-        status: 'Monitorado no Brasil — risco quarentenário para novas áreas.',
-        economicRisk: 'Reduz a produção de citros, compromete pomares e pode impedir a comercialização e exportação.',
-        howToAct: 'Use mudas certificadas, comunique sintomas e siga as orientações dos órgãos de defesa agropecuária.',
-      },
-      {
-        bg: 'linear-gradient(135deg,#B71C1C,#E65100)',
-        imageSrc: '/images/pragas/vespa velutina/1.webp',
-        title: 'Vespa Velutina',
-        desc: 'Predadora de abelhas nativas, com risco à polinização e à apicultura.',
-        status: 'Alerta de vigilância — ocorrência deve ser comunicada às autoridades.',
-        economicRisk: 'Reduz colônias de abelhas, ameaça a polinização e pode afetar a produção de mel e frutas.',
-        howToAct: 'Não manipule ninhos. Registre o local, mantenha distância e denuncie para a fiscalização sanitária.',
       },
     ],
     personaText:
@@ -1106,7 +963,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     title: 'Os Cientistas que ',
     titleHighlight: 'protegem',
     titleSuffix: ' nossas plantas!',
-    heroImageSrc: '/assets/cenarios/pesquisador-laboratorio.png',
     leadText:
       'Por trás de cada solução fitossanitária existe um pesquisador dedicado! Essas pessoas estudam pragas, desenvolvem novas variedades de plantas resistentes e criam métodos de controle sustentáveis.',
     items: [
@@ -1135,7 +991,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     title: 'Os guardiões que ',
     titleHighlight: 'fiscalizam',
     titleSuffix: ' e protegem!',
-    heroImageSrc: '/assets/cenarios/fiscal-aeroporto-fitossanitario.png',
     leadText:
       'Além dos pesquisadores, existe uma rede de fiscalização que trabalha 24 horas por dia para impedir que pragas perigosas entrem no Brasil ou se espalhem entre os estados.',
     items: [
@@ -1153,7 +1008,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 14 — O ESCUDO PROTETOR (BOAS PRÁTICAS — LIFT-THE-FLAP)
+     PÁGINA 14 — O ESCUDO PROTETOR (BOAS PRÁTICAS)
   ───────────────────────────────────────────────────── */
   {
     type: 'lapbook',
@@ -1164,67 +1019,9 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     lapbookBadge: 'PREVENÇÃO E MANEJO',
     lapbookTitle: 'Como Evitar e Controlar as Pragas Agrícolas?',
     lapbookSubtitle: 'Arraste ou clique nos cartões para classificar as atitudes de proteção da lavoura!',
-    backgroundImageSrc: '/assets/cenarios/fundo-lapbook-teal.png',
-    flaps: [
-      {
-        id: 'sementes-certificadas',
-        coverTitle: 'Sementes Certificadas',
-        coverImageSrc: '/assets/boas-praticas/semente-certificada-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'Sementes inspecionadas e aprovadas pelo MAPA garantem que estão livres de pragas, doenças e com alta capacidade de germinação. Começar com boas sementes é a base de uma lavoura saudável!',
-        contentImageSrc: '/assets/boas-praticas/semente-certificada-detalhe.png',
-        backAccent: 'green',
-      },
-      {
-        id: 'rotacao-culturas',
-        coverTitle: 'Rotação de Culturas',
-        coverImageSrc: '/assets/boas-praticas/rotacao-culturas-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'Alternar diferentes especies de plantas numa mesma area entre as safras quebra o ciclo de reproducao das pragas e melhora a saude do solo. E simples, barato e muito eficaz!',
-        contentImageSrc: '/assets/boas-praticas/rotacao-culturas-detalhe.png',
-        backAccent: 'teal',
-      },
-      {
-        id: 'controle-biologico',
-        coverTitle: 'Controle Biológico',
-        coverImageSrc: '/assets/boas-praticas/controle-biologico-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'Usar inimigos naturais das pragas — joaninhas, vespinhas parasitoides e fungos entomopatogênicos — para controlá-las de forma sustentável, sem agrotóxicos. A natureza trabalhando para nós!',
-        contentImageSrc: '/assets/boas-praticas/controle-biologico-detalhe.png',
-        backAccent: 'green',
-      },
-      {
-        id: 'mip',
-        coverTitle: 'MIP — Manejo Integrado de Pragas',
-        coverImageSrc: '/assets/boas-praticas/mip-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'O MIP combina metodos biologicos, culturais e quimicos de forma equilibrada, usando o minimo de agrotoxico possivel. E a abordagem mais moderna e sustentavel da fitossanidade!',
-        contentImageSrc: '/assets/boas-praticas/mip-diagrama.png',
-        backAccent: 'yellow',
-      },
-      {
-        id: 'monitoramento',
-        coverTitle: 'Monitoramento Constante',
-        coverImageSrc: '/assets/boas-praticas/monitoramento-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'Visitar a lavoura regularmente, usar armadilhas para insetos e registrar o que se observa permite identificar problemas cedo. Problema identificado cedo e problema resolvido com menor custo e dano!',
-        contentImageSrc: '/assets/boas-praticas/monitoramento-armadilha.png',
-        backAccent: 'teal',
-      },
-      {
-        id: 'voce-pode-ajudar',
-        coverTitle: 'Você também pode ajudar!',
-        coverImageSrc: '/assets/boas-praticas/cidadao-ajuda-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'Não transporte plantas, frutas ou terra sem verificar a origem. Compre produtos com selos de qualidade. Denuncie pragas desconhecidas ao MAPA. Compartilhe o que aprendeu. Cada atitude conta!',
-        contentImageSrc: '/assets/boas-praticas/cidadao-ajuda-detalhe.png',
-        backAccent: 'yellow',
-      },
-    ],
     callouts: [
       {
         variant: 'green',
-        imageSrc: '/assets/icones/prevencao-icone.png',
         title: 'A prevenção sempre vence o combate!',
         text: 'Investir em boas práticas fitossanitárias custa muito menos do que tratar uma lavoura infestada. Agricultor informado é agricultor protegido — e isso vale para toda a família rural!',
       },
@@ -1258,7 +1055,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     id: 'p16',
     label: 'O Impacto na Sua Vida',
     badgeLabel: 'Conexão com a vida real',
-    heroImageSrc: '/assets/cenarios/familia-mesa-comida.png',
     heroTitle: 'Sem Fitossanidade = Menos Comida na Mesa',
     heroHighlight: '',
     heroSubtitle:
@@ -1276,7 +1072,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'yellow',
-        imageSrc: '/joaninha_corpo_todo.webp',
         title: 'Você quer fazer a diferença?',
         text: 'Não transporte plantas ou frutas de regiões desconhecidas. Compre produtos com selos de qualidade. Apoie agricultores locais. Essas atitudes simples ajudam a manter a fitossanidade da nossa região!',
       },
@@ -1345,7 +1140,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callouts: [
       {
         variant: 'green',
-        imageSrc: '/assets//trofeu-icone.png',
         title: 'Parabéns por aprender!',
         text: 'Distinguir heróis de vilões na natureza é o primeiro passo para um manejo sustentável da lavoura. Agricultores que conhecem seus aliados naturais usam menos agrotoxicos e tem melhores colheitas!',
       },
@@ -1393,7 +1187,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     ctaSub: 'Compartilhe o que aprendeu. Cada pessoa informada é um guardião das nossas plantas.',
     callout: {
       variant: 'green',
-      imageSrc: '/assets/icones/livro-icone.png',
       title: 'Continue sua jornada de aprendizagem!',
       text: 'Explore os outros modulos do EducaFito, converse com agricultores da sua região, visite a Embrapa Amapá e descubra como a ciência está trabalhando para proteger nossas lavouras e nossa biodiversidade amazônica.',
     },
@@ -1417,16 +1210,4 @@ export function getPage(index: number): CartilhaPageData {
   const page = CARTILHA_PAGES[index]
   if (!page) throw new RangeError(`Pagina ${index} não existe. Total: ${TOTAL_PAGES}`)
   return page
-}
-
-/** Retorna apenas paginas do tipo lapbook para pre-renderizacao */
-export function getLapbookPages(): PageLapbookData[] {
-  return CARTILHA_PAGES.filter((p): p is PageLapbookData => p.type === 'lapbook')
-}
-
-/** Retorna o indice de uma pagina pelo seu id */
-export function getPageIndexById(id: string): number {
-  const index = CARTILHA_PAGES.findIndex((p) => p.id === id)
-  if (index === -1) throw new Error(`Pagina com id "${id}" não encontrada.`)
-  return index
 }

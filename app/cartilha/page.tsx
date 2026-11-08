@@ -14,7 +14,6 @@ import {
   PageImpact,
   PageAlert,
   PageOrgaos,
-  PageCase,
   PageChain,
   PageQuiz,
   PageFindTheHero,
@@ -57,8 +56,6 @@ function renderPage(
       return <PageAlert data={page} />;
     case "orgaos":
       return <PageOrgaos data={page} />;
-    case "case":
-      return <PageCase data={page} />;
     case "chain":
       return <PageChain data={page} />;
     case "quiz":
