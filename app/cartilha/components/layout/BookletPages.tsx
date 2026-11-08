@@ -37,7 +37,6 @@ import {
   TreePine,
   Users,
 } from "lucide-react";
-import LiftTheFlap from "../ui/LiftTheFlap";
 import LapbookFolder, { type PocketCard } from "../ui/LapbookFolder";
 import PestModalGallery from "../pages/pests/PestModalGallery";
 import Quiz from "../pages/quiz/Quiz";
@@ -1543,29 +1542,7 @@ export function PageLapbook({ data }: { data: PageLapbookData }) {
     );
   }
 
-  /* ── Layout padrão para todas as demais páginas do tipo lapbook ── */
-  return (
-    <Box>
-      <SectionBadge>{data.badgeLabel}</SectionBadge>
-      <LapbookHeader
-        badge={data.lapbookBadge}
-        title={data.lapbookTitle}
-        subtitle={data.lapbookSubtitle}
-      />
-      <LiftTheFlap
-        title={data.lapbookTitle}
-        flaps={data.flaps.map((f) => ({
-          id: f.id,
-          frontEmoji: "",
-          frontText: f.coverTitle,
-          backContent: f.content,
-          backAccent: f.backAccent,
-        }))}
-        columns={data.columns ?? 2}
-      />
-      {data.callouts && <CalloutList callouts={data.callouts} startMt={5} />}
-    </Box>
-  );
+  return null;
 }
 
 /**

@@ -15,7 +15,7 @@ import { Droplet, Leaf, Sprout } from "lucide-react"
 /** Variantes de callout/alerta disponíveis no design system */
 export type CalloutVariant = 'green' | 'yellow' | 'red'
 
-/** Variante de acento do LiftTheFlap */
+/** Variante de acento das abas interativas */
 export type FlapAccent = 'green' | 'yellow' | 'red' | 'teal'
 
 /** Categoria de microorganismo para o hotspot */
@@ -24,7 +24,7 @@ export type MicroorgCategory = 'fungo' | 'bacteria' | 'virus' | 'fitoplasma'
 /** Tipo de interação da página — usado para selecionar o layout correto */
 export type InteractionType =
   | 'standard'       // Página de conteúdo textual clássico
-  | 'lift-the-flap'  // Abas interativas (LiftTheFlap)
+  | 'lift-the-flap'  // Abas interativas
   | 'hotspot'        // Lente de Investigação (Hotspot Interativo)
   | 'quiz'           // Quiz auto-contido
   | 'find-the-hero'  // Mini-jogo: Encontre o Herói
@@ -67,7 +67,7 @@ export interface CalloutData {
 }
 
 /**
- * Uma aba do componente LiftTheFlap (Lapbook Interativo).
+ * Uma aba do lapbook interativo.
  * frontEmoji/frontText foram substituídos por coverTitle + coverImageSrc.
  */
 export interface FlapData {
@@ -234,7 +234,7 @@ export interface PageContentData extends PersonaBlock {
 }
 
 /**
- * LAPBOOK — Página com LiftTheFlap interativo
+ * LAPBOOK — Página com abas interativas
  */
 export interface PageLapbookData extends PersonaBlock {
   type: 'lapbook'
@@ -1419,7 +1419,7 @@ export function getPage(index: number): CartilhaPageData {
   return page
 }
 
-/** Retorna apenas paginas com LiftTheFlap para pre-renderizacao */
+/** Retorna apenas paginas do tipo lapbook para pre-renderizacao */
 export function getLapbookPages(): PageLapbookData[] {
   return CARTILHA_PAGES.filter((p): p is PageLapbookData => p.type === 'lapbook')
 }
