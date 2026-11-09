@@ -81,7 +81,7 @@ const games: Game[] = [
     iconBg: '#ea580c',
     accentColor: '#ea580c',
     href: '/jogos/bingo',
-    available: false,
+    available: true,
   },
   {
     id: 'caca-palavras',
