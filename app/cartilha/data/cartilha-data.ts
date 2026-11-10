@@ -399,9 +399,9 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     title: 'Educação Fitossanitária\npara o Ensino Básico',
     highlight: 'Fitossanitária',
     subtitle:
-      'Aprenda de forma fácil e divertida como proteger as plantas, garantir nossa alimentação e preservar a natureza.',
+      'Aprenda de forma fácil sobre fitossanidade, pragas agrícolas, aliados naturais e práticas sustentáveis para proteger nossos cultivos agrícolas.',
     personaText:
-      'Olá! Eu sou a Dona Fito, sua guia nessa aventura! Seja bem-vindo a nossa cartilha! Vamos aprender juntos como cuidar das plantas e proteger nossa comida!',
+      'Olá! Eu sou a Dona Fito, sua guia nessa aventura! Seja bem-vindo à nossa cartilha! Vamos aprender juntos sobre pragas agrícolas, aliados naturais e manejo sustentável para cuidar das plantas e proteger nossa comida!',
     personaEmotion: 'happy',
     personaImageSrc: '/assets/dona-fito/dona-fito-happy.png',
   },

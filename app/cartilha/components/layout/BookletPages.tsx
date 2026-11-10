@@ -808,9 +808,9 @@ function PersonaGreeting() {
               letterSpacing="0.01em"
               fontStyle="normal"
             >
-              Olá, futuro cientista! Você sabia que as plantas também ficam
-              doentes? Vamos descobrir juntos como identificar, prevenir e
-              proteger nossas roças!
+              Olá, futuro cientista! As plantas também precisam de cuidados
+              contra doenças, insetos e invasores. Vamos descobrir juntos como
+              cuidar das nossas roças!
             </Text>
           </Box>
         </Box>
@@ -861,9 +861,9 @@ export function PageCover({ data }: { data: PageCoverData }) {
         <BeforeAfterSlider
           beforeImage="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?q=80&w=800&auto=format&fit=crop"
           afterImage="https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?q=80&w=800&auto=format&fit=crop"
-          beforeLabel="Planta Saudável"
-          afterLabel="Planta Doente"
-          altText="Comparação de plantação saudável versus doente"
+          beforeLabel="Cultivo agrícola saudável"
+          afterLabel="Planta afetada"
+          altText="Comparação entre um cultivo agrícola saudável e uma planta afetada por problemas fitossanitários"
         />
       </Box>
 
