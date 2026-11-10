@@ -1122,8 +1122,8 @@ export function PageContent({
     );
   }
 
-  /* Layout exclusivo para a Página 04 — A fábrica de comida */
-  if (data.id === "p4") {
+  /* Layout exclusivo para a Página 05 — A fábrica de comida */
+  if (data.id === "p5") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -1975,6 +1975,32 @@ function AttackInteractivePage({ data }: { data: PageImpactData }) {
       </PageTitle>
       <LeadText>{data.leadText}</LeadText>
 
+      {data.pestGroups && (
+        <SimpleGrid columns={{ base: 2, sm: 4 }} gap={2} mb={5}>
+          {data.pestGroups.map((group) => (
+            <Box
+              key={group}
+              bg="green.50"
+              border="1px solid"
+              borderColor="green.100"
+              borderRadius="lg"
+              px={2}
+              py={3}
+              textAlign="center"
+            >
+              <Text
+                fontSize={{ base: "0.68rem", sm: "0.75rem" }}
+                fontWeight="700"
+                color="green.800"
+                lineHeight="1.25"
+              >
+                {group}
+              </Text>
+            </Box>
+          ))}
+        </SimpleGrid>
+      )}
+
       <Text
         fontSize="0.78rem"
         fontWeight="600"
@@ -2030,7 +2056,7 @@ function PragaAgricolaInteractivePage({ data }: { data: PageImpactData }) {
 }
 
 export function PageImpact({ data }: { data: PageImpactData }) {
-  if (data.id === "p5") {
+  if (data.id === "p4") {
     return <PragaAgricolaInteractivePage data={data} />;
   }
   if (data.id === "p10") {

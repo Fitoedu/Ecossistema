@@ -194,6 +194,7 @@ export interface PageImpactData extends PersonaBlock {
   title: string
   titleHighlight?: string
   leadText: string
+  pestGroups?: string[]
   statCards: StatCardData[]
   impacts: ImpactItemData[]
 }
@@ -481,12 +482,48 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 4 — A FÁBRICA DE COMIDA
+     PÁGINA 4 — O QUE É UMA PRAGA AGRÍCOLA?
+  ───────────────────────────────────────────────────── */
+  {
+    type: 'impact',
+    interactionType: 'standard',
+    id: 'p4',
+    label: 'O que é uma Praga Agrícola?',
+    badgeLabel: 'Conceito de Praga Agrícola',
+    title: 'O que é uma ',
+    titleHighlight: 'Praga Agrícola?',
+    leadText:
+      'Pragas agrícolas incluem insetos, ácaros, microrganismos fitopatogênicos e plantas invasoras. Esses organismos podem causar danos às plantas e prejuízos econômicos à produção agrícola.',
+    pestGroups: [
+      'Insetos',
+      'Ácaros',
+      'Microrganismos fitopatogênicos',
+      'Plantas invasoras',
+    ],
+    statCards: [
+      { gradient: 'linear-gradient(135deg, #2E7D32, #388E3C)', stat: '40%', label: 'das colheitas mundiais são perdidas por pragas agrícolas, segundo a FAO.', textColor: 'white' },
+      { gradient: 'linear-gradient(135deg, #F57F17, #FBC02D)', stat: 'R$ Bilhões', label: 'de prejuízo anual para o agronegócio brasileiro.', textColor: '#212121' },
+      { gradient: 'linear-gradient(135deg, #37474F, #546E7A)', stat: 'Ecossistema', label: 'em risco por introdução de espécies invasoras exóticas.', textColor: 'white' },
+    ],
+    impacts: [
+      { imageSrc: '/assets/icones/caixa-icone.png', title: 'Redução da produção', desc: 'Pragas destroem partes ou toda a plantação, reduzindo drasticamente o volume colhido.' },
+      { imageSrc: '/assets/icones/custo-icone.png', title: 'Aumento de custos', desc: 'Agricultores gastam mais com defensivos agrícolas, replantio e trabalho para combater as pragas agrícolas.' },
+      { imageSrc: '/assets/icones/bloqueio-icone.png', title: 'Bloqueio de exportações', desc: 'Produtos com pragas agrícolas podem ser barrados na alfândega, gerando prejuízos aos produtores.' },
+      { imageSrc: '/assets/icones/clima-icone.png', title: 'Mudanças climáticas agravam', desc: 'O aquecimento global favorece a proliferação e expansão geográfica de novas pragas agrícolas.' },
+    ],
+    personaText:
+      'Praga é qualquer ser vivo que cause prejuízo à nossa roça! Mas atenção: nem todo inseto é vilão! A joaninha, por exemplo, é uma heroína — ela come outros insetos que atacam as plantas!',
+    personaEmotion: 'alert',
+    personaImageSrc: '/assets/dona-fito/dona-fito-alert.png',
+  },
+
+  /* ─────────────────────────────────────────────────────
+     PÁGINA 5 — A FÁBRICA DE COMIDA
   ───────────────────────────────────────────────────── */
   {
     type: 'content',
     interactionType: 'standard',
-    id: 'p4',
+    id: 'p5',
     label: 'A Fábrica de Comida',
     badgeLabel: 'Agricultura',
     title: 'As plantas são a nossa ',
@@ -513,36 +550,6 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       'Imagina a roça como uma grande fábrica. Cada planta é uma máquina que produz comida para a gente. Se uma praga agrícola atacar, a fábrica para! E aí, o que acontece com a nossa comida?',
     personaEmotion: 'pointing',
     personaImageSrc: '/assets/dona-fito/dona-fito-pointing.png',
-  },
-
-  /* ─────────────────────────────────────────────────────
-     PÁGINA 5 — O QUE É UMA PRAGA AGRÍCOLA?
-  ───────────────────────────────────────────────────── */
-  {
-    type: 'impact',
-    interactionType: 'standard',
-    id: 'p5',
-    label: 'O que é uma Praga Agrícola?',
-    badgeLabel: 'Conceito de Praga',
-    title: 'O que é uma ',
-    titleHighlight: 'Praga Agrícola?',
-    leadText:
-      'Uma praga agrícola é qualquer organismo vivo — inseto, fungo, bactéria, vírus, planta invasora — que cause dano econômico a um cultivo agrícola. Nem todo bichinho é uma praga agrícola! Só é praga agrícola quando causa prejuízo real ao agricultor.',
-    statCards: [
-      { gradient: 'linear-gradient(135deg, #2E7D32, #388E3C)', stat: '40%', label: 'das colheitas mundiais são perdidas por pragas agrícolas, segundo a FAO.', textColor: 'white' },
-      { gradient: 'linear-gradient(135deg, #F57F17, #FBC02D)', stat: 'R$ Bilhões', label: 'de prejuízo anual para o agronegócio brasileiro.', textColor: '#212121' },
-      { gradient: 'linear-gradient(135deg, #37474F, #546E7A)', stat: 'Ecossistema', label: 'em risco por introdução de espécies invasoras exóticas.', textColor: 'white' },
-    ],
-    impacts: [
-      { imageSrc: '/assets/icones/caixa-icone.png', title: 'Redução da produção', desc: 'Pragas destroem partes ou toda a plantação, reduzindo drasticamente o volume colhido.' },
-      { imageSrc: '/assets/icones/custo-icone.png', title: 'Aumento de custos', desc: 'Agricultores gastam mais com defensivos agrícolas, replantio e trabalho para combater as pragas agrícolas.' },
-      { imageSrc: '/assets/icones/bloqueio-icone.png', title: 'Bloqueio de exportações', desc: 'Produtos com pragas agrícolas podem ser barrados na alfândega, gerando prejuízos aos produtores.' },
-      { imageSrc: '/assets/icones/clima-icone.png', title: 'Mudanças climáticas agravam', desc: 'O aquecimento global favorece a proliferação e expansão geográfica de novas pragas agrícolas.' },
-    ],
-    personaText:
-      'Praga é qualquer ser vivo que cause prejuízo à nossa roça! Mas atenção: nem todo inseto é vilão! A joaninha, por exemplo, é uma heroína — ela come outros insetos que atacam as plantas!',
-    personaEmotion: 'alert',
-    personaImageSrc: '/assets/dona-fito/dona-fito-alert.png',
   },
 
   /* ─────────────────────────────────────────────────────
