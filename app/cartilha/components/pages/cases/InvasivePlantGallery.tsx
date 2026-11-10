@@ -113,7 +113,7 @@ function InvasivePlantModal({
                 </Box>
 
                 <DialogHeader px={{ base: 4, sm: 6 }} pt={5} pb={2}>
-                  <DialogTitle color="green.900">Como ela compete com a lavoura?</DialogTitle>
+                  <DialogTitle color="green.900">Como ela compete com a roça?</DialogTitle>
                 </DialogHeader>
                 <DialogCloseTrigger
                   position="absolute"

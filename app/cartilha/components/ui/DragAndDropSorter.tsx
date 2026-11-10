@@ -60,7 +60,7 @@ const DEFAULT_CARDS: SorterCard[] = [
     text: "Usar sementes e mudas certificadas pelo MAPA",
     correct: "safe",
     explanation:
-      "Sementes certificadas garantem material livre de pragas e doenças desde o início do ciclo produtivo.",
+      "Sementes certificadas garantem material livre de pragas agrícolas e doenças desde o início do ciclo produtivo.",
   },
   {
     id: "c2",
@@ -88,11 +88,11 @@ const DEFAULT_CARDS: SorterCard[] = [
     text: "Ignorar manchas e sintomas nas folhas até a colheita",
     correct: "risk",
     explanation:
-      "Sintomas precoces não tratados permitem que a praga se reproduza e contamine toda a lavoura.",
+      "Sintomas precoces não tratados permitem que a praga agrícola se reproduza e contamine todo o cultivo agrícola.",
   },
   {
     id: "c6",
-    text: "Usar ferramentas sujas provenientes de lavouras infectadas",
+    text: "Usar ferramentas sujas provenientes de cultivos agrícolas infectados",
     correct: "risk",
     explanation:
       "Implementos sem higienização são vetores mecânicos que dispersam fungos, bactérias e vírus.",

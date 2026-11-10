@@ -42,7 +42,7 @@ const CASES: InvestigationCase[] = [
     blockFeedback:
       "Uau! Se essa Mosca-da-carambola entrasse, toda a nossa produção local estaria em risco!",
     allowFeedback:
-      "Atenção! Sem certificado sanitário, as frutas podem trazer uma praga perigosa. A carga deve ser bloqueada para inspeção.",
+      "Atenção! Sem certificado sanitário, as frutas podem trazer uma praga agrícola perigosa. A carga deve ser bloqueada para inspeção.",
   },
   {
     id: 2,
@@ -64,7 +64,7 @@ const CASES: InvestigationCase[] = [
     id: 3,
     title: "Caso 3: Maçãs Certificadas",
     description:
-      "A presença de nota fiscal e selo de inspeção sanitária comprova a origem segura da carga proveniente de área livre de pragas..",
+      "A presença de nota fiscal e selo de inspeção sanitária comprova a origem segura da carga proveniente de área livre de pragas agrícolas..",
     imageSrc: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6",
     correctAction: "allow",
     alertLabel: "SEGURO: Carga Certificada",

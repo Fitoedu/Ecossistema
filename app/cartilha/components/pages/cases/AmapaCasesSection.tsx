@@ -98,7 +98,7 @@ function SectionHeader() {
           color="gray.600"
           lineHeight="1.7"
         >
-          Pragas e doenças reais que ameaçam a agricultura familiar e as
+          Pragas agrícolas e doenças reais que ameaçam a agricultura familiar e as
           exportações do estado. Clique em cada dossiê para investigar.
         </Text>
 

@@ -96,7 +96,7 @@ function AllyModal({ item, onClose }: { item: AllyCardData | null; onClose: () =
                 </Box>
 
                 <DialogHeader px={{ base: 4, sm: 6 }} pt={5} pb={2}>
-                  <DialogTitle color="green.900">Herói da lavoura</DialogTitle>
+                  <DialogTitle color="green.900">Herói da roça</DialogTitle>
                 </DialogHeader>
                 <DialogCloseTrigger
                   position="absolute"

@@ -26,12 +26,12 @@ const QUESTIONS: Question[] = [
     text: 'O que é Fitossanidade?',
     options: [
       { id: 'a', text: 'A ciência que estuda apenas os remédios naturais.' },
-      { id: 'b', text: 'A área responsável pela saúde e proteção das plantas contra pragas e doenças.' },
+      { id: 'b', text: 'A área responsável pela saúde e proteção das plantas contra pragas agrícolas e doenças.' },
       { id: 'c', text: 'Um tipo de plantação orgânica sem uso de qualquer produto.' },
       { id: 'd', text: 'O processo de irrigação dos campos agrícolas.' },
     ],
     correctId: 'c',
-    explanation: 'Fitossanidade zela pela saúde das plantas, prevenindo e controlando pragas, doenças e plantas invasoras para garantir colheitas saudáveis.',
+    explanation: 'Fitossanidade zela pela saúde das plantas, prevenindo e controlando pragas agrícolas, doenças e plantas invasoras para garantir colheitas saudáveis.',
   },
   {
     id: 2,
@@ -39,9 +39,9 @@ const QUESTIONS: Question[] = [
     text: 'O que é uma Praga Quarentenária?',
     options: [
       { id: 'a', text: 'Um inseto comum encontrado em jardins residenciais.' },
-      { id: 'b', text: 'Uma praga muito pequena, invisível a olho nu.' },
-      { id: 'c', text: 'Uma praga de alto risco econômico, ausente ou com distribuição limitada no país, sujeita a controle oficial.' },
-      { id: 'd', text: 'Qualquer planta que cresce entre as lavouras.' },
+      { id: 'b', text: 'Uma praga agrícola muito pequena, invisível a olho nu.' },
+      { id: 'c', text: 'Uma praga agrícola de alto risco econômico, ausente ou com distribuição limitada no país, sujeita a controle oficial.' },
+      { id: 'd', text: 'Qualquer planta que cresce entre os cultivos agrícolas.' },
     ],
     correctId: 'c',
     explanation: 'Pragas quarentenárias têm alto impacto econômico e sofrem controle rigoroso para impedir sua entrada e dispersão no Brasil.',
@@ -49,7 +49,7 @@ const QUESTIONS: Question[] = [
   {
     id: 3,
     emoji: '🌿',
-    text: 'Qual praga representa um caso real no Amapá / Região Norte?',
+    text: 'Qual praga agrícola representa um caso real no Amapá / Região Norte?',
     options: [
       { id: 'a', text: 'A ferrugem do café no sul de Minas Gerais.' },
       { id: 'b', text: 'A vassoura-de-bruxa na mandioca.' },
@@ -57,7 +57,7 @@ const QUESTIONS: Question[] = [
       { id: 'd', text: 'A podridão-seca da soja no Cerrado.' },
     ],
     correctId: 'b',
-    explanation: 'A vassoura-de-bruxa (fungo Moniliophthora perniciosa) é uma praga relevante que afeta a mandioca na Região Norte, podendo reduzir até 90% da produção.',
+    explanation: 'A vassoura-de-bruxa (fungo Moniliophthora perniciosa) é uma praga agrícola relevante que afeta a mandioca na Região Norte, podendo reduzir até 90% da produção.',
   },
   {
     id: 4,
@@ -70,7 +70,7 @@ const QUESTIONS: Question[] = [
       { id: 'd', text: 'INPE' },
     ],
     correctId: 'c',
-    explanation: 'O MAPA, por meio do VIGIAGRO, fiscaliza a entrada e dispersão de pragas em portos, aeroportos e fronteiras terrestres do Brasil.',
+    explanation: 'O MAPA, por meio do VIGIAGRO, fiscaliza a entrada e dispersão de pragas agrícolas em portos, aeroportos e fronteiras terrestres do Brasil.',
   },
   {
     id: 5,
@@ -80,10 +80,10 @@ const QUESTIONS: Question[] = [
       { id: 'a', text: 'Usar sementes certificadas e sadias.' },
       { id: 'b', text: 'Fazer rotação de culturas.' },
       { id: 'c', text: 'Transportar plantas sem verificar sua procedência.' },
-      { id: 'd', text: 'Monitorar regularmente a lavoura.' },
+      { id: 'd', text: 'Monitorar regularmente a roça.' },
     ],
     correctId: 'c',
-    explanation: 'Transportar plantas sem verificar a origem facilita a disseminação de pragas e doenças entre regiões — o risco mais simples de evitar.',
+    explanation: 'Transportar plantas sem verificar a origem facilita a disseminação de pragas agrícolas e doenças entre regiões — o risco mais simples de evitar.',
   },
 ]
 

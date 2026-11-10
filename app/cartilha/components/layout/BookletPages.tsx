@@ -810,7 +810,7 @@ function PersonaGreeting() {
             >
               Olá, futuro cientista! Você sabia que as plantas também ficam
               doentes? Vamos descobrir juntos como identificar, prevenir e
-              proteger nossas lavouras!
+              proteger nossas roças!
             </Text>
           </Box>
         </Box>
@@ -958,12 +958,12 @@ const PILARES = [
   {
     icon: MapPin,
     label: "Casos Reais da Região Norte",
-    desc: "Pragas e doenças que já afetaram lavouras do Amapá e da Amazônia.",
+    desc: "Pragas agrícolas e doenças que já afetaram cultivos agrícolas do Amapá e da Amazônia.",
   },
   {
     icon: ShieldCheck,
     label: "Como Proteger e Evitar",
-    desc: "Técnicas e boas práticas para prevenir e controlar pragas com segurança.",
+    desc: "Técnicas e boas práticas para prevenir e controlar pragas agrícolas com segurança.",
   },
 ] as const;
 
@@ -1436,7 +1436,7 @@ export function PageHotspot({ data }: { data: PageHotspotData }) {
 const PRAGA_STAT_CARDS = [
   {
     front: "Perdas Mundiais (FAO)",
-    back: "40% das colheitas perdidas por pragas",
+    back: "40% das colheitas perdidas por pragas agrícolas",
     icon: BarChart3,
     bg: "green.500",
   },
@@ -1982,7 +1982,7 @@ function AttackInteractivePage({ data }: { data: PageImpactData }) {
         textAlign="center"
         mb={3}
       >
-        Clique em cada tipo de ataque e sintoma para investigar como as pragas
+        Clique em cada tipo de ataque e sintoma para investigar como as pragas agrícolas
         danificam as plantas!
       </Text>
       <SimpleGrid columns={{ base: 1, sm: 3 }} gap={{ base: 3, sm: 4 }} mb={7}>
@@ -2274,12 +2274,12 @@ const RESEARCH_STATION_IMAGES = [
 ];
 
 const RESEARCH_STATION_IMPACTS = [
-  "Ajuda agricultores a produzir mais e com segurança, usando variedades adaptadas ao clima e às pragas da Amazônia.",
+  "Ajuda agricultores a produzir mais e com segurança, usando variedades adaptadas ao clima e às pragas agrícolas da Amazônia.",
   "Forma profissionais e cria conhecimento para resolver problemas fitossanitários específicos de cada comunidade.",
-  "Prepara técnicos para reconhecer pragas no campo e aplicar práticas de manejo sustentável.",
-  "Protege a biodiversidade do Amapá ao estudar espécies nativas, pragas e aliados naturais.",
+  "Prepara técnicos para reconhecer pragas agrícolas no campo e aplicar práticas de manejo sustentável.",
+  "Protege a biodiversidade do Amapá ao estudar espécies nativas, pragas agrícolas e aliados naturais.",
   "Entrega diagnósticos confiáveis para que o agricultor escolha o tratamento correto e evite desperdícios.",
-  "A curiosidade de hoje pode virar a pesquisa que protegerá a lavoura de amanhã. Ciência também começa na escola!",
+  "A curiosidade de hoje pode virar a pesquisa que protegerá os cultivos agrícolas de amanhã. Ciência também começa na escola!",
 ];
 
 function StationPhoto({
@@ -2484,7 +2484,7 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                           color="orange.800"
                           textTransform="uppercase"
                         >
-                          🌱 Impacto no Amapá / Lavoura
+                          🌱 Impacto no Amapá / Cultivos Agrícolas
                         </Text>
                         <Text
                           mt={1}
@@ -2517,12 +2517,12 @@ const GUARDIAN_IMAGES = [
 ];
 
 const GUARDIAN_IMPACTS = [
-  "Cria regras nacionais e coordena ações que reduzem o risco de entrada e disseminação de pragas no país.",
-  "Interrompe cargas ou produtos suspeitos em portos, aeroportos e fronteiras antes que alcancem novas lavouras.",
+  "Cria regras nacionais e coordena ações que reduzem o risco de entrada e disseminação de pragas agrícolas no país.",
+  "Interrompe cargas ou produtos suspeitos em portos, aeroportos e fronteiras antes que alcancem novos cultivos agrícolas.",
   "Protege a produção do Amapá, fiscalizando o trânsito de plantas, sementes e frutos vindos de outras regiões.",
-  "Garante que sementes e mudas saudáveis cheguem ao produtor, evitando doenças desde o início da lavoura.",
+  "Garante que sementes e mudas saudáveis cheguem ao produtor, evitando doenças desde o início dos cultivos agrícolas.",
   "Ao identificar e comunicar anomalias, ajuda a interromper rapidamente focos antes que atinjam outras propriedades.",
-  "Ao não transportar plantas, frutos ou terra sem autorização, você fecha uma importante porta para as pragas.",
+  "Ao não transportar plantas, frutos ou terra sem autorização, você fecha uma importante porta para as pragas agrícolas.",
 ];
 
 function GuardianCards({ data }: { data: PageOrgaosData }) {
@@ -3124,7 +3124,7 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                       textTransform="uppercase"
                       letterSpacing="0.04em"
                     >
-                      {isHero ? " HERÓI DA LAVOURA" : " VILÃO DA LAVOURA"}
+                      {isHero ? " HERÓI DOS CULTIVOS AGRÍCOLAS" : " VILÃO DOS CULTIVOS AGRÍCOLAS"}
                     </Text>
                     <Text
                       mt={1}

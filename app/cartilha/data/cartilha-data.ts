@@ -420,15 +420,15 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     leadText:
       'Nesta cartilha, você vai descobrir o mundo fascinante da Fitossanidade — a ciência que cuida da saúde das plantas. Vamos explorar juntos:',
     imageCards: [
-      { imageSrc: '/images/doencas/fitoplasma.webp', label: 'O que são pragas e doenças', alt: 'Ilustração de doença de planta causada por Fitoplasma', display: 'full' },
-      { imageSrc: '/images/agricultura/irrigation.webp', label: 'Como afetam a agricultura', alt: 'Imagem de sistema de irrigação em uma lavoura', display: 'full' },
-      { imageSrc: '/images/metodo de controle/pulverizacao correta.webp', label: 'Como nos protegemos delas', alt: 'Imagem de um agricultor aplicando defensivos corretamente', display: 'full' },
-      { imageSrc: '/images/pragas/mosca da carambola/1.webp', label: 'Casos reais do Amapá', alt: 'Imagem da Mosca da Carambola, uma praga relevante para o Amapá', display: 'full' },
+      { imageSrc: '/images/doencas/fitoplasma.webp', label: 'O que são pragas agrícolas e doenças', alt: 'Ilustração de doença de planta causada por Fitoplasma', display: 'full' },
+      { imageSrc: '/images/agricultura/irrigation.webp', label: 'Como afetam a agricultura', alt: 'Imagem de sistema de irrigação em cultivos agrícolas', display: 'full' },
+      { imageSrc: '/images/metodo de controle/pulverizacao correta.webp', label: 'Como nos protegemos delas', alt: 'Imagem de um agricultor aplicando defensivos agrícolas corretamente', display: 'full' },
+      { imageSrc: '/images/pragas/mosca da carambola/1.webp', label: 'Casos reais do Amapá', alt: 'Imagem da Mosca da Carambola, uma praga agrícola relevante para o Amapá', display: 'full' },
     ],
     topCallout: {
       variant: 'green',
       title: 'Olá, futuro cientista!',
-      text: 'Assim como nós, humanos, podemos ficar gripados ou com febre, as plantas também podem ser atacadas por "vilões" que as deixam fracas, feias e improdutivas. Esses vilões se chamam pragas e doenças.',
+      text: 'Assim como nós, humanos, podemos ficar gripados ou com febre, as plantas também podem ser atacadas por "vilões" que as deixam fracas, feias e improdutivas. Esses vilões se chamam pragas agrícolas e doenças.',
     },
     callouts: [
       {
@@ -457,7 +457,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     leadText:
       'A palavra Fitossânidade vem do grego phyton (planta) e do latim sanitas (saúde). É a área da ciência que cuida da saúde das plantas e garante que elas cresçam fortes e produtivas.',
     imageCards: [
-      { imageSrc: '/assets/icones/lupa-icone.png', label: 'Estuda pragas e doenças', alt: 'Lupa de pesquisa' },
+      { imageSrc: '/assets/icones/lupa-icone.png', label: 'Estuda pragas agrícolas e doenças', alt: 'Lupa de pesquisa' },
       { imageSrc: '/assets/icones/escudo-icone.png', label: 'Previne e controla infestações', alt: 'Escudo de proteção' },
       { imageSrc: '/assets/icones/fronteira-icone.png', label: 'Protege fronteiras do comércio', alt: 'Símbolo de fronteira' },
       { imageSrc: '/assets/icones/ciencia-icone.png', label: 'Une ciência e agricultura', alt: 'Frasco de laboratorio' },
@@ -466,7 +466,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     ],
     midSectionHeading: 'Por que é importante?',
     midSectionText:
-      'Sem Fitossanidade, pragas e doenças se espalhariam livremente pelas lavouras, destruindo colheitas inteiras. Isso significaria menos comida, aumento de preços e danos ao meio ambiente.',
+      'Sem Fitossanidade, pragas agrícolas e doenças se espalhariam livremente pelos cultivos agrícolas, destruindo colheitas inteiras. Isso significaria menos comida, aumento de preços e danos ao meio ambiente.',
     callouts: [
       {
         variant: 'green',
@@ -492,7 +492,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     title: 'As plantas são a nossa ',
     titleHighlight: 'fábrica de comida!',
     leadText:
-      'Tudo o que comemos — arroz, feijão, fruta, farinha — começou como uma semente ou muda numa lavoura. As plantas transformam água, luz do sol e nutrientes do solo em alimento para nós. Por isso, cuidar delas é cuidar de nós mesmos!',
+      'Tudo o que comemos — arroz, feijão, fruta, farinha — começou como uma semente ou muda numa roça. As plantas transformam água, luz do sol e nutrientes do solo em alimento para nós. Por isso, cuidar delas é cuidar de nós mesmos!',
     imageCards: [
       { imageSrc: '/assets/icones/sol-icone.png', label: 'Luz do sol gera energia', alt: 'Sol brilhante' },
       { imageSrc: '/assets/icones/agua-icone.png', label: 'Água nutre as raízes', alt: 'Gota de água' },
@@ -501,7 +501,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     ],
     midSectionHeading: 'E o que acontece quando a fábrica é atacada?',
     midSectionText:
-      'Quando pragas invadem a lavoura, é como se alguém danificasse as máquinas da fábrica. A produção cai, os alimentos ficam escassos e mais caros. E é por isso que a Fitossanidade é tão importante para nós, consumidores!',
+      'Quando pragas agrícolas invadem a roça, é como se alguém danificasse as máquinas da fábrica. A produção cai, os alimentos ficam escassos e mais caros. E é por isso que a Fitossanidade é tão importante para nós, consumidores!',
     callouts: [
       {
         variant: 'yellow',
@@ -510,7 +510,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       },
     ],
     personaText:
-      'Imagina a lavoura como uma grande fábrica. Cada planta é uma máquina que produz comida para a gente. Se uma praga atacar, a fábrica para! E aí, o que acontece com a nossa comida?',
+      'Imagina a roça como uma grande fábrica. Cada planta é uma máquina que produz comida para a gente. Se uma praga agrícola atacar, a fábrica para! E aí, o que acontece com a nossa comida?',
     personaEmotion: 'pointing',
     personaImageSrc: '/assets/dona-fito/dona-fito-pointing.png',
   },
@@ -527,20 +527,20 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     title: 'O que é uma ',
     titleHighlight: 'Praga Agrícola?',
     leadText:
-      'Uma praga agrícola é qualquer organismo vivo — inseto, fungo, bactéria, vírus, planta invasora — que cause dano econômico a uma lavoura. Nem todo bichinho é uma praga! Só é praga quando causa prejuízo real ao agricultor.',
+      'Uma praga agrícola é qualquer organismo vivo — inseto, fungo, bactéria, vírus, planta invasora — que cause dano econômico a um cultivo agrícola. Nem todo bichinho é uma praga agrícola! Só é praga agrícola quando causa prejuízo real ao agricultor.',
     statCards: [
-      { gradient: 'linear-gradient(135deg, #2E7D32, #388E3C)', stat: '40%', label: 'das colheitas mundiais são perdidas por pragas, segundo a FAO.', textColor: 'white' },
+      { gradient: 'linear-gradient(135deg, #2E7D32, #388E3C)', stat: '40%', label: 'das colheitas mundiais são perdidas por pragas agrícolas, segundo a FAO.', textColor: 'white' },
       { gradient: 'linear-gradient(135deg, #F57F17, #FBC02D)', stat: 'R$ Bilhões', label: 'de prejuízo anual para o agronegócio brasileiro.', textColor: '#212121' },
       { gradient: 'linear-gradient(135deg, #37474F, #546E7A)', stat: 'Ecossistema', label: 'em risco por introdução de espécies invasoras exóticas.', textColor: 'white' },
     ],
     impacts: [
       { imageSrc: '/assets/icones/caixa-icone.png', title: 'Redução da produção', desc: 'Pragas destroem partes ou toda a plantação, reduzindo drasticamente o volume colhido.' },
-      { imageSrc: '/assets/icones/custo-icone.png', title: 'Aumento de custos', desc: 'Agricultores gastam mais com defensivos, replantio e trabalho para combater as pragas.' },
-      { imageSrc: '/assets/icones/bloqueio-icone.png', title: 'Bloqueio de exportações', desc: 'Produtos com pragas podem ser barrados na alfândega, gerando prejuízos aos produtores.' },
-      { imageSrc: '/assets/icones/clima-icone.png', title: 'Mudanças climáticas agravam', desc: 'O aquecimento global favorece a proliferação e expansão geográfica de novas pragas.' },
+      { imageSrc: '/assets/icones/custo-icone.png', title: 'Aumento de custos', desc: 'Agricultores gastam mais com defensivos agrícolas, replantio e trabalho para combater as pragas agrícolas.' },
+      { imageSrc: '/assets/icones/bloqueio-icone.png', title: 'Bloqueio de exportações', desc: 'Produtos com pragas agrícolas podem ser barrados na alfândega, gerando prejuízos aos produtores.' },
+      { imageSrc: '/assets/icones/clima-icone.png', title: 'Mudanças climáticas agravam', desc: 'O aquecimento global favorece a proliferação e expansão geográfica de novas pragas agrícolas.' },
     ],
     personaText:
-      'Praga é qualquer ser vivo que cause prejuízo à nossa lavoura! Mas atenção: nem todo inseto é vilão! A joaninha, por exemplo, é uma heroína — ela come outros insetos que atacam as plantas!',
+      'Praga é qualquer ser vivo que cause prejuízo à nossa roça! Mas atenção: nem todo inseto é vilão! A joaninha, por exemplo, é uma heroína — ela come outros insetos que atacam as plantas!',
     personaEmotion: 'alert',
     personaImageSrc: '/assets/dona-fito/dona-fito-alert.png',
   },
@@ -555,9 +555,9 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     label: 'Insetos e Ácaros',
     badgeLabel: 'Galeria Interativa',
     title: 'Insetos e Ácaros: ',
-    titleHighlight: 'Os Pequenos Vilões da Lavoura',
+    titleHighlight: 'Os Pequenos Vilões dos Cultivos Agrícolas',
     leadText:
-      'Clique em qualquer card para conhecer de perto esses organismos que causam grandes prejuízos nas lavouras. Identificar o invasor é o primeiro passo para combatê-lo.',
+      'Clique em qualquer card para conhecer de perto esses organismos que causam grandes prejuízos nos cultivos agrícolas. Identificar o invasor é o primeiro passo para combatê-lo.',
     pestGalleryItems: [
       {
         id: 1,
@@ -566,7 +566,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         damageType: 'Desfolha folhas, caules e frutos ao se alimentar em grandes quantidades.',
         fieldTip: 'Procure folhas mastigadas e a presença de adultos ou ninfas saltadoras.',
         description:
-          'O gafanhoto é um inseto que voa em enxames gigantes e pode destruir campos inteiros de cultivo em poucas horas. Quando milhoes deles voam juntos, chamamos de praga de gafanhotos — um dos maiores pesadelos dos agricultores. Seu aparato bucal mastigador devasta folhas, caules e frutos de forma extremamente rapida.',
+          'O gafanhoto é um inseto que voa em enxames gigantes e pode destruir campos inteiros de cultivo em poucas horas. Quando milhoes deles voam juntos, chamamos de praga agrícola de gafanhotos — um dos maiores pesadelos dos agricultores. Seu aparato bucal mastigador devasta folhas, caules e frutos de forma extremamente rapida.',
       },
       {
         id: 2,
@@ -618,11 +618,11 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       {
         variant: 'yellow',
         title: 'Atenção!',
-        text: 'Nem todo inseto é praga! Abelhas, joaninhas e vespinhas parasitoides são aliadas da lavoura. Conhecer os benefícios e os prejudiciais é essencial para um manejo agrícola responsável.',
+        text: 'Nem todo inseto é praga agrícola! Abelhas, joaninhas e vespinhas parasitoides são aliadas da roça. Conhecer os benefícios e os prejudiciais é essencial para um manejo agrícola responsável.',
       },
     ],
     personaText:
-      'Que turma! Insetos e ácaros são os mais diversos vilões da lavoura. Clique em cada card para conhecê-los de perto e aprender como nos defendemos deles.',
+      'Que turma! Insetos e ácaros são os mais diversos vilões da roça. Clique em cada card para conhecê-los de perto e aprender como nos defendemos deles.',
     personaEmotion: 'pointing',
     personaImageSrc: '/assets/dona-fito/dona-fito-pointing.png',
   },
@@ -648,7 +648,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         category: 'fungo',
         backgroundImageSrc: '/images/sintomas/clorose.webp',
         concept:
-          'A ferrugem é uma doença causada por fungos que deixam manchas alaranjadas ou marrons nas folhas, semelhantes à ferrugem de metal. Ela se espalha pelo vento e pode destruir lavouras de soja ou trigo em poucos dias!',
+          'A ferrugem é uma doença causada por fungos que deixam manchas alaranjadas ou marrons nas folhas, semelhantes à ferrugem de metal. Ela se espalha pelo vento e pode destruir cultivos agrícolas de soja ou trigo em poucos dias!',
         spreadText:
           'Os esporos são carregados pelo vento e também podem viajar em respingos de chuva e ferramentas contaminadas.',
         impactText:
@@ -680,7 +680,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         spreadText:
           'Esporos são levados pelo vento e por respingos de chuva, especialmente em períodos frios e muito úmidos.',
         impactText:
-          'Em condições ideais de umidade e frio, pode destruir uma lavoura de batata em apenas 10 dias. É considerada emergência fitossanitária.',
+          'Em condições ideais de umidade e frio, pode destruir cultivos agrícolas de batata em apenas 10 dias. É considerada emergência fitossanitária.',
         preventionText:
           'Plante variedades resistentes, faça rotação de culturas e aplique fungicidas sistêmicos de forma preventiva.',
       },
@@ -696,7 +696,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         impactText:
           'Prejuízo enorme para produtores: frutos com sintomas são descartados e a planta infectada deve ser erradicada por lei.',
         preventionText:
-          'Utilize mudas certificadas, higienize ferramentas e evite trabalhar na lavoura com folhas molhadas. É de notificação obrigatória ao MAPA.',
+          'Utilize mudas certificadas, higienize ferramentas e evite trabalhar na roça com folhas molhadas. É de notificação obrigatória ao MAPA.',
       },
       {
         id: 'virus-mosaico',
@@ -753,7 +753,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     titleHighlight: 'roubam espaço',
     titleSuffix: ' das outras!',
     leadText:
-      'Plantas invasoras (ou ervas daninhas) são plantas que crescem onde não são desejadas e competem com as plantas cultivadas por água, luz e nutrientes do solo. E uma disputa por recursos — e a planta da lavoura quem perde!',
+      'Plantas invasoras (ou ervas daninhas) são plantas que crescem onde não são desejadas e competem com as plantas cultivadas por água, luz e nutrientes do solo. E uma disputa por recursos — e a planta da roça quem perde!',
     invasiveCards: [
       {
         imageSrc: '/images/ameacas/plantas invasoras/1.webp',
@@ -766,7 +766,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         imageSrc: '/images/ameacas/plantas invasoras/2.webp',
         label: 'Capim-colônia',
         alt: 'Capim-colônia invasor',
-        whatItSteals: 'Água, luz e nutrientes da lavoura e das pastagens ao formar touceiras muito fechadas.',
+        whatItSteals: 'Água, luz e nutrientes dos cultivos agrícolas e das pastagens ao formar touceiras muito fechadas.',
         impact: 'Sufoca plantas jovens, dificulta o manejo e reduz o espaço disponível para a cultura se desenvolver.',
       },
       {
@@ -780,7 +780,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         imageSrc: '/images/ameacas/plantas invasoras/2.webp',
         label: 'Buva',
         alt: 'Buva invasora resistente',
-        whatItSteals: 'Água, luz e nutrientes durante todo o ciclo da lavoura, especialmente quando cresce cedo.',
+        whatItSteals: 'Água, luz e nutrientes durante todo o ciclo dos cultivos agrícolas, especialmente quando cresce cedo.',
         impact: 'É difícil de controlar em algumas áreas e pode produzir muitas sementes, comprometendo a colheita.',
       },
     ],
@@ -791,7 +791,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       {
         variant: 'yellow',
         title: 'Curiosidade!',
-        text: 'O aguapé (jacinto-d’água) é uma planta invasora aquática que bloqueia rios e lagos no Amapá, prejudicando a pesca e a navegação. Até plantas podem ser pragas em locais errados!',
+        text: 'O aguapé (jacinto-d’água) é uma planta invasora aquática que bloqueia rios e lagos no Amapá, prejudicando a pesca e a navegação. Até plantas podem ser pragas agrícolas em locais errados!',
       },
     ],
     personaText:
@@ -808,18 +808,18 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     interactionType: 'standard',
     id: 'p9',
     label: 'O Lado Bom da Natureza',
-    badgeLabel: 'Aliados da Lavoura',
+    badgeLabel: 'Aliados da Roça',
     title: 'Na natureza, todo mundo tem ',
     titleHighlight: 'um papel!',
     leadText:
-      'Nem tudo é vilão na natureza! Existem seres vivos incríveis que ajudam a lavoura ao se alimentar das pragas ou ao polinizar as flores das plantas. São os nossos heróis naturais!',
+      'Nem tudo é vilão na natureza! Existem seres vivos incríveis que ajudam a roça ao se alimentar das pragas agrícolas ou ao polinizar as flores das plantas. São os nossos heróis naturais!',
     allyCards: [
       {
         imageSrc: '/images/encontre_herois/joaninha.webp',
         label: 'Joaninha',
         alt: 'Joaninha predadora de pulgões',
         role: 'Alimenta-se de pulgões e outros pequenos insetos que sugam a seiva das plantas.',
-        benefit: 'Ajuda a controlar pragas naturalmente, reduzindo a necessidade de inseticidas.',
+        benefit: 'Ajuda a controlar pragas agrícolas naturalmente, reduzindo a necessidade de inseticidas.',
       },
       {
         imageSrc: '/images/aliados/abelha.webp',
@@ -832,15 +832,15 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         imageSrc: '/images/aliados/vespa.webp',
         label: 'Vespinha',
         alt: 'Vespinha parasitoide',
-        role: 'Parasita ovos e larvas de pragas, impedindo que elas cheguem à fase adulta.',
-        benefit: 'Faz o controle biológico de forma específica e ajuda a preservar a lavoura.',
+        role: 'Parasita ovos e larvas de pragas agrícolas, impedindo que elas cheguem à fase adulta.',
+        benefit: 'Faz o controle biológico de forma específica e ajuda a preservar os cultivos agrícolas.',
       },
       {
         imageSrc: '/images/aliados/larva.webp',
         label: 'Aranha',
         alt: 'Aranha predadora de insetos',
         role: 'Captura e come diversos insetos que circulam entre as folhas e o solo.',
-        benefit: 'Reduz a população de pragas sem custo para o agricultor e sem contaminar o ambiente.',
+        benefit: 'Reduz a população de pragas agrícolas sem custo para o agricultor e sem contaminar o ambiente.',
       },
       {
         imageSrc: '/images/agricultura/ghabiru-plantation.webp',
@@ -853,39 +853,39 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         imageSrc: '/images/fungos/vassoura-da-bruxa-mandioca.webp',
         label: 'Fungos Bons',
         alt: 'Fungo benéfico usado no controle biológico',
-        role: 'Infectam algumas pragas e interrompem seu desenvolvimento, sem atacar a cultura.',
+        role: 'Infectam algumas pragas agrícolas e interrompem seu desenvolvimento, sem atacar a cultura.',
         benefit: 'Podem substituir parte dos agrotóxicos e tornar o manejo mais seguro e sustentável.',
       },
     ],
     midSectionHeading: 'O que é Controle Biológico?',
     midSectionText:
-      'Controle biológico é usar esses seres naturais para combater as pragas! Em vez de usar agrotoxicos, os agricultores podem criar e soltar joaninhas, vespinhas ou fungos bons na lavoura. É sustentável, barato e não polui o ambiente!',
+      'Controle biológico é usar esses seres naturais para combater as pragas agrícolas! Em vez de usar agrotoxicos, os agricultores podem criar e soltar joaninhas, vespinhas ou fungos bons na roça. É sustentável, barato e não polui o ambiente!',
     callouts: [
       {
         variant: 'green',
         title: 'A natureza é sábia!',
-        text: 'Quando preservamos a biodiversidade ao redor das lavouras — matas, rios, bosques — estamos protegendo o lar dos nossos aliados naturais. Fazenda sustentavel e fazenda saudavel!',
+        text: 'Quando preservamos a biodiversidade ao redor das roças — matas, rios, bosques — estamos protegendo o lar dos nossos aliados naturais. Fazenda sustentavel e fazenda saudavel!',
       },
     ],
     personaText:
-      'Você sabia que a joaninha é uma super-heroína da lavoura? Ela pode comer até 50 pulgões por dia! Cada ser vivo tem um papel importante na natureza. Vamos respeitar e valorizar nossos aliados!',
+      'Você sabia que a joaninha é uma super-heroína da roça? Ela pode comer até 50 pulgões por dia! Cada ser vivo tem um papel importante na natureza. Vamos respeitar e valorizar nossos aliados!',
     personaEmotion: 'happy',
     personaImageSrc: '/assets/dona-fito/dona-fito-happy.png',
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 10 — O ATAQUE NA LAVOURA
+     PÁGINA 10 — O ATAQUE NOS CULTIVOS AGRÍCOLAS
   ───────────────────────────────────────────────────── */
   {
     type: 'impact',
     interactionType: 'standard',
     id: 'p10',
-    label: 'O Ataque na Lavoura',
+    label: 'O Ataque nos Cultivos Agrícolas',
     badgeLabel: 'Como as Pragas Atacam',
-    title: 'Como as pragas ',
-    titleHighlight: 'atacam a lavoura?',
+    title: 'Como as pragas agrícolas ',
+    titleHighlight: 'atacam os cultivos agrícolas?',
     leadText:
-      'Cada tipo de praga tem uma forma diferente de atacar as plantas. Conhecer essas estratégias nos ajuda a identificar o problema cedo e agir rapidamente, salvando a colheita!',
+      'Cada tipo de praga agrícola tem uma forma diferente de atacar as plantas. Conhecer essas estratégias nos ajuda a identificar o problema cedo e agir rapidamente, salvando a colheita!',
     statCards: [
   { 
     gradient: 'linear-gradient(135deg, #2E7D32, #388E3C)', 
@@ -916,7 +916,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       { imageSrc: '/assets/icones/virus-transmissao.png', title: 'Transmissão de vírus', desc: 'Insetos como pulgões e moscas-brancas são vetores de vírus que enfraquecem ou matam as plantas.' },
     ],
     personaText:
-      'Cada praga tem sua própria "arma" para atacar as plantas. Por isso é tão importante monitorar a lavoura constantemente! Quanto mais cedo identificarmos o problema, mais fácil será controlá-lo!',
+      'Cada praga agrícola tem sua própria "arma" para atacar as plantas. Por isso é tão importante monitorar a roça constantemente! Quanto mais cedo identificarmos o problema, mais fácil será controlá-lo!',
     personaEmotion: 'alert',
     personaImageSrc: '/assets/dona-fito/dona-fito-alert.png',
   },
@@ -933,7 +933,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     title: 'O que são ',
     titleHighlight: 'Pragas Quarentenárias?',
     leadText:
-      'Imagine uma praga tão perigosa que poderia destruir toda a agricultura de um país se entrasse em suas fronteiras. É exatamente isso que define uma Praga Quarentenária — um inimigo externo que não podemos deixar entrar!',
+      'Imagine uma praga agrícola tão perigosa que poderia destruir toda a agricultura de um país se entrasse em suas fronteiras. É exatamente isso que define uma Praga Quarentenária — um inimigo externo que não podemos deixar entrar!',
     alertImageSrc: '/assets/icones/alerta-quarentena-icone.png',
     alertTitle: 'Definição Oficial (MAPA)',
     alertText:
@@ -946,7 +946,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       },
     ],
     personaText:
-      'Algumas pragas são tão perigosas que o Brasil tem regras rígidas para impedir sua entrada no país! Aeroportos, portos e fronteiras são fiscalizados para isso. Nunca traga frutas ou plantas de outros países sem verificar!',
+      'Algumas pragas agrícolas são tão perigosas que o Brasil tem regras rígidas para impedir sua entrada no país! Aeroportos, portos e fronteiras são fiscalizados para isso. Nunca traga frutas ou plantas de outros países sem verificar!',
     personaEmotion: 'alert',
     personaImageSrc: '/assets/dona-fito/dona-fito-alert.png',
   },
@@ -964,17 +964,17 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     titleHighlight: 'protegem',
     titleSuffix: ' nossas plantas!',
     leadText:
-      'Por trás de cada solução fitossanitária existe um pesquisador dedicado! Essas pessoas estudam pragas, desenvolvem novas variedades de plantas resistentes e criam métodos de controle sustentáveis.',
+      'Por trás de cada solução fitossanitária existe um pesquisador dedicado! Essas pessoas estudam pragas agrícolas, desenvolvem novas variedades de plantas resistentes e criam métodos de controle sustentáveis.',
     items: [
       { imageSrc: '/assets/icones/embrapa-icone.png', name: 'Embrapa — Empresa Brasileira de Pesquisa Agropecuária', desc: 'Desenvolveu variedades de mandioca resistentes a vassoura-de-bruxa e tecnicas de controle biologico para a Amazonia.' },
-      { imageSrc: '/assets/icones/universidade-icone.png', name: 'Universidades e Institutos Federais', desc: 'Formam biologos, agronomos e engenheiros florestais que pesquisam pragas locais e desenvolvem solucoes regionais.' },
-      { imageSrc: '/assets/icones/ifap-icone.png', name: 'IFAP — Instituto Federal do Amapá', desc: 'Pesquisa e forma técnicos agrícolas com foco nas pragas e desafios específicos da região amazônica.' },
-      { imageSrc: '/assets/icones/iepa-icone.png', name: 'IEPA — Instituto de Pesquisas Científicas do Amapá', desc: 'Estuda a biodiversidade amazônica, identificando novas pragas e aliados naturais da lavoura amapaense.' },
-      { imageSrc: '/assets/icones/laboratorio-icone.png', name: 'Laboratórios de Diagnóstico Fitossanitário', desc: 'Identificam com precisão qual praga ou doença está atacando uma lavoura, permitindo o tratamento correto.' },
+      { imageSrc: '/assets/icones/universidade-icone.png', name: 'Universidades e Institutos Federais', desc: 'Formam biologos, agronomos e engenheiros florestais que pesquisam pragas agrícolas locais e desenvolvem solucoes regionais.' },
+      { imageSrc: '/assets/icones/ifap-icone.png', name: 'IFAP — Instituto Federal do Amapá', desc: 'Pesquisa e forma técnicos agrícolas com foco nas pragas agrícolas e desafios específicos da região amazônica.' },
+      { imageSrc: '/assets/icones/iepa-icone.png', name: 'IEPA — Instituto de Pesquisas Científicas do Amapá', desc: 'Estuda a biodiversidade amazônica, identificando novas pragas agrícolas e aliados naturais dos cultivos agrícolas amapaenses.' },
+      { imageSrc: '/assets/icones/laboratorio-icone.png', name: 'Laboratórios de Diagnóstico Fitossanitário', desc: 'Identificam com precisão qual praga agrícola ou doença está atacando um cultivo agrícola, permitindo o tratamento correto.' },
       { imageSrc: '/assets/icones/estudante-icone.png', name: 'Você pode ser o próximo!', desc: 'Cada estudante curioso é um futuro pesquisador em potencial. A ciência precisa de você para proteger nossas plantas!' },
     ],
     personaText:
-      'Os pesquisadores são os verdadeiros super-heróis da fitossanidade! Eles passam anos estudando para nos ajudar. Quem sabe um dia você não vai trabalhar na Embrapa ou numa universidade pesquisando pragas do Amapá?',
+      'Os pesquisadores são os verdadeiros super-heróis da fitossanidade! Eles passam anos estudando para nos ajudar. Quem sabe um dia você não vai trabalhar na Embrapa ou numa universidade pesquisando pragas agrícolas do Amapá?',
     personaEmotion: 'happy',
     personaImageSrc: '/dona_fito_meio_corpo.png',
   },
@@ -992,13 +992,13 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     titleHighlight: 'fiscalizam',
     titleSuffix: ' e protegem!',
     leadText:
-      'Além dos pesquisadores, existe uma rede de fiscalização que trabalha 24 horas por dia para impedir que pragas perigosas entrem no Brasil ou se espalhem entre os estados.',
+      'Além dos pesquisadores, existe uma rede de fiscalização que trabalha 24 horas por dia para impedir que pragas agrícolas perigosas entrem no Brasil ou se espalhem entre os estados.',
     items: [
       { imageSrc: '/assets/icones/mapa-ministerio-icone.png', name: 'MAPA — Ministerio da Agricultura', desc: 'Define as normas fitossanitarias nacionais e coordena toda a rede de proteção das plantas do Brasil.' },
-      { imageSrc: '/assets/icones/vigiagro-icone.png', name: 'VIGIAGRO — Vigilancia Agropecuaria', desc: 'Fiscaliza portos, aeroportos e fronteiras terrestres, inspecionando malas, caixas e cargas em busca de pragas.' },
-      { imageSrc: '/assets/icones/adap-icone.png', name: 'ADAP — Agencia de Defesa Agropecuaria do Amapa', desc: 'Fiscaliza o comercio de plantas, sementes e frutas dentro do Amapa, evitando a entrada de pragas de outros estados.' },
+      { imageSrc: '/assets/icones/vigiagro-icone.png', name: 'VIGIAGRO — Vigilancia Agropecuaria', desc: 'Fiscaliza portos, aeroportos e fronteiras terrestres, inspecionando malas, caixas e cargas em busca de pragas agrícolas.' },
+      { imageSrc: '/assets/icones/adap-icone.png', name: 'ADAP — Agencia de Defesa Agropecuaria do Amapa', desc: 'Fiscaliza o comercio de plantas, sementes e frutas dentro do Amapa, evitando a entrada de pragas agrícolas de outros estados.' },
       { imageSrc: '/assets/icones/sementes-certificadas.png', name: 'Inspeção de Sementes e Mudas', desc: 'Antes de ser vendida, toda semente precisa passar por inspeção oficial para garantir que esta livre de doencas.' },
-      { imageSrc: '/assets/icones/produtor-rural-icone.png', name: 'Produtor Rural', desc: 'São os primeiros a perceber algo errado na lavoura! Cada produtor é um fiscal em campo, reportando anomalias.' },
+      { imageSrc: '/assets/icones/produtor-rural-icone.png', name: 'Produtor Rural', desc: 'São os primeiros a perceber algo errado na roça! Cada produtor é um fiscal em campo, reportando anomalias.' },
       { imageSrc: '/assets/icones/consumidor-icone.png', name: 'E você, consumidor!', desc: 'Não transporte frutas, plantas ou terra de regiões desconhecidas. Essa atitude simples ajuda a proteger nossa agricultura!' },
     ],
     personaText:
@@ -1018,16 +1018,16 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     badgeLabel: 'Boas Práticas',
     lapbookBadge: 'PREVENÇÃO E MANEJO',
     lapbookTitle: 'Como Evitar e Controlar as Pragas Agrícolas?',
-    lapbookSubtitle: 'Arraste ou clique nos cartões para classificar as atitudes de proteção da lavoura!',
+    lapbookSubtitle: 'Arraste ou clique nos cartões para classificar as atitudes de proteção dos cultivos agrícolas!',
     callouts: [
       {
         variant: 'green',
         title: 'A prevenção sempre vence o combate!',
-        text: 'Investir em boas práticas fitossanitárias custa muito menos do que tratar uma lavoura infestada. Agricultor informado é agricultor protegido — e isso vale para toda a família rural!',
+        text: 'Investir em boas práticas fitossanitárias custa muito menos do que tratar cultivos agrícolas infestados. Agricultor informado é agricultor protegido — e isso vale para toda a família rural!',
       },
     ],
     personaText:
-      'Aqui estão as "armas" dos heróis da lavoura! Cada uma dessas práticas é um escudo que protege nossas plantas. Levante as abas e descubra qual você já conhecia!',
+      'Aqui estão as "armas" dos heróis da roça! Cada uma dessas práticas é um escudo que protege nossas plantas. Levante as abas e descubra qual você já conhecia!',
     personaEmotion: 'celebrating',
     personaImageSrc: '/assets/dona-fito/dona-fito-celebrating.png',
   },
@@ -1060,10 +1060,10 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     heroSubtitle:
       'Entender a fitossanidade não é só para cientistas. É para qualquer pessoa que come, que compra e que se preocupa com o futuro do planeta.',
     sectionHeading: 'Como isso chega até você?',
-    leadText: 'Veja a cadeia de impactos quando pragas não são controladas:',
+    leadText: 'Veja a cadeia de impactos quando pragas agrícolas não são controladas:',
     chainItems: [
-      { imageSrc: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec', text: 'Uma praga entra no país sem controle fitossanitário', studentImpact: 'A fiscalização protege as plantas que chegam à nossa região e evita que novas pragas alcancem as lavouras.' },
-      { imageSrc: 'https://images.unsplash.com/photo-1595974482597-4b8da8879bc5', text: 'Ela se espalha pelas lavouras de mandioca, açaí e frutas', studentImpact: 'Quando a lavoura é atingida, os alimentos que fazem parte da sua rotina podem ficar mais difíceis de produzir.' },
+      { imageSrc: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec', text: 'Uma praga agrícola entra no país sem controle fitossanitário', studentImpact: 'A fiscalização protege as plantas que chegam à nossa região e evita que novas pragas agrícolas alcancem os cultivos agrícolas.' },
+      { imageSrc: 'https://images.unsplash.com/photo-1595974482597-4b8da8879bc5', text: 'Ela se espalha pelas roças de mandioca, açaí e frutas', studentImpact: 'Quando a roça é atingida, os alimentos que fazem parte da sua rotina podem ficar mais difíceis de produzir.' },
       { imageSrc: 'https://images.unsplash.com/photo-1574943320219-553eb213f72d', text: 'A produção cai drasticamente e os agricultores perdem renda', studentImpact: 'Menos colheita significa mais preocupação para as famílias produtoras e menos produtos disponíveis.' },
       { imageSrc: 'https://images.unsplash.com/photo-1533900298318-6b8da08a523e', text: 'Os alimentos ficam escassos e mais caros nos mercados', studentImpact: 'A queda na oferta pode aumentar os preços dos alimentos que sua família compra.' },
       { imageSrc: 'https://images.unsplash.com/photo-1547592180-85f173990554', text: 'Famílias têm menos acesso a alimentos nutritivos e acessíveis', studentImpact: 'Cuidar da saúde das plantas ajuda a manter refeições variadas e nutritivas na mesa.' },
@@ -1077,7 +1077,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       },
     ],
     personaText:
-      'Cada vez que você compra uma fruta saudável e barata no mercado, é porque alguém trabalhou duro para proteger a lavoura! A fitossanidade está na sua mesa todo dia — só que você não sabia disso. Agora sabe!',
+      'Cada vez que você compra uma fruta saudável e barata no mercado, é porque alguém trabalhou duro para proteger a roça! A fitossanidade está na sua mesa todo dia — só que você não sabia disso. Agora sabe!',
     personaEmotion: 'pointing',
     personaImageSrc: '/assets/dona-fito/dona-fito-pointing.png',
   },
@@ -1099,14 +1099,14 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         imageSrc: '/images/encontre_herois/joaninha.webp',
         name: 'Joaninha',
         isHero: true,
-        revealText: 'A joaninha come pulgões e outros insetos praga. Ela é uma das melhores aliadas da lavoura!',
+        revealText: 'A joaninha come pulgões e outros insetos praga agrícola. Ela é uma das melhores aliadas da roça!',
       },
       {
         id: 'pulgao',
         imageSrc: '/images/ameacas/pulgoes/4.webp',
         name: 'Pulgão',
         isHero: false,
-        revealText: 'O pulgão suga a seiva das plantas e transmite vírus. Um dos mais comuns inimigos da lavoura!',
+        revealText: 'O pulgão suga a seiva das plantas e transmite vírus. Um dos mais comuns inimigos da roça!',
       },
       {
         id: 'abelha',
@@ -1134,18 +1134,18 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         imageSrc: '/images/encontre_herois/fungo-ferrugem.webp',
         name: 'Fungo da Ferrugem',
         isHero: false,
-        revealText: 'A ferrugem é um fungo que deixa manchas alaranjadas nas folhas e pode destruir lavouras inteiras de soja e trigo!',
+        revealText: 'A ferrugem é um fungo que deixa manchas alaranjadas nas folhas e pode destruir roças inteiras de soja e trigo!',
       },
     ],
     callouts: [
       {
         variant: 'green',
         title: 'Parabéns por aprender!',
-        text: 'Distinguir heróis de vilões na natureza é o primeiro passo para um manejo sustentável da lavoura. Agricultores que conhecem seus aliados naturais usam menos agrotoxicos e tem melhores colheitas!',
+        text: 'Distinguir heróis de vilões na natureza é o primeiro passo para um manejo sustentável da roça. Agricultores que conhecem seus aliados naturais usam menos agrotoxicos e tem melhores colheitas!',
       },
     ],
     personaText:
-      'Você consegue separar os heróis dos vilões? Cada ser vivo tem um papel na natureza — cabe a nós entender esse papel! Clique em cada personagem e descubra se ele é aliado ou inimigo da lavoura!',
+      'Você consegue separar os heróis dos vilões? Cada ser vivo tem um papel na natureza — cabe a nós entender esse papel! Clique em cada personagem e descubra se ele é aliado ou inimigo da roça!',
     personaEmotion: 'happy',
     personaImageSrc: '/assets/dona-fito/dona-fito-happy.png',
   },
@@ -1188,7 +1188,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     callout: {
       variant: 'green',
       title: 'Continue sua jornada de aprendizagem!',
-      text: 'Explore os outros modulos do EducaFito, converse com agricultores da sua região, visite a Embrapa Amapá e descubra como a ciência está trabalhando para proteger nossas lavouras e nossa biodiversidade amazônica.',
+      text:       'Explore os outros modulos do EducaFito, converse com agricultores da sua região, visite a Embrapa Amapá e descubra como a ciência está trabalhando para proteger nossos cultivos agrícolas e nossa biodiversidade amazônica.',
     },
     footerText: 'EducaFito — Aprendendo com a natureza, crescendo com o conhecimento.',
     personaText:

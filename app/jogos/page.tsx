@@ -116,7 +116,7 @@ const games: Game[] = [
     icon: LuSprout,
     emoji: '🌱',
     title: 'Simulador de Cultivo',
-    desc: 'Simule o cultivo de plantas medicinais, gerencie pragas e descubra as melhores práticas agrícolas.',
+    desc: 'Simule o cultivo de plantas medicinais, gerencie pragas agrícolas e descubra as melhores práticas agrícolas.',
     tag: 'Simulação',
     tagColor: '#166534',
     gradient: 'linear-gradient(145deg, #f0fdf4 0%, #dcfce7 100%)',

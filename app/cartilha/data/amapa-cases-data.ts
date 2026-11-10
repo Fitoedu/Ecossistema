@@ -86,7 +86,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     /* Placeholder Unsplash — substitua por imagem oficial da professora */
     cardImageSrc: "/images/pragas/mosca da carambola/1.webp",
     cardImageAlt:
-      "Fotografia da Mosca-da-Carambola (Bactrocera carambolae), praga quarentenária presente no Amapá",
+      "Fotografia da Mosca-da-Carambola (Bactrocera carambolae), praga agrícola quarentenária presente no Amapá",
 
     /* Aba 1 */
     invasorHeadline: "A Maior Ameaça Fitossanitária do Amapá",

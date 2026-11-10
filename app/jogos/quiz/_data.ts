@@ -42,8 +42,8 @@ export const categories: QuizCategory[] = [
         id: 'pragas',
         icon: LuBug,
         emoji: '🦟',
-        label: 'Pragas e Doenças',
-        description: 'Identifique pragas comuns e seus métodos de controle.',
+        label: 'Pragas Agrícolas e Doenças',
+        description: 'Identifique pragas agrícolas comuns e seus métodos de controle.',
         accentColor: '#c2410c',
         gradient: 'linear-gradient(135deg, #fff3e6 0%, #fde0c0 100%)',
         available: true,
@@ -91,7 +91,7 @@ export const achievements: Achievement[] = [
 
 export const featuredQuiz: FeaturedQuiz = {
     title: 'Pragas do Solo',
-    description: 'Aprenda a identificar as principais pragas que atacam as raízes e o solo em plantações.',
+    description: 'Aprenda a identificar as principais pragas agrícolas que atacam as raízes e o solo em plantações.',
     questionCount: 10,
     estimatedTime: '5 min',
     difficulty: 'Médio',
