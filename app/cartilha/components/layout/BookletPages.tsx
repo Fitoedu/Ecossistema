@@ -853,7 +853,7 @@ export function PageCover({ data }: { data: PageCoverData }) {
           border="1px solid rgba(46,125,50,0.2)"
           mb={6}
         >
-          📚 Cartilha Educativa — EducaFito
+           Cartilha Educativa — EducaFito
         </Box>
       </motion.div>
 

@@ -2,7 +2,32 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
+import {
+  Book,
+  BookOpen,
+  Microscope,
+  Sun,
+  Sprout,
+  Bug,
+  Scissors,
+  Search,
+  Wheat,
+  Handshake,
+  Siren,
+  ShieldAlert,
+  FlaskConical,
+  Landmark,
+  ShieldCheck,
+  MapPin,
+  TrendingDown,
+  Trophy,
+  Brain,
+  GraduationCap,
+  ChevronLeft,
+  ChevronRight,
+  CheckCircle2,
+} from 'lucide-react'
 import { Box, Flex, Input, Text, HStack, VStack } from '@chakra-ui/react'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -18,27 +43,27 @@ interface PageNavigationProps {
 
 // ─── Constantes ───────────────────────────────────────────────────────────────
 
-const PAGE_EMOJIS: Record<number, string> = {
-  0:  '📗', // Capa
-  1:  '📖', // Apresentação
-  2:  '🔬', // Fitossanidade
-  3:  '🐛', // Fábrica de comida
-  4:  '🌱', // Praga agrícola
-  5:  '🦟', // Insetos e ácaros
-  6:  '🦷', // Aparelhos bucais
-  7:  '🔎', // Fungos, bactérias e vírus
-  8:  '🌿', // Plantas invasoras
-  9:  '🤝', // Todo mundo tem um papel
-  10: '🚨', // Ataque na lavoura
-  11: '🛂', // Pragas quarentenárias
-  12: '🔬', // Pesquisadores
-  13: '🏛️', // Fiscalização
-  14: '🛡️', // Boas práticas
-  15: '🗺️', // Casos reais do Amapá
-  16: '📉', // Impacto
-  17: '🏆', // Encontre o herói
-  18: '🧠', // Quiz
-  19: '🎓', // Encerramento
+const PAGE_ICONS: Record<number, LucideIcon> = {
+  0: Book,
+  1: BookOpen,
+  2: Microscope,
+  3: Sun,
+  4: Sprout,
+  5: Bug,
+  6: Scissors,
+  7: Search,
+  8: Wheat,
+  9: Handshake,
+  10: Siren,
+  11: ShieldAlert,
+  12: FlaskConical,
+  13: Landmark,
+  14: ShieldCheck,
+  15: MapPin,
+  16: TrendingDown,
+  17: Trophy,
+  18: Brain,
+  19: GraduationCap,
 }
 
 // ─── NavButton ────────────────────────────────────────────────────────────────
@@ -239,7 +264,10 @@ function ProgressDots({
                 }}
                 aria-hidden="true"
               >
-                {PAGE_EMOJIS[currentPage] ?? '●'}
+                {(() => {
+                  const PageIcon = PAGE_ICONS[currentPage] ?? Search
+                  return <PageIcon size={16} color="currentColor" aria-hidden="true" />
+                })()}
               </motion.span>
             )}
           </motion.button>
@@ -265,7 +293,7 @@ function PageInfo({
   pageLabel?: string
   onGoTo?: (index: number) => void
 }) {
-  const emoji = PAGE_EMOJIS[currentPage] ?? '📄'
+  const PageIcon = PAGE_ICONS[currentPage] ?? BookOpen
   const [pageInput, setPageInput] = useState(String(currentPage + 1))
 
   const commitPageInput = () => {
@@ -304,14 +332,9 @@ function PageInfo({
           style={{ textAlign: 'center', width: '100%' }}
         >
           <HStack gap={1} justify="center" wrap="nowrap">
-            <Text
-              fontSize="14px"
-              lineHeight="1"
-              aria-hidden="true"
-              style={{ flexShrink: 0 }}
-            >
-              {emoji}
-            </Text>
+            <Box color="green.600" lineHeight="1" flexShrink={0}>
+              <PageIcon size={16} color="currentColor" aria-hidden="true" />
+            </Box>
             {pageLabel && (
               <Text
                 fontSize={{ base: '0.62rem', sm: '0.7rem' }}
