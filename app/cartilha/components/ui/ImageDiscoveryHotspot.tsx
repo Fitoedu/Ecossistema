@@ -26,10 +26,12 @@ const CATEGORY_META: Record<
   MicroorgCategory,
   { label: string; color: string; soft: string }
 > = {
-  fungo: { label: 'Fungo', color: 'orange.700', soft: 'orange.50' },
-  bacteria: { label: 'Bactéria', color: 'yellow.800', soft: 'yellow.50' },
+  fungo: { label: 'Fungos', color: 'orange.700', soft: 'orange.50' },
+  bacteria: { label: 'Bactérias', color: 'yellow.800', soft: 'yellow.50' },
   virus: { label: 'Vírus', color: 'green.700', soft: 'green.50' },
-  fitoplasma: { label: 'Fitoplasma', color: 'teal.700', soft: 'teal.50' },
+  fitoplasma: { label: 'Fitoplasmas', color: 'teal.700', soft: 'teal.50' },
+  nematoide: { label: 'Nematoides', color: 'purple.700', soft: 'purple.50' },
+  protozoario: { label: 'Protozoários', color: 'blue.700', soft: 'blue.50' },
 }
 
 function InvestigationModal({
@@ -71,11 +73,11 @@ function InvestigationModal({
                   bg={meta.soft}
                 >
                   <Image
-                    src={item.backgroundImageSrc}
-                    alt={`Fotografia ampliada de ${item.name}`}
+                    src={item.image}
+                    alt={item.imageAlt}
                     fill
                     sizes="(max-width: 560px) 100vw, 560px"
-                    style={{ objectFit: 'cover' }}
+                    style={{ objectFit: 'cover', filter: 'none' }}
                   />
                   <Box
                     position="absolute"
@@ -84,10 +86,10 @@ function InvestigationModal({
                   />
                   <Box position="absolute" left={5} right={5} bottom={4}>
                     <Text color="white" fontSize={{ base: '1.35rem', sm: '1.65rem' }} fontWeight="900">
-                      {item.name}
+                      {item.diseaseName}
                     </Text>
                     <Text color="white" fontSize="0.8rem" fontWeight="700">
-                      {meta.label}
+                      Grupo: {item.name}
                     </Text>
                   </Box>
                 </Box>
@@ -120,10 +122,18 @@ function InvestigationModal({
                   <VStack align="stretch" gap={3}>
                     <Box bg={meta.soft} borderLeft="4px solid" borderColor={meta.color} p={3} borderRadius="md">
                       <Text fontSize="0.72rem" fontWeight="800" color={meta.color} mb={1}>
-                        O que observar
+                        O que são e como agem?
                       </Text>
                       <Text fontSize="0.85rem" color="gray.700" lineHeight="1.6">
                         {item.concept}
+                      </Text>
+                    </Box>
+                    <Box bg="green.50" borderLeft="4px solid" borderColor="green.500" p={3} borderRadius="md">
+                      <Text fontSize="0.72rem" fontWeight="800" color="green.800" mb={1}>
+                        Sintomas na planta
+                      </Text>
+                      <Text fontSize="0.85rem" color="gray.700" lineHeight="1.6">
+                        {item.symptomsText}
                       </Text>
                     </Box>
                     <Box bg="orange.50" borderLeft="4px solid" borderColor="orange.400" p={3} borderRadius="md">
@@ -163,25 +173,37 @@ function HotspotCard({
       style={{ height: '100%' }}
     >
       <Box
-        as="button"
-        onClick={onInvestigate}
         position="relative"
         w="full"
         h={{ base: '250px', sm: '290px' }}
         borderRadius="18px"
         overflow="hidden"
-        cursor="pointer"
         textAlign="left"
         bg="green.900"
-        backgroundImage={`url('${item.backgroundImageSrc}')`}
-        backgroundSize="cover"
-        backgroundPosition="center"
         boxShadow="0 6px 28px rgba(0,0,0,0.2)"
         border="0"
-        _hover={{ transform: 'translateY(-3px)', shadow: 'md' }}
-        _focusVisible={{ outline: '3px solid', outlineColor: 'yellow.300', outlineOffset: '3px' }}
       >
-        <Box position="absolute" inset={0} bg="linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.05) 70%)" />
+        <Box position="absolute" inset={0} overflow="hidden">
+          <Image
+            src={item.image}
+            alt=""
+            fill
+            sizes="(max-width: 640px) 100vw, 50vw"
+            style={{
+              objectFit: 'cover',
+              filter: 'blur(3.5px)',
+              transform: 'scale(1.04)',
+              transition: 'filter 0.25s ease',
+            }}
+            aria-hidden="true"
+          />
+        </Box>
+        <Box
+          position="absolute"
+          inset={0}
+          zIndex={1}
+          bg="linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0.05) 70%)"
+        />
 
         <motion.div
           animate={{ scale: [1, 1.08, 1] }}
@@ -189,6 +211,17 @@ function HotspotCard({
           style={{ position: 'absolute', top: '50%', left: '50%', zIndex: 2, transform: 'translate(-50%, -50%)' }}
         >
           <Flex
+            as="button"
+            onClick={onInvestigate}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault()
+                onInvestigate()
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-label={`Investigar o grupo ${item.name}`}
             w={{ base: '48px', sm: '54px' }}
             h={{ base: '48px', sm: '54px' }}
             align="center"
@@ -199,7 +232,14 @@ function HotspotCard({
             border="3px solid"
             borderColor="yellow.300"
             boxShadow="0 0 0 7px rgba(255,255,255,0.18), 0 5px 18px rgba(0,0,0,0.3)"
-            aria-hidden="true"
+            cursor="pointer"
+            transition="transform 0.2s ease, box-shadow 0.2s ease"
+            _hover={{
+              transform: 'scale(1.1)',
+              boxShadow: '0 0 0 9px rgba(255,255,255,0.24), 0 8px 24px rgba(0,0,0,0.4)',
+            }}
+            _active={{ transform: 'scale(0.98)' }}
+            _focusVisible={{ outline: '3px solid', outlineColor: 'yellow.300', outlineOffset: '4px' }}
           >
             <Search size={24} strokeWidth={2.5} />
           </Flex>
@@ -210,7 +250,7 @@ function HotspotCard({
             {item.name}
           </Text>
           <Text color="whiteAlpha.800" fontSize="0.7rem" fontWeight="700">
-            {meta.label} · clique para investigar
+            Clique na lupa para investigar
           </Text>
         </Box>
       </Box>

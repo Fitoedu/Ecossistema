@@ -1575,7 +1575,7 @@ export function PageHotspot({ data }: { data: PageHotspotData }) {
         </Text>
       </Box>
 
-      {/* Grade de Hotspots — 2 colunas */}
+      {/* Grade de grupos — 2 colunas x 3 linhas */}
       <ImageDiscoveryHotspotGrid items={data.items} />
 
       {data.callouts && <CalloutList callouts={data.callouts} startMt={4} />}

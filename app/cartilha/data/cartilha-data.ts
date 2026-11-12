@@ -15,7 +15,13 @@ import { Droplet, Leaf, Sprout } from "lucide-react"
 export type CalloutVariant = 'green' | 'yellow' | 'red'
 
 /** Categoria de microorganismo para o hotspot */
-export type MicroorgCategory = 'fungo' | 'bacteria' | 'virus' | 'fitoplasma'
+export type MicroorgCategory =
+  | 'fungo'
+  | 'bacteria'
+  | 'virus'
+  | 'fitoplasma'
+  | 'nematoide'
+  | 'protozoario'
 
 /** Emoções possíveis da persona Dona Fito */
 export type PersonaEmotion =
@@ -114,12 +120,18 @@ export interface HotspotItemData {
   id: string
   /** Nome da doença/patógeno */
   name: string
+  /** Exemplo de doença associada ao grupo */
+  diseaseName: string
   /** Categoria para coloração do badge */
   category: MicroorgCategory
-  /** URL da imagem de fundo do card (foto da doença na folha/fruto) */
-  backgroundImageSrc: string
+  /** Imagem real do sintoma ou doença exibida no card e no modal */
+  image: string
   /** Texto principal de explicação */
   concept: string
+  /** Sintomas descritos em linguagem acessível */
+  symptomsText: string
+  /** Texto alternativo da imagem do sintoma ou doença */
+  imageAlt: string
   /** Como o agente causador se dissemina no campo */
   spreadText: string
   /** Texto de alerta/impacto (aparece em destaque vermelho) */
@@ -475,7 +487,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     type: 'content',
     interactionType: 'standard',
     id: 'p3',
-    label: 'O que é Fitossanidade?',
+    label: 'Fitossanidade',
     badgeLabel: 'Conceito Base',
     title: 'O que é ',
     titleHighlight: 'Fitossanidade?',
@@ -512,7 +524,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     type: 'impact',
     interactionType: 'standard',
     id: 'p4',
-    label: 'O que é uma Praga Agrícola?',
+    label: 'Praga Agrícola',
     badgeLabel: 'Conceito de Praga Agrícola',
     title: 'O que é uma ',
     titleHighlight: 'Praga Agrícola?',
@@ -705,114 +717,138 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 8 — FUNGOS, BACTÉRIAS E VÍRUS (HOTSPOT INTERATIVO)
+     PÁGINA 8 — INVASORES INVISÍVEIS (HOTSPOT INTERATIVO)
   ───────────────────────────────────────────────────── */
   {
     type: 'hotspot',
     interactionType: 'hotspot',
     id: 'p8',
-    label: 'Fungos, Bactérias e Vírus',
+    label: 'Invasores Invisíveis',
     badgeLabel: 'Lente de Investigação',
     title: 'Os Invasores ',
     titleHighlight: 'Invisíveis',
     titleSuffix: ' das Plantas',
     leadText:
-      'Fungos, bactérias e vírus são micro-organismos que adoecem as plantas. Clique em cada imagem para investigar o que está acontecendo com essa folha ou fruto!',
+      'Vários microrganismos e organismos — como bactérias, fungos, vírus, fitoplasmas, nematoides e protozoários — podem causar doenças nas plantas. Clique na lupa de cada grupo para investigar!',
     items: [
       {
-        id: 'fungo-ferrugem',
-        name: 'Ferrugem',
-        category: 'fungo',
-        backgroundImageSrc: '/images/sintomas/clorose.webp',
-        concept:
-          'A ferrugem é uma doença causada por fungos que deixam manchas alaranjadas ou marrons nas folhas, semelhantes à ferrugem de metal. Ela se espalha pelo vento e pode destruir cultivos agrícolas de soja ou trigo em poucos dias!',
-        spreadText:
-          'Os esporos são carregados pelo vento e também podem viajar em respingos de chuva e ferramentas contaminadas.',
-        impactText:
-          'Pode causar perdas de até 70% da colheita de soja. Uma das doenças fúngicas mais destrutivas do agronegócio brasileiro.',
-        preventionText:
-          'Use variedades resistentes e fungicidas preventivos. O monitoramento precoce é fundamental!',
-      },
-      {
-        id: 'fungo-antracnose',
-        name: 'Antracnose',
-        category: 'fungo',
-        backgroundImageSrc: '/images/sintomas/podridao.webp',
-        concept:
-          'A antracnose é causada por fungos do gênero Colletotrichum. Provoca manchas escuras e afundadas nos frutos de manga, mamão e tomate. Os frutos apodrecem antes de amadurecer, ficando impróprios para venda.',
-        spreadText:
-          'A chuva e a irrigação espalham os esporos entre folhas e frutos; restos de plantas e ferramentas contaminadas também transportam o fungo.',
-        impactText:
-          'Muito comum no clima úmido da Amazônia. Frutos infectados perdem completamente o valor comercial.',
-        preventionText:
-          'Evite excesso de umidade, faça colheita no tempo certo e aplique fungicidas cúpricos como medida preventiva.',
-      },
-      {
-        id: 'fungo-requeima',
-        name: 'Requeima',
-        category: 'fungo',
-        backgroundImageSrc: '/images/sintomas/necrose.webp',
-        concept:
-          'A requeima, causada pelo oomiceto Phytophthora infestans, foi responsável pela Grande Fome da Irlanda no século XIX! Ela ataca batata, tomate e pimenta, provocando o apodrecimento rápido e total das plantas.',
-        spreadText:
-          'Esporos são levados pelo vento e por respingos de chuva, especialmente em períodos frios e muito úmidos.',
-        impactText:
-          'Em condições ideais de umidade e frio, pode destruir cultivos agrícolas de batata em apenas 10 dias. É considerada emergência fitossanitária.',
-        preventionText:
-          'Plante variedades resistentes, faça rotação de culturas e aplique fungicidas sistêmicos de forma preventiva.',
-      },
-      {
-        id: 'bacteria-cancro',
-        name: 'Cancro Cítrico',
+        id: 'bacterias',
+        name: 'Bactérias',
+        diseaseName: 'Cancro Cítrico',
         category: 'bacteria',
-        backgroundImageSrc: '/images/sintomas/frutos com lesoes.webp',
+        image: '/images/sintomas/frutos com lesoes.webp',
+        imageAlt: 'Fruto cítrico com lesões do cancro cítrico',
         concept:
-          'O cancro cítrico é uma doença bacteriana causada por Xanthomonas citri. Ataca laranjas, limões e outras frutas cítricas, causando lesões elevadas nas folhas, frutos e caules. Frutos infectados não podem ser exportados.',
+          'As bactérias são seres muito pequenos que podem entrar por ferimentos e aberturas da planta. O cancro cítrico é um exemplo conhecido em laranjeiras e limoeiros.',
+        symptomsText:
+          'Aparecem lesões elevadas, ásperas e amarronzadas nas folhas, nos frutos e nos galhos. As folhas podem cair e os frutos ficam com aparência ruim.',
         spreadText:
           'Respingos de chuva, vento, insetos e ferramentas contaminadas levam a bactéria de uma planta para outra.',
         impactText:
-          'Prejuízo enorme para produtores: frutos com sintomas são descartados e a planta infectada deve ser erradicada por lei.',
+          'Frutos com sintomas perdem valor e podem ser descartados.',
         preventionText:
-          'Utilize mudas certificadas, higienize ferramentas e evite trabalhar na roça com folhas molhadas. É de notificação obrigatória ao MAPA.',
+          'Use mudas certificadas, higienize ferramentas e evite trabalhar com folhas molhadas.',
       },
       {
-        id: 'virus-mosaico',
-        name: 'Vírus do Mosaico',
+        id: 'fungos',
+        name: 'Fungos',
+        diseaseName: 'Ferrugem',
+        category: 'fungo',
+        image: '/images/encontre_herois/fungo-ferrugem.webp',
+        imageAlt: 'Folha com manchas alaranjadas causadas por ferrugem',
+        concept:
+          'Os fungos podem crescer sobre ou dentro da planta. A ferrugem deixa manchas que lembram a cor da ferrugem de metal.',
+        symptomsText:
+          'A folha fica com pontos ou manchas alaranjadas e marrons. Com o tempo, ela pode amarelar, secar e cair.',
+        spreadText:
+          'Esporos são carregados pelo vento e por respingos de chuva.',
+        impactText:
+          'A doença reduz a fotossíntese e pode diminuir a colheita.',
+        preventionText:
+          'Evite excesso de umidade e plante variedades resistentes quando possível.',
+      },
+      {
+        id: 'virus',
+        name: 'Vírus',
+        diseaseName: 'Vírus do Mosaico',
         category: 'virus',
-        backgroundImageSrc: '/images/sintomas/murcha.webp',
+        image: '/images/encontre_herois/mosaico de virus.webp',
+        imageAlt: 'Folha com sintomas do vírus do mosaico',
         concept:
-          'O vírus do mosaico (TMV, CMV e outros) deixa as folhas com padrão de manchas claras e escuras, parecendo um mosaico colorido. É transmitido por insetos vetores como pulgões. Afeta tomate, feijão, mandioca e muitas outras culturas.',
+          'Os vírus são agentes minúsculos que usam as células da planta para se multiplicar. O vírus do mosaico é um exemplo comum em várias culturas.',
+        symptomsText:
+          'As folhas ficam com desenhos de manchas claras e escuras, como um mosaico. A planta pode crescer menos e produzir frutos menores.',
         spreadText:
-          'Insetos vetores, como pulgões e moscas-brancas, transmitem o vírus; mãos e ferramentas contaminadas também podem espalhá-lo.',
+          'Pulgões, moscas-brancas, mãos e ferramentas contaminadas podem transmitir o vírus.',
         impactText:
-          'Não existe cura para vírus em plantas. Uma vez infectada, a planta deve ser removida para evitar a disseminação para as vizinhas.',
+          'Não há cura para a planta infectada.',
         preventionText:
-          'Controle os insetos vetores (pulgões, moscas-brancas), use mudas sadias e elimine imediatamente plantas sintomáticas.',
+          'Use mudas sadias, controle os insetos vetores e retire plantas muito doentes.',
       },
       {
-        id: 'fitoplasma',
-        name: 'Fitoplasma',
+        id: 'fitoplasmas',
+        name: 'Fitoplasmas',
+        diseaseName: 'Enfezamento / Superbrotamento',
         category: 'fitoplasma',
-        backgroundImageSrc: '/images/doencas/fitoplasma.webp',
+        image: '/images/doencas/fitoplasma.webp',
+        imageAlt: 'Planta com sintomas de enfezamento e superbrotamento',
         concept:
-          'O fitoplasma é um micro-organismo que vive dentro dos vasos condutores da planta (floema). Causa o amarelecimento letal de palmeiras como açaí, coco e dendê — sem cura conhecida! É transmitido por cigarrinhas e outros insetos vetores.',
+          'Fitoplasmas são microrganismos que vivem nos vasos que transportam alimento dentro da planta. Eles podem causar enfezamento e superbrotamento.',
+        symptomsText:
+          'A planta fica menor e fraca, com folhas amareladas, galhos muito finos ou muitos brotos pequenos juntos.',
         spreadText:
-          'Cigarrinhas e outros insetos vetores adquirem o fitoplasma de plantas doentes e o transmitem ao se alimentarem de plantas saudáveis.',
+          'Cigarrinhas e outros insetos vetores levam o fitoplasma de uma planta doente para outra.',
         impactText:
-          'O amarelecimento fatal do coqueiro já destruiu milhões de palmeiras no Brasil. A doença é irreversível e a planta morre em poucos meses após a infecção.',
+          'A planta pode perder a produção e não se recuperar.',
         preventionText:
-          'Controle rigoroso dos insetos vetores e erradicação imediata de palmeiras sintomáticas. Não existe tratamento curativo.',
+          'Use mudas sadias e controle os insetos vetores.',
+      },
+      {
+        id: 'nematoides',
+        name: 'Nematoides',
+        diseaseName: 'Nematoides das Galhas',
+        category: 'nematoide',
+        image: '/images/sintomas/galhas.webp',
+        imageAlt: 'Raízes de planta com caroços e galhas causadas por nematoides',
+        concept:
+          'Nematoides são vermes microscópicos que vivem no solo e atacam as raízes. Alguns formam galhas, que são como caroços nas raízes.',
+        symptomsText:
+          'A planta fica fraca, murcha e cresce pouco mesmo quando é regada. Ao retirar a planta, podem aparecer galhas nas raízes.',
+        spreadText:
+          'Solo, água, ferramentas e mudas contaminadas podem transportar nematoides.',
+        impactText:
+          'Raízes machucadas absorvem menos água e nutrientes.',
+        preventionText:
+          'Faça rotação de culturas, use mudas sadias e evite levar solo contaminado.',
+      },
+      {
+        id: 'protozoarios',
+        name: 'Protozoários',
+        diseaseName: 'Murcha-de-Phytomonas',
+        category: 'protozoario',
+        image: '/images/doencas/planta2.webp',
+        imageAlt: 'Planta com folhas murchas, representação de doença associada a protozoários',
+        concept:
+          'Protozoários são organismos microscópicos. Alguns vivem nos vasos da planta e podem causar doenças como a murcha-de-Phytomonas em coqueiros e cafeeiros.',
+        symptomsText:
+          'As folhas perdem a força, ficam amareladas e murcham. A planta pode secar aos poucos porque a água não circula bem.',
+        spreadText:
+          'Insetos vetores podem carregar o organismo de uma planta doente para outra.',
+        impactText:
+          'A doença pode comprometer a produção e levar a planta à morte.',
+        preventionText:
+          'Observe as plantas, controle os vetores e retire partes ou plantas muito doentes conforme a orientação técnica.',
       },
     ],
     callouts: [
       {
         variant: 'green',
         title: 'A prevenção é sempre melhor!',
-        text: 'Fungos e bactérias se espalham pela água, pelo vento e por ferramentas contaminadas. Higienizar os instrumentos agrícolas, usar sementes certificadas e evitar o excesso de água são formas simples de prevenir essas doenças!',
+        text: 'Bactérias, fungos, vírus, fitoplasmas, nematoides e protozoários podem se espalhar pela água, pelo vento, por insetos, por ferramentas contaminadas, pelo solo e por mudas contaminadas. Higienizar instrumentos, usar mudas sadias e observar as plantas são formas simples de prevenção!',
       },
     ],
     personaText:
-      'Esses inimigos são invisíveis a olho nu, mas causam estragos enormes! Fungos, bactérias e vírus são os "germes das plantas". Clique em cada imagem para investigar o que está acontecendo!',
+      'Esses inimigos são invisíveis a olho nu, mas causam estragos enormes! Bactérias, fungos, vírus, fitoplasmas, nematoides e protozoários podem adoecer as plantas. Clique em cada grupo para investigar!',
     personaEmotion: 'alert',
     personaImageSrc: '/assets/dona-fito/dona-fito-alert.png',
   },
