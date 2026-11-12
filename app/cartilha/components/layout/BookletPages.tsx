@@ -11,6 +11,7 @@ import {
   VStack,
   SimpleGrid,
   Icon,
+  Link,
 } from "@chakra-ui/react";
 import {
   AnimatePresence,
@@ -33,6 +34,7 @@ import {
   Telescope,
   TreePine,
   Users,
+  ExternalLink,
 } from "lucide-react";
 import PestModalGallery from "../pages/pests/PestModalGallery";
 import Quiz from "../pages/quiz/Quiz";
@@ -2445,7 +2447,7 @@ const RESEARCH_STATION_IMAGES = [
   "https://images.unsplash.com/photo-1532094349884-543bc11b234d",
   "https://images.unsplash.com/photo-1523240795612-9a054b0db644",
   "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc",
-  "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b",
+  "/assets/icones/laboratorio-icone.png",
   "/assets/dona-fito/dona-fito-happy.png",
 ];
 
@@ -2455,6 +2457,7 @@ const RESEARCH_STATION_IMPACTS = [
   "Prepara técnicos para reconhecer pragas agrícolas no campo e aplicar práticas de manejo sustentável.",
   "Protege a biodiversidade do Amapá ao estudar espécies nativas, pragas agrícolas e aliados naturais.",
   "Entrega diagnósticos confiáveis para que o agricultor escolha o tratamento correto e evite desperdícios.",
+  "Integra ensino, pesquisa e extensão em fitossanidade e produção vegetal, contribuindo para o diagnóstico, o manejo sustentável e a produção no Amapá.",
   "A curiosidade de hoje pode virar a pesquisa que protegerá os cultivos agrícolas de amanhã. Ciência também começa na escola!",
 ];
 
@@ -2526,8 +2529,15 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
           return (
             <Box
               key={station.name}
-              as="button"
               onClick={() => setExpandedIndex(isExpanded ? null : index)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  setExpandedIndex(isExpanded ? null : index);
+                }
+              }}
               w="100%"
               textAlign="left"
               cursor="pointer"
@@ -2545,6 +2555,9 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
               boxShadow={isExpanded ? "0 8px 24px rgba(46,125,50,0.16)" : "sm"}
               _hover={{ transform: "translateY(-3px)", shadow: "md" }}
               transition="all 0.25s ease"
+              display="flex"
+              flexDirection="column"
+              minH={{ base: "auto", md: "268px" }}
             >
               <Box
                 h="140px"
@@ -2591,7 +2604,12 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                 </Box>
               </Box>
 
-              <Box p={{ base: 4, sm: 5 }}>
+              <Box
+                p={{ base: 4, sm: 5 }}
+                display="flex"
+                flexDirection="column"
+                flex="1"
+              >
                 <Flex align="center" justify="space-between" gap={3}>
                   <Text
                     fontWeight="800"
@@ -2615,14 +2633,16 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                   </Text>
                 )}
                 <Text
-                  mt={3}
+                  mt={isExpanded ? 3 : "auto"}
+                  pt={2}
                   fontSize="0.68rem"
                   fontWeight="800"
                   color="green.700"
                 >
-                  🔬 Clique para explorar a estação
+                  {isExpanded
+                    ? "Clique para recolher"
+                    : "🔬 Clique para explorar a estação"}
                 </Text>
-
                 <AnimatePresence initial={false}>
                   {isExpanded && (
                     <motion.div
@@ -2653,6 +2673,20 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                         >
                           {station.desc}
                         </Text>
+                        {station.pillars && (
+                          <VStack align="stretch" gap={2} mt={4}>
+                            {station.pillars.map((pillar) => (
+                              <Box key={pillar.title} bg="green.50" borderLeft="3px solid" borderColor="green.400" p={2.5} borderRadius="md">
+                                <Text fontSize="0.7rem" fontWeight="900" color="green.800">
+                                  {pillar.title}
+                                </Text>
+                                <Text mt={1} fontSize="0.75rem" color="gray.700" lineHeight="1.5">
+                                  {pillar.text}
+                                </Text>
+                              </Box>
+                            ))}
+                          </VStack>
+                        )}
                         <Text
                           mt={3}
                           fontSize="0.7rem"
@@ -2670,6 +2704,42 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                         >
                           {RESEARCH_STATION_IMPACTS[index]}
                         </Text>
+                        {station.links && station.links.length > 0 && (
+                          <Flex
+                            wrap="wrap"
+                            gap={2}
+                            mt={4}
+                            justify="flex-start"
+                            w="full"
+                            ml={0}
+                          >
+                            {station.links.map((link) => (
+                              <Link
+                                key={link.url}
+                                href={link.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(event) => event.stopPropagation()}
+                                display="inline-flex"
+                                alignItems="center"
+                                gap={1.5}
+                                px={3}
+                                py={1.5}
+                                borderRadius="lg"
+                                bg="green.50"
+                                color="green.700"
+                                border="1px solid"
+                                borderColor="green.200"
+                                fontSize="xs"
+                                fontWeight="semibold"
+                                _hover={{ bg: "green.100", borderColor: "green.300" }}
+                              >
+                                <ExternalLink size={13} aria-hidden="true" />
+                                {link.label}
+                              </Link>
+                            ))}
+                          </Flex>
+                        )}
                       </Box>
                     </motion.div>
                   )}

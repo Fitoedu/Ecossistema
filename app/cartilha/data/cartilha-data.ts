@@ -95,6 +95,14 @@ export interface OrgaoItemData {
   imageSrc: string
   name: string
   desc: string
+  links?: {
+    label: string
+    url: string
+  }[]
+  pillars?: {
+    title: string
+    text: string
+  }[]
 }
 
 /** Item da cadeia de impacto */
@@ -1079,11 +1087,15 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     leadText:
       'Por trás de cada solução fitossanitária existe um pesquisador dedicado! Essas pessoas estudam pragas agrícolas, desenvolvem novas variedades de plantas resistentes e criam métodos de controle sustentáveis.',
     items: [
-      { imageSrc: '/assets/icones/embrapa-icone.png', name: 'Embrapa — Empresa Brasileira de Pesquisa Agropecuária', desc: 'Desenvolveu variedades de mandioca resistentes a vassoura-de-bruxa e tecnicas de controle biologico para a Amazonia.' },
-      { imageSrc: '/assets/icones/universidade-icone.png', name: 'Universidades e Institutos Federais', desc: 'Formam biologos, agronomos e engenheiros florestais que pesquisam pragas agrícolas locais e desenvolvem solucoes regionais.' },
-      { imageSrc: '/assets/icones/ifap-icone.png', name: 'IFAP — Instituto Federal do Amapá', desc: 'Pesquisa e forma técnicos agrícolas com foco nas pragas agrícolas e desafios específicos da região amazônica.' },
-      { imageSrc: '/assets/icones/iepa-icone.png', name: 'IEPA — Instituto de Pesquisas Científicas do Amapá', desc: 'Estuda a biodiversidade amazônica, identificando novas pragas agrícolas e aliados naturais dos cultivos agrícolas amapaenses.' },
-      { imageSrc: '/assets/icones/laboratorio-icone.png', name: 'Laboratórios de Diagnóstico Fitossanitário', desc: 'Identificam com precisão qual praga agrícola ou doença está atacando um cultivo agrícola, permitindo o tratamento correto.' },
+      { imageSrc: '/assets/icones/embrapa-icone.png', name: 'Embrapa — Empresa Brasileira de Pesquisa Agropecuária', desc: 'Desenvolveu variedades de mandioca resistentes à vassoura-de-bruxa e técnicas de controle biológico para a Amazônia.', links: [{ label: 'Site oficial da Embrapa', url: 'https://www.embrapa.br' }] },
+      { imageSrc: '/assets/icones/universidade-icone.png', name: 'Universidades Públicas do Amapá (UNIFAP e UEAP)', desc: 'A UNIFAP e a UEAP formam biólogos, agrônomos e pesquisadores que estudam pragas agrícolas e desenvolvem soluções sustentáveis para a Amazônia.', links: [{ label: 'UNIFAP — Universidade Federal do Amapá', url: 'https://www.unifap.br' }, { label: 'UEAP — Universidade do Estado do Amapá', url: 'https://www.ueap.edu.br' }] },
+      { imageSrc: '/assets/icones/ifap-icone.png', name: 'IFAP — Instituto Federal do Amapá', desc: 'Pesquisa e forma técnicos agrícolas e profissionais com foco nas pragas e desafios da agricultura amazônica.', links: [{ label: 'Site oficial do IFAP', url: 'https://www.ifap.edu.br' }] },
+      { imageSrc: '/assets/icones/iepa-icone.png', name: 'IEPA — Instituto de Pesquisas Científicas e Tecnológicas do Estado do Amapá', desc: 'Estuda a biodiversidade amazônica, identificando pragas agrícolas e aliados naturais nos cultivos amapaenses.', links: [{ label: 'Site oficial do IEPA', url: 'https://iepa.ap.gov.br' }] },
+      { imageSrc: '/assets/icones/laboratorio-icone.png', name: 'LABFITO — Laboratório de Fitossanidade e Produção Vegetal', desc: 'Vinculado à UNIFAP (Campus Mazagão), atua em ensino, pesquisa e extensão nas áreas de fitossanidade e produção vegetal.', links: [{ label: 'UNIFAP — Campus Mazagão (LABFITO)', url: 'https://www2.unifap.br/mazagao/' }], pillars: [
+        { title: 'Ensino', text: 'Forma estudantes em fitossanidade e produção vegetal, conectando teoria e prática para a realidade do Amapá.' },
+        { title: 'Pesquisa', text: 'Investiga diagnóstico e manejo sustentável de pragas e doenças, buscando soluções adequadas aos cultivos amapaenses.' },
+        { title: 'Extensão', text: 'Compartilha conhecimentos e orientações com produtores e comunidades para fortalecer a produção vegetal no Amapá.' },
+      ] },
       { imageSrc: '/assets/icones/estudante-icone.png', name: 'Você pode ser o próximo!', desc: 'Cada estudante curioso é um futuro pesquisador em potencial. A ciência precisa de você para proteger nossas plantas!' },
     ],
     personaText:
