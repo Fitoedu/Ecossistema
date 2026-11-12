@@ -25,19 +25,20 @@ const PAGE_EMOJIS: Record<number, string> = {
   3:  '🐛', // Fábrica de comida
   4:  '🌱', // Praga agrícola
   5:  '🦟', // Insetos e ácaros
-  6:  '🔎', // Fungos, bactérias e vírus
-  7:  '🌿', // Plantas invasoras
-  8:  '🤝', // Todo mundo tem um papel
-  9:  '🚨', // Ataque na lavoura
-  10: '🛂', // Pragas quarentenárias
-  11: '🔬', // Pesquisadores
-  12: '🏛️', // Fiscalização
-  13: '🛡️', // Boas práticas
-  14: '🗺️', // Casos reais do Amapá
-  15: '📉', // Impacto
-  16: '🏆', // Encontre o herói
-  17: '🧠', // Quiz
-  18: '🎓', // Encerramento
+  6:  '🦷', // Aparelhos bucais
+  7:  '🔎', // Fungos, bactérias e vírus
+  8:  '🌿', // Plantas invasoras
+  9:  '🤝', // Todo mundo tem um papel
+  10: '🚨', // Ataque na lavoura
+  11: '🛂', // Pragas quarentenárias
+  12: '🔬', // Pesquisadores
+  13: '🏛️', // Fiscalização
+  14: '🛡️', // Boas práticas
+  15: '🗺️', // Casos reais do Amapá
+  16: '📉', // Impacto
+  17: '🏆', // Encontre o herói
+  18: '🧠', // Quiz
+  19: '🎓', // Encerramento
 }
 
 // ─── NavButton ────────────────────────────────────────────────────────────────

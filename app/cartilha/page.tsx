@@ -10,6 +10,7 @@ import {
   PageContent,
   PageLapbook,
   PagePestGallery,
+  PageMouthparts,
   PageHotspot,
   PageImpact,
   PageAlert,
@@ -48,6 +49,8 @@ function renderPage(
       return <PageLapbook data={page} />;
     case "pest-gallery":
       return <PagePestGallery data={page} onSelectItem={onSelectItem} />;
+    case "mouthparts":
+      return <PageMouthparts data={page} />;
     case "hotspot":
       return <PageHotspot data={page} />;
     case "impact":

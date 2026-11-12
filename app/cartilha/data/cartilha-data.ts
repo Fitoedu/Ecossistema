@@ -1,6 +1,6 @@
 /* ══════════════════════════════════════════════════════════════════════════
    cartilha-data.ts — EducaFito
-   Refatoração completa: 19 páginas | Persona Dona Fito | imageSrc
+   Refatoração completa: 20 páginas | Persona Dona Fito | imageSrc
    Versão: 2.0.0
 ══════════════════════════════════════════════════════════════════════════ */
 
@@ -355,6 +355,29 @@ export interface PagePestGalleryData extends PersonaBlock {
   callouts?: CalloutData[]
 }
 
+/** PÁGINA DE APARELHOS BUCAIS — comparação interativa dos tipos de ataque */
+export interface MouthpartCardData {
+  id: 'chewing' | 'piercing-sucking'
+  name: string
+  howItWorks: string
+  plantDamage: string
+  examples: string[]
+  imageSrc: string
+  imageAlt: string
+}
+
+export interface PageMouthpartsData extends PersonaBlock {
+  type: 'mouthparts'
+  interactionType: 'mouthparts'
+  id: string
+  label: string
+  badgeLabel: string
+  title: string
+  leadText: string
+  mouthparts: MouthpartCardData[]
+  tip: string
+}
+
 /**
  * AMAPA CASES — Pagina dos Casos Reais do Amapa com design Dossie Investigativo 3D.
  * Renderiza o AmapaCasesSection (Antigravity + Glassmorphism).
@@ -373,6 +396,7 @@ export type CartilhaPageData =
   | PageContentData
   | PageLapbookData
   | PagePestGalleryData
+  | PageMouthpartsData
   | PageHotspotData
   | PageImpactData
   | PageAlertData
@@ -384,7 +408,7 @@ export type CartilhaPageData =
   | PageAmapaCasesData
 
 /* ══════════════════════════════════════════════════════════════════════════
-   DADOS — 19 ENTRADAS (Capa + 18 páginas)
+   DADOS — 20 ENTRADAS (Capa + 19 páginas)
 ══════════════════════════════════════════════════════════════════════════ */
 
 export const CARTILHA_PAGES: CartilhaPageData[] = [
@@ -635,12 +659,58 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 7 — FUNGOS, BACTÉRIAS E VÍRUS (HOTSPOT INTERATIVO)
+     PÁGINA 7 — APARELHOS BUCAIS
+  ───────────────────────────────────────────────────── */
+  {
+    type: 'mouthparts',
+    interactionType: 'mouthparts',
+    id: 'p7',
+    label: 'Aparelhos Bucais',
+    badgeLabel: 'APARELHOS BUCAIS',
+    title: 'Como os insetos se alimentam das plantas?',
+    leadText:
+      'O formato da "boca" de cada inseto, chamado aparelho bucal, define como ele ataca a planta e qual tipo de dano deixa nas roças e cultivos agrícolas. Conhecer esses sinais ajuda a identificar a praga mais rápido!',
+    mouthparts: [
+      {
+        id: 'chewing',
+        name: 'Aparelho Mastigador',
+        howItWorks:
+          'Possui mandíbulas fortes que cortam, raspam e trituram folhas, caules, flores ou frutos.',
+        plantDamage:
+          'Deixa buracos, bordas roídas ou folhas totalmente cortadas (desfolha).',
+        examples: ['Formigas', 'Lagartas'],
+        imageSrc: '/images/ameacas/gafanhoto/gafanhoto.webp',
+        imageAlt:
+          'Gafanhoto com aparelho mastigador sobre uma folha com partes roídas',
+      },
+      {
+        id: 'piercing-sucking',
+        name: 'Aparelho Picador-Sugador',
+        howItWorks:
+          'Funciona como um “canudinho” ou agulha fina (estilete) que perfura a planta para sugar a seiva nutritiva.',
+        plantDamage:
+          'Deixa as folhas amareladas, enroladas ou murchas, além de poder transmitir doenças, como vírus.',
+        examples: ['Mosca-branca', 'Pulgões'],
+        imageSrc: '/images/ameacas/pulgoes/pulgao.webp',
+        imageAlt:
+          'Pulgão sugando a seiva na parte inferior de uma folha com sintoma amarelado',
+      },
+    ],
+    tip:
+      'Viu folha cortada? Provavelmente foi um mastigador. Viu folha enrolada e amarelada? Pode ser um picador-sugador!',
+    personaText:
+      'Se a folha parece ter passado por uma tesourinha, procure um mastigador. Se ficou enrolada ou amarelada, pode haver um inseto sugando a seiva. O formato da boca dá uma pista importante!',
+    personaEmotion: 'thinking',
+    personaImageSrc: '/assets/dona-fito/dona-fito-thinking.png',
+  },
+
+  /* ─────────────────────────────────────────────────────
+     PÁGINA 8 — FUNGOS, BACTÉRIAS E VÍRUS (HOTSPOT INTERATIVO)
   ───────────────────────────────────────────────────── */
   {
     type: 'hotspot',
     interactionType: 'hotspot',
-    id: 'p7',
+    id: 'p8',
     label: 'Fungos, Bactérias e Vírus',
     badgeLabel: 'Lente de Investigação',
     title: 'Os Invasores ',
@@ -753,7 +823,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   {
     type: 'content',
     interactionType: 'standard',
-    id: 'p8',
+    id: 'p9',
     label: 'Plantas Invasoras',
     badgeLabel: 'Ervas Daninhas',
     title: 'As plantas que ',
@@ -813,7 +883,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   {
     type: 'content',
     interactionType: 'standard',
-    id: 'p9',
+    id: 'p10',
     label: 'O Lado Bom da Natureza',
     badgeLabel: 'Aliados da Roça',
     title: 'Na natureza, todo mundo tem ',
@@ -886,7 +956,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   {
     type: 'impact',
     interactionType: 'standard',
-    id: 'p10',
+    id: 'p11',
     label: 'O Ataque nos Cultivos Agrícolas',
     badgeLabel: 'Como as Pragas Atacam',
     title: 'Como as pragas agrícolas ',
@@ -934,7 +1004,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   {
     type: 'alert',
     interactionType: 'standard',
-    id: 'p11',
+    id: 'p12',
     label: 'Pragas Quarentenárias',
     badgeLabel: 'Alerta Especial',
     title: 'O que são ',
@@ -964,7 +1034,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   {
     type: 'orgaos',
     interactionType: 'standard',
-    id: 'p12',
+    id: 'p13',
     label: 'Quem Cuida? Pesquisadores',
     badgeLabel: 'Heróis da Ciencia',
     title: 'Os Cientistas que ',
@@ -992,7 +1062,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   {
     type: 'orgaos',
     interactionType: 'standard',
-    id: 'p13',
+    id: 'p14',
     label: 'Quem Cuida? Fiscalização',
     badgeLabel: 'Guardioes das Fronteiras',
     title: 'Os guardiões que ',
@@ -1020,7 +1090,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   {
     type: 'lapbook',
     interactionType: 'lift-the-flap',
-    id: 'p14',
+    id: 'p15',
     label: 'O Escudo Protetor',
     badgeLabel: 'Boas Práticas',
     lapbookBadge: 'PREVENÇÃO E MANEJO',
@@ -1045,7 +1115,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   {
     type: 'amapa-cases',
     interactionType: 'standard',
-    id: 'p15',
+    id: 'p16',
     label: 'Casos Reais do Amapá',
     badgeLabel: 'Dossie Fitossanitário',
     personaText: 'Investigue os detalhes de cada ameaça acima e veja como podemos defender o nosso Amapá!',
@@ -1059,7 +1129,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   {
     type: 'chain',
     interactionType: 'standard',
-    id: 'p16',
+    id: 'p17',
     label: 'O Impacto na Sua Vida',
     badgeLabel: 'Conexão com a vida real',
     heroTitle: 'Sem Fitossanidade = Menos Comida na Mesa',
@@ -1095,7 +1165,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   {
     type: 'find-the-hero',
     interactionType: 'find-the-hero',
-    id: 'p17',
+    id: 'p18',
     label: 'Jogo: Encontre o Herói!',
     badgeLabel: 'ATIVIDADE INTERATIVA',
     title: 'Descubra os Heróis e Vilões!',
@@ -1163,7 +1233,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   {
     type: 'quiz',
     interactionType: 'quiz',
-    id: 'p18',
+    id: 'p19',
     label: 'Quiz Final',
     badgeLabel: 'Avaliação de Aprendizagem',
     personaText:
@@ -1178,7 +1248,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   {
     type: 'closing',
     interactionType: 'closing',
-    id: 'p19',
+    id: 'p20',
     label: 'Mensagem Final',
     heroImageSrc: '/assets/cenarios/paisagem-amapa-sustentavel.png',
     heroTitle: 'Ciencia, Sustentabilidade\ne Você!',

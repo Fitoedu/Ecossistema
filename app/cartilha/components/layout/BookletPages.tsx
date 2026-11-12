@@ -46,6 +46,7 @@ import type {
   PageContentData,
   PageLapbookData,
   PagePestGalleryData,
+  PageMouthpartsData,
   PageHotspotData,
   PageImpactData,
   PageAlertData,
@@ -967,12 +968,161 @@ const PILARES = [
   },
 ] as const;
 
+function MouthpartCard({
+  card,
+  isSelected,
+  onSelect,
+}: {
+  card: PageMouthpartsData["mouthparts"][number];
+  isSelected: boolean;
+  onSelect: () => void;
+}) {
+  return (
+    <motion.div
+      whileHover={{ y: -3 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: "spring", stiffness: 300, damping: 22 }}
+    >
+      <Box
+        onClick={onSelect}
+        role="button"
+        tabIndex={0}
+        aria-pressed={isSelected}
+        textAlign="left"
+        w="100%"
+        h="100%"
+        p={{ base: 3, sm: 4 }}
+        bg={isSelected ? "#E8F5E9" : "white"}
+        border="2px solid"
+        borderColor={isSelected ? "#2E7D32" : "green.100"}
+        borderRadius="18px"
+        boxShadow={isSelected ? "0 8px 22px rgba(46,125,50,0.18)" : "sm"}
+        transition="all 0.2s ease"
+        cursor="pointer"
+        _hover={{ borderColor: "green.400" }}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            onSelect();
+          }
+        }}
+      >
+        <Box
+          position="relative"
+          overflow="hidden"
+          borderRadius="14px"
+          h={{ base: "150px", sm: "175px" }}
+          bg="green.50"
+          mb={3}
+        >
+          <Image
+            src={card.imageSrc}
+            alt={card.imageAlt}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            style={{ objectFit: "cover" }}
+          />
+          <Box
+            position="absolute"
+            inset={0}
+            bg="linear-gradient(180deg, transparent 45%, rgba(27,94,32,0.85) 100%)"
+          />
+          <Text
+            position="absolute"
+            bottom={2}
+            left={3}
+            right={3}
+            color="white"
+            fontSize="0.72rem"
+            fontWeight="700"
+          >
+            {card.id === "chewing"
+              ? "Inseto mastigador"
+              : "Pulgão sugando a seiva"}
+          </Text>
+        </Box>
+
+        <Text fontSize={{ base: "1rem", sm: "1.1rem" }} fontWeight="800" color="#1B5E20" mb={2}>
+          {card.name}
+        </Text>
+        <Text fontSize="0.82rem" color="gray.700" lineHeight="1.55" mb={2}>
+          <Text as="strong" color="#2E7D32">Como funciona: </Text>
+          {card.howItWorks}
+        </Text>
+        <Text fontSize="0.82rem" color="gray.700" lineHeight="1.55" mb={2}>
+          <Text as="strong" color="#2E7D32">Dano na planta: </Text>
+          {card.plantDamage}
+        </Text>
+        <Text fontSize="0.82rem" color="gray.700" lineHeight="1.55">
+          <Text as="strong" color="#2E7D32">Exemplos: </Text>
+          {card.examples.join(" e ")}
+        </Text>
+      </Box>
+    </motion.div>
+  );
+}
+
+export function PageMouthparts({ data }: { data: PageMouthpartsData }) {
+  const [selectedId, setSelectedId] =
+    useState<PageMouthpartsData["mouthparts"][number]["id"]>("chewing");
+  const selectedCard = data.mouthparts.find((card) => card.id === selectedId);
+  const tipText =
+    selectedId === "chewing"
+      ? "Viu folha cortada, com buracos ou bordas roídas? Provavelmente foi um inseto mastigador, como formigas ou lagartas!"
+      : "Viu folha amarelada, enrolada ou murcha sem nenhum buraco? Fique de olho: pode ser um picador-sugador, como pulgões ou mosca-branca!";
+
+  return (
+    <Box>
+      <SectionBadge>{data.badgeLabel}</SectionBadge>
+      <PageTitle>{data.title}</PageTitle>
+      <LeadText>{data.leadText}</LeadText>
+
+      <Text
+        fontSize="0.78rem"
+        fontWeight="700"
+        color="green.700"
+        textAlign="center"
+        mb={3}
+      >
+        Clique em um cartão para destacar o jeito de atacar da praga agrícola.
+      </Text>
+
+      <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: 4, md: 5 }}>
+        {data.mouthparts.map((card) => (
+          <MouthpartCard
+            key={card.id}
+            card={card}
+            isSelected={card.id === selectedId}
+            onSelect={() => setSelectedId(card.id)}
+          />
+        ))}
+      </SimpleGrid>
+
+      <AnimatePresence mode="wait">
+        {selectedCard && (
+          <motion.div
+            key={selectedCard.id}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+          >
+            <Callout variant="yellow" title="Dica da Dona Fito" mt={5}>
+              {tipText}
+            </Callout>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </Box>
+  );
+}
+
 function PillarGrid({ onGoTo }: { onGoTo: (pageIndex: number) => void }) {
   const pageByLabel: Record<(typeof PILARES)[number]["label"], number> = {
     "O que é Fitossanidade?": 2,
     "O que são Pragas Agrícolas?": 3,
-    "Casos Reais da Região Norte": 14,
-    "Como Proteger e Evitar": 13,
+    "Casos Reais da Região Norte": 15,
+    "Como Proteger e Evitar": 14,
   };
 
   return (
@@ -1151,8 +1301,8 @@ export function PageContent({
     );
   }
 
-  /* Layout exclusivo para a Página 08 — Plantas invasoras */
-  if (data.id === "p8") {
+  /* Layout exclusivo para a Página 09 — Plantas invasoras */
+  if (data.id === "p9") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -1182,8 +1332,8 @@ export function PageContent({
     );
   }
 
-  /* Layout exclusivo para a Página 09 — Aliados da lavoura */
-  if (data.id === "p9") {
+  /* Layout exclusivo para a Página 10 — Aliados da lavoura */
+  if (data.id === "p10") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -1250,8 +1400,8 @@ export function PageContent({
 }
 
 export function PageLapbook({ data }: { data: PageLapbookData }) {
-  /* ── Layout exclusivo da Página 13 — O Escudo Protetor ── */
-  if (data.id === "p14") {
+  /* ── Layout exclusivo da Página 15 — O Escudo Protetor ── */
+  if (data.id === "p15") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -2059,7 +2209,7 @@ export function PageImpact({ data }: { data: PageImpactData }) {
   if (data.id === "p4") {
     return <PragaAgricolaInteractivePage data={data} />;
   }
-  if (data.id === "p10") {
+  if (data.id === "p11") {
     return <AttackInteractivePage data={data} />;
   }
 
@@ -2201,7 +2351,7 @@ export function PageImpact({ data }: { data: PageImpactData }) {
 }
 
 export function PageAlert({ data }: { data: PageAlertData }) {
-  if (data.id === "p11") {
+  if (data.id === "p12") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -2734,7 +2884,7 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
 }
 
 export function PageOrgaos({ data }: { data: PageOrgaosData }) {
-  if (data.id === "p12") {
+  if (data.id === "p13") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -2749,7 +2899,7 @@ export function PageOrgaos({ data }: { data: PageOrgaosData }) {
     );
   }
 
-  if (data.id === "p13") {
+  if (data.id === "p14") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
