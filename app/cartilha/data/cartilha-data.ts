@@ -1113,11 +1113,11 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     title: 'O que são ',
     titleHighlight: 'Pragas Quarentenárias?',
     leadText:
-      'Imagine uma praga agrícola tão perigosa que poderia destruir toda a agricultura de um país se entrasse em suas fronteiras. É exatamente isso que define uma Praga Quarentenária — um inimigo externo que não podemos deixar entrar!',
+      'Pragas quarentenárias são organismos de importância econômica que exigem medidas oficiais para proteger a agricultura. Elas podem estar ausentes do país, exigindo bloqueio rigoroso nas fronteiras, ou presentes apenas em áreas restritas, exigindo controle da dispersão e erradicação oficial.',
     alertImageSrc: '/assets/icones/alerta-quarentena-icone.png',
     alertTitle: 'Definição Oficial (MAPA)',
     alertText:
-      'Praga quarentenária é aquela de importância econômica potencial para o país ameaçado, ainda não presente no território ou presente em área limitada, e sujeita ao controle oficial.',
+      'Praga Quarentenária Ausente (PQA): praga que não ocorre no país e representa uma ameaça externa imediata nas fronteiras. Praga Quarentenária Presente (PQP): praga presente apenas em áreas limitadas do território nacional e submetida a estrito controlo e erradicação oficial.',
     callouts: [
       {
         variant: 'yellow',

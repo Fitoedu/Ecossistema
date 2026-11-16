@@ -97,7 +97,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     invasorImageAlt:
       "Fotografia em alta resolução da Mosca-da-Carambola sobre fruto de carambola",
     invasorRegionText:
-      "Presente no Amapá desde 1996, a espécie é classificada como Praga Quarentenária A1 pelo MAPA. Toda a produção de frutas do estado está sujeita a barreiras sanitárias rigorosas. O transporte de frutas frescas do Amapá para outros estados sem autorização oficial é proibido por lei.",
+      "Presente no Amapá desde 1996, a espécie é uma Praga Quarentenária Presente (PQP): ocorre em área restrita e está sujeita a barreiras sanitárias rigorosas. O transporte de frutas frescas do Amapá para outros estados sem autorização oficial é proibido por lei.",
 
     /* Aba 2 */
     symptoms: [
@@ -496,7 +496,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
 
 export function getThreatLabel(level: ThreatLevel): string {
   const labels: Record<ThreatLevel, string> = {
-    quarentenaria: "Quarentenária A2",
+    quarentenaria: "Praga Quarentenária (PQP)",
     "alerta-critico": "Alerta Crítico",
     monitorada: "Sob Monitoramento",
     "praga-regional": "Alerta Fitossanitário",

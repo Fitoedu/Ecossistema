@@ -33,12 +33,12 @@ const CASES: InvestigationCase[] = [
     id: 1,
     title: "Caso 1: Carga de Carambolas",
     description:
-      "Sem documentação sanitária de origem, a carga oferece alto risco: larvas da Mosca-da-carambola poderiam se espalhar e devastar os pomares locais.",
+      "PQP — a Mosca-da-Carambola está presente em áreas restritas do Amapá. Sem documentação, a carga deve ser bloqueada na barreira fitossanitária para impedir a dispersão para outras regiões.",
     imageSrc: "/images/cartilha/quarentenarias/mosca-carambola.jpg",
     imageCredit: "Foto: Ken Walker / Museum Victoria / Wikimedia Commons (CC BY 3.0)",
     correctAction: "block",
     alertLabel: "ALERTA: Mosca-da-carambola",
-    status: "Origem não certificada · Entrada deve ser bloqueada",
+    status: "PQP · Controle de dispersão em área restrita · Transporte sem autorização bloqueado",
     threat:
       "",
     blockFeedback:
@@ -50,12 +50,12 @@ const CASES: InvestigationCase[] = [
     id: 2,
     title: "Caso 2: Mudas de Laranja",
     description:
-      "Mudas cítricas sem certificação de origem podem introduzir o Greening (HLB) — uma doença incurável e devastadora para os pomares de citros da região.",
+      "PQA — mudas cítricas sem certificação podem introduzir uma praga quarentenária ausente no país. A ameaça externa exige bloqueio rigoroso na alfândega e inspeção oficial antes de qualquer entrada.",
     imageSrc: "/images/cartilha/quarentenarias/mudas-laranja.jpg",
     imageCredit: "Foto: USDA / David Bartels / Wikimedia Commons (Domínio Público)",
     correctAction: "block",
-    alertLabel: "ALERTA: Doença HLB",
-    status: "Mudas suspeitas de Greening (HLB) · Entrada proibida",
+    alertLabel: "ALERTA: PQA",
+    status: "PQA · Ameaça externa · Entrada na alfândega bloqueada",
     threat:
       "",
     blockFeedback:
@@ -67,12 +67,12 @@ const CASES: InvestigationCase[] = [
     id: 3,
     title: "Caso 3: Maçãs Certificadas",
     description:
-      "A presença de nota fiscal e selo de inspeção sanitária comprova a origem segura da carga proveniente de área livre de pragas agrícolas..",
+      "PQA — a carga vem de área oficialmente livre e tem documentação e selo de inspeção. A certificação permite a entrada após a conferência, sem abrir mão do bloqueio de cargas irregulares.",
     imageSrc: "/images/cartilha/quarentenarias/macas-certificadas.jpg",
     imageCredit: "Foto: AS Photography / Wikimedia Commons (CC BY 4.0)",
     correctAction: "allow",
     alertLabel: "SEGURO: Carga Certificada",
-    status: "Carga regularizada com certificação · Permitir entrada",
+    status: "PQA · Origem certificada e área livre · Entrada permitida após inspeção",
     threat:
       "",
     blockFeedback:
@@ -275,7 +275,7 @@ export default function BorderInvestigationCases({
                 color="orange.800"
                 mb={1}
               >
-                Status sanitário
+                Classificação e status sanitário
               </Text>
               <Text fontSize="0.82rem" color="gray.900" fontWeight="500" lineHeight="1.55">
                 {item.status}
