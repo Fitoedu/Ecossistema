@@ -1088,7 +1088,9 @@ export function PageMouthparts({ data }: { data: PageMouthpartsData }) {
   return (
     <Box>
       <SectionBadge>{data.badgeLabel}</SectionBadge>
-      <PageTitle>{data.title}</PageTitle>
+      <PageTitle>
+        Como os insetos se <Highlight>alimentam</Highlight> das plantas?
+      </PageTitle>
       <LeadText>{data.leadText}</LeadText>
 
       <Text
