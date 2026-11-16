@@ -65,12 +65,14 @@ export interface ImageCardData {
 export interface InvasivePlantCardData extends ImageCardData {
   whatItSteals: string
   impact: string
+  credito: string
 }
 
 /** Ficha interativa de um aliado natural da lavoura */
 export interface AllyCardData extends ImageCardData {
   role: string
   benefit: string
+  credito: string
 }
 
 /** Card de estatística para páginas de impacto */
@@ -88,6 +90,7 @@ export interface ImpactItemData {
   imageSrc: string
   title: string
   desc: string
+  imageCredit?: string
 }
 
 /** Item de órgão/ator */
@@ -142,6 +145,8 @@ export interface HotspotItemData {
   imageAlt: string
   /** Como o agente causador se dissemina no campo */
   spreadText: string
+  /** Crédito da imagem exibido no rodapé do modal */
+  credito: string
   /** Texto de alerta/impacto (aparece em destaque vermelho) */
   impactText?: string
   /** Texto de prevenção (aparece em destaque amarelo) */
@@ -155,6 +160,18 @@ export interface HotspotItemData {
 /**
  * CAPA — Página 1
  */
+export interface CoverComparisonImageData {
+  imageSrc: string
+  label: string
+  imageCredit: string
+}
+
+export interface CoverComparisonData {
+  before: CoverComparisonImageData
+  after: CoverComparisonImageData
+  altText: string
+}
+
 export interface PageCoverData extends PersonaBlock {
   type: 'cover'
   interactionType: 'cover'
@@ -163,6 +180,7 @@ export interface PageCoverData extends PersonaBlock {
   title: string
   highlight: string
   subtitle: string
+  imageComparison: CoverComparisonData
 }
 
 /**
@@ -349,6 +367,8 @@ export interface PestGalleryItemData {
   name: string
   /** Caminho da imagem representativa */
   imageSrc: string
+  /** Crédito da imagem representativa */
+  imageCredit: string
   /** Descrição didática exibida no modal */
   description: string
   /** Tipo de dano causado na planta */
@@ -383,6 +403,7 @@ export interface MouthpartCardData {
   plantDamage: string
   examples: string[]
   imageSrc: string
+  imageCredit: string
   imageAlt: string
 }
 
@@ -445,6 +466,20 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     highlight: 'Fitossanitária',
     subtitle:
       'Aprenda de forma fácil sobre fitossanidade, pragas agrícolas, aliados naturais e práticas sustentáveis para proteger nossos cultivos agrícolas.',
+    imageComparison: {
+      before: {
+        imageSrc: '/images/cartilha/capa/cultivo-saudavel.jpg',
+        label: 'Cultivo agrícola saudável',
+        imageCredit: 'Foto: Devi Puspita Amartha Yahya / Unsplash',
+      },
+      after: {
+        imageSrc: '/images/cartilha/capa/planta-afetada.jpg',
+        label: 'Planta afetada',
+        imageCredit: 'Foto: cottonbro studio / Pexels',
+      },
+      altText:
+        'Comparação entre um cultivo agrícola saudável e uma planta afetada por problemas fitossanitários',
+    },
     personaText:
       'Olá! Eu sou a Dona Fito, sua guia nessa aventura! Seja bem-vindo à nossa cartilha! Vamos aprender juntos sobre pragas agrícolas, aliados naturais e manejo sustentável para cuidar das plantas e proteger nossa comida!',
     personaEmotion: 'happy',
@@ -550,10 +585,10 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       { gradient: 'linear-gradient(135deg, #37474F, #546E7A)', stat: 'Ecossistema', label: 'em risco por introdução de espécies invasoras exóticas.', textColor: 'white' },
     ],
     impacts: [
-      { imageSrc: '/assets/icones/caixa-icone.png', title: 'Redução da produção', desc: 'Pragas destroem partes ou toda a plantação, reduzindo drasticamente o volume colhido.' },
-      { imageSrc: '/assets/icones/custo-icone.png', title: 'Aumento de custos', desc: 'Agricultores gastam mais com defensivos agrícolas, replantio e trabalho para combater as pragas agrícolas.' },
-      { imageSrc: '/assets/icones/bloqueio-icone.png', title: 'Bloqueio de exportações', desc: 'Produtos com pragas agrícolas podem ser barrados na alfândega, gerando prejuízos aos produtores.' },
-      { imageSrc: '/assets/icones/clima-icone.png', title: 'Mudanças climáticas agravam', desc: 'O aquecimento global favorece a proliferação e expansão geográfica de novas pragas agrícolas.' },
+      { imageSrc: '/images/cartilha/impactos/reducao-producao.jpg', title: 'Redução da produção', desc: 'Pragas destroem partes ou toda a plantação, reduzindo drasticamente o volume colhido.', imageCredit: 'Foto: Karl Wiggers / Unsplash' },
+      { imageSrc: '/images/cartilha/impactos/aumento-custos.jpg', title: 'Aumento de custos', desc: 'Agricultores gastam mais com defensivos agrícolas, replantio e trabalho para combater as pragas agrícolas.', imageCredit: 'Foto: Teo Sticea / Unsplash' },
+      { imageSrc: '/images/cartilha/impactos/bloqueio-exportacoes.jpg', title: 'Bloqueio de exportações', desc: 'Produtos com pragas agrícolas podem ser barrados na alfândega, gerando prejuízos aos produtores.', imageCredit: 'Foto: Timelab / Unsplash' },
+      { imageSrc: '/images/cartilha/impactos/mudancas-climaticas.jpg', title: 'Mudanças climáticas agravam', desc: 'O aquecimento global favorece a proliferação e expansão geográfica de novas pragas agrícolas.', imageCredit: 'Foto: 1 1 / Unsplash' },
     ],
     personaText:
       'Praga é qualquer ser vivo que cause prejuízo à nossa roça! Mas atenção: nem todo inseto é vilão! A joaninha, por exemplo, é uma heroína — ela come outros insetos que atacam as plantas!',
@@ -613,16 +648,18 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       {
         id: 1,
         name: 'Gafanhoto',
-        imageSrc: 'https://images.unsplash.com/photo-1533318087102-b3ad366ed041',
+        imageSrc: '/images/cartilha/pragas/gafanhoto.jpg',
+        imageCredit: 'Foto: daksu / iNaturalist (CC BY)',
         damageType: 'Desfolha folhas, caules e frutos ao se alimentar em grandes quantidades.',
         fieldTip: 'Procure folhas mastigadas e a presença de adultos ou ninfas saltadoras.',
         description:
-          'O gafanhoto é um inseto que voa em enxames gigantes e pode destruir campos inteiros de cultivo em poucas horas. Quando milhoes deles voam juntos, chamamos de praga agrícola de gafanhotos — um dos maiores pesadelos dos agricultores. Seu aparato bucal mastigador devasta folhas, caules e frutos de forma extremamente rapida.',
+          'O gafanhoto é um inseto que voa em enxames gigantes e pode destruir campos inteiros de cultivo em poucas horas. Quando milhões deles voam juntos, chamamos de praga agrícola de gafanhotos — um dos maiores pesadelos dos agricultores. Seu aparato bucal mastigador devasta folhas, caules e frutos de forma extremamente rápida.',
       },
       {
         id: 2,
         name: 'Pulgão',
-        imageSrc: '/images/ameacas/pulgoes/pulgao.webp',
+        imageSrc: '/images/cartilha/pragas/pulgao.jpg',
+        imageCredit: 'Foto: Jesse Rorabaugh / iNaturalist (CC0)',
         damageType: 'Suga a seiva e pode transmitir vírus entre plantas.',
         fieldTip: 'Observe colônias pequenas na face inferior das folhas e brotos novos.',
         description:
@@ -631,7 +668,8 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       {
         id: 3,
         name: 'Mosca-branca',
-        imageSrc: '/images/ameacas/mosca branca/1.webp',
+        imageSrc: '/images/cartilha/pragas/mosca-branca.jpg',
+        imageCredit: 'Foto: Mihajlo Tomić / iNaturalist (CC BY)',
         damageType: 'Suga a seiva, causa clorose e favorece a fumagina nas folhas.',
         fieldTip: 'Toque a planta e observe pequenos insetos brancos levantando voo.',
         description:
@@ -640,7 +678,8 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       {
         id: 4,
         name: 'Broca',
-        imageSrc: '/images/pragas/mosca negra dos citros/1.webp',
+        imageSrc: '/images/cartilha/pragas/broca.jpg',
+        imageCredit: 'Foto: Julia Moning / iNaturalist (CC BY)',
         damageType: 'Perfura caules, frutos ou raízes, comprometendo os tecidos por dentro.',
         fieldTip: 'Procure orifícios, serragem e galerias em caules, frutos ou raízes.',
         description:
@@ -649,16 +688,18 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       {
         id: 5,
         name: 'Ácaro',
-        imageSrc: '/images/ameacas/acaro/1.webp',
+        imageSrc: '/images/cartilha/pragas/acaro.jpg',
+        imageCredit: 'Foto: Wynand Uys / iNaturalist (CC BY)',
         damageType: 'Suga o conteúdo das células e provoca bronzeamento e queda das folhas.',
         fieldTip: 'Verifique pontilhado amarelado, teias finas e folhas bronzeadas em tempo seco.',
         description:
-          'Os ácaros são artropodes aracnídeos de dimensões microscópicas, difíceis de visualizar a olho nu. Eles vivem na epiderme foliar e sugam o conteudo celular, causando bronzeamento, manchas amareladas e queda precoce de folhas. Em periodos de seca e calor intenso, sua velocidade de reproducao aumenta drasticamente, agravando as infestacoes.',
+          'Os ácaros são artropodes aracnídeos de dimensões microscópicas, difíceis de visualizar a olho nu. Eles vivem na epiderme foliar e sugam o conteudo celular, causando bronzeamento, manchas amareladas e queda precoce de folhas. Em periodos de seca e calor intenso, sua velocidade de reprodução aumenta drasticamente, agravando as infestações.',
       },
       {
         id: 6,
         name: 'Trips',
-        imageSrc: '/images/ameacas/mosca branca/2.webp',
+        imageSrc: '/images/cartilha/pragas/trips.jpg',
+        imageCredit: 'Foto: Trevor Van Loon / iNaturalist (CC BY)',
         damageType: 'Raspa e suga células, causando estrias prateadas e transmitindo vírus.',
         fieldTip: 'Observe estrias prateadas em folhas e frutos e insetos muito pequenos e estreitos.',
         description:
@@ -699,7 +740,8 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         plantDamage:
           'Deixa buracos, bordas roídas ou folhas totalmente cortadas (desfolha).',
         examples: ['Formigas', 'Lagartas'],
-        imageSrc: '/images/ameacas/gafanhoto/gafanhoto.webp',
+        imageSrc: '/images/cartilha/aparelhos/mastigador.jpg',
+        imageCredit: 'Foto: Rodolfo Salinas Villarreal / iNaturalist (CC BY)',
         imageAlt:
           'Gafanhoto com aparelho mastigador sobre uma folha com partes roídas',
       },
@@ -711,7 +753,8 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         plantDamage:
           'Deixa as folhas amareladas, enroladas ou murchas, além de poder transmitir doenças, como vírus.',
         examples: ['Mosca-branca', 'Pulgões'],
-        imageSrc: '/images/ameacas/pulgoes/pulgao.webp',
+        imageSrc: '/images/cartilha/aparelhos/picador-sugador.jpg',
+        imageCredit: 'Foto: Jorge Íñiguez / iNaturalist (CC BY)',
         imageAlt:
           'Pulgão sugando a seiva na parte inferior de uma folha com sintoma amarelado',
       },
@@ -744,7 +787,8 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         name: 'Bactérias',
         diseaseName: 'Cancro Cítrico',
         category: 'bacteria',
-        image: '/images/sintomas/frutos com lesoes.webp',
+        image: '/images/cartilha/patogenos/bacterias.jpg',
+        credito: 'Foto: USDA / APHIS (Domínio Público)',
         imageAlt: 'Fruto cítrico com lesões do cancro cítrico',
         concept:
           'As bactérias são seres muito pequenos que podem entrar por ferimentos e aberturas da planta. O cancro cítrico é um exemplo conhecido em laranjeiras e limoeiros.',
@@ -762,7 +806,8 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         name: 'Fungos',
         diseaseName: 'Ferrugem',
         category: 'fungo',
-        image: '/images/encontre_herois/fungo-ferrugem.webp',
+        image: '/images/cartilha/patogenos/fungos.jpg',
+        credito: 'Foto: bjoerns / iNaturalist / Wikimedia Commons (CC BY-SA 4.0)',
         imageAlt: 'Folha com manchas alaranjadas causadas por ferrugem',
         concept:
           'Os fungos podem crescer sobre ou dentro da planta. A ferrugem deixa manchas que lembram a cor da ferrugem de metal.',
@@ -780,7 +825,8 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         name: 'Vírus',
         diseaseName: 'Vírus do Mosaico',
         category: 'virus',
-        image: '/images/encontre_herois/mosaico de virus.webp',
+        image: '/images/cartilha/patogenos/virus.jpg',
+        credito: 'Foto: Plant pests and diseases / Wikimedia Commons (CC0 1.0)',
         imageAlt: 'Folha com sintomas do vírus do mosaico',
         concept:
           'Os vírus são agentes minúsculos que usam as células da planta para se multiplicar. O vírus do mosaico é um exemplo comum em várias culturas.',
@@ -798,7 +844,8 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         name: 'Fitoplasmas',
         diseaseName: 'Enfezamento / Superbrotamento',
         category: 'fitoplasma',
-        image: '/images/doencas/fitoplasma.webp',
+        image: '/images/cartilha/patogenos/fitoplasmas.jpg',
+        credito: 'Foto: Whitney Cranshaw / Bugwood / Wikimedia Commons (CC BY 3.0)',
         imageAlt: 'Planta com sintomas de enfezamento e superbrotamento',
         concept:
           'Fitoplasmas são microrganismos que vivem nos vasos que transportam alimento dentro da planta. Eles podem causar enfezamento e superbrotamento.',
@@ -816,7 +863,8 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         name: 'Nematoides',
         diseaseName: 'Nematoides das Galhas',
         category: 'nematoide',
-        image: '/images/sintomas/galhas.webp',
+        image: '/images/cartilha/patogenos/nematoides.jpg',
+        credito: 'Foto: Jeffrey W. Lotz / Bugwood / Wikimedia Commons (CC BY 3.0)',
         imageAlt: 'Raízes de planta com caroços e galhas causadas por nematoides',
         concept:
           'Nematoides são vermes microscópicos que vivem no solo e atacam as raízes. Alguns formam galhas, que são como caroços nas raízes.',
@@ -834,7 +882,8 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         name: 'Protozoários',
         diseaseName: 'Murcha-de-Phytomonas',
         category: 'protozoario',
-        image: '/images/doencas/planta2.webp',
+        image: '/images/cartilha/patogenos/protozoarios.jpg',
+        credito: 'Foto: Jaskowska et al. (2015) / Wikimedia Commons (CC BY-SA 4.0)',
         imageAlt: 'Planta com folhas murchas, representação de doença associada a protozoários',
         concept:
           'Protozoários são organismos microscópicos. Alguns vivem nos vasos da planta e podem causar doenças como a murcha-de-Phytomonas em coqueiros e cafeeiros.',
@@ -877,30 +926,34 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       'Plantas invasoras (ou ervas daninhas) são plantas que crescem onde não são desejadas e competem com as plantas cultivadas por água, luz e nutrientes do solo. E uma disputa por recursos — e a planta da roça quem perde!',
     invasiveCards: [
       {
-        imageSrc: '/images/ameacas/plantas invasoras/1.webp',
+        imageSrc: '/images/cartilha/invasoras/tiririca.jpg',
         label: 'Tiririca',
         alt: 'Tiririca invasora',
+        credito: 'Foto: Macleay Grass Man / Wikimedia Commons (CC BY 2.0)',
         whatItSteals: 'Água, luz e nutrientes, graças às raízes e estruturas subterrâneas que ocupam o solo.',
         impact: 'Forma manchas densas e compete diretamente com a cultura, reduzindo o crescimento e a produtividade.',
       },
       {
-        imageSrc: '/images/ameacas/plantas invasoras/2.webp',
+        imageSrc: '/images/cartilha/invasoras/capim-colonia.jpg',
         label: 'Capim-colônia',
         alt: 'Capim-colônia invasor',
+        credito: 'Foto: Forest & Kim Starr / Wikimedia Commons (CC BY 3.0)',
         whatItSteals: 'Água, luz e nutrientes dos cultivos agrícolas e das pastagens ao formar touceiras muito fechadas.',
         impact: 'Sufoca plantas jovens, dificulta o manejo e reduz o espaço disponível para a cultura se desenvolver.',
       },
       {
-        imageSrc: '/images/ameacas/plantas invasoras/1.webp',
+        imageSrc: '/images/cartilha/invasoras/picao-preto.jpg',
         label: 'Picão-preto',
         alt: 'Picão-preto invasor',
+        credito: 'Foto: Juan Carlos Fonseca Mata / Wikimedia Commons (CC BY-SA 4.0)',
         whatItSteals: 'Água, luz e nutrientes, além de espaço para suas raízes e folhas se espalharem.',
         impact: 'Pode liberar substâncias que atrapalham outras plantas e competir com diversas culturas anuais.',
       },
       {
-        imageSrc: '/images/ameacas/plantas invasoras/2.webp',
+        imageSrc: '/images/cartilha/invasoras/buva.jpg',
         label: 'Buva',
         alt: 'Buva invasora resistente',
+        credito: 'Foto: Josep Gesti / Wikimedia Commons (CC BY-SA 4.0)',
         whatItSteals: 'Água, luz e nutrientes durante todo o ciclo dos cultivos agrícolas, especialmente quando cresce cedo.',
         impact: 'É difícil de controlar em algumas áreas e pode produzir muitas sementes, comprometendo a colheita.',
       },
@@ -936,44 +989,50 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       'Nem tudo é vilão na natureza! Existem seres vivos incríveis que ajudam a roça ao se alimentar das pragas agrícolas ou ao polinizar as flores das plantas. São os nossos heróis naturais!',
     allyCards: [
       {
-        imageSrc: '/images/encontre_herois/joaninha.webp',
+        imageSrc: '/images/cartilha/aliados/joaninha.jpg',
         label: 'Joaninha',
         alt: 'Joaninha predadora de pulgões',
+        credito: 'Foto: Zsolt BRNA / Wikimedia Commons (CC BY-SA 3.0)',
         role: 'Preda pulgões e pequenos insetos que sugam a seiva das plantas.',
         benefit: 'Faz controle biológico natural e reduz a necessidade de inseticidas.',
       },
       {
-        imageSrc: '/images/aliados/abelha.webp',
+        imageSrc: '/images/cartilha/aliados/abelha.jpg',
         label: 'Abelha',
         alt: 'Abelha polinizando uma flor',
+        credito: 'Foto: Ivar Leidus / Wikimedia Commons (CC BY-SA 4.0)',
         role: 'Faz a polinização das flores, transportando o pólen entre elas.',
         benefit: 'Ajuda as plantas a formar frutos e sementes e melhora a produção da lavoura.',
       },
       {
-        imageSrc: '/images/aliados/vespa.webp',
+        imageSrc: '/images/cartilha/aliados/vespa.jpg',
         label: 'Vespa',
         alt: 'Vespinha parasitoide',
+        credito: 'Foto: Muhammad Mahdi Karim / Wikimedia Commons (CC BY 1.0)',
         role: 'Parasita ovos e lagartas de pragas agrícolas, impedindo seu desenvolvimento.',
         benefit: 'Faz controle biológico específico e ajuda a proteger os cultivos agrícolas.',
       },
       {
-        imageSrc: '/images/aliados/larva.webp',
+        imageSrc: '/images/cartilha/aliados/crisopideo.jpg',
         label: 'Crisopídeo',
         alt: 'Larva de crisopídeo, conhecida como bicho-lixeiro',
+        credito: 'Foto: Didier Descouens / Muséum de Toulouse / Wikimedia Commons (CC BY-SA 4.0)',
         role: 'A larva, conhecida como bicho-lixeiro, alimenta-se de pulgões, ácaros e cochonilhas.',
         benefit: 'Ajuda no controle biológico de várias pragas agrícolas sem contaminar o ambiente.',
       },
       {
-        imageSrc: '/images/agricultura/ghabiru-plantation.webp',
+        imageSrc: '/images/cartilha/aliados/metarhizium.jpg',
         label: 'Fungo Metarhizium',
         alt: 'Fungo benéfico Metarhizium usado no controle biológico',
+        credito: 'Foto: CSIRO / Wikimedia Commons (CC BY 3.0)',
         role: 'É um fungo benéfico que infecta e controla pragas como cigarrinhas e percevejos.',
         benefit: 'Combate pragas naturalmente e pode reduzir o uso de agrotóxicos na lavoura.',
       },
       {
-        imageSrc: '/images/fungos/vassoura-da-bruxa-mandioca.webp',
+        imageSrc: '/images/cartilha/aliados/bacillus.jpg',
         label: 'Bactéria Bacillus',
         alt: 'Bactéria benéfica Bacillus usada no controle biológico',
+        credito: 'Foto: Dr. Sahay / Wikimedia Commons (CC BY-SA 3.0)',
         role: 'É uma bactéria benéfica, como o Bacillus thuringiensis, que combate lagartas na lavoura.',
         benefit: 'Ajuda a controlar lagartas sem atacar a cultura e torna o manejo mais sustentável.',
       },
@@ -1031,10 +1090,10 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
   },
 ],
     impacts: [
-      { imageSrc: '/assets/icones/manchas-icone.png', title: 'Manchas e lesões', desc: 'Fungos e bactérias causam manchas que reduzem a fotossíntese e desvalorizam o produto no mercado.' },
-      { imageSrc: '/assets/icones/galha-icone.png', title: 'Deformações e galhas', desc: 'Alguns insetos injetam substâncias que deformam folhas, caules e frutos, inviabilizando a sua comercialização.' },
-      { imageSrc: '/assets/icones/murcha-icone.png', title: 'Murcha e morte subita', desc: 'Doenças vasculares bloqueiam o transporte de água dentro da planta, causando murcha repentina.' },
-      { imageSrc: '/assets/icones/virus-transmissao.png', title: 'Transmissão de vírus', desc: 'Insetos como pulgões e moscas-brancas são vetores de vírus que enfraquecem ou matam as plantas.' },
+  { imageSrc: '/images/cartilha/sintomas/manchas-lesoes.jpg', title: 'Manchas e lesões', desc: 'Fungos e bactérias causam manchas que reduzem a fotossíntese e desvalorizam o produto no mercado.', imageCredit: 'Foto: Scot Nelson / Wikimedia Commons (CC0 1.0)' },
+  { imageSrc: '/images/cartilha/sintomas/deformacoes-galhas.jpg', title: 'Deformações e galhas', desc: 'Alguns insetos injetam substâncias que deformam folhas, caules e frutos, inviabilizando a sua comercialização.', imageCredit: 'Foto: Didier Descouens / Muséum de Toulouse / Wikimedia Commons (CC BY-SA 4.0)' },
+  { imageSrc: '/images/cartilha/sintomas/murcha-morte-subita.jpg', title: 'Murcha e morte subita', desc: 'Doenças vasculares bloqueiam o transporte de água dentro da planta, causando murcha repentina.', imageCredit: 'Foto: Ed Kurtz / Bugwood.org / Wikimedia Commons (CC BY 3.0)' },
+  { imageSrc: '/images/cartilha/sintomas/transmissao-virus.jpg', title: 'Transmissão de vírus', desc: 'Insetos como pulgões e moscas-brancas são vetores de vírus que enfraquecem ou matam as plantas.', imageCredit: 'Foto: Plant pests and diseases / Wikimedia Commons (CC0 / Domínio Público)' },
     ],
     personaText:
       'Cada praga agrícola tem sua própria "arma" para atacar as plantas. Por isso é tão importante monitorar a roça constantemente! Quanto mais cedo identificarmos o problema, mais fácil será controlá-lo!',
@@ -1221,42 +1280,42 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     characters: [
       {
         id: 'joaninha',
-        imageSrc: '/images/encontre_herois/joaninha.webp',
+        imageSrc: '/images/cartilha/aliados/joaninha.jpg',
         name: 'Joaninha',
         isHero: true,
         revealText: 'A joaninha come pulgões e outros insetos praga agrícola. Ela é uma das melhores aliadas da roça!',
       },
       {
         id: 'pulgao',
-        imageSrc: '/images/ameacas/pulgoes/4.webp',
+        imageSrc: '/images/cartilha/pragas/pulgao.jpg',
         name: 'Pulgão',
         isHero: false,
         revealText: 'O pulgão suga a seiva das plantas e transmite vírus. Um dos mais comuns inimigos da roça!',
       },
       {
         id: 'abelha',
-        imageSrc: '/images/encontre_herois/abelha.webp',
+        imageSrc: '/images/cartilha/aliados/abelha.jpg',
         name: 'Abelha',
         isHero: true,
         revealText: 'A abelha poliniza as flores das plantas, garantindo que elas produzam frutos. Sem abelhas, sem frutas!',
       },
       {
         id: 'gafanhoto',
-        imageSrc: '/images/ameacas/gafanhoto/gafanhoto.webp',
+        imageSrc: '/images/cartilha/pragas/gafanhoto.jpg',
         name: 'Gafanhoto',
         isHero: false,
         revealText: 'Em enxames, os gafanhotos podem destruir campos inteiros de plantação em poucas horas!',
       },
       {
-        id: 'minhoca',
-        imageSrc: '/images/encontre_herois/minhoca.webp',
-        name: 'Minhoca',
+        id: 'crisopideo',
+        imageSrc: '/images/cartilha/aliados/crisopideo.jpg',
+        name: 'Bicho-lixeira / Crisopídeo',
         isHero: true,
-        revealText: 'A minhoca aerifica o solo e produz húmus, melhorando a saúde do solo e ajudando as raízes das plantas!',
+        revealText: 'As larvas de crisopídeos devoram pulgões e outras pragas, protegendo os cultivos agrícolas de forma natural!',
       },
       {
         id: 'fungo-ferrugem',
-        imageSrc: '/images/encontre_herois/fungo-ferrugem.webp',
+        imageSrc: '/images/cartilha/patogenos/fungos.jpg',
         name: 'Fungo da Ferrugem',
         isHero: false,
         revealText: 'A ferrugem é um fungo que deixa manchas alaranjadas nas folhas e pode destruir roças inteiras de soja e trigo!',

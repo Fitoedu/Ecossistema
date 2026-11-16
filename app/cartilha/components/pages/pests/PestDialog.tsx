@@ -216,6 +216,11 @@ export default function PestDialog({
                         </Text>
                       </Box>
                     )}
+                    {selectedItem.imageCredit && (
+                      <Text fontSize="xs" color="gray.500">
+                        {selectedItem.imageCredit}
+                      </Text>
+                    )}
                   </VStack>
                 </DialogBody>
               </>

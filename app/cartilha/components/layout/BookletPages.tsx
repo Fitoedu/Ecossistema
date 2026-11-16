@@ -862,12 +862,21 @@ export function PageCover({ data }: { data: PageCoverData }) {
       {/* ── BeforeAfterSlider — comparação fotográfica ── */}
       <Box w="full" maxW="480px" mx="auto" mb={8}>
         <BeforeAfterSlider
-          beforeImage="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?q=80&w=800&auto=format&fit=crop"
-          afterImage="https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?q=80&w=800&auto=format&fit=crop"
-          beforeLabel="Cultivo agrícola saudável"
-          afterLabel="Planta afetada"
-          altText="Comparação entre um cultivo agrícola saudável e uma planta afetada por problemas fitossanitários"
+          beforeImage={data.imageComparison.before.imageSrc}
+          afterImage={data.imageComparison.after.imageSrc}
+          beforeLabel={data.imageComparison.before.label}
+          afterLabel={data.imageComparison.after.label}
+          altText={data.imageComparison.altText}
         />
+        <Text
+          mt={2}
+          fontSize="0.65rem"
+          color="gray.600"
+          textAlign="center"
+        >
+          {data.imageComparison.before.imageCredit} ·{' '}
+          {data.imageComparison.after.imageCredit}
+        </Text>
       </Box>
 
       {/* ── Title ── */}
@@ -1058,6 +1067,9 @@ function MouthpartCard({
         <Text fontSize="0.82rem" color="gray.700" lineHeight="1.55">
           <Text as="strong" color="#2E7D32">Exemplos: </Text>
           {card.examples.join(" e ")}
+        </Text>
+        <Text fontSize="11px" color="gray.500" mt={1}>
+          {card.imageCredit}
         </Text>
       </Box>
     </motion.div>
@@ -1681,20 +1693,6 @@ function PragaStatRevealCard({
   );
 }
 
-const PRAGA_IMPACT_IMAGE_URLS = [
-  "/images/agricultura/ghabiru-plantation.webp",
-  "/images/agricultura/irrigation.webp",
-  "/images/pragas/mosca da carambola/1.webp",
-  "/images/agricultura/irrigation2.webp",
-] as const;
-
-const ATTACK_SYMPTOM_IMAGE_URLS = [
-  "/images/sintomas/necrose.webp",
-  "/images/sintomas/galhas.webp",
-  "/images/sintomas/murcha.webp",
-  "/images/encontre_herois/mosaico de virus.webp",
-] as const;
-
 function PragaImpactImage({
   imageUrl,
   title,
@@ -1835,10 +1833,22 @@ function PragaImpactAccordion({
                       >
                         {item.desc}
                       </Text>
-                      <PragaImpactImage
-                        imageUrl={PRAGA_IMPACT_IMAGE_URLS[index]}
-                        title={item.title}
-                      />
+                      <Box>
+                        <PragaImpactImage
+                          imageUrl={item.imageSrc}
+                          title={item.title}
+                        />
+                        {item.imageCredit && (
+                          <Text
+                            mt={1}
+                            fontSize="0.65rem"
+                            color="gray.600"
+                            textAlign="center"
+                          >
+                            {item.imageCredit}
+                          </Text>
+                        )}
+                      </Box>
                     </SimpleGrid>
                   </Box>
                 </motion.div>
@@ -2101,10 +2111,22 @@ function AttackSymptomAccordion({
                           {item.desc}
                         </Text>
                       </Box>
-                      <AttackSymptomImage
-                        imageUrl={ATTACK_SYMPTOM_IMAGE_URLS[index]}
-                        title={item.title}
-                      />
+                      <Box>
+                        <AttackSymptomImage
+                          imageUrl={item.imageSrc}
+                          title={item.title}
+                        />
+                        {item.imageCredit && (
+                          <Text
+                            mt={1}
+                            fontSize="xs"
+                            color="gray.500"
+                            textAlign="right"
+                          >
+                            {item.imageCredit}
+                          </Text>
+                        )}
+                      </Box>
                     </SimpleGrid>
                   </Box>
                 </motion.div>
@@ -3286,8 +3308,8 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
       </Box>
 
       <SimpleGrid
-        columns={{ base: 2, sm: 3 }}
-        gap={{ base: 3, sm: 4, md: 6 }}
+        columns={3}
+        gap={{ base: 3, md: 5 }}
         my={{ base: 5, sm: 8 }}
       >
         {data.characters.map((char) => {
@@ -3300,11 +3322,14 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
+              style={{ height: "100%" }}
             >
               <Box
-                h="full"
-                minH={{ base: "190px", sm: "260px" }}
-                p={4}
+                h={{ base: "360px", sm: "390px" }}
+                w="full"
+                p={{ base: 3, sm: 4 }}
+                display="flex"
+                flexDirection="column"
                 bg={isRevealed ? (isHero ? "green.50" : "red.50") : undefined}
                 bgGradient={
                   !isRevealed ? "linear(to-b, green.50, #EBF5EB)" : undefined
@@ -3327,7 +3352,7 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                     : undefined
                 }
                 _hover={{
-                  transform: "scale(1.05)",
+                  transform: "translateY(-3px)",
                   rotate: "0deg",
                   shadow: "xl",
                   cursor: "pointer",
@@ -3341,25 +3366,39 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                     initial={{ opacity: 0, rotateY: -12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
+                    style={{
+                      minHeight: 0,
+                      flex: 1,
+                      overflowY: "auto",
+                    }}
                   >
-                    <Image
-                      src={char.imageSrc}
-                      alt={char.name}
-                      width={180}
-                      height={150}
-                      style={{
-                        display: "block",
-                        width: "100px",
-                        height: "100px",
-                        objectFit: "cover",
-                        borderRadius: "2xl",
-                        margin: "0 auto",
-                        border: "4px solid white",
-                        boxShadow: "0 4px 10px rgba(0,0,0,0.18)",
-                      }}
-                    />
+                    <Box
+                      position="relative"
+                      w="full"
+                      h={{ base: "150px", sm: "190px" }}
+                      mb={3}
+                      borderRadius="lg"
+                      overflow="hidden"
+                      bg="green.100"
+                    >
+                      <Image
+                        src={char.imageSrc}
+                        alt={char.name}
+                        fill
+                        sizes="(max-width: 640px) 50vw, 33vw"
+                        style={{ objectFit: "cover" }}
+                      />
+                    </Box>
                     <Text
-                      mt={3}
+                      mt={1}
+                      fontWeight="800"
+                      color="gray.800"
+                      fontSize={{ base: "0.8rem", sm: "1rem" }}
+                    >
+                      {char.name}
+                    </Text>
+                    <Text
+                      mt={2}
                       px={2}
                       py={1}
                       borderRadius="full"
@@ -3373,15 +3412,7 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                       {isHero ? " HERÓI DOS CULTIVOS AGRÍCOLAS" : " VILÃO DOS CULTIVOS AGRÍCOLAS"}
                     </Text>
                     <Text
-                      mt={1}
-                      fontWeight="800"
-                      color="gray.800"
-                      fontSize={{ base: "0.8rem", sm: "1rem" }}
-                    >
-                      {char.name}
-                    </Text>
-                    <Text
-                      mt={2}
+                      mt={3}
                       fontSize={{ base: "0.65rem", sm: "0.82rem" }}
                       color={isHero ? "green.700" : "red.700"}
                       fontWeight="600"
@@ -3390,7 +3421,7 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                     </Text>
                   </motion.div>
                 ) : (
-                  <VStack h="full" justify="space-between" gap={2} py={1}>
+                  <VStack flex={1} justify="space-between" gap={2} py={1}>
                     <Text
                       color="green.800"
                       fontWeight="800"

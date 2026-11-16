@@ -152,6 +152,9 @@ function InvasivePlantModal({
                         {item.impact}
                       </Text>
                     </Box>
+                    <Text fontSize="xs" color="gray.500" mt={3} textAlign="right">
+                      {item.credito}
+                    </Text>
                   </VStack>
                 </DialogBody>
               </>

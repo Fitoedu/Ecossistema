@@ -19,6 +19,7 @@ type InvestigationCase = {
   title: string;
   description: string;
   imageSrc: string;
+  imageCredit: string;
   correctAction: "block" | "allow";
   alertLabel?: string;
   status: string;
@@ -33,7 +34,8 @@ const CASES: InvestigationCase[] = [
     title: "Caso 1: Carga de Carambolas",
     description:
       "Sem documentação sanitária de origem, a carga oferece alto risco: larvas da Mosca-da-carambola poderiam se espalhar e devastar os pomares locais.",
-    imageSrc: "https://images.unsplash.com/photo-1619566636858-adf3ef46400b",
+    imageSrc: "/images/cartilha/quarentenarias/mosca-carambola.jpg",
+    imageCredit: "Foto: Ken Walker / Museum Victoria / Wikimedia Commons (CC BY 3.0)",
     correctAction: "block",
     alertLabel: "ALERTA: Mosca-da-carambola",
     status: "Origem não certificada · Entrada deve ser bloqueada",
@@ -49,7 +51,8 @@ const CASES: InvestigationCase[] = [
     title: "Caso 2: Mudas de Laranja",
     description:
       "Mudas cítricas sem certificação de origem podem introduzir o Greening (HLB) — uma doença incurável e devastadora para os pomares de citros da região.",
-    imageSrc: "https://images.unsplash.com/photo-1590502160462-2200234771a3",
+    imageSrc: "/images/cartilha/quarentenarias/mudas-laranja.jpg",
+    imageCredit: "Foto: USDA / David Bartels / Wikimedia Commons (Domínio Público)",
     correctAction: "block",
     alertLabel: "ALERTA: Doença HLB",
     status: "Mudas suspeitas de Greening (HLB) · Entrada proibida",
@@ -65,7 +68,8 @@ const CASES: InvestigationCase[] = [
     title: "Caso 3: Maçãs Certificadas",
     description:
       "A presença de nota fiscal e selo de inspeção sanitária comprova a origem segura da carga proveniente de área livre de pragas agrícolas..",
-    imageSrc: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6",
+    imageSrc: "/images/cartilha/quarentenarias/macas-certificadas.jpg",
+    imageCredit: "Foto: AS Photography / Wikimedia Commons (CC BY 4.0)",
     correctAction: "allow",
     alertLabel: "SEGURO: Carga Certificada",
     status: "Carga regularizada com certificação · Permitir entrada",
@@ -219,38 +223,39 @@ export default function BorderInvestigationCases({
         >
           <Box
             key={item.id}
-            h="220px"
             w="100%"
             position="relative"
-            overflow="hidden"
-            borderRadius="lg"
-            bg="green.50"
           >
-            <CasePhoto item={item} />
-            {item.alertLabel && (
-              <Box
-                position="absolute"
-                left={3}
-                top={3}
-                px={2.5}
-                py={1}
-                borderRadius="full"
-                bg={item.correctAction === "block" ? "red.700" : "green.700"}
-                color="white"
-                fontSize="0.68rem"
-                fontWeight="800"
-                display="flex"
-                alignItems="center"
-                gap="5px"
-              >
-                {item.correctAction === "block" ? (
-                  <AlertTriangle size={13} color="white" />
-                ) : (
-                  <CheckCircle2 size={13} color="white" />
-                )}
-                <span>{item.alertLabel}</span>
-              </Box>
-            )}
+            <Box h="220px" position="relative" overflow="hidden" borderRadius="lg" bg="green.50">
+              <CasePhoto item={item} />
+              {item.alertLabel && (
+                <Box
+                  position="absolute"
+                  left={3}
+                  top={3}
+                  px={2.5}
+                  py={1}
+                  borderRadius="full"
+                  bg={item.correctAction === "block" ? "red.700" : "green.700"}
+                  color="white"
+                  fontSize="0.68rem"
+                  fontWeight="800"
+                  display="flex"
+                  alignItems="center"
+                  gap="5px"
+                >
+                  {item.correctAction === "block" ? (
+                    <AlertTriangle size={13} color="white" />
+                  ) : (
+                    <CheckCircle2 size={13} color="white" />
+                  )}
+                  <span>{item.alertLabel}</span>
+                </Box>
+              )}
+            </Box>
+            <Text mt={1} fontSize="xs" color="gray.500" textAlign="right">
+              {item.imageCredit}
+            </Text>
           </Box>
           <Box display="flex" flexDirection="column" justifyContent="center" py={4}>
             <Text fontSize="1.15rem" fontWeight="900" color="green.900">
