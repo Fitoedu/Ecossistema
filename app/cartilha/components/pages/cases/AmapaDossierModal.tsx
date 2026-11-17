@@ -74,6 +74,22 @@ function getModalColors(level: AmapaCaseData['threatLevel']) {
       iconBg: '#DC2626',
     }
   }
+  if (level === 'quarentenaria-ausente') {
+    return {
+      headerBg: 'linear-gradient(135deg, #A16207, #CA8A04)',
+      badgeBg: '#FFFBEB',
+      badgeBorder: '#FDE68A',
+      badgeText: '#92400E',
+      tabActive: '#CA8A04',
+      tabActiveBg: '#FFFBEB',
+      tabActiveBorder: '#FDE68A',
+      sectionBg: '#FFFBEB',
+      sectionBorder: '#FDE68A',
+      sectionText: '#92400E',
+      indicatorGrad: 'linear-gradient(90deg, #CA8A04, #EAB308)',
+      iconBg: '#CA8A04',
+    }
+  }
   if (level === 'alerta-critico') {
     return {
       headerBg: 'linear-gradient(135deg, #C2410C, #EA580C)',
