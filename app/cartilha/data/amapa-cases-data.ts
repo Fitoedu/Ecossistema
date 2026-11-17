@@ -85,7 +85,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     scientificName: "Bactrocera carambolae",
     threatLevel: "quarentenaria",
 
-    imageSrc: "/images/mosca-carambola.jpg",
+    imageSrc: "/images/cartilha/casos-reais/mosca-carambola.jpg",
     credit: "Foto: Ken Walker / Museum Victoria",
     cardImageAlt:
       "Fotografia da Mosca-da-Carambola (Bactrocera carambolae), praga agrícola quarentenária presente no Amapá",
@@ -94,7 +94,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     invasorHeadline: "A Maior Ameaça Fitossanitária do Amapá",
     invasorDescription:
       "A Mosca-da-Carambola é um díptero originário do Sudeste Asiático detectado no Amapá em 1996, tornando-se a praga quarentenária mais importante da região. A fêmea perfura a casca dos frutos para depositar seus ovos; as larvas eclodem e devoram a polpa por dentro, inviabilizando a comercialização e a exportação.",
-    invasorImageSrc: "/images/mosca-carambola-campo.jpg",
+    invasorImageSrc: "/images/cartilha/casos-reais/mosca-carambola-campo.jpg",
     invasorCredit: "Foto: Lenny Worthington / Wikimedia Commons",
     invasorImageAlt:
       "Fotografia em alta resolução da Mosca-da-Carambola sobre fruto de carambola",
@@ -108,7 +108,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         title: "Picada de Oviposição",
         description:
           "Pequenos orifícios na casca do fruto onde a fêmea insere o ovipositor para depositar os ovos. A região ao redor amolece e escurece rapidamente.",
-        imageSrc: "/images/sintoma-picada.jpg",
+        imageSrc: "/images/cartilha/casos-reais/sintoma-picada.jpg",
         credit: "Foto: Cristiane Ramos de Jesus / Embrapa Amapá",
         imageAlt:
           "Detalhe de fruto com picada de oviposição da Mosca-da-Carambola",
@@ -124,7 +124,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         title: "Larvas na Polpa",
         description:
           "Ao cortar o fruto, observam-se larvas brancas (1–8 mm) se alimentando da polpa, criando galerias e promovendo apodrecimento interno acelerado.",
-        imageSrc: "/images/sintoma-larvas.jpg",
+        imageSrc: "/images/cartilha/casos-reais/sintoma-larvas.jpg",
         credit: "Foto: Cristiane Ramos de Jesus / Embrapa Amapá",
         imageAlt:
           "Larvas da Mosca-da-Carambola visíveis no interior de um fruto seccionado",
@@ -191,7 +191,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     scientificName: "Moniliophthora perniciosa",
     threatLevel: "alerta-critico",
 
-    imageSrc: "/images/vassoura-cupuacu.jpg",
+    imageSrc: "/images/cartilha/casos-reais/vassoura-cupuacu.jpg",
     credit: "Foto: Scott Bauer / ARS-USDA",
     cardImageAlt:
       "Ramos de cupuaçuzeiro deformados em formato de vassoura pelo fungo Moniliophthora perniciosa",
@@ -200,7 +200,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     invasorHeadline: "A doença fúngica do cupuaçuzeiro",
     invasorDescription:
       'A Vassoura-de-bruxa do Cupuaçuzeiro (Theobroma grandiflorum) é causada pelo fungo Moniliophthora perniciosa. O patógeno infecta os tecidos jovens, provoca brotações anormais em formato de "vassoura" e pode levar os frutos à podridão, reduzindo a produção.',
-    invasorImageSrc: "/images/cupuacu-invasor.jpg",
+    invasorImageSrc: "/images/cartilha/casos-reais/cupuacu-invasor.jpg",
     invasorCredit: "Foto: Ronaldo Rosa / Embrapa Amapá Oriental",
     invasorImageAlt:
       "Ramos de cupuaçuzeiro com sintomas de vassoura-de-bruxa",
@@ -214,7 +214,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         title: 'Ramos em "Vassoura"',
         description:
           "Brotamentos compactos e eretos crescem em excesso, formando um feixe de ramos que lembra uma vassoura. Os ramos são inicialmente verdes e depois secam e escurecem.",
-        imageSrc: "/images/sintoma-cupuacu-ramos.jpg",
+        imageSrc: "/images/cartilha/casos-reais/sintoma-cupuacu-ramos.jpg",
         credit: "Foto: Ronaldo Rosa / Embrapa Amapá Oriental",
         imageAlt:
           "Detalhe de ramos deformados em formato de vassoura no cupuaçuzeiro",
@@ -224,7 +224,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         title: "Frutos de Cupuaçu Apodrecidos",
         description:
           "Frutos jovens podem parar de crescer, escurecer e murchar. Em frutos maiores, manchas marrons evoluem para a podridão da polpa.",
-        imageSrc: "/images/sintoma-cupuacu-frutos.jpg",
+        imageSrc: "/images/cartilha/casos-reais/sintoma-cupuacu-frutos.jpg",
         credit: "Foto: Brantlee Spakes Richter, University of Florida / Bugwood.org",
         imageAlt:
           "Frutos de cupuaçu infectados com vassoura-de-bruxa apresentando podridão",
@@ -296,7 +296,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     scientificName: "Candidatus Phytoplasma palmae (16SrIV)",
     threatLevel: "quarentenaria-ausente",
 
-    imageSrc: "/images/amarelamento-palmeiras.jpg",
+    imageSrc: "/images/cartilha/casos-reais/amarelamento-palmeiras.jpg",
     credit: "Foto: USDA Forest Service",
     cardImageAlt:
       "Palmeira com sintomas de amarelamento letal causado por fitoplasma no Amapá",
@@ -305,7 +305,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     invasorHeadline: "Uma doença letal das palmeiras",
     invasorDescription:
       "O Amarelamento Letal das Palmeiras está associado a fitoplasmas do grupo 16SrIV, incluindo Candidatus Phytoplasma palmae. Esses microrganismos vivem no floema, interferem no transporte de nutrientes e podem levar a palmeira à morte.",
-    invasorImageSrc: "/images/palmeiras-invasor.jpg",
+    invasorImageSrc: "/images/cartilha/casos-reais/palmeiras-invasor.jpg",
     invasorCredit: "Foto: USDA Forest Service / Bugwood.org",
     invasorImageAlt:
       "Palmeira com amarelamento letal avançado",
@@ -319,7 +319,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         title: "Amarelamento Progressivo das Folhas",
         description:
           "Em geral, ocorre primeiro a queda dos frutos; depois, as folhas mais velhas começam a amarelar e o sintoma avança para a copa. A doença é progressiva e letal.",
-        imageSrc: "/images/sintoma-palmeiras-folhas.jpg",
+        imageSrc: "/images/cartilha/casos-reais/sintoma-palmeiras-folhas.jpg",
         credit: "Foto: USDA Forest Service / Bugwood.org",
         imageAlt:
           "Palmeira com folhas amareladas",
@@ -397,7 +397,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     scientificName: "Rhizoctonia theobromae (Ceratobasidium theobromae)",
     threatLevel: "quarentenaria",
 
-    imageSrc: "/images/vassoura-mandioca.jpg",
+    imageSrc: "/images/cartilha/casos-reais/vassoura-mandioca.jpg",
     credit: "Foto: Antônio Carlos Pereira de Góes / Embrapa Amapá",
     cardImageAlt:
       "Planta de mandioca com sintomas de vassoura-de-bruxa causados por Rhizoctonia theobromae",
@@ -406,7 +406,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     invasorHeadline: "A doença fúngica da mandioca",
     invasorDescription:
       'A Vassoura-de-bruxa da Mandioca, também chamada de morte descendente, é causada pelo fungo Rhizoctonia theobromae (Ceratobasidium theobromae). O agente causal provoca brotações anormais, deformação dos ramos e perda de vigor, comprometendo o desenvolvimento da mandioca.',
-    invasorImageSrc: "/images/mandioca-invasor.jpg",
+    invasorImageSrc: "/images/cartilha/casos-reais/mandioca-invasor.jpg",
     invasorCredit: "Foto: Antônio Carlos Pereira / Embrapa Amapá",
     invasorImageAlt:
       "Ramos de mandioca com sintomas de vassoura-de-bruxa",
@@ -420,7 +420,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         title: "Brotações em Forma de Vassoura",
         description:
           "Brotações laterais fracas e finas crescem de forma compacta e desordenada, formando o aspecto de uma vassoura velha nos ramos da mandioca.",
-        imageSrc: "/images/sintoma-mandioca-necrose.jpg",
+        imageSrc: "/images/cartilha/casos-reais/sintoma-mandioca-necrose.jpg",
         credit: "Foto: Adilson Lima / Embrapa Amapá",
         imageAlt:
           "Brotações deformadas em forma de vassoura na mandioca",
