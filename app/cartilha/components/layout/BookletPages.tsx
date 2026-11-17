@@ -3268,11 +3268,19 @@ export function PageChain({ data }: { data: PageChainData }) {
   );
 }
 
-export function PageQuiz({ data }: { data: PageQuizData }) {
+export function PageQuiz({
+  data,
+  onComplete,
+  onReset,
+}: {
+  data: PageQuizData
+  onComplete?: () => void
+  onReset?: () => void
+}) {
   return (
     <Box>
       <SectionBadge>{data.badgeLabel}</SectionBadge>
-      <Quiz />
+      <Quiz onComplete={onComplete} onReset={onReset} />
     </Box>
   );
 }

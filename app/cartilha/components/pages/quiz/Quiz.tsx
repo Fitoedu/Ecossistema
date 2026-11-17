@@ -457,7 +457,13 @@ function ResultScreen({
 
 // ─── QuizGamificado (exportação padrão) ───────────────────────────────────────
 
-export default function QuizGamificado() {
+export default function QuizGamificado({
+  onComplete,
+  onReset,
+}: {
+  onComplete?: () => void
+  onReset?: () => void
+}) {
   const [currentQ,  setCurrentQ]  = useState(0)
   const [selected,  setSelected]  = useState<string | null>(null)
   const [revealed,  setRevealed]  = useState(false)
@@ -490,12 +496,13 @@ export default function QuizGamificado() {
   const handleNext = useCallback(() => {
     if (isLast) {
       setFinished(true)
+      onComplete?.()
     } else {
       setCurrentQ(q => q + 1)
       setSelected(null)
       setRevealed(false)
     }
-  }, [isLast])
+  }, [isLast, onComplete])
 
   const handleRetry = useCallback(() => {
     setCurrentQ(0)
@@ -503,7 +510,8 @@ export default function QuizGamificado() {
     setRevealed(false)
     setAnswers(Array(QUESTIONS.length).fill(null))
     setFinished(false)
-  }, [])
+    onReset?.()
+  }, [onReset])
 
   if (finished) {
     return (

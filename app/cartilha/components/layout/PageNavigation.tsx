@@ -39,6 +39,7 @@ interface PageNavigationProps {
   onPrev: () => void
   onNext: () => void
   onGoTo?: (index: number) => void
+  nextDisabled?: boolean
 }
 
 // ─── Constantes ───────────────────────────────────────────────────────────────
@@ -434,9 +435,11 @@ export default function PageNavigation({
   onPrev,
   onNext,
   onGoTo,
+  nextDisabled = false,
 }: PageNavigationProps) {
   const isFirst = currentPage === 0
   const isLast  = currentPage === totalPages - 1
+  const isNextDisabled = isLast || nextDisabled
 
   return (
     <Box
@@ -528,9 +531,15 @@ export default function PageNavigation({
             id="nav-btn-next"
             direction="next"
             onClick={onNext}
-            disabled={isLast}
+            disabled={isNextDisabled}
             isLast={isLast}
-            label={isLast ? 'Última página — cartilha concluída' : 'Próxima página'}
+            label={
+              isLast
+                ? 'Última página — cartilha concluída'
+                : nextDisabled
+                  ? 'Responde a todas as questões para avançar'
+                  : 'Próxima página'
+            }
           />
         </Box>
       </Flex>

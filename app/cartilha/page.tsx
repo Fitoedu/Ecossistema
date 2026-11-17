@@ -39,6 +39,8 @@ function renderPage(
   page: CartilhaPageData,
   onSelectItem: (item: PestGalleryItemData, index: number) => void,
   onGoTo: (pageIndex: number) => void,
+  onQuizComplete: () => void,
+  onQuizReset: () => void,
 ) {
   switch (page.type) {
     case "cover":
@@ -62,7 +64,13 @@ function renderPage(
     case "chain":
       return <PageChain data={page} />;
     case "quiz":
-      return <PageQuiz data={page} />;
+      return (
+        <PageQuiz
+          data={page}
+          onComplete={onQuizComplete}
+          onReset={onQuizReset}
+        />
+      );
     case "find-the-hero":
       return <PageFindTheHero data={page} />;
     case "amapa-cases":
@@ -76,6 +84,7 @@ export default function CartilhaPage() {
   const [currentPage, setCurrentPage] = useState(0);
   const [animKey, setAnimKey] = useState(0);
   const [direction, setDirection] = useState<"next" | "prev">("next");
+  const [quizCompleted, setQuizCompleted] = useState(false);
 
   /* ── Estado do modal de praga — mantido AQUI, fora do PageTransitionWrapper ── */
   const [pestDialogOpen, setPestDialogOpen] = useState(false);
@@ -100,13 +109,20 @@ export default function CartilhaPage() {
   /* ── Navegacao de paginas ── */
   const goTo = useCallback(
     (target: number) => {
+      if (
+        getPage(currentPage).type === "quiz" &&
+        target > currentPage &&
+        !quizCompleted
+      ) {
+        return;
+      }
       const clamped = Math.max(0, Math.min(target, TOTAL_PAGES - 1));
       setDirection(clamped >= currentPage ? "next" : "prev");
       setCurrentPage(clamped);
       setAnimKey((k) => k + 1);
       window.scrollTo({ top: 0, behavior: "smooth" });
     },
-    [currentPage],
+    [currentPage, quizCompleted],
   );
 
   const handlePrev = useCallback(
@@ -193,7 +209,13 @@ export default function CartilhaPage() {
             }}
           >
             <PageTransitionWrapper pageKey={animKey} direction={direction}>
-              {renderPage(page, handleSelectPest, goTo)}
+              {renderPage(
+                page,
+                handleSelectPest,
+                goTo,
+                () => setQuizCompleted(true),
+                () => setQuizCompleted(false),
+              )}
             </PageTransitionWrapper>
           </Box>
 
@@ -204,6 +226,7 @@ export default function CartilhaPage() {
               onPrev={handlePrev}
               onNext={handleNext}
               onGoTo={goTo}
+              nextDisabled={page.type === "quiz" && !quizCompleted}
             />
           </Box>
         </Box>
