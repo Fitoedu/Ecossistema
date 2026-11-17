@@ -37,7 +37,6 @@ import {
   FileText,
 } from 'lucide-react'
 import type { AmapaCaseData, SymptomItem, CombatAction } from '../../../data/amapa-cases-data'
-import { getThreatLabel } from '../../../data/amapa-cases-data'
 
 /* ─── Tipos ───────────────────────────────────────────────────────────────── */
 
@@ -233,29 +232,6 @@ function TabInvasor({ item, mc }: { item: AmapaCaseData; mc: ReturnType<typeof g
         bg="gray.100"
       >
         <DossierImage src={item.invasorImageSrc} alt={item.invasorImageAlt} light />
-        {/* Badge sobreposto */}
-        <Box
-          position="absolute"
-          bottom={3}
-          left={3}
-          display="flex"
-          alignItems="center"
-          gap="5px"
-          px={2.5}
-          py={1}
-          borderRadius="full"
-          bg="rgba(255,255,255,0.92)"
-          border="1px solid"
-          borderColor={mc.badgeBorder}
-          color={mc.badgeText}
-          fontSize="0.6rem"
-          fontWeight="800"
-          letterSpacing="0.07em"
-          boxShadow="0 1px 6px rgba(0,0,0,0.1)"
-        >
-          <MapPin size={9} aria-hidden="true" />
-          {getThreatLabel(item.threatLevel)} — Amapá
-        </Box>
       </Box>
       {item.invasorCredit && (
         <Text fontSize="0.62rem" color="gray.500" lineHeight="1.3">
@@ -672,7 +648,7 @@ export default function AmapaDossierModal({ item, onClose }: AmapaDossierModalPr
                   </Box>
 
                   {/* Botão Fechar */}
-                  <DialogCloseTrigger asChild position="absolute" top={3} right={3} zIndex={10}>
+                  <DialogCloseTrigger asChild position="absolute" top={4} right={4} zIndex={10}>
                     <Box
                       as="button"
                       w="34px"
@@ -800,6 +776,7 @@ export default function AmapaDossierModal({ item, onClose }: AmapaDossierModalPr
                   overflowY="auto"
                   px={{ base: 4, sm: 5 }}
                   py={{ base: 5, sm: 6 }}
+                  pb={{ base: 8, sm: 10 }}
                   bg="gray.50"
                   flex={1}
                   css={{

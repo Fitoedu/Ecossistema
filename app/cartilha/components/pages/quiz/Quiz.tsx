@@ -3,7 +3,25 @@
 import { useState, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence, useAnimationControls } from 'framer-motion'
 import { Box, Text, VStack, HStack } from '@chakra-ui/react'
-import { CheckCircle, XCircle, ChevronRight, Trophy, RotateCcw, Lightbulb } from 'lucide-react'
+import {
+  Brain,
+  BookOpen,
+  Building2,
+  CheckCircle,
+  ChevronRight,
+  Leaf,
+  Lightbulb,
+  Microscope,
+  RotateCcw,
+  ShieldCheck,
+  Siren,
+  Sparkles,
+  Sprout,
+  Star,
+  Trophy,
+  XCircle,
+  type LucideIcon,
+} from 'lucide-react'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -14,7 +32,7 @@ interface Question {
   options: Option[]
   correctId: string
   explanation: string
-  emoji: string
+  icon: LucideIcon
 }
 
 // ─── Dados das perguntas ──────────────────────────────────────────────────────
@@ -22,7 +40,7 @@ interface Question {
 const QUESTIONS: Question[] = [
   {
     id: 1,
-    emoji: '🔬',
+    icon: Microscope,
     text: 'O que é Fitossanidade?',
     options: [
       { id: 'a', text: 'A ciência que estuda apenas os remédios naturais.' },
@@ -35,7 +53,7 @@ const QUESTIONS: Question[] = [
   },
   {
     id: 2,
-    emoji: '🚨',
+    icon: Siren,
     text: 'O que é uma Praga Quarentenária?',
     options: [
       { id: 'a', text: 'Um inseto comum encontrado em jardins residenciais.' },
@@ -48,7 +66,7 @@ const QUESTIONS: Question[] = [
   },
   {
     id: 3,
-    emoji: '🌿',
+    icon: Sprout,
     text: 'Qual praga agrícola representa um caso real no Amapá / Região Norte?',
     options: [
       { id: 'a', text: 'A ferrugem do café no sul de Minas Gerais.' },
@@ -61,7 +79,7 @@ const QUESTIONS: Question[] = [
   },
   {
     id: 4,
-    emoji: '🏛️',
+    icon: Building2,
     text: 'Qual órgão federal é responsável pela fiscalização fitossanitária no Brasil?',
     options: [
       { id: 'a', text: 'IBAMA' },
@@ -74,7 +92,7 @@ const QUESTIONS: Question[] = [
   },
   {
     id: 5,
-    emoji: '🛡️',
+    icon: ShieldCheck,
     text: 'Qual das práticas abaixo NÃO é uma boa prática fitossanitária?',
     options: [
       { id: 'a', text: 'Usar sementes certificadas e sadias.' },
@@ -91,11 +109,11 @@ const QUESTIONS: Question[] = [
 
 function getResultTier(score: number, total: number) {
   const pct = score / total
-  if (pct === 1)   return { emoji: '🏆', grade: 'A+', label: 'Expert em Fitossanidade!',        color: '#2E7D32', bg: 'linear-gradient(135deg,#1B5E20,#2E7D32)', stars: 5 }
-  if (pct >= 0.8)  return { emoji: '🌟', grade: 'A',  label: 'Excelente! Quase perfeito.',       color: '#00695C', bg: 'linear-gradient(135deg,#004D40,#00897B)', stars: 4 }
-  if (pct >= 0.6)  return { emoji: '🌱', grade: 'B',  label: 'Muito bem! No caminho certo.',     color: '#F57F17', bg: 'linear-gradient(135deg,#E65100,#F57C00)', stars: 3 }
-  if (pct >= 0.4)  return { emoji: '📖', grade: 'C',  label: 'Continue estudando!',              color: '#1565C0', bg: 'linear-gradient(135deg,#0D47A1,#1565C0)', stars: 2 }
-  return             { emoji: '🌿', grade: 'D',  label: 'Todo especialista foi iniciante!', color: '#C62828', bg: 'linear-gradient(135deg,#B71C1C,#C62828)', stars: 1 }
+  if (pct === 1)   return { icon: Trophy, grade: 'A+', label: 'Expert em Fitossanidade!',        color: '#2E7D32', bg: 'linear-gradient(135deg,#1B5E20,#2E7D32)', stars: 5 }
+  if (pct >= 0.8)  return { icon: Sparkles, grade: 'A',  label: 'Excelente! Quase perfeito.',       color: '#00695C', bg: 'linear-gradient(135deg,#004D40,#00897B)', stars: 4 }
+  if (pct >= 0.6)  return { icon: Sprout, grade: 'B',  label: 'Muito bem! No caminho certo.',     color: '#F57F17', bg: 'linear-gradient(135deg,#E65100,#F57C00)', stars: 3 }
+  if (pct >= 0.4)  return { icon: BookOpen, grade: 'C',  label: 'Continue estudando!',              color: '#1565C0', bg: 'linear-gradient(135deg,#0D47A1,#1565C0)', stars: 2 }
+  return             { icon: Leaf, grade: 'D',  label: 'Todo especialista foi iniciante!', color: '#C62828', bg: 'linear-gradient(135deg,#B71C1C,#C62828)', stars: 1 }
 }
 
 // ─── QuizProgress ─────────────────────────────────────────────────────────────
@@ -271,6 +289,7 @@ function ResultScreen({
   onRetry: () => void
 }) {
   const tier = getResultTier(score, total)
+  const TierIcon = tier.icon
 
   return (
     <motion.div
@@ -303,10 +322,10 @@ function ResultScreen({
             <motion.div
               animate={{ y: [0, -8, 0], rotate: [0, 4, -4, 0] }}
               transition={{ repeat: Infinity, duration: 3.5, ease: 'easeInOut' }}
-              style={{ fontSize: '56px', lineHeight: 1, marginBottom: '16px', display: 'block' }}
+              style={{ lineHeight: 1, marginBottom: '16px', display: 'block' }}
               aria-hidden="true"
             >
-              {tier.emoji}
+              <TierIcon size={56} color="white" strokeWidth={1.8} />
             </motion.div>
 
             <HStack justify="center" gap="4px" mb={3}>
@@ -316,10 +335,15 @@ function ResultScreen({
                   initial={{ opacity: 0, scale: 0, rotate: -30 }}
                   animate={{ opacity: i < tier.stars ? 1 : 0.2, scale: 1, rotate: 0 }}
                   transition={{ delay: 0.3 + i * 0.1, type: 'spring', stiffness: 300, damping: 18 }}
-                  style={{ fontSize: '22px', display: 'inline-block' }}
+                  style={{ display: 'inline-flex' }}
                   aria-hidden="true"
                 >
-                  ⭐
+                  <Star
+                    size={22}
+                    color={i < tier.stars ? '#FBBF24' : 'rgba(255,255,255,0.42)'}
+                    fill={i < tier.stars ? '#FBBF24' : 'none'}
+                    strokeWidth={1.8}
+                  />
                 </motion.span>
               ))}
             </HStack>
@@ -471,6 +495,7 @@ export default function QuizGamificado({
   const [finished,  setFinished]  = useState(false)
 
   const question = QUESTIONS[currentQ]
+  const QuestionIcon = question.icon
   const isLast   = currentQ === QUESTIONS.length - 1
 
   const score = answers.reduce<number>(
@@ -539,7 +564,7 @@ export default function QuizGamificado({
           borderRadius="999px"
           mb={1}
         >
-          <Text fontSize="16px" aria-hidden="true">🧠</Text>
+          <Brain size={16} color="#2E7D32" aria-hidden="true" />
           <Text fontSize="0.68rem" fontWeight="700" textTransform="uppercase"
             letterSpacing="0.08em" color="#1B5E20">
             Quiz de Aprendizagem
@@ -603,11 +628,10 @@ export default function QuizGamificado({
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
-                fontSize={{ base: '18px', sm: '22px' }}
                 flexShrink={0}
                 aria-hidden="true"
               >
-                {question.emoji}
+                <QuestionIcon size={20} color="white" strokeWidth={2} />
               </Box>
               <Box>
                 <Text fontSize="0.6rem" fontWeight="700" textTransform="uppercase"
