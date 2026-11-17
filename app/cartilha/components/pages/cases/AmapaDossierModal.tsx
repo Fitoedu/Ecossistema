@@ -173,7 +173,7 @@ function DossierImage({ src, alt, light = false }: { src: string; alt: string; l
 }
 
 /** Imagem de detalhe do sintoma */
-function SymptomDetailImage({ src, alt }: { src: string; alt: string }) {
+function SymptomDetailImage({ src, alt, credit }: { src: string; alt: string; credit?: string }) {
   const [hasError, setHasError] = useState(false)
   if (hasError || !src) return null
 
@@ -197,6 +197,20 @@ function SymptomDetailImage({ src, alt }: { src: string; alt: string }) {
         style={{ objectFit: 'cover' }}
         onError={() => setHasError(true)}
       />
+      {credit && (
+        <Text
+          position="absolute"
+          left={2}
+          right={2}
+          bottom={1}
+          color="white"
+          fontSize="0.58rem"
+          lineHeight="1.2"
+          textShadow="0 1px 3px rgba(0,0,0,0.8)"
+        >
+          {credit}
+        </Text>
+      )}
     </Box>
   )
 }
@@ -243,6 +257,11 @@ function TabInvasor({ item, mc }: { item: AmapaCaseData; mc: ReturnType<typeof g
           {getThreatLabel(item.threatLevel)} — Amapá
         </Box>
       </Box>
+      {item.invasorCredit && (
+        <Text fontSize="0.62rem" color="gray.500" lineHeight="1.3">
+          {item.invasorCredit}
+        </Text>
+      )}
 
       {/* Headline */}
       <Box>
@@ -360,7 +379,11 @@ function TabDiagnostico({ item, mc }: { item: AmapaCaseData; mc: ReturnType<type
                 </Box>
               </HStack>
               {symptom.imageSrc && (
-                <SymptomDetailImage src={symptom.imageSrc} alt={symptom.imageAlt ?? ''} />
+                <SymptomDetailImage
+                  src={symptom.imageSrc}
+                  alt={symptom.imageAlt ?? ''}
+                  credit={symptom.credit}
+                />
               )}
             </Box>
           </motion.div>
@@ -596,7 +619,7 @@ export default function AmapaDossierModal({ item, onClose }: AmapaDossierModalPr
                 >
                   {/* Imagem de fundo */}
                   <Box position="absolute" inset={0} bg="gray.200">
-                    <DossierImage src={item.cardImageSrc} alt={item.cardImageAlt} light />
+                    <DossierImage src={item.imageSrc} alt={item.cardImageAlt} light />
                   </Box>
 
                   {/* Gradiente de legibilidade */}
@@ -608,6 +631,18 @@ export default function AmapaDossierModal({ item, onClose }: AmapaDossierModalPr
                     }}
                     pointerEvents="none"
                   />
+                  <Text
+                    position="absolute"
+                    bottom={2}
+                    left={3}
+                    right={3}
+                    color="white"
+                    fontSize="0.62rem"
+                    lineHeight="1.3"
+                    textShadow="0 1px 3px rgba(0,0,0,0.7)"
+                  >
+                    {item.credit}
+                  </Text>
 
                   {/* Faixa colorida no topo */}
                   <Box

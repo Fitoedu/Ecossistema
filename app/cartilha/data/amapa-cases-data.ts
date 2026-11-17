@@ -30,6 +30,7 @@ export interface SymptomItem {
    * Substitua pelo caminho da imagem oficial quando disponível.
    */
   imageSrc?: string;
+  credit?: string;
   imageAlt?: string;
 }
 
@@ -46,11 +47,10 @@ export interface AmapaCaseData {
   /** Nome científico — exibido em itálico */
   scientificName: string;
   threatLevel: ThreatLevel;
-  /**
-   * Imagem principal do card (placeholder Unsplash até a foto oficial chegar).
-   * Para trocar: substitua apenas o valor de `cardImageSrc`.
-   */
-  cardImageSrc: string;
+  /** Caminho local da imagem principal do card e do modal. */
+  imageSrc: string;
+  /** Crédito acadêmico resumido da imagem principal. */
+  credit: string;
   cardImageAlt: string;
 
   /* ── Aba 1: O Invasor ── */
@@ -61,6 +61,7 @@ export interface AmapaCaseData {
    * Substitua por caminho local quando a foto oficial estiver disponível.
    */
   invasorImageSrc: string;
+  invasorCredit?: string;
   invasorImageAlt: string;
   invasorRegionText: string;
 
@@ -84,8 +85,8 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     scientificName: "Bactrocera carambolae",
     threatLevel: "quarentenaria",
 
-    /* Placeholder Unsplash — substitua por imagem oficial da professora */
-    cardImageSrc: "/images/pragas/mosca da carambola/1.webp",
+    imageSrc: "/images/mosca-carambola.jpg",
+    credit: "Foto: Ken Walker / Museum Victoria",
     cardImageAlt:
       "Fotografia da Mosca-da-Carambola (Bactrocera carambolae), praga agrícola quarentenária presente no Amapá",
 
@@ -93,8 +94,8 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     invasorHeadline: "A Maior Ameaça Fitossanitária do Amapá",
     invasorDescription:
       "A Mosca-da-Carambola é um díptero originário do Sudeste Asiático detectado no Amapá em 1996, tornando-se a praga quarentenária mais importante da região. A fêmea perfura a casca dos frutos para depositar seus ovos; as larvas eclodem e devoram a polpa por dentro, inviabilizando a comercialização e a exportação.",
-    /* Placeholder Unsplash — substitua por foto oficial */
-    invasorImageSrc: "/images/pragas/mosca da carambola/2.webp",
+    invasorImageSrc: "/images/mosca-carambola-campo.jpg",
+    invasorCredit: "Foto: Lenny Worthington / Wikimedia Commons",
     invasorImageAlt:
       "Fotografia em alta resolução da Mosca-da-Carambola sobre fruto de carambola",
     invasorRegionText:
@@ -107,7 +108,8 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         title: "Picada de Oviposição",
         description:
           "Pequenos orifícios na casca do fruto onde a fêmea insere o ovipositor para depositar os ovos. A região ao redor amolece e escurece rapidamente.",
-        imageSrc: "/images/pragas/mosca da carambola/3.webp",
+        imageSrc: "/images/sintoma-picada.jpg",
+        credit: "Foto: Cristiane Ramos de Jesus / Embrapa Amapá",
         imageAlt:
           "Detalhe de fruto com picada de oviposição da Mosca-da-Carambola",
       },
@@ -122,7 +124,8 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         title: "Larvas na Polpa",
         description:
           "Ao cortar o fruto, observam-se larvas brancas (1–8 mm) se alimentando da polpa, criando galerias e promovendo apodrecimento interno acelerado.",
-        imageSrc: "/images/pragas/mosca da carambola/4.webp",
+        imageSrc: "/images/sintoma-larvas.jpg",
+        credit: "Foto: Cristiane Ramos de Jesus / Embrapa Amapá",
         imageAlt:
           "Larvas da Mosca-da-Carambola visíveis no interior de um fruto seccionado",
       },
@@ -188,7 +191,8 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     scientificName: "Moniliophthora perniciosa",
     threatLevel: "alerta-critico",
 
-    cardImageSrc: "/images/fungos/vassoura-da-bruxa-mandioca.webp",
+    imageSrc: "/images/vassoura-cupuacu.jpg",
+    credit: "Foto: Scott Bauer / ARS-USDA",
     cardImageAlt:
       "Ramos de cupuaçuzeiro deformados em formato de vassoura pelo fungo Moniliophthora perniciosa",
 
@@ -196,7 +200,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     invasorHeadline: "A doença fúngica do cupuaçuzeiro",
     invasorDescription:
       'A Vassoura-de-bruxa do Cupuaçuzeiro (Theobroma grandiflorum) é causada pelo fungo Moniliophthora perniciosa. O patógeno infecta os tecidos jovens, provoca brotações anormais em formato de "vassoura" e pode levar os frutos à podridão, reduzindo a produção.',
-    invasorImageSrc: "/images/fungos/vassoura-da-bruxa-mandioca2.webp",
+    invasorImageSrc: "/images/vassoura-cupuacu.jpg",
     invasorImageAlt:
       "Ramos de cupuaçuzeiro com sintomas de vassoura-de-bruxa",
     invasorRegionText:
@@ -289,7 +293,8 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     scientificName: "Candidatus Phytoplasma palmae (16SrIV)",
     threatLevel: "quarentenaria-ausente",
 
-    cardImageSrc: "/images/doencas/fitoplasma.webp",
+    imageSrc: "/images/amarelamento-palmeiras.jpg",
+    credit: "Foto: USDA Forest Service",
     cardImageAlt:
       "Palmeira com sintomas de amarelamento letal causado por fitoplasma no Amapá",
 
@@ -297,7 +302,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     invasorHeadline: "Uma doença letal das palmeiras",
     invasorDescription:
       "O Amarelamento Letal das Palmeiras está associado a fitoplasmas do grupo 16SrIV, incluindo Candidatus Phytoplasma palmae. Esses microrganismos vivem no floema, interferem no transporte de nutrientes e podem levar a palmeira à morte.",
-    invasorImageSrc: "/images/doencas/fitoplasma.webp",
+    invasorImageSrc: "/images/amarelamento-palmeiras.jpg",
     invasorImageAlt:
       "Palmeira com amarelamento letal avançado",
     invasorRegionText:
@@ -387,7 +392,8 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     scientificName: "Rhizoctonia theobromae (Ceratobasidium theobromae)",
     threatLevel: "quarentenaria",
 
-    cardImageSrc: "/images/fungos/vassoura-da-bruxa-mandioca.webp",
+    imageSrc: "/images/vassoura-mandioca.jpg",
+    credit: "Foto: Antônio Carlos Pereira de Góes / Embrapa Amapá",
     cardImageAlt:
       "Planta de mandioca com sintomas de vassoura-de-bruxa causados por Rhizoctonia theobromae",
 
@@ -395,7 +401,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     invasorHeadline: "A doença fúngica da mandioca",
     invasorDescription:
       'A Vassoura-de-bruxa da Mandioca, também chamada de morte descendente, é causada pelo fungo Rhizoctonia theobromae (Ceratobasidium theobromae). O agente causal provoca brotações anormais, deformação dos ramos e perda de vigor, comprometendo o desenvolvimento da mandioca.',
-    invasorImageSrc: "/images/fungos/vassoura-da-bruxa-mandioca2.webp",
+    invasorImageSrc: "/images/vassoura-mandioca.jpg",
     invasorImageAlt:
       "Ramos de mandioca com sintomas de vassoura-de-bruxa",
     invasorRegionText:

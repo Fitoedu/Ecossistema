@@ -108,7 +108,7 @@ function CardImage({ item }: { item: AmapaCaseData }) {
 
   return (
     <Image
-      src={item.cardImageSrc}
+      src={item.imageSrc}
       alt={item.cardImageAlt}
       fill
       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -274,6 +274,9 @@ export default function AmapaCaseCard({
               Amapá
             </Box>
           </Box>
+          <Text px={4} pt={2} fontSize="0.62rem" color="gray.500" lineHeight="1.3">
+            {item.credit}
+          </Text>
 
           {/* ── Rodapé do card (fundo branco) ── */}
           <Box px={4} pt={3} pb={4} bg="white">
