@@ -631,19 +631,6 @@ export default function AmapaDossierModal({ item, onClose }: AmapaDossierModalPr
                     }}
                     pointerEvents="none"
                   />
-                  <Text
-                    position="absolute"
-                    bottom={2}
-                    left={3}
-                    right={3}
-                    color="white"
-                    fontSize="0.62rem"
-                    lineHeight="1.3"
-                    textShadow="0 1px 3px rgba(0,0,0,0.7)"
-                  >
-                    {item.credit}
-                  </Text>
-
                   {/* Faixa colorida no topo */}
                   <Box
                     position="absolute"
