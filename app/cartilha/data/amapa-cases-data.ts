@@ -200,7 +200,8 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     invasorHeadline: "A doença fúngica do cupuaçuzeiro",
     invasorDescription:
       'A Vassoura-de-bruxa do Cupuaçuzeiro (Theobroma grandiflorum) é causada pelo fungo Moniliophthora perniciosa. O patógeno infecta os tecidos jovens, provoca brotações anormais em formato de "vassoura" e pode levar os frutos à podridão, reduzindo a produção.',
-    invasorImageSrc: "/images/vassoura-cupuacu.jpg",
+    invasorImageSrc: "/images/cupuacu-invasor.jpg",
+    invasorCredit: "Foto: Ronaldo Rosa / Embrapa Amapá Oriental",
     invasorImageAlt:
       "Ramos de cupuaçuzeiro com sintomas de vassoura-de-bruxa",
     invasorRegionText:
@@ -213,7 +214,8 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         title: 'Ramos em "Vassoura"',
         description:
           "Brotamentos compactos e eretos crescem em excesso, formando um feixe de ramos que lembra uma vassoura. Os ramos são inicialmente verdes e depois secam e escurecem.",
-        imageSrc: "/images/fungos/vassoura-da-bruxa-mandioca3.webp",
+        imageSrc: "/images/sintoma-cupuacu-ramos.jpg",
+        credit: "Foto: Ronaldo Rosa / Embrapa Amapá Oriental",
         imageAlt:
           "Detalhe de ramos deformados em formato de vassoura no cupuaçuzeiro",
       },
@@ -222,7 +224,8 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         title: "Frutos de Cupuaçu Apodrecidos",
         description:
           "Frutos jovens podem parar de crescer, escurecer e murchar. Em frutos maiores, manchas marrons evoluem para a podridão da polpa.",
-        imageSrc: "/images/fungos/vassoura-da-bruxa-mandioca4.webp",
+        imageSrc: "/images/sintoma-cupuacu-frutos.jpg",
+        credit: "Foto: Brantlee Spakes Richter, University of Florida / Bugwood.org",
         imageAlt:
           "Frutos de cupuaçu infectados com vassoura-de-bruxa apresentando podridão",
       },
@@ -302,7 +305,8 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     invasorHeadline: "Uma doença letal das palmeiras",
     invasorDescription:
       "O Amarelamento Letal das Palmeiras está associado a fitoplasmas do grupo 16SrIV, incluindo Candidatus Phytoplasma palmae. Esses microrganismos vivem no floema, interferem no transporte de nutrientes e podem levar a palmeira à morte.",
-    invasorImageSrc: "/images/amarelamento-palmeiras.jpg",
+    invasorImageSrc: "/images/palmeiras-invasor.jpg",
+    invasorCredit: "Foto: USDA Forest Service / Bugwood.org",
     invasorImageAlt:
       "Palmeira com amarelamento letal avançado",
     invasorRegionText:
@@ -315,7 +319,8 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         title: "Amarelamento Progressivo das Folhas",
         description:
           "Em geral, ocorre primeiro a queda dos frutos; depois, as folhas mais velhas começam a amarelar e o sintoma avança para a copa. A doença é progressiva e letal.",
-        imageSrc: "/images/doencas/fitoplasma.webp",
+        imageSrc: "/images/sintoma-palmeiras-folhas.jpg",
+        credit: "Foto: USDA Forest Service / Bugwood.org",
         imageAlt:
           "Palmeira com folhas amareladas",
       },
@@ -401,7 +406,8 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     invasorHeadline: "A doença fúngica da mandioca",
     invasorDescription:
       'A Vassoura-de-bruxa da Mandioca, também chamada de morte descendente, é causada pelo fungo Rhizoctonia theobromae (Ceratobasidium theobromae). O agente causal provoca brotações anormais, deformação dos ramos e perda de vigor, comprometendo o desenvolvimento da mandioca.',
-    invasorImageSrc: "/images/vassoura-mandioca.jpg",
+    invasorImageSrc: "/images/mandioca-invasor.jpg",
+    invasorCredit: "Foto: Antônio Carlos Pereira / Embrapa Amapá",
     invasorImageAlt:
       "Ramos de mandioca com sintomas de vassoura-de-bruxa",
     invasorRegionText:
@@ -414,7 +420,8 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         title: "Brotações em Forma de Vassoura",
         description:
           "Brotações laterais fracas e finas crescem de forma compacta e desordenada, formando o aspecto de uma vassoura velha nos ramos da mandioca.",
-        imageSrc: "/images/fungos/vassoura-da-bruxa-mandioca3.webp",
+        imageSrc: "/images/sintoma-mandioca-necrose.jpg",
+        credit: "Foto: Adilson Lima / Embrapa Amapá",
         imageAlt:
           "Brotações deformadas em forma de vassoura na mandioca",
       },
