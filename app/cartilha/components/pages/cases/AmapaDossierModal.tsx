@@ -8,7 +8,7 @@
  */
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Box,
@@ -567,6 +567,11 @@ interface AmapaDossierModalProps {
 
 export default function AmapaDossierModal({ item, onClose }: AmapaDossierModalProps) {
   const [activeTab, setActiveTab] = useState<TabId>('invasor')
+  const contentRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    contentRef.current?.scrollTo({ top: 0, behavior: 'auto' })
+  }, [activeTab])
 
   function handleOpenChange(details: { open: boolean }) {
     if (!details.open) {
@@ -791,6 +796,7 @@ export default function AmapaDossierModal({ item, onClose }: AmapaDossierModalPr
 
                 {/* ── Conteúdo da aba ativa ── */}
                 <Box
+                  ref={contentRef}
                   overflowY="auto"
                   px={{ base: 4, sm: 5 }}
                   py={{ base: 5, sm: 6 }}
