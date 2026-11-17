@@ -7,8 +7,6 @@ import { Box, HStack, SimpleGrid, Text } from "@chakra-ui/react";
 import type { PageAlertData } from "../../../data/cartilha-data";
 import { Avatar } from "../../layout/Avatar";
 import {
-  AlertTriangle,
-  CheckCircle2,
   ShieldAlert,
   ShieldCheck,
   Package,
@@ -33,16 +31,16 @@ const CASES: InvestigationCase[] = [
     id: 1,
     title: "Caso 1: Carga de Carambolas",
     description:
-      "PQP — a Mosca-da-Carambola está presente em áreas restritas do Amapá. Sem documentação, a carga deve ser bloqueada na barreira fitossanitária para impedir a dispersão para outras regiões.",
+      "PQP — a Mosca-da-Carambola está presente em áreas restritas do Amapá. A carga chega sem a documentação fitossanitária necessária para a conferência.",
     imageSrc: "/images/cartilha/quarentenarias/mosca-carambola.jpg",
     imageCredit: "Foto: Ken Walker / Museum Victoria / Wikimedia Commons (CC BY 3.0)",
     correctAction: "block",
-    alertLabel: "ALERTA: Mosca-da-carambola",
-    status: "PQP · Controle de dispersão em área restrita · Transporte sem autorização bloqueado",
+    alertLabel: "Mosca-da-carambola",
+    status: "PQP · Controle de dispersão em área restrita",
     threat:
       "",
     blockFeedback:
-      "Uau! Se essa Mosca-da-carambola entrasse, toda a nossa produção local estaria em risco!",
+      "Uau! Decisão correta: a carga deve ser bloqueada para inspeção, pois, se essa Mosca-da-carambola entrasse, toda a nossa produção local estaria em risco.",
     allowFeedback:
       "Atenção! Sem certificado sanitário, as frutas podem trazer uma praga agrícola perigosa. A carga deve ser bloqueada para inspeção.",
   },
@@ -50,16 +48,16 @@ const CASES: InvestigationCase[] = [
     id: 2,
     title: "Caso 2: Mudas de Laranja",
     description:
-      "PQA — mudas cítricas sem certificação podem introduzir uma praga quarentenária ausente no país. A ameaça externa exige bloqueio rigoroso na alfândega e inspeção oficial antes de qualquer entrada.",
+      "PQA — mudas cítricas chegam sem certificação. A origem externa e a ausência do selo de inspeção exigem uma análise cuidadosa na alfândega.",
     imageSrc: "/images/cartilha/quarentenarias/mudas-laranja.jpg",
     imageCredit: "Foto: USDA / David Bartels / Wikimedia Commons (Domínio Público)",
     correctAction: "block",
-    alertLabel: "ALERTA: PQA",
-    status: "PQA · Ameaça externa · Entrada na alfândega bloqueada",
+    alertLabel: "Mudas de laranja",
+    status: "PQA · Ameaça externa",
     threat:
       "",
     blockFeedback:
-      "Muito bem! Mudas sem comprovação podem espalhar o HLB e destruir pomares inteiros de laranja.",
+      "Muito bem! Decisão correta: a entrada deve ser bloqueada para inspeção. Mudas sem comprovação podem espalhar o HLB e destruir pomares inteiros de laranja.",
     allowFeedback:
       "Atenção! Sem o selo de inspeção, essa doença destruiria as laranjeiras. A entrada deve ser bloqueada.",
   },
@@ -67,18 +65,18 @@ const CASES: InvestigationCase[] = [
     id: 3,
     title: "Caso 3: Maçãs Certificadas",
     description:
-      "PQA — a carga vem de área oficialmente livre e tem documentação e selo de inspeção. A certificação permite a entrada após a conferência, sem abrir mão do bloqueio de cargas irregulares.",
+      "PQA — a carga vem de área oficialmente livre e tem documentação e selo de inspeção para conferência na barreira fitossanitária.",
     imageSrc: "/images/cartilha/quarentenarias/macas-certificadas.jpg",
     imageCredit: "Foto: AS Photography / Wikimedia Commons (CC BY 4.0)",
     correctAction: "allow",
-    alertLabel: "SEGURO: Carga Certificada",
-    status: "PQA · Origem certificada e área livre · Entrada permitida após inspeção",
+    alertLabel: "Maçãs certificadas",
+    status: "PQA · Origem certificada e área livre",
     threat:
       "",
     blockFeedback:
       "Atenção! Esta carga está regularizada. Bloqueá-la sem motivo atrasa uma remessa segura e dificulta o trabalho de fiscalização.",
     allowFeedback:
-      "Decisão correta! A documentação confirma que a carga foi inspecionada e pode seguir com segurança.",
+      "Decisão correta: a documentação confirma que a carga foi inspecionada e a entrada pode ser permitida com segurança.",
   },
 ];
 
@@ -236,19 +234,13 @@ export default function BorderInvestigationCases({
                   px={2.5}
                   py={1}
                   borderRadius="full"
-                  bg={item.correctAction === "block" ? "red.700" : "green.700"}
+                  bg="green.700"
                   color="white"
                   fontSize="0.68rem"
                   fontWeight="800"
                   display="flex"
                   alignItems="center"
-                  gap="5px"
                 >
-                  {item.correctAction === "block" ? (
-                    <AlertTriangle size={13} color="white" />
-                  ) : (
-                    <CheckCircle2 size={13} color="white" />
-                  )}
                   <span>{item.alertLabel}</span>
                 </Box>
               )}

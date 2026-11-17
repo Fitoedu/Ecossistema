@@ -1246,12 +1246,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     sectionHeading: 'Como isso chega até você?',
     leadText: 'Veja a cadeia de impactos quando pragas agrícolas não são controladas:',
     chainItems: [
-      { imageSrc: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec', text: 'Uma praga agrícola entra no país sem controle fitossanitário', studentImpact: 'A fiscalização protege as plantas que chegam à nossa região e evita que novas pragas agrícolas alcancem os cultivos agrícolas.' },
-      { imageSrc: 'https://images.unsplash.com/photo-1595974482597-4b8da8879bc5', text: 'Ela se espalha pelas roças de mandioca, açaí e frutas', studentImpact: 'Quando a roça é atingida, os alimentos que fazem parte da sua rotina podem ficar mais difíceis de produzir.' },
-      { imageSrc: 'https://images.unsplash.com/photo-1574943320219-553eb213f72d', text: 'A produção cai drasticamente e os agricultores perdem renda', studentImpact: 'Menos colheita significa mais preocupação para as famílias produtoras e menos produtos disponíveis.' },
-      { imageSrc: 'https://images.unsplash.com/photo-1533900298318-6b8da08a523e', text: 'Os alimentos ficam escassos e mais caros nos mercados', studentImpact: 'A queda na oferta pode aumentar os preços dos alimentos que sua família compra.' },
-      { imageSrc: 'https://images.unsplash.com/photo-1547592180-85f173990554', text: 'Famílias têm menos acesso a alimentos nutritivos e acessíveis', studentImpact: 'Cuidar da saúde das plantas ajuda a manter refeições variadas e nutritivas na mesa.' },
-      { imageSrc: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc', text: 'O meio ambiente sofre com o desequilíbrio ecológico', studentImpact: 'Proteger a fitossanidade também preserva os seres vivos e os ambientes que você conhece.' },
+      { imageSrc: '/images/cartilha/consequencias/impacto-porto.jpg', text: 'Uma praga agrícola entra no país sem controle fitossanitário', studentImpact: 'A fiscalização protege as plantas que chegam à nossa região e evita que novas pragas agrícolas alcancem os cultivos agrícolas.' },
+      { imageSrc: '/images/cartilha/consequencias/impacto-roca.jpg', text: 'Ela se espalha pelas roças de mandioca, açaí e frutas', studentImpact: 'Quando a roça é atingida, os alimentos que fazem parte da sua rotina podem ficar mais difíceis de produzir.' },
+      { imageSrc: '/images/cartilha/consequencias/impacto-agricultor.jpg', text: 'A produção cai drasticamente e os agricultores perdem renda', studentImpact: 'Menos colheita significa mais preocupação para as famílias produtoras e menos produtos disponíveis.' },
+      { imageSrc: '/images/cartilha/consequencias/impacto-mercado.jpg', text: 'Os alimentos ficam escassos e mais caros nos mercados', studentImpact: 'A queda na oferta pode aumentar os preços dos alimentos que sua família compra.' },
+      { imageSrc: '/images/cartilha/consequencias/impacto-refeicao.jpg', text: 'Famílias têm menos acesso a alimentos nutritivos e acessíveis', studentImpact: 'Cuidar da saúde das plantas ajuda a manter refeições variadas e nutritivas na mesa.' },
+      { imageSrc: '/images/cartilha/consequencias/impacto-ambiente.jpg', text: 'O meio ambiente sofre com o desequilíbrio ecológico', studentImpact: 'Proteger a fitossanidade também preserva os seres vivos e os ambientes que você conhece.' },
     ],
     callouts: [
       {
