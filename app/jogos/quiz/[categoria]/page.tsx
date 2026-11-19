@@ -28,7 +28,7 @@ export default function QuizPage() {
                         <Text fontSize="sm" fontWeight={700} color="brand.700">{title}</Text>
                     </Flex>
                     <Flex align="center" gap={2}>
-                        <Box w={7} h={7} borderRadius="full" overflow="hidden" border="1px solid" borderColor="brand.200"><Image src="/imgs/joaninha_corpo_todo.png" alt="Mascote" w="full" h="full" objectFit="cover"/></Box>
+                        <Box w={7} h={7} borderRadius="full" overflow="hidden" border="1px solid" borderColor="brand.200"><Image src="/assets/joaninha_corpo_todo.png" alt="Mascote" w="full" h="full" objectFit="cover"/></Box>
                         <Link href="/perfil" aria-label="Perfil"><Flex w={8} h={8} align="center" justify="center" borderRadius="full" border="1px solid" borderColor="brand.200" color="brand.600"><Icon as={UserRound} boxSize={4}/></Flex></Link>
                         <Link href="/conteudo" aria-label="Ajuda"><Flex w={8} h={8} align="center" justify="center" borderRadius="full" border="1px solid" borderColor="brand.200" color="brand.600"><Icon as={Info} boxSize={4}/></Flex></Link>
                     </Flex>

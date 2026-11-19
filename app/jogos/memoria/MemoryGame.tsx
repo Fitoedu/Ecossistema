@@ -19,7 +19,7 @@ export function MemoryGame() {
             <span aria-hidden="true">←</span> Jogos
           </Link>
           <strong className={styles.headerTitle}>Jogo da Memória</strong>
-          <img src="/imgs/joaninha_corpo_todo.png" alt="" className={styles.headerMascot} />
+          <img src="/assets/joaninha_corpo_todo.png" alt="" className={styles.headerMascot} />
         </header>
 
         <main className={styles.main}>
@@ -44,7 +44,7 @@ function StartScreen({ game }: ScreenProps) {
   return (
     <section className={`${styles.screen} ${styles.start}`} aria-labelledby="memoria-titulo">
       <div className={styles.hero}>
-        <img src="/imgs/dona_fito_meio_corpo.png" alt="Dona Fito" className={styles.guide} />
+        <img src="/assets/dona_fito_meio_corpo.png" alt="Dona Fito" className={styles.guide} />
         <div className={styles.bubble}>
           <p className={styles.bubbleTitle}>Olá, agente da natureza! 🌱</p>
           <p>As pragas se esconderam nas plantações do Amapá. Me ajude a encontrá-las?</p>

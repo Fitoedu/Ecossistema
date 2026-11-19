@@ -171,7 +171,7 @@ export default function JogosPage() {
               boxShadow="0 8px 18px rgba(15, 107, 61, 0.12)"
             >
               <Image
-                src="/imgs/joaninha_corpo_todo.png"
+                src="/assets/joaninha_corpo_todo.png"
                 alt="Mascote EducaFito"
                 w="full"
                 h="full"

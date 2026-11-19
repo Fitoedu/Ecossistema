@@ -62,7 +62,7 @@ export default function BingoPage() {
               borderColor="brand.200"
             >
               <Image
-                src="/imgs/joaninha_corpo_todo.png"
+                src="/assets/joaninha_corpo_todo.png"
                 alt="Mascote EducaFito"
                 w="full"
                 h="full"

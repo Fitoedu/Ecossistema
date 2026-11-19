@@ -58,7 +58,7 @@ export default function QuizLobbyPage() {
                     <Flex align="center" gap={2}>
                         <Box w={7} h={7} borderRadius="full" overflow="hidden" border="1px solid"
                              borderColor="brand.200">
-                            <Image src="/imgs/joaninha_corpo_todo.png" alt="Mascote" w="full" h="full"
+                            <Image src="/assets/joaninha_corpo_todo.png" alt="Mascote" w="full" h="full"
                                    objectFit="cover"/>
                         </Box>
                         <Link href="/perfil" aria-label="Perfil" style={{textDecoration: 'none'}}>
