@@ -7,6 +7,17 @@ import type { ThemeProviderProps } from "next-themes"
 import * as React from "react"
 import { Moon, Sun } from "lucide-react"
 
+// Suprime falso-positivo do React 19 com a tag de script interna do next-themes em desenvolvimento
+if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
+  const originalError = console.error
+  console.error = (...args: unknown[]) => {
+    if (typeof args[0] === "string" && args[0].includes("Encountered a script tag")) {
+      return
+    }
+    originalError.apply(console, args)
+  }
+}
+
 export type ColorModeProviderProps = ThemeProviderProps
 
 export function ColorModeProvider(props: ColorModeProviderProps) {
