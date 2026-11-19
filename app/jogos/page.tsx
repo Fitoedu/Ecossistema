@@ -12,22 +12,22 @@ import {
 } from '@chakra-ui/react'
 
 import Link from 'next/link'
-import type { IconType } from 'react-icons'
+import type { LucideIcon } from 'lucide-react'
 import {
-  LuBrain,
-  LuGrid2X2,
-  LuInfo,
-  LuLetterText,
-  LuPuzzle,
-  LuSprout,
-  LuUserRound,
-  LuZap,
-} from 'react-icons/lu'
-import { PiCardsBold } from 'react-icons/pi'
+  Brain,
+  Grid2X2,
+  Info,
+  LetterText,
+  Puzzle,
+  Sprout,
+  UserRound,
+  Zap,
+  Layers,
+} from 'lucide-react'
 
 type Game = {
   id: string
-  icon: IconType
+  icon: LucideIcon
   emoji: string
   title: string
   desc: string
@@ -43,7 +43,7 @@ type Game = {
 const games: Game[] = [
   {
     id: 'quiz',
-    icon: LuBrain,
+    icon: Brain,
     emoji: '🧠',
     title: 'Quiz de Pragas',
     desc: 'Teste seus conhecimentos sobre plantas medicinais e fitossanidade em perguntas de múltipla escolha.',
@@ -57,21 +57,21 @@ const games: Game[] = [
   },
   {
     id: 'memoria',
-    icon: PiCardsBold,
+    icon: Layers,
     emoji: '🃏',
     title: 'Jogo da Memória',
-    desc: 'Encontre os pares de plantas e seus nomes científicos virando as cartas com concentração.',
+    desc: 'Encontre os pares de pragas da Região Norte e as plantas que elas atacam, virando as cartas com concentração.',
     tag: 'Memória',
     tagColor: '#7c3aed',
     gradient: 'linear-gradient(145deg, #f0ebff 0%, #e0d4fd 100%)',
     iconBg: '#7c3aed',
     accentColor: '#7c3aed',
     href: '/jogos/memoria',
-    available: false,
+    available: true,
   },
   {
     id: 'bingo',
-    icon: LuGrid2X2,
+    icon: Grid2X2,
     emoji: '🎱',
     title: 'Bingo Botânico',
     desc: 'Marque as plantas sorteadas na sua cartela e seja o primeiro a completar uma linha!',
@@ -81,11 +81,11 @@ const games: Game[] = [
     iconBg: '#ea580c',
     accentColor: '#ea580c',
     href: '/jogos/bingo',
-    available: false,
+    available: true,
   },
   {
     id: 'caca-palavras',
-    icon: LuLetterText,
+    icon: LetterText,
     emoji: '🔡',
     title: 'Caça-Palavras',
     desc: 'Encontre os nomes das plantas escondidos em um grid de letras antes do tempo acabar.',
@@ -99,7 +99,7 @@ const games: Game[] = [
   },
   {
     id: 'quebra-cabeca',
-    icon: LuPuzzle,
+    icon: Puzzle,
     emoji: '🧩',
     title: 'Quebra-Cabeça',
     desc: 'Monte imagens de plantas medicinais peça por peça e aprenda enquanto resolve o puzzle.',
@@ -113,7 +113,7 @@ const games: Game[] = [
   },
   {
     id: 'simulador',
-    icon: LuSprout,
+    icon: Sprout,
     emoji: '🌱',
     title: 'Simulador de Cultivo',
     desc: 'Simule o cultivo de plantas medicinais, gerencie pragas e descubra as melhores práticas agrícolas.',
@@ -150,7 +150,6 @@ export default function JogosPage() {
         boxShadow="0 24px 80px rgba(15, 42, 26, 0.12)"
         backdropFilter="blur(10px)"
       >
-        {/* Header */}
         <Flex
           as="header"
           px={{ base: 4, md: 6 }}
@@ -197,7 +196,7 @@ export default function JogosPage() {
                 color="brand.600"
                 bg="whiteAlpha.700"
               >
-                <Icon as={LuUserRound} boxSize={4} />
+                <Icon as={UserRound} boxSize={4} />
               </Flex>
             </Link>
             <Link href="/conteudo" aria-label="Ajuda" style={{ textDecoration: 'none' }}>
@@ -212,7 +211,7 @@ export default function JogosPage() {
                 color="brand.600"
                 bg="whiteAlpha.700"
               >
-                <Icon as={LuInfo} boxSize={4} />
+                <Icon as={Info} boxSize={4} />
               </Flex>
             </Link>
           </Flex>
@@ -297,7 +296,7 @@ export default function JogosPage() {
               <Flex gap={4} align="center" shrink={0}>
                 <Stack gap={1} align="center">
                   <Flex align="center" gap={1}>
-                    <Icon as={LuZap} color="#f4b000" boxSize={4} />
+                    <Icon as={Zap} color="#f4b000" boxSize={4} />
                     <Text fontSize="xl" fontWeight={800} color="white">6</Text>
                   </Flex>
                   <Text fontSize="xs" color="rgba(255,255,255,0.65)" fontWeight={600}>jogos</Text>

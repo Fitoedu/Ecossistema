@@ -2,15 +2,15 @@
 
 import {Box, Flex, Grid, GridItem, Image, Icon, SimpleGrid, Stack, Text} from '@chakra-ui/react'
 import Link from 'next/link'
-import {LuInfo, LuUserRound} from 'react-icons/lu'
+import {Info, UserRound} from 'lucide-react'
 
 import {achievements, categories, featuredQuiz} from './_data'
-import {WelcomeCard} from '@/components/quiz/WelcomeCard'
-import {StatsCard} from '@/components/quiz/StatsCard'
-import {AchievementsCard} from '@/components/quiz/AchievementsCard'
-import {FeaturedQuizCard} from '@/components/quiz/FeaturedQuizCard'
-import {CategoryCard} from '@/components/quiz/CategoryCard'
-import {RecentHistoryCard} from '@/components/quiz/RecentHistoryCard'
+import {WelcomeCard} from '@/components/jogos/quiz/WelcomeCard'
+import {StatsCard} from '@/components/jogos/quiz/StatsCard'
+import {AchievementsCard} from '@/components/jogos/quiz/AchievementsCard'
+import {FeaturedQuizCard} from '@/components/jogos/quiz/FeaturedQuizCard'
+import {CategoryCard} from '@/components/jogos/quiz/CategoryCard'
+import {RecentHistoryCard} from '@/components/jogos/quiz/RecentHistoryCard'
 
 export default function QuizLobbyPage() {
     return (
@@ -64,13 +64,13 @@ export default function QuizLobbyPage() {
                         <Link href="/perfil" aria-label="Perfil" style={{textDecoration: 'none'}}>
                             <Flex w={8} h={8} align="center" justify="center" borderRadius="full" border="1px solid"
                                   borderColor="brand.200" color="brand.600" bg="whiteAlpha.700">
-                                <Icon as={LuUserRound} boxSize={4}/>
+                                <Icon as={UserRound} boxSize={4}/>
                             </Flex>
                         </Link>
                         <Link href="/conteudo" aria-label="Ajuda" style={{textDecoration: 'none'}}>
                             <Flex w={8} h={8} align="center" justify="center" borderRadius="full" border="1px solid"
                                   borderColor="brand.200" color="brand.600" bg="whiteAlpha.700">
-                                <Icon as={LuInfo} boxSize={4}/>
+                                <Icon as={Info} boxSize={4}/>
                             </Flex>
                         </Link>
                     </Flex>
