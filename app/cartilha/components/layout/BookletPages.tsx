@@ -3417,7 +3417,7 @@ export function PageChain({ data }: { data: PageChainData }) {
               key={index}
               variant="green"
               title={callout.title}
-              titleColor="orange.600"
+              titleColor="#1B5E20"
               titleFontWeight="extrabold"
             >
               {callout.text}
