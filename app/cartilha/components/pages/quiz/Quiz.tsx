@@ -62,12 +62,12 @@ const QUESTIONS: Question[] = [
       { id: 'd', text: 'Qualquer planta que cresce entre os cultivos agrícolas.' },
     ],
     correctId: 'c',
-    explanation: 'Pragas quarentenárias têm alto impacto econômico e sofrem controle rigoroso para impedir sua entrada e dispersão no Brasil.',
+    explanation: 'Pragas quarentenárias têm alto impacto econômico e são submetidas a controle rigoroso para impedir sua entrada e dispersão no Brasil.',
   },
   {
     id: 3,
     icon: Sprout,
-    text: 'Qual praga agrícola representa um caso real no Amapá / Região Norte?',
+    text: 'Qual praga agrícola representa um caso real no Amapá ou na Região Norte?',
     options: [
       { id: 'a', text: 'A ferrugem do café no sul de Minas Gerais.' },
       { id: 'b', text: 'A vassoura-de-bruxa na mandioca.' },
@@ -109,7 +109,7 @@ const QUESTIONS: Question[] = [
 
 function getResultTier(score: number, total: number) {
   const pct = score / total
-  if (pct === 1)   return { icon: Trophy, grade: 'A+', label: 'Expert em Fitossanidade!',        color: '#2E7D32', bg: 'linear-gradient(135deg,#1B5E20,#2E7D32)', stars: 5 }
+  if (pct === 1)   return { icon: Trophy, grade: 'A+', label: 'Especialista em Fitossanidade!',        color: '#2E7D32', bg: 'linear-gradient(135deg,#1B5E20,#2E7D32)', stars: 5 }
   if (pct >= 0.8)  return { icon: Sparkles, grade: 'A',  label: 'Excelente! Quase perfeito.',       color: '#00695C', bg: 'linear-gradient(135deg,#004D40,#00897B)', stars: 4 }
   if (pct >= 0.6)  return { icon: Sprout, grade: 'B',  label: 'Muito bem! No caminho certo.',     color: '#F57F17', bg: 'linear-gradient(135deg,#E65100,#F57C00)', stars: 3 }
   if (pct >= 0.4)  return { icon: BookOpen, grade: 'C',  label: 'Continue estudando!',              color: '#1565C0', bg: 'linear-gradient(135deg,#0D47A1,#1565C0)', stars: 2 }

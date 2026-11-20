@@ -123,7 +123,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         iconName: "Microscope",
         title: "Larvas na Polpa",
         description:
-          "Ao cortar o fruto, observam-se larvas brancas (1–8 mm) se alimentando da polpa, criando galerias e promovendo apodrecimento interno acelerado.",
+          "Ao cortar o fruto, observam-se larvas brancas (1–8 mm) que se alimentam da polpa, criando galerias e promovendo apodrecimento interno acelerado.",
         imageSrc: "/images/cartilha/casos-reais/sintoma-larvas.jpg",
         credit: "Foto: Cristiane Ramos de Jesus / Embrapa Amapá",
         imageAlt:
@@ -145,7 +145,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         actions: [
           "Monitoramento contínuo com armadilhas que usam atrativos específicos, como o metil eugenol, em toda a área endêmica.",
           "Barreiras fitossanitárias em rodovias e aeroportos para impedir a dispersão.",
-          "Programa de Técnica do Inseto Estéril (TIE) em parceria com a Embrapa.",
+          "Programa de controle por meio da Técnica do Inseto Estéril (TIE), em parceria com a Embrapa.",
           "Fiscalização do trânsito de frutas frescas entre o Amapá e demais estados.",
         ],
       },
@@ -233,7 +233,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         iconName: "Microscope",
         title: "Estruturas Fúngicas Visíveis",
         description:
-          "Em alta umidade, o basidiocarpo do fungo pode surgir nos ramos secos infectados e liberar basidiósporos, que iniciam novas infecções.",
+          "Em condições de alta umidade, o basidiocarpo do fungo pode surgir nos ramos secos infectados e liberar basidiósporos, que iniciam novas infecções.",
       },
       {
         iconName: "Leaf",

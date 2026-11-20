@@ -537,7 +537,7 @@ export default function PageNavigation({
               isLast
                 ? 'Última página — cartilha concluída'
                 : nextDisabled
-                  ? 'Responde a todas as questões para avançar'
+                  ? 'Responda a todas as questões para avançar'
                   : 'Próxima página'
             }
           />

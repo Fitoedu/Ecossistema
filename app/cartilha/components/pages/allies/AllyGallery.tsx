@@ -93,7 +93,7 @@ function AllyModal({ item, onClose }: { item: AllyCardData | null; onClose: () =
 
                 <DialogHeader px={{ base: 4, sm: 6 }} pt={5} pb={2}>
                   <Heading as="h2" size="md" color="green.900">
-                    Herói da roça
+                    Aliado da roça
                   </Heading>
                 </DialogHeader>
                 <DialogCloseTrigger
@@ -119,7 +119,7 @@ function AllyModal({ item, onClose }: { item: AllyCardData | null; onClose: () =
                   <VStack align="stretch" gap={3}>
                     <Box bg="green.50" borderLeft="4px solid" borderColor="green.500" p={3} borderRadius="md">
                       <Text fontSize="0.72rem" fontWeight="800" color="green.800" mb={1}>
-                        O que ele faz
+                        Como contribui?
                       </Text>
                       <Text fontSize="0.85rem" color="gray.700" lineHeight="1.6">
                         {item.role}

@@ -244,7 +244,7 @@ const FITOSSANIDADE_CARDS = [
     title: "Sanitas",
     subtitle: "Significado de Saúde",
     explanation:
-      "Termo latim para SAÚDE. Previne a entrada de fungos, vírus e insetos.",
+      "Termo latino para SAÚDE. Previne a entrada de fungos, vírus e insetos.",
     bg: "yellow.50",
     border: "yellow.300",
     accent: "yellow.700",
@@ -1614,7 +1614,7 @@ const PRAGA_STAT_CARDS = [
   },
   {
     front: "Prejuízo Econômico",
-    back: "R$ Bilhões perdidos anualmente no Brasil",
+    back: "Prejuízo de bilhões de reais por ano no Brasil",
     icon: Coins,
     bg: "orange.400",
   },
@@ -3456,7 +3456,7 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
         fontWeight="800"
         mb={4}
       >
-        Cards Descobertos: {discoveredCount} / {data.characters.length}
+        Cartões descobertos: {discoveredCount} / {data.characters.length}
       </Box>
 
       <SimpleGrid

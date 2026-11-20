@@ -171,9 +171,9 @@ export default function BorderInvestigationCases({
                 Curiosidade: por que o nome “Quarentenária”?
               </Text>
               <Text fontSize="0.82rem" color="gray.900" lineHeight="1.65">
-                O termo vem de “quarentena”: um período de isolamento para
-                evitar a propagação. Na agricultura, a quarentena fitossanitária
-                protege as plantas e a produção.
+                O termo vem de “quarentena”, período de isolamento para
+                evitar a propagação de doenças. Na agricultura, a quarentena fitossanitária
+                protege as plantas.
               </Text>
             </Box>
           </HStack>
