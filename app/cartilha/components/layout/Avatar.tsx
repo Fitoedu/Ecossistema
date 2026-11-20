@@ -7,7 +7,13 @@ const AVATAR_BOX_SHADOW = [
   "0 2px 6px rgba(0,0,0,0.12)",
 ].join(", ");
 
-export function Avatar({ src }: { src: string }) {
+export function Avatar({
+  src,
+  alt = "Avatar",
+}: {
+  src: string;
+  alt?: string;
+}) {
   return (
     <Box
       w="60px"
@@ -19,11 +25,12 @@ export function Avatar({ src }: { src: string }) {
       boxShadow={AVATAR_BOX_SHADOW}
       border="3px solid white"
       role="img"
+      aria-label={alt}
       flexShrink={0}
     >
       <Image
         src={src}
-        alt="Avatar"
+        alt={alt}
         fill
         sizes="60px"
         style={{ objectFit: "cover", objectPosition: "center 20%" }}

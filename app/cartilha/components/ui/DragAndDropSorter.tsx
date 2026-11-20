@@ -6,7 +6,7 @@
  * Atividade interativa de classificação fitossanitária.
  *
  * O estudante distribui cartões de ações agrícolas em duas caixas:
- *   • Zona SEGURA  — práticas que protegem a lavoura
+ *   • Zona SEGURA  — práticas que protegem a roça
  *   • Zona de RISCO — ações que favorecem pragas e doenças
  *
  * Interação híbrida:

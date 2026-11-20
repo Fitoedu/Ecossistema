@@ -68,7 +68,7 @@ export interface InvasivePlantCardData extends ImageCardData {
   credito: string
 }
 
-/** Ficha interativa de um aliado natural da lavoura */
+/** Ficha interativa de um aliado natural da roça */
 export interface AllyCardData extends ImageCardData {
   role: string
   benefit: string
@@ -98,6 +98,9 @@ export interface OrgaoItemData {
   imageSrc: string
   name: string
   desc: string
+  details: string
+  impact?: string
+  credit?: string
   links?: {
     label: string
     url: string
@@ -113,6 +116,7 @@ export interface ChainItemData {
   imageSrc: string
   text: string
   studentImpact?: string
+  credit: string
 }
 
 /** Pilar da página de encerramento */
@@ -1002,7 +1006,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         alt: 'Abelha polinizando uma flor',
         credito: 'Foto: Ivar Leidus / Wikimedia Commons (CC BY-SA 4.0)',
         role: 'Faz a polinização das flores, transportando o pólen entre elas.',
-        benefit: 'Ajuda as plantas a formar frutos e sementes e melhora a produção da lavoura.',
+        benefit: 'Ajuda as plantas a formar frutos e sementes e melhora a produção dos cultivos.',
       },
       {
         imageSrc: '/images/cartilha/aliados/vespa.jpg',
@@ -1026,20 +1030,20 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         alt: 'Fungo benéfico Metarhizium usado no controle biológico',
         credito: 'Foto: CSIRO / Wikimedia Commons (CC BY 3.0)',
         role: 'É um fungo benéfico que infecta e controla pragas como cigarrinhas e percevejos.',
-        benefit: 'Combate pragas naturalmente e pode reduzir o uso de agrotóxicos na lavoura.',
+        benefit: 'Combate pragas naturalmente e pode reduzir o uso de agrotóxicos nas plantações.',
       },
       {
         imageSrc: '/images/cartilha/aliados/bacillus.jpg',
         label: 'Bactéria Bacillus',
         alt: 'Bactéria benéfica Bacillus usada no controle biológico',
         credito: 'Foto: Dr. Sahay / Wikimedia Commons (CC BY-SA 3.0)',
-        role: 'É uma bactéria benéfica, como o Bacillus thuringiensis, que combate lagartas na lavoura.',
+        role: 'É uma bactéria benéfica, como o Bacillus thuringiensis, que combate lagartas na roça.',
         benefit: 'Ajuda a controlar lagartas sem atacar a cultura e torna o manejo mais sustentável.',
       },
     ],
     midSectionHeading: 'EQUILÍBRIO NOS AGROECOSSISTEMAS',
     midSectionText:
-      'Esses aliados mantêm o equilíbrio dos agroecossistemas de duas formas essenciais: pelo controle biológico, quando joaninhas, vespas, crisopídeos, fungos e bactérias benéficas combatem as pragas naturalmente, e pela polinização, feita pelas abelhas para que as plantas produzam frutos e sementes. Com esse equilíbrio, a lavoura fica saudável e reduz a necessidade de agrotóxicos!',
+      'Esses aliados mantêm o equilíbrio dos agroecossistemas de duas formas essenciais: pelo controle biológico, quando joaninhas, vespas, crisopídeos, fungos e bactérias benéficas combatem as pragas naturalmente, e pela polinização, feita pelas abelhas para que as plantas produzam frutos e sementes. Com esse equilíbrio, a roça fica saudável e reduz a necessidade de agrotóxicos!',
     callouts: [
       {
         variant: 'green',
@@ -1063,7 +1067,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     label: 'Ataque aos Cultivos',
     badgeLabel: 'Como as Pragas Atacam',
     title: 'Como as pragas agrícolas ',
-    titleHighlight: 'atacam os cultivos agrícolas?',
+    titleHighlight: 'atacam os cultivos?',
     leadText:
       'Cada tipo de praga agrícola tem uma forma diferente de atacar as plantas. Conhecer essas estratégias nos ajuda a identificar o problema cedo e agir rapidamente, salvando a colheita!',
     statCards: [
@@ -1082,7 +1086,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     textColor: 'white' 
   },
   { 
-    gradient: 'linear-gradient(135deg, #37474F, #546E7A)', 
+    gradient: 'linear-gradient(135deg, #0F766E, #0D9488)', 
     icon: Droplet, 
     stat: 'Seiva', 
     label: 'Pulgões, ácaros e moscas sugam a seiva, enfraquecendo gradativamente a planta.', 
@@ -1092,7 +1096,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     impacts: [
   { imageSrc: '/images/cartilha/sintomas/manchas-lesoes.jpg', title: 'Manchas e lesões', desc: 'Fungos e bactérias causam manchas que reduzem a fotossíntese e desvalorizam o produto no mercado.', imageCredit: 'Foto: Scot Nelson / Wikimedia Commons (CC0 1.0)' },
   { imageSrc: '/images/cartilha/sintomas/deformacoes-galhas.jpg', title: 'Deformações e galhas', desc: 'Alguns insetos injetam substâncias que deformam folhas, caules e frutos, inviabilizando a sua comercialização.', imageCredit: 'Foto: Didier Descouens / Muséum de Toulouse / Wikimedia Commons (CC BY-SA 4.0)' },
-  { imageSrc: '/images/cartilha/sintomas/murcha-morte-subita.jpg', title: 'Murcha e morte subita', desc: 'Doenças vasculares bloqueiam o transporte de água dentro da planta, causando murcha repentina.', imageCredit: 'Foto: Ed Kurtz / Bugwood.org / Wikimedia Commons (CC BY 3.0)' },
+  { imageSrc: '/images/cartilha/sintomas/murcha-morte-subita.jpg', title: 'Murcha e morte súbita', desc: 'Doenças vasculares bloqueiam o transporte de água dentro da planta, causando murcha repentina.', imageCredit: 'Foto: Ed Kurtz / Bugwood.org / Wikimedia Commons (CC BY 3.0)' },
   { imageSrc: '/images/cartilha/sintomas/transmissao-virus.jpg', title: 'Transmissão de vírus', desc: 'Insetos como pulgões e moscas-brancas são vetores de vírus que enfraquecem ou matam as plantas.', imageCredit: 'Foto: Plant pests and diseases / Wikimedia Commons (CC0 / Domínio Público)' },
     ],
     personaText:
@@ -1146,16 +1150,56 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     leadText:
       'Por trás de cada solução fitossanitária existe um pesquisador dedicado! Essas pessoas estudam pragas agrícolas, desenvolvem novas variedades de plantas resistentes e criam métodos de controle sustentáveis.',
     items: [
-      { imageSrc: '/assets/icones/embrapa-icone.png', name: 'Embrapa — Empresa Brasileira de Pesquisa Agropecuária', desc: 'Desenvolveu variedades de mandioca resistentes à vassoura-de-bruxa e técnicas de controle biológico para a Amazônia.', links: [{ label: 'Site oficial da Embrapa', url: 'https://www.embrapa.br' }] },
-      { imageSrc: '/assets/icones/universidade-icone.png', name: 'Universidades Públicas do Amapá (UNIFAP e UEAP)', desc: 'A UNIFAP e a UEAP formam biólogos, agrônomos e pesquisadores que estudam pragas agrícolas e desenvolvem soluções sustentáveis para a Amazônia.', links: [{ label: 'UNIFAP — Universidade Federal do Amapá', url: 'https://www.unifap.br' }, { label: 'UEAP — Universidade do Estado do Amapá', url: 'https://www.ueap.edu.br' }] },
-      { imageSrc: '/assets/icones/ifap-icone.png', name: 'IFAP — Instituto Federal do Amapá', desc: 'Pesquisa e forma técnicos agrícolas e profissionais com foco nas pragas e desafios da agricultura amazônica.', links: [{ label: 'Site oficial do IFAP', url: 'https://www.ifap.edu.br' }] },
-      { imageSrc: '/assets/icones/iepa-icone.png', name: 'IEPA — Instituto de Pesquisas Científicas e Tecnológicas do Estado do Amapá', desc: 'Estuda a biodiversidade amazônica, identificando pragas agrícolas e aliados naturais nos cultivos amapaenses.', links: [{ label: 'Site oficial do IEPA', url: 'https://iepa.ap.gov.br' }] },
-      { imageSrc: '/assets/icones/laboratorio-icone.png', name: 'LABFITO — Laboratório de Fitossanidade e Produção Vegetal', desc: 'Vinculado à UNIFAP (Campus Mazagão), atua em ensino, pesquisa e extensão nas áreas de fitossanidade e produção vegetal.', links: [{ label: 'UNIFAP — Campus Mazagão (LABFITO)', url: 'https://www2.unifap.br/mazagao/' }], pillars: [
-        { title: 'Ensino', text: 'Forma estudantes em fitossanidade e produção vegetal, conectando teoria e prática para a realidade do Amapá.' },
-        { title: 'Pesquisa', text: 'Investiga diagnóstico e manejo sustentável de pragas e doenças, buscando soluções adequadas aos cultivos amapaenses.' },
-        { title: 'Extensão', text: 'Compartilha conhecimentos e orientações com produtores e comunidades para fortalecer a produção vegetal no Amapá.' },
-      ] },
-      { imageSrc: '/assets/icones/estudante-icone.png', name: 'Você pode ser o próximo!', desc: 'Cada estudante curioso é um futuro pesquisador em potencial. A ciência precisa de você para proteger nossas plantas!' },
+      {
+        imageSrc: '/assets/icones/embrapa-icone.png',
+        name: 'Embrapa — Empresa Brasileira de Pesquisa Agropecuária',
+        desc: 'Pesquisa soluções para fortalecer a agricultura amazônica.',
+        details: 'Desenvolveu variedades de mandioca resistentes à vassoura-de-bruxa e técnicas de controle biológico para a Amazônia.',
+        links: [{ label: 'Site oficial da Embrapa', url: 'https://www.embrapa.br' }],
+      },
+      {
+        imageSrc: '/assets/icones/universidade-icone.png',
+        name: 'Universidades Públicas do Amapá (UNIFAP e UEAP)',
+        desc: 'Formam profissionais e pesquisam soluções para proteger os cultivos do Amapá.',
+        details: 'A UNIFAP e a UEAP formam biólogos, agrônomos e pesquisadores que estudam pragas agrícolas e desenvolvem soluções sustentáveis para a Amazônia.',
+        links: [
+          { label: 'UNIFAP — Universidade Federal do Amapá', url: 'https://www.unifap.br' },
+          { label: 'UEAP — Universidade do Estado do Amapá', url: 'https://www.ueap.edu.br' },
+        ],
+      },
+      {
+        imageSrc: '/assets/icones/ifap-icone.png',
+        name: 'IFAP — Instituto Federal do Amapá',
+        desc: 'Capacita profissionais para os desafios da agricultura amazônica.',
+        details: 'Pesquisa e forma técnicos agrícolas e profissionais com foco nas pragas e desafios da agricultura amazônica.',
+        links: [{ label: 'Site oficial do IFAP', url: 'https://www.ifap.edu.br' }],
+      },
+      {
+        imageSrc: '/assets/icones/iepa-icone.png',
+        name: 'IEPA — Instituto de Pesquisas Científicas e Tecnológicas do Estado do Amapá',
+        desc: 'Investiga a biodiversidade amazônica e sua relação com a fitossanidade.',
+        details: 'Estuda a biodiversidade amazônica, identificando pragas agrícolas e aliados naturais nos cultivos amapaenses.',
+        links: [{ label: 'Site oficial do IEPA', url: 'https://iepa.ap.gov.br' }],
+      },
+      {
+        imageSrc: '/assets/icones/laboratorio-icone.png',
+        name: 'LABFITO — Laboratório de Fitossanidade e Produção Vegetal',
+        desc: 'Contribui para a formação e a produção vegetal no Amapá.',
+        details: 'Vinculado à UNIFAP (Campus Mazagão), atua em ensino, pesquisa e extensão nas áreas de fitossanidade e produção vegetal.',
+        links: [{ label: 'UNIFAP — Campus Mazagão (LABFITO)', url: 'https://www2.unifap.br/mazagao/' }],
+        pillars: [
+          { title: 'Ensino', text: 'Forma estudantes em fitossanidade e produção vegetal, conectando teoria e prática para a realidade do Amapá.' },
+          { title: 'Pesquisa', text: 'Investiga diagnóstico e manejo sustentável de pragas e doenças, buscando soluções adequadas aos cultivos amapaenses.' },
+          { title: 'Extensão', text: 'Compartilha conhecimentos e orientações com produtores e comunidades para fortalecer a produção vegetal no Amapá.' },
+        ],
+      },
+      {
+        imageSrc: '/assets/icones/estudante-icone.png',
+        name: 'Você pode ser o próximo!',
+        desc: 'A curiosidade pode ser o primeiro passo para uma carreira científica.',
+        details: 'Participe de feiras de ciências, projetos escolares de iniciação científica júnior e observe as plantas ao seu redor com olhar investigador.',
+        impact: 'Novos pesquisadores trazem ideias criativas para identificar pragas cedo, proteger os cultivos agrícolas e fortalecer a agricultura sustentável no Amapá.',
+      },
     ],
     personaText:
       'Os pesquisadores são os verdadeiros super-heróis da fitossanidade! Eles passam anos estudando para nos ajudar. Quem sabe um dia você não vai trabalhar na Embrapa ou numa universidade pesquisando pragas agrícolas do Amapá?',
@@ -1171,22 +1215,58 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     interactionType: 'standard',
     id: 'p14',
     label: 'Fiscalização',
-    badgeLabel: 'Guardioes das Fronteiras',
+    badgeLabel: 'Guardiões das Fronteiras',
     title: 'Os guardiões que ',
     titleHighlight: 'fiscalizam',
     titleSuffix: ' e protegem!',
     leadText:
       'Além dos pesquisadores, existe uma rede de fiscalização que trabalha 24 horas por dia para impedir que pragas agrícolas perigosas entrem no Brasil ou se espalhem entre os estados.',
     items: [
-      { imageSrc: '/assets/icones/mapa-ministerio-icone.png', name: 'MAPA — Ministerio da Agricultura', desc: 'Define as normas fitossanitarias nacionais e coordena toda a rede de proteção das plantas do Brasil.' },
-      { imageSrc: '/assets/icones/vigiagro-icone.png', name: 'VIGIAGRO — Vigilancia Agropecuaria', desc: 'Fiscaliza portos, aeroportos e fronteiras terrestres, inspecionando malas, caixas e cargas em busca de pragas agrícolas.' },
-      { imageSrc: '/assets/icones/adap-icone.png', name: 'ADAP — Agencia de Defesa Agropecuaria do Amapa', desc: 'Fiscaliza o comercio de plantas, sementes e frutas dentro do Amapa, evitando a entrada de pragas agrícolas de outros estados.' },
-      { imageSrc: '/assets/icones/sementes-certificadas.png', name: 'Inspeção de Sementes e Mudas', desc: 'Antes de ser vendida, toda semente precisa passar por inspeção oficial para garantir que esta livre de doencas.' },
-      { imageSrc: '/assets/icones/produtor-rural-icone.png', name: 'Produtor Rural', desc: 'São os primeiros a perceber algo errado na roça! Cada produtor é um fiscal em campo, reportando anomalias.' },
-      { imageSrc: '/assets/icones/consumidor-icone.png', name: 'E você, consumidor!', desc: 'Não transporte frutas, plantas ou terra de regiões desconhecidas. Essa atitude simples ajuda a proteger nossa agricultura!' },
+      {
+        imageSrc: '/images/cartilha/guardioes/guardiao-mapa.jpg',
+        name: 'MAPA — Ministério da Agricultura',
+        desc: 'Coordena as normas e a rede nacional de proteção fitossanitária.',
+        details: 'Define as normas fitossanitárias nacionais e coordena toda a rede de proteção das plantas do Brasil.',
+        credit: "Foto: Land O'Lakes, Inc. / Unsplash",
+      },
+      {
+        imageSrc: '/images/cartilha/guardioes/guardiao-vigiagro.png',
+        name: 'VIGIAGRO — Vigilância Agropecuária',
+        desc: 'Fiscaliza cargas e bagagens que entram no país.',
+        details: 'Fiscaliza portos, aeroportos e fronteiras terrestres, inspecionando malas, caixas e cargas em busca de pragas agrícolas.',
+        credit: 'Foto: Divulgação / MAPA (gov.br)',
+      },
+      {
+        imageSrc: '/images/cartilha/guardioes/guardiao-adap.jpg',
+        name: 'ADAP – Defesa Agropecuária do Amapá',
+        desc: 'Fiscaliza a circulação de produtos vegetais no Amapá.',
+        details: 'Fiscaliza o trânsito de plantas, sementes e frutas no Amapá, impedindo a entrada de pragas de outros estados.',
+        credit: 'Foto: Aldward Castillo / Unsplash',
+      },
+      {
+        imageSrc: '/images/cartilha/guardioes/guardiao-sementes-mudas.jpg',
+        name: 'Inspeção de Sementes e Mudas',
+        desc: 'Inspeciona sementes e mudas antes da venda.',
+        details: 'Antes de ser vendida, toda semente precisa passar por inspeção oficial para garantir que está livre de doenças.',
+        credit: 'Foto: Vitor Monthay / Unsplash',
+      },
+      {
+        imageSrc: '/images/cartilha/guardioes/guardiao-produtor-rural.jpg',
+        name: 'Produtor Rural',
+        desc: 'Ajuda a identificar e comunicar problemas nos cultivos.',
+        details: 'Percebe primeiro alterações na roça e atua como fiscal no campo, relatando anomalias.',
+        credit: 'Foto: Dương Trí / Unsplash',
+      },
+      {
+        imageSrc: '/assets/icones/consumidor-icone.png',
+        name: 'E você, consumidor!',
+        desc: 'Você também pode ajudar a impedir a disseminação de pragas.',
+        details: 'Não transporte frutas, plantas ou terra de regiões desconhecidas em viagens e compre mudas apenas de viveiros certificados.',
+        impact: 'Com atitudes simples no dia a dia, você evita a entrada de novas pragas e ajuda a proteger toda a nossa agricultura.',
+      },
     ],
     personaText:
-      'Imagina o trabalho desses fiscais! Eles inspecionam cada bagagem, cada caixa de fruta, cada muda de planta que chega ao Amapá. É um trabalho de heroi — silencioso mas muito importante para nossa segurança alimentar!',
+      'Imagina o trabalho desses fiscais! Eles inspecionam cada bagagem, cada caixa de fruta, cada muda de planta que chega ao Amapá. É um trabalho de herói — silencioso, mas muito importante para nossa segurança alimentar!',
     personaEmotion: 'pointing',
     personaImageSrc: '/dona_fito_meio_corpo.png',
   },
@@ -1246,12 +1326,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     sectionHeading: 'Como isso chega até você?',
     leadText: 'Veja a cadeia de impactos quando pragas agrícolas não são controladas:',
     chainItems: [
-      { imageSrc: '/images/cartilha/consequencias/impacto-porto.jpg', text: 'Uma praga agrícola entra no país sem controle fitossanitário', studentImpact: 'A fiscalização protege as plantas que chegam à nossa região e evita que novas pragas agrícolas alcancem os cultivos agrícolas.' },
-      { imageSrc: '/images/cartilha/consequencias/impacto-roca.jpg', text: 'Ela se espalha pelas roças de mandioca, açaí e frutas', studentImpact: 'Quando a roça é atingida, os alimentos que fazem parte da sua rotina podem ficar mais difíceis de produzir.' },
-      { imageSrc: '/images/cartilha/consequencias/impacto-agricultor.jpg', text: 'A produção cai drasticamente e os agricultores perdem renda', studentImpact: 'Menos colheita significa mais preocupação para as famílias produtoras e menos produtos disponíveis.' },
-      { imageSrc: '/images/cartilha/consequencias/impacto-mercado.jpg', text: 'Os alimentos ficam escassos e mais caros nos mercados', studentImpact: 'A queda na oferta pode aumentar os preços dos alimentos que sua família compra.' },
-      { imageSrc: '/images/cartilha/consequencias/impacto-refeicao.jpg', text: 'Famílias têm menos acesso a alimentos nutritivos e acessíveis', studentImpact: 'Cuidar da saúde das plantas ajuda a manter refeições variadas e nutritivas na mesa.' },
-      { imageSrc: '/images/cartilha/consequencias/impacto-ambiente.jpg', text: 'O meio ambiente sofre com o desequilíbrio ecológico', studentImpact: 'Proteger a fitossanidade também preserva os seres vivos e os ambientes que você conhece.' },
+      { imageSrc: '/images/cartilha/consequencias/impacto-porto.jpg', text: 'Uma praga agrícola entra no país sem controle fitossanitário', studentImpact: 'A fiscalização protege as plantas que chegam à nossa região e evita que novas pragas agrícolas alcancem os cultivos agrícolas.', credit: 'Foto: Unsplash / Acervo Educativo' },
+      { imageSrc: '/images/cartilha/consequencias/impacto-roca.jpg', text: 'Ela se espalha pelas roças de mandioca, açaí e frutas', studentImpact: 'Quando a roça é atingida, os alimentos que fazem parte da sua rotina podem ficar mais difíceis de produzir.', credit: 'Foto: Unsplash / Acervo Educativo' },
+      { imageSrc: '/images/cartilha/consequencias/impacto-agricultor.jpg', text: 'A produção cai drasticamente e os agricultores perdem renda', studentImpact: 'Menos colheita significa mais preocupação para as famílias produtoras e menos produtos disponíveis.', credit: 'Foto: Unsplash / Acervo Educativo' },
+      { imageSrc: '/images/cartilha/consequencias/impacto-mercado.jpg', text: 'Os alimentos ficam escassos e mais caros nos mercados', studentImpact: 'A queda na oferta pode aumentar os preços dos alimentos que sua família compra.', credit: 'Foto: Unsplash / Acervo Educativo' },
+      { imageSrc: '/images/cartilha/consequencias/impacto-refeicao.jpg', text: 'Famílias têm menos acesso a alimentos nutritivos e acessíveis', studentImpact: 'Cuidar da saúde das plantas ajuda a manter refeições variadas e nutritivas na mesa.', credit: 'Foto: Unsplash / Acervo Educativo' },
+      { imageSrc: '/images/cartilha/consequencias/impacto-ambiente.jpg', text: 'O meio ambiente sofre com o desequilíbrio ecológico', studentImpact: 'Proteger a fitossanidade também preserva os seres vivos e os ambientes que você conhece.', credit: 'Foto: Unsplash / Acervo Educativo' },
     ],
     callouts: [
       {

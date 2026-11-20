@@ -22,15 +22,21 @@ import {
   BadgeCheck,
   BarChart3,
   Bug,
+  ClipboardCheck,
+  ChevronUp,
   Coins,
   Droplets,
+  Eye,
+  FlaskConical,
   Leaf,
-  RotateCw,
   Lightbulb,
   MapPin,
+  Microscope,
   ShieldCheck,
+  Search,
   Sprout,
   Sun,
+  Target,
   Telescope,
   TreePine,
   Users,
@@ -1348,7 +1354,7 @@ export function PageContent({
     );
   }
 
-  /* Layout exclusivo para a Página 10 — Aliados da lavoura */
+  /* Layout exclusivo para a Página 10 — Aliados da roça */
   if (data.id === "p10") {
     return (
       <Box>
@@ -1931,11 +1937,7 @@ function AttackTypeFlipCard({
             mt={2}
             style={{ backdropFilter: "blur(4px)" }}
           >
-            <Icon
-              as={RotateCw as React.ElementType}
-              boxSize="12px"
-              color="white"
-            />
+            <Eye size={12} className="shrink-0" aria-hidden="true" />
             <Text
               fontSize="0.7rem"
               fontWeight="bold"
@@ -2508,7 +2510,11 @@ function StationPhoto({
         fontSize="3.5rem"
         aria-label={`Ilustração de ${alt}`}
       >
-        {isStudent ? "🌱" : "🔬"}
+        {isStudent ? (
+          <Sprout size={56} strokeWidth={1.5} aria-hidden="true" />
+        ) : (
+          <Microscope size={56} strokeWidth={1.5} aria-hidden="true" />
+        )}
       </Box>
     );
   }
@@ -2540,9 +2546,16 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
         fontSize="0.78rem"
         fontWeight="800"
         textAlign="center"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        gap={1.5}
       >
-        🔬 Clique em cada estação científica para descobrir o que os
-        pesquisadores fazem!
+        <Microscope size={14} className="shrink-0" aria-hidden="true" />
+        <Box as="span">
+          Clique em cada estação científica para descobrir o que os
+          pesquisadores fazem!
+        </Box>
       </Text>
 
       <SimpleGrid columns={{ base: 1, md: 2 }} gap={4} alignItems="start">
@@ -2607,7 +2620,10 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                     justifyContent="center"
                     bg="rgba(255,193,7,0.28)"
                   >
-                    <Avatar src="/assets/dona_fito_meio_corpo.webp" />
+                    <Avatar
+                      src="/assets/dona_fito_meio_corpo.png"
+                      alt="Dona Fito"
+                    />
                   </Box>
                 )}
                 <Box
@@ -2622,9 +2638,23 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                   fontSize="0.62rem"
                   fontWeight="900"
                 >
-                  {isStudent
-                    ? "🌟 Seu futuro na ciência"
-                    : `ESTAÇÃO ${index + 1}`}
+                  {isStudent ? (
+                    <Box
+                      as="span"
+                      display="inline-flex"
+                      alignItems="center"
+                      gap={1.5}
+                    >
+                      <Sprout
+                        size={13}
+                        className="shrink-0"
+                        aria-hidden="true"
+                      />
+                      Seu futuro na ciência
+                    </Box>
+                  ) : (
+                    `ESTAÇÃO ${index + 1}`
+                  )}
                 </Box>
               </Box>
 
@@ -2646,26 +2676,36 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                     {isExpanded ? "−" : "+"}
                   </Text>
                 </Flex>
-                {!isExpanded && (
-                  <Text
-                    mt={2}
-                    fontSize="0.78rem"
-                    color="gray.600"
-                    lineHeight="1.55"
-                  >
-                    {station.desc}
-                  </Text>
-                )}
                 <Text
-                  mt={isExpanded ? 3 : "auto"}
-                  pt={2}
-                  fontSize="0.68rem"
+                  mt={2}
+                  fontSize="0.78rem"
+                  color="gray.600"
+                  lineHeight="1.55"
+                >
+                  {station.desc}
+                </Text>
+                <Text
+                  mt={3}
+                  fontSize="xs"
                   fontWeight="800"
                   color="green.700"
+                  display="inline-flex"
+                  alignItems="center"
+                  gap={1.5}
+                  whiteSpace="nowrap"
                 >
+                  {isExpanded ? (
+                    <ChevronUp size={13} className="shrink-0" aria-hidden="true" />
+                  ) : isStudent ? (
+                    <Search size={13} className="shrink-0" aria-hidden="true" />
+                  ) : (
+                    <Microscope size={13} className="shrink-0" aria-hidden="true" />
+                  )}
                   {isExpanded
                     ? "Clique para recolher"
-                    : "🔬 Clique para explorar a estação"}
+                    : isStudent
+                      ? "Clique para ver como participar"
+                      : "Clique para explorar a estação"}
                 </Text>
                 <AnimatePresence initial={false}>
                   {isExpanded && (
@@ -2686,8 +2726,17 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                           fontWeight="900"
                           color="green.800"
                           textTransform="uppercase"
+                          display="inline-flex"
+                          alignItems="center"
+                          gap={1.5}
+                          whiteSpace="nowrap"
                         >
-                          🔬 O que fazem
+                          <FlaskConical
+                            size={13}
+                            className="shrink-0"
+                            aria-hidden="true"
+                          />
+                          {isStudent ? "Como começar" : "O que fazem"}
                         </Text>
                         <Text
                           mt={1}
@@ -2695,7 +2744,7 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                           color="gray.700"
                           lineHeight="1.55"
                         >
-                          {station.desc}
+                          {station.details}
                         </Text>
                         {station.pillars && (
                           <VStack align="stretch" gap={2} mt={4}>
@@ -2717,8 +2766,19 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                           fontWeight="900"
                           color="orange.800"
                           textTransform="uppercase"
+                          display="inline-flex"
+                          alignItems="center"
+                          gap={1.5}
+                          whiteSpace="nowrap"
                         >
-                          🌱 Impacto no Amapá / Cultivos Agrícolas
+                          <Sprout
+                            size={13}
+                            className="shrink-0"
+                            aria-hidden="true"
+                          />
+                          {isStudent
+                            ? "Seu impacto no futuro"
+                            : "Impacto no Amapá / Cultivos Agrícolas"}
                         </Text>
                         <Text
                           mt={1}
@@ -2726,7 +2786,7 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                           color="gray.700"
                           lineHeight="1.55"
                         >
-                          {RESEARCH_STATION_IMPACTS[index]}
+                          {station.impact ?? RESEARCH_STATION_IMPACTS[index]}
                         </Text>
                         {station.links && station.links.length > 0 && (
                           <Flex
@@ -2777,18 +2837,9 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
   );
 }
 
-const GUARDIAN_IMAGES = [
-  "https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3",
-  "https://images.unsplash.com/photo-1578575437130-527eed3abbec",
-  "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d",
-  "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8",
-  "https://images.unsplash.com/photo-1595974482597-4b8da8879bc5",
-  "/assets/dona_fito_meio_corpo.webp",
-];
-
 const GUARDIAN_IMPACTS = [
   "Cria regras nacionais e coordena ações que reduzem o risco de entrada e disseminação de pragas agrícolas no país.",
-  "Interrompe cargas ou produtos suspeitos em portos, aeroportos e fronteiras antes que alcancem novos cultivos agrícolas.",
+  "Interrompe cargas ou produtos suspeitos em portos, aeroportos e fronteiras antes que cheguem às áreas de cultivo.",
   "Protege a produção do Amapá, fiscalizando o trânsito de plantas, sementes e frutos vindos de outras regiões.",
   "Garante que sementes e mudas saudáveis cheguem ao produtor, evitando doenças desde o início dos cultivos agrícolas.",
   "Ao identificar e comunicar anomalias, ajuda a interromper rapidamente focos antes que atinjam outras propriedades.",
@@ -2810,9 +2861,20 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
         fontSize="0.78rem"
         fontWeight="800"
         textAlign="center"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        gap={1.5}
       >
-        🔍 Clique em cada guardião para entender como funciona a fiscalização
-        fitossanitária!
+        <Search
+          size={14}
+          className="shrink-0"
+          aria-hidden="true"
+        />
+        <Box as="span">
+          Clique em cada guardião para entender como funciona a fiscalização
+          fitossanitária!
+        </Box>
       </Text>
 
       <SimpleGrid columns={{ base: 1, md: 2 }} gap={4} alignItems="start">
@@ -2853,7 +2915,7 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
               >
                 {!isConsumer ? (
                   <StationPhoto
-                    src={GUARDIAN_IMAGES[index]}
+                    src={guardian.imageSrc}
                     alt={guardian.name}
                     isStudent={false}
                   />
@@ -2866,7 +2928,10 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
                     justifyContent="center"
                     bg="rgba(255,193,7,0.28)"
                   >
-                    <Avatar src="/assets/dona_fito_meio_corpo.webp" />
+                    <Avatar
+                      src="/assets/dona_fito_meio_corpo.png"
+                      alt="Dona Fito"
+                    />
                   </Box>
                 )}
                 <Box
@@ -2874,16 +2939,46 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
                   left={3}
                   bottom={3}
                   px={2}
-                  py={1}
+                  py={isConsumer ? 0.5 : 1}
                   borderRadius="full"
                   bg={isConsumer ? "yellow.500" : "green.700"}
                   color={isConsumer ? "yellow.950" : "white"}
                   fontSize="0.62rem"
                   fontWeight="900"
                 >
-                  {isConsumer ? "🌟 Faça sua parte" : `GUARDIÃO ${index + 1}`}
+                  {isConsumer ? (
+                    <Box
+                      as="span"
+                      display="inline-flex"
+                      alignItems="center"
+                      gap={1}
+                    >
+                      <Sprout
+                        size={12}
+                        strokeWidth={1.75}
+                        className="shrink-0"
+                        aria-hidden="true"
+                      />
+                      Faça sua parte
+                    </Box>
+                  ) : (
+                    `GUARDIÃO ${index + 1}`
+                  )}
                 </Box>
               </Box>
+
+              {guardian.credit && (
+                <Text
+                  mt={1}
+                  px={4}
+                  fontSize="xs"
+                  color="gray.400"
+                  fontStyle="italic"
+                  display="block"
+                >
+                  {guardian.credit}
+                </Text>
+              )}
 
               <Box p={{ base: 4, sm: 5 }}>
                 <Flex align="center" justify="space-between" gap={3}>
@@ -2898,23 +2993,42 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
                     {isExpanded ? "−" : "+"}
                   </Text>
                 </Flex>
-                {!isExpanded && (
-                  <Text
-                    mt={2}
-                    fontSize="0.78rem"
-                    color="gray.600"
-                    lineHeight="1.55"
-                  >
-                    {guardian.desc}
-                  </Text>
-                )}
+                <Text
+                  mt={2}
+                  fontSize="0.78rem"
+                  color="gray.600"
+                  lineHeight="1.55"
+                >
+                  {guardian.desc}
+                </Text>
                 <Text
                   mt={3}
-                  fontSize="0.68rem"
+                  fontSize="xs"
                   fontWeight="800"
                   color="green.700"
+                  display="inline-flex"
+                  alignItems="center"
+                  gap={1.5}
+                  whiteSpace="nowrap"
                 >
-                  🔍 Clique para explorar o guardião
+                  {isExpanded ? (
+                    <ChevronUp
+                      size={13}
+                      className="shrink-0"
+                      aria-hidden="true"
+                    />
+                  ) : (
+                    <Search
+                      size={13}
+                      className="shrink-0"
+                      aria-hidden="true"
+                    />
+                  )}
+                  {isExpanded
+                    ? "Clique para recolher"
+                    : isConsumer
+                      ? "Clique para ver como ajudar"
+                      : "Clique para explorar o guardião"}
                 </Text>
 
                 <AnimatePresence initial={false}>
@@ -2936,8 +3050,17 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
                           fontWeight="900"
                           color="green.800"
                           textTransform="uppercase"
+                          display="inline-flex"
+                          alignItems="center"
+                          gap={1.5}
+                          whiteSpace="nowrap"
                         >
-                          🛡️ Atuação
+                          <ClipboardCheck
+                            size={13}
+                            className="shrink-0"
+                            aria-hidden="true"
+                          />
+                          {isConsumer ? "Como ajudar" : "Atuação"}
                         </Text>
                         <Text
                           mt={1}
@@ -2945,7 +3068,7 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
                           color="gray.700"
                           lineHeight="1.55"
                         >
-                          {guardian.desc}
+                          {guardian.details}
                         </Text>
                         <Text
                           mt={3}
@@ -2953,8 +3076,17 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
                           fontWeight="900"
                           color="orange.800"
                           textTransform="uppercase"
+                          display="inline-flex"
+                          alignItems="center"
+                          gap={1.5}
+                          whiteSpace="nowrap"
                         >
-                          📍 Impacto
+                          <Target
+                            size={13}
+                            className="shrink-0"
+                            aria-hidden="true"
+                          />
+                          {isConsumer ? "Seu impacto" : "Impacto"}
                         </Text>
                         <Text
                           mt={1}
@@ -2962,7 +3094,7 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
                           color="gray.700"
                           lineHeight="1.55"
                         >
-                          {GUARDIAN_IMPACTS[index]}
+                          {guardian.impact ?? GUARDIAN_IMPACTS[index]}
                         </Text>
                       </Box>
                     </motion.div>
@@ -3196,6 +3328,16 @@ export function PageChain({ data }: { data: PageChainData }) {
                 {String(idx + 1).padStart(2, "0")}
               </Box>
             </Box>
+            <Text
+              mt={1}
+              px={4}
+              fontSize="xs"
+              color="gray.400"
+              fontStyle="italic"
+              display="block"
+            >
+              {item.credit}
+            </Text>
             <Box p={4}>
               <Text
                 fontSize="0.9rem"
