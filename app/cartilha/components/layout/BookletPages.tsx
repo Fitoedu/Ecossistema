@@ -2468,15 +2468,6 @@ export function PageAlert({ data }: { data: PageAlertData }) {
   );
 }
 
-const RESEARCH_STATION_IMAGES = [
-  "https://images.unsplash.com/photo-1574943320219-553eb213f72d",
-  "https://images.unsplash.com/photo-1532094349884-543bc11b234d",
-  "https://images.unsplash.com/photo-1523240795612-9a054b0db644",
-  "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc",
-  "/assets/icones/laboratorio-icone.png",
-  "/assets/dona-fito/dona-fito-happy.png",
-];
-
 const RESEARCH_STATION_IMPACTS = [
   "Ajuda agricultores a produzir mais e com segurança, usando variedades adaptadas ao clima e às pragas agrícolas da Amazônia.",
   "Forma profissionais e cria conhecimento para resolver problemas fitossanitários específicos de cada comunidade.",
@@ -2491,10 +2482,12 @@ function StationPhoto({
   src,
   alt,
   isStudent,
+  imageFit = "cover",
 }: {
   src: string;
   alt: string;
   isStudent: boolean;
+  imageFit?: "cover" | "contain";
 }) {
   const [hasError, setHasError] = useState(false);
 
@@ -2520,14 +2513,16 @@ function StationPhoto({
   }
 
   return (
-    <Image
-      src={src}
-      alt={alt}
-      fill
-      sizes="(max-width: 768px) 100vw, 50vw"
-      style={{ objectFit: "cover", width: "100%", height: "100%" }}
-      onError={() => setHasError(true)}
-    />
+    <Box position="relative" h="full" w="full">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(max-width: 768px) 100vw, 50vw"
+        style={{ objectFit: imageFit, width: "100%", height: "100%" }}
+        onError={() => setHasError(true)}
+      />
+    </Box>
   );
 }
 
@@ -2602,14 +2597,26 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                 position="relative"
                 overflow="hidden"
                 borderTopRadius="lg"
-                bg={isStudent ? "yellow.100" : "green.50"}
+                bg={
+                  isStudent
+                    ? "yellow.100"
+                    : station.imageFit === "contain"
+                      ? "white"
+                      : "green.50"
+                }
               >
                 {!isStudent && (
-                  <StationPhoto
-                    src={RESEARCH_STATION_IMAGES[index]}
-                    alt={station.name}
-                    isStudent={false}
-                  />
+                  <Box
+                    position="absolute"
+                    inset={station.imageFit === "contain" ? "16px 16px 42px" : 0}
+                  >
+                    <StationPhoto
+                      src={station.imageSrc}
+                      alt={station.name}
+                      isStudent={false}
+                      imageFit={station.imageFit}
+                    />
+                  </Box>
                 )}
                 {isStudent && (
                   <Box
@@ -2657,6 +2664,18 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                   )}
                 </Box>
               </Box>
+
+              {!isStudent && station.credit && (
+                <Text
+                  px={3}
+                  mt={1}
+                  fontSize="11px"
+                  color="gray.500"
+                  lineHeight="1.35"
+                >
+                  {station.credit}
+                </Text>
+              )}
 
               <Box
                 p={{ base: 4, sm: 5 }}

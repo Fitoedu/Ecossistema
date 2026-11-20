@@ -45,7 +45,7 @@ const QUESTIONS: Question[] = [
     options: [
       { id: 'a', text: 'A ciência que estuda apenas os remédios naturais.' },
       { id: 'b', text: 'A área responsável pela saúde e proteção das plantas contra pragas agrícolas e doenças.' },
-      { id: 'c', text: 'Um tipo de plantação orgânica sem uso de qualquer produto.' },
+      { id: 'c', text: 'Um tipo de cultivo orgânico sem uso de qualquer produto.' },
       { id: 'd', text: 'O processo de irrigação dos campos agrícolas.' },
     ],
     correctId: 'c',

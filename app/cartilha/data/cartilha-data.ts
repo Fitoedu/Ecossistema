@@ -96,6 +96,7 @@ export interface ImpactItemData {
 /** Item de órgão/ator */
 export interface OrgaoItemData {
   imageSrc: string;
+  imageFit?: "cover" | "contain";
   name: string;
   desc: string;
   details: string;
@@ -1298,9 +1299,11 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       "Por trás de cada solução fitossanitária há pesquisadores dedicados. Eles estudam pragas agrícolas, desenvolvem novas variedades de plantas resistentes e criam métodos de controle sustentáveis.",
     items: [
       {
-        imageSrc: "/assets/icones/embrapa-icone.png",
+        imageSrc: "/images/cartilha/pesquisadores/embrapa-amapa.jpg",
+        imageFit: "cover",
         name: "Embrapa — Empresa Brasileira de Pesquisa Agropecuária",
         desc: "Pesquisa soluções para fortalecer a agricultura amazônica.",
+        credit: "Foto: Divulgação / Embrapa",
         details:
           "Desenvolveu variedades de mandioca resistentes à vassoura-de-bruxa e técnicas de controle biológico para a Amazônia.",
         links: [
@@ -1308,9 +1311,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         ],
       },
       {
-        imageSrc: "/assets/icones/universidade-icone.png",
+        imageSrc: "/images/cartilha/pesquisadores/logo-unifap.png",
+        imageFit: "contain",
         name: "Universidades Públicas do Amapá (UNIFAP e UEAP)",
         desc: "Formam profissionais e pesquisam soluções para proteger os cultivos do Amapá.",
+        credit:
+          "Logo institucional: Deivid França 96 / Wikimedia Commons (CC BY 4.0)",
         details:
           "A UNIFAP e a UEAP formam biólogos, agrônomos e pesquisadores que estudam pragas agrícolas e desenvolvem soluções sustentáveis para a Amazônia.",
         links: [
@@ -1325,9 +1331,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         ],
       },
       {
-        imageSrc: "/assets/icones/ifap-icone.png",
+        imageSrc: "/images/cartilha/pesquisadores/logo-ifap.svg",
+        imageFit: "contain",
         name: "IFAP — Instituto Federal do Amapá",
         desc: "Capacita profissionais para os desafios da agricultura amazônica.",
+        credit:
+          "Marca oficial: Setec/MEC (Domínio público)",
         details:
           "Pesquisa e forma técnicos agrícolas e profissionais com foco nas pragas e desafios da agricultura amazônica.",
         links: [
@@ -1335,9 +1344,11 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         ],
       },
       {
-        imageSrc: "/assets/icones/iepa-icone.png",
+        imageSrc: "/images/cartilha/pesquisadores/iepa-biodiversidade.jpg",
+        imageFit: "cover",
         name: "IEPA — Instituto de Pesquisas Científicas e Tecnológicas do Estado do Amapá",
         desc: "Investiga a biodiversidade amazônica e sua relação com a fitossanidade.",
+        credit: "Foto: Adrien Olichon / Unsplash",
         details:
           "Estuda a biodiversidade amazônica, identificando pragas agrícolas e aliados naturais nos cultivos amapaenses.",
         links: [
@@ -1345,9 +1356,12 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         ],
       },
       {
-        imageSrc: "/assets/icones/laboratorio-icone.png",
+        imageSrc: "/images/cartilha/pesquisadores/labfito-pesquis.jpg",
+        imageFit: "cover",
         name: "LABFITO — Laboratório de Fitossanidade e Produção Vegetal",
         desc: "Contribui para a formação e a produção vegetal no Amapá.",
+        credit:
+          "Foto: Fred Miller / Wikimedia Commons (CC BY-SA 2.0)",
         details:
           "Vinculado à UNIFAP (Campus Mazagão), atua em ensino, pesquisa e extensão nas áreas de fitossanidade e produção vegetal.",
         links: [

@@ -85,6 +85,7 @@ export default function CartilhaPage() {
   const [animKey, setAnimKey] = useState(0);
   const [direction, setDirection] = useState<"next" | "prev">("next");
   const [quizCompleted, setQuizCompleted] = useState(false);
+  const [quizNavigationMessage, setQuizNavigationMessage] = useState("");
 
   /* ── Estado do modal de praga — mantido AQUI, fora do PageTransitionWrapper ── */
   const [pestDialogOpen, setPestDialogOpen] = useState(false);
@@ -114,8 +115,12 @@ export default function CartilhaPage() {
         target > currentPage &&
         !quizCompleted
       ) {
+        setQuizNavigationMessage(
+          "Responda e confirme todas as perguntas do quiz antes de avançar.",
+        );
         return;
       }
+      setQuizNavigationMessage("");
       const clamped = Math.max(0, Math.min(target, TOTAL_PAGES - 1));
       setDirection(clamped >= currentPage ? "next" : "prev");
       setCurrentPage(clamped);
@@ -124,6 +129,16 @@ export default function CartilhaPage() {
     },
     [currentPage, quizCompleted],
   );
+
+  useEffect(() => {
+    if (!quizNavigationMessage) return;
+
+    const timeoutId = window.setTimeout(
+      () => setQuizNavigationMessage(""),
+      4000,
+    );
+    return () => window.clearTimeout(timeoutId);
+  }, [quizNavigationMessage]);
 
   const handlePrev = useCallback(
     () => goTo(currentPage - 1),
@@ -213,13 +228,36 @@ export default function CartilhaPage() {
                 page,
                 handleSelectPest,
                 goTo,
-                () => setQuizCompleted(true),
-                () => setQuizCompleted(false),
+                () => {
+                  setQuizCompleted(true);
+                  setQuizNavigationMessage("");
+                },
+                () => {
+                  setQuizCompleted(false);
+                  setQuizNavigationMessage("");
+                },
               )}
             </PageTransitionWrapper>
           </Box>
 
           <Box as="footer" w="100%" maxW="100%" minW={0} boxSizing="border-box">
+            {quizNavigationMessage && (
+              <Box
+                role="alert"
+                mb={3}
+                px={4}
+                py={3}
+                border="1px solid #FFCC80"
+                borderRadius="lg"
+                bg="#FFF8E1"
+                color="#5D4037"
+                fontSize="sm"
+                fontWeight="600"
+                textAlign="center"
+              >
+                {quizNavigationMessage}
+              </Box>
+            )}
             <PageController
               currentPage={currentPage}
               totalPages={TOTAL_PAGES}

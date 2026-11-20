@@ -72,13 +72,22 @@ const PAGE_ICONS: Record<number, LucideIcon> = {
 interface NavButtonProps {
   onClick: () => void
   disabled: boolean
+  allowDisabledClick?: boolean
   direction: 'prev' | 'next'
   isLast?: boolean
   id: string
   label: string
 }
 
-function NavButton({ onClick, disabled, direction, isLast, id, label }: NavButtonProps) {
+function NavButton({
+  onClick,
+  disabled,
+  allowDisabledClick = false,
+  direction,
+  isLast,
+  id,
+  label,
+}: NavButtonProps) {
   const isPrev = direction === 'prev'
 
   const baseStyle: React.CSSProperties = {
@@ -153,7 +162,7 @@ function NavButton({ onClick, disabled, direction, isLast, id, label }: NavButto
   return (
     <motion.button
       id={id}
-      onClick={disabled ? undefined : onClick}
+      onClick={disabled && !allowDisabledClick ? undefined : onClick}
       aria-label={label}
       aria-disabled={disabled}
       type="button"
@@ -532,6 +541,7 @@ export default function PageNavigation({
             direction="next"
             onClick={onNext}
             disabled={isNextDisabled}
+            allowDisabledClick={nextDisabled && !isLast}
             isLast={isLast}
             label={
               isLast
