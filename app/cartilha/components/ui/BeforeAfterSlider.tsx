@@ -25,6 +25,7 @@ export interface BeforeAfterSliderProps {
   beforeImage: string
   afterImage: string
   beforeLabel?: string
+  beforeLabelMobile?: string
   afterLabel?: string
   altText: string
 }
@@ -46,9 +47,11 @@ function getRelativeX(clientX: number, container: HTMLElement): number {
 
 function SliderLabel({
   children,
+  mobileLabel,
   side,
 }: {
   children: string
+  mobileLabel?: string
   side: 'left' | 'right'
 }) {
   return (
@@ -63,6 +66,11 @@ function SliderLabel({
       borderRadius="6px"
       px="10px"
       py="4px"
+      css={{
+        "@media (max-width: 639px)": {
+          paddingInline: "8px",
+        },
+      }}
       pointerEvents="none"
       userSelect="none"
     >
@@ -73,8 +81,32 @@ function SliderLabel({
         letterSpacing="0.07em"
         textTransform="uppercase"
         lineHeight="1"
+        css={{
+          "@media (max-width: 639px)": {
+            fontSize: "10px",
+            letterSpacing: "0.04em",
+            whiteSpace: "nowrap",
+          },
+        }}
       >
-        {children}
+        {mobileLabel ? (
+          <>
+            <Box
+              as="span"
+              css={{ "@media (min-width: 640px)": { display: "none" } }}
+            >
+              {mobileLabel}
+            </Box>
+            <Box
+              as="span"
+              css={{ "@media (max-width: 639px)": { display: "none" } }}
+            >
+              {children}
+            </Box>
+          </>
+        ) : (
+          children
+        )}
       </Text>
     </Box>
   )
@@ -88,8 +120,10 @@ function DividerHandle({ isDragging }: { isDragging: boolean }) {
       position="absolute"
       top="0"
       bottom="0"
-      w="2px"
+      w="3px"
       bg="white"
+      border="2px solid"
+      borderColor="#2E7D32"
       boxShadow="0 0 0 1px rgba(0,0,0,0.25), 0 2px 12px rgba(0,0,0,0.35)"
       zIndex={20}
       pointerEvents="none"
@@ -101,8 +135,8 @@ function DividerHandle({ isDragging }: { isDragging: boolean }) {
         top="50%"
         left="50%"
         transform="translate(-50%, -50%)"
-        w={isDragging ? '44px' : '38px'}
-        h={isDragging ? '44px' : '38px'}
+        w={isDragging ? '46px' : '40px'}
+        h={isDragging ? '46px' : '40px'}
         borderRadius="50%"
         bg="white"
         boxShadow={
@@ -173,6 +207,7 @@ export default function BeforeAfterSlider({
   beforeImage,
   afterImage,
   beforeLabel = 'Antes',
+  beforeLabelMobile,
   afterLabel = 'Depois',
   altText,
 }: BeforeAfterSliderProps) {
@@ -259,7 +294,7 @@ export default function BeforeAfterSlider({
            56.25% = 16:9 | 66.66% = 4:3 | 75% = 4:3 portrait */
         paddingBottom="66.66%"
         borderRadius="16px"
-        overflow="hidden"
+        overflow="visible"
         boxShadow="0 8px 32px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.12)"
         border="1.5px solid rgba(0,0,0,0.10)"
         bg="#111"
@@ -280,8 +315,16 @@ export default function BeforeAfterSlider({
           outlineOffset: '3px',
         }}
       >
+        <Box
+          position="absolute"
+          inset="0"
+          overflow="hidden"
+          borderRadius="16px"
+          zIndex={1}
+          pointerEvents="none"
+        >
         {/* ── Imagem DEPOIS (fundo completo — camada de baixo) ──────────────── */}
-        <Box position="absolute" inset="0">
+        <Box position="absolute" inset="0" zIndex={1}>
           <Image
             src={afterImage}
             alt={`Depois — ${altText}`}
@@ -298,6 +341,7 @@ export default function BeforeAfterSlider({
         <Box
           position="absolute"
           inset="0"
+          zIndex={2}
           style={{ clipPath: `inset(0 ${((1 - position) * 100).toFixed(2)}% 0 0)` }}
         >
           <Image
@@ -309,7 +353,10 @@ export default function BeforeAfterSlider({
             draggable={false}
             priority
           />
-          <SliderLabel side="left">{beforeLabel}</SliderLabel>
+          <SliderLabel side="left" mobileLabel={beforeLabelMobile}>
+            {beforeLabel}
+          </SliderLabel>
+        </Box>
         </Box>
 
         {/* ── Área de arraste (largura ampliada para facilitar toque mobile) ── */}
@@ -322,8 +369,9 @@ export default function BeforeAfterSlider({
           display="flex"
           alignItems="stretch"
           justifyContent="center"
-          zIndex={30}
+          zIndex={100}
           cursor={isDragging ? 'grabbing' : 'col-resize'}
+          aria-label="Arraste para comparar as imagens"
         >
           <DividerHandle isDragging={isDragging} />
         </Box>

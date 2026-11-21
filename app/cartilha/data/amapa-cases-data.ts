@@ -8,6 +8,7 @@
 
 export type ThreatLevel =
   | "quarentenaria"
+  | "quarentenaria-ausente"
   | "alerta-critico"
   | "monitorada"
   | "praga-regional";
@@ -29,6 +30,7 @@ export interface SymptomItem {
    * Substitua pelo caminho da imagem oficial quando disponível.
    */
   imageSrc?: string;
+  credit?: string;
   imageAlt?: string;
 }
 
@@ -45,11 +47,10 @@ export interface AmapaCaseData {
   /** Nome científico — exibido em itálico */
   scientificName: string;
   threatLevel: ThreatLevel;
-  /**
-   * Imagem principal do card (placeholder Unsplash até a foto oficial chegar).
-   * Para trocar: substitua apenas o valor de `cardImageSrc`.
-   */
-  cardImageSrc: string;
+  /** Caminho local da imagem principal do card e do modal. */
+  imageSrc: string;
+  /** Crédito acadêmico resumido da imagem principal. */
+  credit: string;
   cardImageAlt: string;
 
   /* ── Aba 1: O Invasor ── */
@@ -60,6 +61,7 @@ export interface AmapaCaseData {
    * Substitua por caminho local quando a foto oficial estiver disponível.
    */
   invasorImageSrc: string;
+  invasorCredit?: string;
   invasorImageAlt: string;
   invasorRegionText: string;
 
@@ -83,21 +85,21 @@ export const AMAPA_CASES: AmapaCaseData[] = [
     scientificName: "Bactrocera carambolae",
     threatLevel: "quarentenaria",
 
-    /* Placeholder Unsplash — substitua por imagem oficial da professora */
-    cardImageSrc: "/images/pragas/mosca da carambola/1.webp",
+    imageSrc: "/images/cartilha/casos-reais/mosca-carambola.jpg",
+    credit: "Foto: Ken Walker / Museum Victoria",
     cardImageAlt:
-      "Fotografia da Mosca-da-Carambola (Bactrocera carambolae), praga quarentenária presente no Amapá",
+      "Fotografia da Mosca-da-Carambola (Bactrocera carambolae), praga agrícola quarentenária presente no Amapá",
 
     /* Aba 1 */
     invasorHeadline: "A Maior Ameaça Fitossanitária do Amapá",
     invasorDescription:
       "A Mosca-da-Carambola é um díptero originário do Sudeste Asiático detectado no Amapá em 1996, tornando-se a praga quarentenária mais importante da região. A fêmea perfura a casca dos frutos para depositar seus ovos; as larvas eclodem e devoram a polpa por dentro, inviabilizando a comercialização e a exportação.",
-    /* Placeholder Unsplash — substitua por foto oficial */
-    invasorImageSrc: "/images/pragas/mosca da carambola/2.webp",
+    invasorImageSrc: "/images/cartilha/casos-reais/mosca-carambola-campo.jpg",
+    invasorCredit: "Foto: Lenny Worthington / Wikimedia Commons",
     invasorImageAlt:
       "Fotografia em alta resolução da Mosca-da-Carambola sobre fruto de carambola",
     invasorRegionText:
-      "Presente no Amapá desde 1996, a espécie é classificada como Praga Quarentenária A1 pelo MAPA. Toda a produção de frutas do estado está sujeita a barreiras sanitárias rigorosas. O transporte de frutas frescas do Amapá para outros estados sem autorização oficial é proibido por lei.",
+      "Presente no Amapá desde 1996, a espécie é uma Praga Quarentenária Presente (PQP): ocorre em área restrita e está sujeita a barreiras sanitárias rigorosas. O transporte de frutas frescas do Amapá para outros estados sem autorização oficial é proibido por lei.",
 
     /* Aba 2 */
     symptoms: [
@@ -106,7 +108,8 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         title: "Picada de Oviposição",
         description:
           "Pequenos orifícios na casca do fruto onde a fêmea insere o ovipositor para depositar os ovos. A região ao redor amolece e escurece rapidamente.",
-        imageSrc: "/images/pragas/mosca da carambola/3.webp",
+        imageSrc: "/images/cartilha/casos-reais/sintoma-picada.jpg",
+        credit: "Foto: Cristiane Ramos de Jesus / Embrapa Amapá",
         imageAlt:
           "Detalhe de fruto com picada de oviposição da Mosca-da-Carambola",
       },
@@ -120,8 +123,9 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         iconName: "Microscope",
         title: "Larvas na Polpa",
         description:
-          "Ao cortar o fruto, observam-se larvas brancas (1–8 mm) se alimentando da polpa, criando galerias e promovendo apodrecimento interno acelerado.",
-        imageSrc: "/images/pragas/mosca da carambola/4.webp",
+          "Ao cortar o fruto, observam-se larvas brancas (1–8 mm) que se alimentam da polpa, criando galerias e promovendo apodrecimento interno acelerado.",
+        imageSrc: "/images/cartilha/casos-reais/sintoma-larvas.jpg",
+        credit: "Foto: Cristiane Ramos de Jesus / Embrapa Amapá",
         imageAlt:
           "Larvas da Mosca-da-Carambola visíveis no interior de um fruto seccionado",
       },
@@ -139,9 +143,9 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         actor: "DIAGRO / MAPA",
         role: "orgao",
         actions: [
-          "Monitoramento contínuo com armadilhas de feromônio em toda a área endêmica.",
+          "Monitoramento contínuo com armadilhas que usam atrativos específicos, como o metil eugenol, em toda a área endêmica.",
           "Barreiras fitossanitárias em rodovias e aeroportos para impedir a dispersão.",
-          "Programa de Técnica do Inseto Estéril (TIE) em parceria com a Embrapa.",
+          "Programa de controle por meio da Técnica do Inseto Estéril (TIE), em parceria com a Embrapa.",
           "Fiscalização do trânsito de frutas frescas entre o Amapá e demais estados.",
         ],
       },
@@ -159,7 +163,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         role: "agricultor",
         actions: [
           "Recolher e enterrar (ou destruir) frutos caídos no solo para eliminar larvas.",
-          "Instalar armadilhas de monitoramento com feromônio no pomar.",
+          "Instalar armadilhas de monitoramento com atrativo recomendado no pomar.",
           "Embalar os frutos ainda no pé (bagging) para proteção física.",
           "Avisar imediatamente o DIAGRO ao detectar sinais da mosca.",
         ],
@@ -179,29 +183,29 @@ export const AMAPA_CASES: AmapaCaseData[] = [
   },
 
   /* ──────────────────────────────────────────────────────────────────────────
-     CASO 2 — Vassoura-de-Bruxa
+     CASO 2 — Vassoura-de-bruxa do Cupuaçuzeiro
   ────────────────────────────────────────────────────────────────────────── */
   {
-    id: "vassoura-bruxa",
-    name: "Vassoura-de-Bruxa",
+    id: "vassoura-bruxa-cupuacuzeiro",
+    name: "Vassoura-de-bruxa do Cupuaçuzeiro",
     scientificName: "Moniliophthora perniciosa",
     threatLevel: "alerta-critico",
 
-    /* Placeholder — substitua por imagem oficial da professora */
-    cardImageSrc: "/images/fungos/vassoura-da-bruxa-mandioca.webp",
+    imageSrc: "/images/cartilha/casos-reais/vassoura-cupuacu.jpg",
+    credit: "Foto: Scott Bauer / ARS-USDA",
     cardImageAlt:
-      "Fotografia de ramos deformados em formato de vassoura causados pelo fungo Moniliophthora perniciosa no cacaueiro/cupuaçuzeiro",
+      "Ramos de cupuaçuzeiro deformados em formato de vassoura pelo fungo Moniliophthora perniciosa",
 
     /* Aba 1 */
-    invasorHeadline: "O Fungo que Destrói o Cacau e o Cupuaçu do Amapá",
+    invasorHeadline: "A doença fúngica do cupuaçuzeiro",
     invasorDescription:
-      'A Vassoura-de-Bruxa é uma doença fúngica causada por Moniliophthora perniciosa. O fungo infecta os ponteiros (crescimentos novos) do cacaueiro, cupuaçuzeiro e outras espécies, produzindo um crescimento anormal de ramos que formam a característica "vassoura". Os frutos infectados apodrecem antes de amadurecer, destruindo a produção do pequeno agricultor.',
-    /* Placeholder — substitua por foto oficial */
-    invasorImageSrc: "/images/fungos/vassoura-da-bruxa-mandioca2.webp",
+      'A Vassoura-de-bruxa do Cupuaçuzeiro (Theobroma grandiflorum) é causada pelo fungo Moniliophthora perniciosa. O patógeno infecta os tecidos jovens, provoca brotações anormais em formato de "vassoura" e pode levar os frutos à podridão, reduzindo a produção.',
+    invasorImageSrc: "/images/cartilha/casos-reais/cupuacu-invasor.jpg",
+    invasorCredit: "Foto: Ronaldo Rosa / Embrapa Amapá Oriental",
     invasorImageAlt:
-      "Fotografia em alta resolução de ramos em vassoura causados por Moniliophthora perniciosa",
+      "Ramos de cupuaçuzeiro com sintomas de vassoura-de-bruxa",
     invasorRegionText:
-      "No Amapá, a vassoura-de-bruxa afeta principalmente o cupuaçuzeiro — fruta nativa da Amazônia de enorme importância cultural e econômica para a agricultura familiar. Comunidades ribeirinhas e assentamentos rurais sofrem perdas de até 90% da produção em áreas severamente infestadas, comprometendo diretamente a renda das famílias.",
+      "No Amapá, a doença compromete o cupuaçuzeiro, espécie nativa de importância para a agricultura familiar. A identificação precoce e a remoção de tecidos infectados reduzem a fonte de inóculo (material que espalha o fungo) no plantio.",
 
     /* Aba 2 */
     symptoms: [
@@ -209,17 +213,19 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         iconName: "Bug",
         title: 'Ramos em "Vassoura"',
         description:
-          "O sintoma mais característico: brotamentos compactos e eretos crescem em excesso, formando um feixe de ramos que lembra uma vassoura de bruxa. Esses ramos são inicialmente verdes, depois secam e ficam escuros.",
-        imageSrc: "/images/fungos/vassoura-da-bruxa-mandioca3.webp",
+          "Brotamentos compactos e eretos crescem em excesso, formando um feixe de ramos que lembra uma vassoura. Os ramos são inicialmente verdes e depois secam e escurecem.",
+        imageSrc: "/images/cartilha/casos-reais/sintoma-cupuacu-ramos.jpg",
+        credit: "Foto: Ronaldo Rosa / Embrapa Amapá Oriental",
         imageAlt:
           "Detalhe de ramos deformados em formato de vassoura no cupuaçuzeiro",
       },
       {
         iconName: "AlertTriangle",
-        title: "Frutos Apodrecidos (Cherelle Wilt)",
+        title: "Frutos de Cupuaçu Apodrecidos",
         description:
-          "Frutos jovens (cherelles) param de crescer, ficam pretos e murcham na planta sem cair. Em frutos maiores, surgem manchas marrons que evoluem para podridão total da polpa.",
-        imageSrc: "/images/fungos/vassoura-da-bruxa-mandioca4.webp",
+          "Frutos jovens podem parar de crescer, escurecer e murchar. Em frutos maiores, manchas marrons evoluem para a podridão da polpa.",
+        imageSrc: "/images/cartilha/casos-reais/sintoma-cupuacu-frutos.jpg",
+        credit: "Foto: Brantlee Spakes Richter, University of Florida / Bugwood.org",
         imageAlt:
           "Frutos de cupuaçu infectados com vassoura-de-bruxa apresentando podridão",
       },
@@ -227,25 +233,25 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         iconName: "Microscope",
         title: "Estruturas Fúngicas Visíveis",
         description:
-          "Em condições de alta umidade, é possível observar o basidiocarpo (cogumelo) do fungo — pequena estrutura avermelhada/rosada — nos ramos secos infectados. É ele que libera esporos para novas infecções.",
+          "Em condições de alta umidade, o basidiocarpo do fungo pode surgir nos ramos secos infectados e liberar basidiósporos, que iniciam novas infecções.",
       },
       {
         iconName: "Leaf",
         title: "Engrossamento e Deformação de Ramos",
         description:
-          "Ramos jovens infectados incham e apresentam internós (espaços entre folhas) muito curtos, resultando em deformações permanentes que reduzem a capacidade produtiva da planta.",
+          "Ramos jovens infectados incham e apresentam internós curtos, resultando em deformações que reduzem a capacidade produtiva do cupuaçuzeiro.",
       },
     ],
 
     /* Aba 3 */
     combatActions: [
       {
-        actor: "Embrapa Amazônia Oriental / CEPLAC",
+        actor: "Embrapa",
         role: "orgao",
         actions: [
-          "Desenvolvimento e distribuição de variedades de cupuaçu e cacau resistentes à vassoura.",
-          "Pesquisa de fungicidas biológicos (Trichoderma spp.) como agentes de biocontrole.",
-          "Assistência técnica a produtores rurais sobre manejo integrado da doença.",
+          "Desenvolvimento e recomendação de materiais de cupuaçu com maior tolerância.",
+          "Pesquisa de controle biológico com Trichoderma spp.",
+          "Orientação sobre o manejo integrado da doença no cupuaçuzeiro.",
         ],
       },
       {
@@ -253,7 +259,7 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         role: "orgao",
         actions: [
           "Monitoramento epidemiológico da doença nas principais regiões produtoras.",
-          "Apoio a programas de renovação de pomares com mudas sadias e resistentes.",
+          "Apoio à renovação de plantios com mudas sadias.",
         ],
       },
       {
@@ -262,49 +268,49 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         actions: [
           'Realizar a "poda fitossanitária": remover e destruir (queimar ou enterrar) todos os ramos e frutos infectados.',
           "Aplicar pasta bordalesa ou produtos cúpricos nos cortes de poda para proteger os ferimentos.",
-          "Plantar variedades resistentes recomendadas pela Embrapa.",
+          "Plantar materiais de cupuaçu recomendados pela assistência técnica.",
           "Evitar o sombreamento excessivo — reduzir a umidade inibe a disseminação do fungo.",
-          "Realizar roços regulares para melhorar a ventilação do pomar.",
+          "Realizar roços regulares para melhorar a ventilação do cupuaçuzal.",
         ],
       },
       {
         actor: "Você, Cidadão",
         role: "cidadao",
         actions: [
-          "Valorize e compre cupuaçu e cacau do Amapá com origem identificada.",
-          "Apoie a agricultura familiar local — pequenos produtores são os mais afetados.",
+          "Valorize e compre cupuaçu do Amapá com origem identificada.",
+          "Apoie a agricultura familiar produtora de cupuaçu.",
           "Não transporte mudas ou partes de plantas entre propriedades sem verificar sanidade.",
         ],
       },
     ],
     citizenTip:
-      "O cupuaçu é um tesouro amazônico! Consumir produtos locais com origem rastreável ajuda a fortalecer a renda do agricultor familiar e estimula boas práticas fitossanitárias.",
+      "O cupuaçu é um tesouro amazônico! Consumir produtos com origem rastreável ajuda a fortalecer a renda do agricultor familiar e as boas práticas fitossanitárias.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────
-     CASO 3 — Amarelecimento Letal do Açaí
+     CASO 3 — Amarelamento Letal das Palmeiras
   ────────────────────────────────────────────────────────────────────────── */
   {
-    id: "amarelecimento-letal-acai",
-    name: "Amarelecimento Letal do Açaí",
-    scientificName: "Candidatus Phytoplasma sp.",
-    threatLevel: "alerta-critico",
+    id: "amarelamento-letal-palmeiras",
+    name: "Amarelamento Letal das Palmeiras",
+    scientificName: "Candidatus Phytoplasma palmae (16SrIV)",
+    threatLevel: "quarentenaria-ausente",
 
-    /* Placeholder — substitua por imagem oficial da professora */
-    cardImageSrc: "/images/doencas/fitoplasma.webp",
+    imageSrc: "/images/cartilha/casos-reais/amarelamento-palmeiras.jpg",
+    credit: "Foto: USDA Forest Service",
     cardImageAlt:
-      "Fotografia de palmeira de açaí com sintomas de amarelecimento letal causado por fitoplasma no Amapá",
+      "Palmeira com sintomas de amarelamento letal causado por fitoplasma no Amapá",
 
     /* Aba 1 */
-    invasorHeadline: "A Doença Invisível que Ameaça o Tesouro do Amapá",
+    invasorHeadline: "Uma doença letal das palmeiras",
     invasorDescription:
-      "O Amarelecimento Letal é causado por um fitoplasma — um micro-organismo que habita os vasos condutores (floema) das palmeiras. Diferente de fungos ou bactérias comuns, o fitoplasma não tem parede celular própria e vive obrigatoriamente dentro das células do vegetal ou do inseto vetor. O resultado é devastador: a palmeira amarela progressivamente, aborta seus frutos e morre em poucos meses, sem possibilidade de cura.",
-    /* Placeholder — substitua por foto oficial */
-    invasorImageSrc: "/images/doencas/fitoplasma.webp",
+      "O Amarelamento Letal das Palmeiras está associado a fitoplasmas do grupo 16SrIV, incluindo Candidatus Phytoplasma palmae. Esses microrganismos vivem no floema, interferem no transporte de nutrientes e podem levar a palmeira à morte.",
+    invasorImageSrc: "/images/cartilha/casos-reais/palmeiras-invasor.jpg",
+    invasorCredit: "Foto: USDA Forest Service / Bugwood.org",
     invasorImageAlt:
-      "Fotografia em alta resolução de palmeira de açaí com amarelecimento letal avançado",
+      "Palmeira com amarelamento letal avançado",
     invasorRegionText:
-      "Detectado no Amapá, Pará e Maranhão, o amarelecimento letal das palmeiras representa uma ameaça silenciosa para o açaí (Euterpe oleracea), símbolo cultural e econômico da região Norte. O açaí é um dos principais produtos de exportação do Amapá e fonte de renda para milhares de famílias ribeirinhas. A doença também afeta coco, dendê e babaçu.",
+      "No Brasil, o Amarelamento Letal é tratado como praga quarentenária ausente. A prevenção e o monitoramento são essenciais; uma suspeita deve ser confirmada por laboratório antes de qualquer medida oficial de eliminação.",
 
     /* Aba 2 */
     symptoms: [
@@ -312,28 +318,29 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         iconName: "AlertTriangle",
         title: "Amarelamento Progressivo das Folhas",
         description:
-          "As folhas mais antigas da palmeira começam a apresentar coloração amarelada que progride rapidamente para as folhas mais jovens, até a morte completa da copa. O processo é irreversível.",
-        imageSrc: "/images/doencas/fitoplasma.webp",
+          "Em geral, ocorre primeiro a queda dos frutos; depois, as folhas mais velhas começam a amarelar e o sintoma avança para a copa. A doença é progressiva e letal.",
+        imageSrc: "/images/cartilha/casos-reais/sintoma-palmeiras-folhas.jpg",
+        credit: "Foto: USDA Forest Service / Bugwood.org",
         imageAlt:
-          "Palmeira de açaí com folhas amareladas sintomáticas de amarelecimento letal",
+          "Palmeira com folhas amareladas",
       },
       {
         iconName: "Bug",
-        title: "Aborto de Frutos (Coração Apodrecido)",
+        title: "Aborto de Frutos e Comprometimento do Meristema",
         description:
-          'Os cachos de frutos param de se desenvolver e caem prematuramente. Em estágio avançado, o "coração" (meristema apical) da palmeira apodrece — ponto sem retorno que indica morte iminente da planta.',
+          "Os frutos deixam de se desenvolver e caem prematuramente. Em estágio avançado, o meristema apical é comprometido, indicando a morte iminente da palmeira.",
       },
       {
         iconName: "Microscope",
         title: "Transmissão por Cigarrinhas",
         description:
-          "O fitoplasma é transmitido por cigarrinhas e outros insetos vetores. Esses insetos se alimentam do floema de palmeiras doentes e carregam o patógeno para plantas saudáveis ao se alimentarem novamente.",
+          "O fitoplasma pode ser transmitido por cigarrinhas vetoras que se alimentam do floema de palmeiras doentes e depois de plantas saudáveis.",
       },
       {
         iconName: "Leaf",
         title: "Morte em Poucos Meses",
         description:
-          "Após os primeiros sintomas, a palmeira pode morrer em 3 a 6 meses. Não existe tratamento curativo — toda a energia de controle deve ser direcionada à prevenção e erradicação das plantas doentes.",
+          "Após os primeiros sintomas, a palmeira pode morrer em poucos meses. Não existe tratamento curativo; o controle depende da prevenção, da confirmação laboratorial e das medidas oficiais.",
       },
     ],
 
@@ -343,8 +350,8 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         actor: "Embrapa Amapá / INPA",
         role: "orgao",
         actions: [
-          "Pesquisa de variedades de açaí e coco com resistência ao fitoplasma.",
-          "Monitoramento epidemiológico em açaizais nativos e cultivados.",
+          "Pesquisa de palmeiras com resistência ao fitoplasma.",
+          "Monitoramento epidemiológico de palmeiras nativas e cultivadas.",
           "Estudo da biologia das cigarrinhas vetoras para desenvolver estratégias de controle.",
           "Diagnóstico molecular (PCR) para confirmação da presença do fitoplasma.",
         ],
@@ -354,141 +361,123 @@ export const AMAPA_CASES: AmapaCaseData[] = [
         role: "orgao",
         actions: [
           "Fiscalização do trânsito de mudas de palmeiras entre estados.",
-          "Regulamentação e apoio à erradicação de palmeiras sintomáticas.",
-          "Alertas fitossanitários para produtores de açaí e coco da região.",
+          "Regulamentação e apoio à eliminação de palmeiras sintomáticas.",
+          "Alertas fitossanitários para produtores de palmeiras.",
         ],
       },
       {
         actor: "Agricultor",
         role: "agricultor",
         actions: [
-          "Erradicar imediatamente palmeiras com sintomas para evitar a disseminação.",
+          "Comunicar imediatamente a suspeita ao órgão de defesa agropecuária e seguir a orientação técnica.",
           "Controlar as cigarrinhas vetoras com inseticidas registrados ou controle biológico.",
           "Não utilizar mudas de procedência desconhecida no plantio.",
-          "Monitorar regularmente o açaizal e comunicar ao DIAGRO qualquer sinal suspeito.",
+          "Monitorar regularmente as palmeiras e comunicar ao DIAGRO qualquer sinal suspeito.",
         ],
       },
       {
         actor: "Você, Cidadão",
         role: "cidadao",
         actions: [
-          "Valorize e consuma açaí do Amapá com procedência garantida.",
-          "Apoie iniciativas de pesquisa e conservação do açaizal nativo.",
           "Não transporte mudas de palmeiras entre regiões sem inspeção sanitária.",
+          "Comunique aos órgãos de defesa agropecuária suspeitas em palmeiras.",
         ],
       },
     ],
     citizenTip:
-      "O açaí é nosso tesouro! Proteger as palmeiras é proteger a renda de milhares de famílias ribeirinhas e a cultura do Amapá. Fique atento e reporte sintomas ao DIAGRO!",
+      "Proteger as palmeiras depende de monitoramento, mudas sadias e comunicação rápida de sintomas ao órgão de defesa agropecuária.",
   },
 
   /* ──────────────────────────────────────────────────────────────────────────
-     CASO 4 — Mosca-da-Fruta (Anastrepha spp.)
+     CASO 4 — Vassoura-de-bruxa da Mandioca
   ────────────────────────────────────────────────────────────────────────── */
   {
-    id: "mosca-fruta-anastrepha",
-    name: "Mosca-da-Fruta",
-    scientificName: "Anastrepha spp.",
-    threatLevel: "praga-regional",
+    id: "vassoura-bruxa-mandioca",
+    name: "Vassoura-de-bruxa da Mandioca",
+    scientificName: "Rhizoctonia theobromae (Ceratobasidium theobromae)",
+    threatLevel: "quarentenaria",
 
-    /* Placeholder Unsplash — substitua por imagem oficial da professora */
-    cardImageSrc:
-      "https://images.unsplash.com/photo-1547514701-42782101795e?w=600&q=80",
+    imageSrc: "/images/cartilha/casos-reais/vassoura-mandioca.jpg",
+    credit: "Foto: Antônio Carlos Pereira de Góes / Embrapa Amapá",
     cardImageAlt:
-      "Fotografia de laranjas e frutas cítricas em pomar, hospedeiras da mosca-da-fruta Anastrepha na Região Norte do Brasil",
+      "Planta de mandioca com sintomas de vassoura-de-bruxa causados por Rhizoctonia theobromae",
 
     /* Aba 1 */
-    invasorHeadline: "A Invasora dos Pomares: Pequena, Invisível e Destruidora",
+    invasorHeadline: "A doença fúngica da mandioca",
     invasorDescription:
-      "O gênero Anastrepha reúne dezenas de espécies de moscas-da-fruta nativas das Américas que representam uma das principais ameaças aos pomares tropicais. A fêmea perfura a casca dos frutos com seu ovipositor pontiagudo e deposita os ovos diretamente na polpa. As larvas eclodem e destroem o interior do fruto — que parece perfeito por fora, mas está completamente estragado por dentro. Isso gera enormes prejuízos econômicos e barreiras às exportações brasileiras.",
-    /* Placeholder Unsplash — substitua por foto oficial */
-    invasorImageSrc:
-      "https://images.unsplash.com/photo-1611080626919-7cf5a9dbab12?w=800&q=80",
+      'A Vassoura-de-bruxa da Mandioca, também chamada de morte descendente, é causada pelo fungo Rhizoctonia theobromae (Ceratobasidium theobromae). O agente causal provoca brotações anormais, deformação dos ramos e perda de vigor, comprometendo o desenvolvimento da mandioca.',
+    invasorImageSrc: "/images/cartilha/casos-reais/mandioca-invasor.jpg",
+    invasorCredit: "Foto: Antônio Carlos Pereira / Embrapa Amapá",
     invasorImageAlt:
-      "Fotografia em alta resolução de pomar de frutas tropicais (acerola/laranja) afetado pela mosca-da-fruta Anastrepha",
+      "Ramos de mandioca com sintomas de vassoura-de-bruxa",
     invasorRegionText:
-      "No Amapá, as espécies de Anastrepha afetam principalmente manga, goiaba, laranja, maracujá, acerola e diversas outras frutas tropicais de pomar familiar. A presença da mosca-da-fruta impede a exportação de frutas frescas da região sem certificação fitossanitária, bloqueando mercados externos e reduzindo a renda dos fruticultures locais.",
+      "No Amapá, a doença foi detectada em plantios de mandioca e pode reduzir o crescimento, causar morte descendente e comprometer as raízes comerciais. O uso de manivas sadias e a retirada de plantas sintomáticas ajudam a conter a disseminação.",
 
     /* Aba 2 */
     symptoms: [
       {
         iconName: "Bug",
-        title: "Picada de Oviposição na Casca",
+        title: "Brotações em Forma de Vassoura",
         description:
-          "Pequenos furos circulares na casca do fruto onde a fêmea inseriu o ovipositor. Ao redor do furo, a casca amolece, escurece e frequentemente aparece uma mancha úmida — sinal de infestação ativa.",
-        imageSrc:
-          "https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=600&q=80",
+          "Brotações laterais fracas e finas crescem de forma compacta e desordenada, formando o aspecto de uma vassoura velha nos ramos da mandioca.",
+        imageSrc: "/images/cartilha/casos-reais/sintoma-mandioca-necrose.jpg",
+        credit: "Foto: Adilson Lima / Embrapa Amapá",
         imageAlt:
-          "Detalhe de fruto tropical com picadas de oviposição da mosca-da-fruta Anastrepha",
+          "Brotações deformadas em forma de vassoura na mandioca",
       },
       {
         iconName: "AlertTriangle",
-        title: "Queda Precoce dos Frutos",
+        title: "Deformação e Encurtamento dos Ramos",
         description:
-          "Frutos infestados caem do pé antes de amadurecer completamente. No chão, apodrecem rapidamente, liberando as larvas que se enterram no solo para completar o ciclo de vida.",
+          "Os ramos ficam secos e deformados, com entrenós curtos e crescimento irregular. Ao cortar a haste, podem ser vistos tecidos internos escurecidos.",
       },
       {
         iconName: "Microscope",
-        title: "Larvas Brancas na Polpa",
+        title: "Agente Causal: Rhizoctonia theobromae",
         description:
-          "Ao cortar o fruto, observam-se larvas brancas e translúcidas (3–12 mm) se alimentando da polpa, criando galerias e promovendo fermentação interna. Um único fruto pode conter dezenas de larvas.",
-        imageSrc:
-          "https://images.unsplash.com/photo-1600231915037-f5811a44e60a?w=600&q=80",
-        imageAlt:
-          "Larvas de Anastrepha visíveis no interior de um fruto tropical seccionado",
+          "O fungo pode ser disseminado por manivas infectadas, ferramentas, solo e água. Por isso, o material de plantio e a higiene das ferramentas são importantes.",
       },
       {
         iconName: "Leaf",
-        title: "Podridão e Odor Fermentado",
+        title: "Perda de Vigor da Mandioca",
         description:
-          "A polpa apresenta manchas escuras, textura pastosa e odor ácido de fermentação. O fruto perde totalmente o valor comercial — mesmo quando a casca ainda parece intacta externamente.",
+          "A planta pode apresentar nanismo, folhas amareladas, murcha, secamento progressivo de cima para baixo e morte.",
       },
     ],
 
     /* Aba 3 */
     combatActions: [
       {
-        actor: "DIAGRO / MAPA",
+        actor: "Embrapa / DIAGRO",
         role: "orgao",
         actions: [
-          "Rede de monitoramento com armadilhas de feromônio e atrativo alimentar em toda a região.",
-          "Emissão de certificados fitossanitários para exportação de frutas da região.",
-          "Barreiras fitossanitárias em rodovias e aeroportos para impedir dispersão.",
-          "Programas de controle em áreas de produção com foco em frutos caídos.",
-        ],
-      },
-      {
-        actor: "Embrapa Amapá",
-        role: "orgao",
-        actions: [
-          "Pesquisa sobre espécies de Anastrepha presentes no Amapá e seus hospedeiros preferenciais.",
-          "Técnica do Inseto Estéril (TIE): machos esterilizados por irradiação reduzem a população sem agrotóxicos.",
-          "Desenvolvimento de atrativos alimentares e armadilhas mais eficientes.",
+          "Monitoramento da ocorrência da doença nas áreas produtoras de mandioca.",
+          "Orientação sobre diagnóstico, manejo e uso de material propagativo sadio.",
+          "Pesquisa de materiais de mandioca mais tolerantes e de medidas de controle.",
         ],
       },
       {
         actor: "Agricultor",
         role: "agricultor",
         actions: [
-          "Recolher e destruir (enterrar a ≥30 cm ou embalar hermeticamente) todos os frutos caídos.",
-          "Instalar armadilhas de monitoramento com atrativo alimentar no pomar.",
-          "Usar o método de ensacamento (bagging) dos frutos ainda verdes para proteção física.",
-          "Realizar colheita regular e não deixar frutos maduros demais na planta.",
-          "Comunicar ao DIAGRO quando detectar altas infestações.",
+          "Usar manivas sadias e de procedência conhecida no plantio.",
+          "Seguir a orientação oficial para eliminar e destruir plantas e ramos com sintomas, evitando deixá-los na área.",
+          "Desinfetar ferramentas de corte antes de utilizá-las em outra planta.",
+          "Comunicar ao serviço de defesa agropecuária quando identificar sintomas suspeitos.",
         ],
       },
       {
         actor: "Você, Cidadão",
         role: "cidadao",
         actions: [
-          "Nunca transporte frutas frescas sem nota fiscal e certificado de origem.",
-          "Prefira comprar frutas de produtores locais certificados.",
-          "Denuncie suspeitas de transporte irregular ao MAPA: 0800 704 1995.",
+          "Não transportar manivas sem verificar a origem e a sanidade do material.",
+          "Valorizar a produção de mandioca com procedência conhecida.",
+          "Informar suspeitas de disseminação ao órgão de defesa agropecuária.",
         ],
       },
     ],
     citizenTip:
-      "A mosca-da-fruta é traiçoeira: a fruta parece ótima por fora, mas está estragada por dentro! Inspecione sempre as frutas antes de consumir ou transportar. Sua atitude protege o pomar de toda a região!",
+      "A escolha de manivas sadias e a comunicação rápida de sintomas ajudam a proteger os plantios de mandioca.",
   },
 ];
 
@@ -496,53 +485,11 @@ export const AMAPA_CASES: AmapaCaseData[] = [
 
 export function getThreatLabel(level: ThreatLevel): string {
   const labels: Record<ThreatLevel, string> = {
-    quarentenaria: "Quarentenária A2",
+    quarentenaria: "Praga Quarentenária Presente (PQP)",
+    "quarentenaria-ausente": "Praga Quarentenária Ausente (PQA)",
     "alerta-critico": "Alerta Crítico",
     monitorada: "Sob Monitoramento",
     "praga-regional": "Alerta Fitossanitário",
   };
   return labels[level];
-}
-
-export function getThreatColors(level: ThreatLevel): {
-  bg: string;
-  border: string;
-  text: string;
-  glow: string;
-  badge: string;
-} {
-  if (level === "quarentenaria") {
-    return {
-      bg: "rgba(183, 28, 28, 0.08)",
-      border: "rgba(198, 40, 40, 0.5)",
-      text: "#B71C1C",
-      glow: "rgba(198, 40, 40, 0.35)",
-      badge: "linear-gradient(135deg, #B71C1C, #C62828)",
-    };
-  }
-  if (level === "alerta-critico") {
-    return {
-      bg: "rgba(245, 127, 23, 0.08)",
-      border: "rgba(245, 127, 23, 0.5)",
-      text: "#E65100",
-      glow: "rgba(245, 127, 23, 0.35)",
-      badge: "linear-gradient(135deg, #E65100, #F57F17)",
-    };
-  }
-  if (level === "praga-regional") {
-    return {
-      bg: "rgba(234, 88, 12, 0.08)",
-      border: "rgba(234, 88, 12, 0.5)",
-      text: "#C2410C",
-      glow: "rgba(234, 88, 12, 0.2)",
-      badge: "#EA580C",
-    };
-  }
-  return {
-    bg: "rgba(27, 94, 32, 0.08)",
-    border: "rgba(46, 125, 50, 0.4)",
-    text: "#1B5E20",
-    glow: "rgba(46, 125, 50, 0.3)",
-    badge: "linear-gradient(135deg, #1B5E20, #2E7D32)",
-  };
 }

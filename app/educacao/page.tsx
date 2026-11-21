@@ -11,7 +11,7 @@ const temas = [
   },
   {
     title: 'Entomologia agrícola',
-    description: 'Conheça insetos-praga e estratégias de prevenção.',
+    description: 'Conheça insetos que causam danos e estratégias de prevenção.',
     level: 'Intermediário',
   },
   {

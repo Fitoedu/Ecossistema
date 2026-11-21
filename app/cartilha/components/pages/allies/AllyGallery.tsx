@@ -9,15 +9,14 @@ import {
   DialogCloseTrigger,
   DialogContent,
   DialogHeader,
-  DialogPositioner,
   DialogRoot,
-  DialogTitle,
+  DialogPositioner,
+  Heading,
   Portal,
   SimpleGrid,
   Text,
   VStack,
 } from '@chakra-ui/react'
-import { Search } from 'lucide-react'
 import type { AllyCardData } from '../../../data/cartilha-data'
 
 function AllyImage({ item, modal = false }: { item: AllyCardData; modal?: boolean }) {
@@ -82,21 +81,20 @@ function AllyModal({ item, onClose }: { item: AllyCardData | null; onClose: () =
                   <Box
                     position="absolute"
                     inset={0}
-                    bg="linear-gradient(to top, rgba(0,0,0,0.55), transparent 60%)"
+                    bgGradient="linear(to-t, blackAlpha.800, blackAlpha.300 50%, transparent)"
                     pointerEvents="none"
                   />
                   <Box position="absolute" left={5} right={5} bottom={4} pointerEvents="none">
                     <Text color="white" fontSize={{ base: '1.35rem', sm: '1.7rem' }} fontWeight="900">
                       {item.label}
                     </Text>
-                    <Text color="white" fontSize="0.78rem" fontWeight="700">
-                      Ficha técnica do aliado
-                    </Text>
                   </Box>
                 </Box>
 
                 <DialogHeader px={{ base: 4, sm: 6 }} pt={5} pb={2}>
-                  <DialogTitle color="green.900">Herói da lavoura</DialogTitle>
+                  <Heading as="h2" size="md" color="green.900">
+                    Aliado da roça
+                  </Heading>
                 </DialogHeader>
                 <DialogCloseTrigger
                   position="absolute"
@@ -121,7 +119,7 @@ function AllyModal({ item, onClose }: { item: AllyCardData | null; onClose: () =
                   <VStack align="stretch" gap={3}>
                     <Box bg="green.50" borderLeft="4px solid" borderColor="green.500" p={3} borderRadius="md">
                       <Text fontSize="0.72rem" fontWeight="800" color="green.800" mb={1}>
-                        O que ele faz
+                        Como contribui?
                       </Text>
                       <Text fontSize="0.85rem" color="gray.700" lineHeight="1.6">
                         {item.role}
@@ -135,6 +133,9 @@ function AllyModal({ item, onClose }: { item: AllyCardData | null; onClose: () =
                         {item.benefit}
                       </Text>
                     </Box>
+                    <Text fontSize="xs" color="gray.500" mt={3} textAlign="right">
+                      {item.credito}
+                    </Text>
                   </VStack>
                 </DialogBody>
               </>
@@ -176,25 +177,6 @@ export default function AllyGallery({ items }: { items: AllyCardData[] }) {
           >
             <Box h="150px" w="100%" position="relative" overflow="hidden" bg="green.50">
               <AllyImage item={item} />
-              <Box
-                position="absolute"
-                top={2}
-                right={2}
-                display="flex"
-                alignItems="center"
-                gap={1}
-                px={2}
-                py={1}
-                borderRadius="full"
-                bg="rgba(255,255,255,0.9)"
-                color="green.800"
-                fontSize="0.58rem"
-                fontWeight="800"
-                pointerEvents="none"
-              >
-                <Search size={11} aria-hidden="true" />
-                Conhecer Herói
-              </Box>
             </Box>
             <Box p={{ base: 3, sm: 4 }} bg="green.50">
               <Text fontSize={{ base: '0.75rem', sm: '0.86rem' }} fontWeight="800" color="green.900">

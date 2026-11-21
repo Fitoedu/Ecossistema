@@ -10,11 +10,11 @@ import {
   PageContent,
   PageLapbook,
   PagePestGallery,
+  PageMouthparts,
   PageHotspot,
   PageImpact,
   PageAlert,
   PageOrgaos,
-  PageCase,
   PageChain,
   PageQuiz,
   PageFindTheHero,
@@ -39,6 +39,8 @@ function renderPage(
   page: CartilhaPageData,
   onSelectItem: (item: PestGalleryItemData, index: number) => void,
   onGoTo: (pageIndex: number) => void,
+  onQuizComplete: () => void,
+  onQuizReset: () => void,
 ) {
   switch (page.type) {
     case "cover":
@@ -49,6 +51,8 @@ function renderPage(
       return <PageLapbook data={page} />;
     case "pest-gallery":
       return <PagePestGallery data={page} onSelectItem={onSelectItem} />;
+    case "mouthparts":
+      return <PageMouthparts data={page} />;
     case "hotspot":
       return <PageHotspot data={page} />;
     case "impact":
@@ -57,12 +61,16 @@ function renderPage(
       return <PageAlert data={page} />;
     case "orgaos":
       return <PageOrgaos data={page} />;
-    case "case":
-      return <PageCase data={page} />;
     case "chain":
       return <PageChain data={page} />;
     case "quiz":
-      return <PageQuiz data={page} />;
+      return (
+        <PageQuiz
+          data={page}
+          onComplete={onQuizComplete}
+          onReset={onQuizReset}
+        />
+      );
     case "find-the-hero":
       return <PageFindTheHero data={page} />;
     case "amapa-cases":
@@ -76,6 +84,8 @@ export default function CartilhaPage() {
   const [currentPage, setCurrentPage] = useState(0);
   const [animKey, setAnimKey] = useState(0);
   const [direction, setDirection] = useState<"next" | "prev">("next");
+  const [quizCompleted, setQuizCompleted] = useState(false);
+  const [quizNavigationMessage, setQuizNavigationMessage] = useState("");
 
   /* ── Estado do modal de praga — mantido AQUI, fora do PageTransitionWrapper ── */
   const [pestDialogOpen, setPestDialogOpen] = useState(false);
@@ -100,14 +110,35 @@ export default function CartilhaPage() {
   /* ── Navegacao de paginas ── */
   const goTo = useCallback(
     (target: number) => {
+      if (
+        getPage(currentPage).type === "quiz" &&
+        target > currentPage &&
+        !quizCompleted
+      ) {
+        setQuizNavigationMessage(
+          "Responda e confirme todas as perguntas do quiz antes de avançar.",
+        );
+        return;
+      }
+      setQuizNavigationMessage("");
       const clamped = Math.max(0, Math.min(target, TOTAL_PAGES - 1));
       setDirection(clamped >= currentPage ? "next" : "prev");
       setCurrentPage(clamped);
       setAnimKey((k) => k + 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: "auto" });
     },
-    [currentPage],
+    [currentPage, quizCompleted],
   );
+
+  useEffect(() => {
+    if (!quizNavigationMessage) return;
+
+    const timeoutId = window.setTimeout(
+      () => setQuizNavigationMessage(""),
+      4000,
+    );
+    return () => window.clearTimeout(timeoutId);
+  }, [quizNavigationMessage]);
 
   const handlePrev = useCallback(
     () => goTo(currentPage - 1),
@@ -143,7 +174,8 @@ export default function CartilhaPage() {
         minH="100vh"
         position="relative"
         overflow="hidden"
-        py={8}
+        pt={{ base: 12, md: 8 }}
+        pb={8}
         px={4}
       >
         <Box
@@ -176,9 +208,33 @@ export default function CartilhaPage() {
           overflow="hidden"
           boxSizing="border-box"
           w="100%"
-          p={{ base: 4, md: 8 }}
+          py={{ base: 4, md: 8 }}
+          px={{ base: 4, sm: 6, md: 8 }}
           minW={0}
           id="main-content"
+          css={
+            page.id === "p7" ||
+            page.id === "p8" ||
+            page.id === "p9" ||
+            page.id === "p10" ||
+            page.id === "p11" ||
+            page.id === "p12" ||
+            page.id === "p13" ||
+            page.id === "p14" ||
+            page.id === "p15" ||
+            page.id === "p16" ||
+            page.id === "p17" ||
+            page.id === "p18" ||
+            page.id === "p19" ||
+            page.id === "p20"
+              ? {
+                  "@media (max-width: 639px)": {
+                    width: "calc(100% - 16px)",
+                    marginInline: "auto",
+                  },
+                }
+              : undefined
+          }
         >
           <Box
             w="100%"
@@ -193,17 +249,47 @@ export default function CartilhaPage() {
             }}
           >
             <PageTransitionWrapper pageKey={animKey} direction={direction}>
-              {renderPage(page, handleSelectPest, goTo)}
+              {renderPage(
+                page,
+                handleSelectPest,
+                goTo,
+                () => {
+                  setQuizCompleted(true);
+                  setQuizNavigationMessage("");
+                },
+                () => {
+                  setQuizCompleted(false);
+                  setQuizNavigationMessage("");
+                },
+              )}
             </PageTransitionWrapper>
           </Box>
 
           <Box as="footer" w="100%" maxW="100%" minW={0} boxSizing="border-box">
+            {quizNavigationMessage && (
+              <Box
+                role="alert"
+                mb={3}
+                px={4}
+                py={3}
+                border="1px solid #FFCC80"
+                borderRadius="lg"
+                bg="#FFF8E1"
+                color="#5D4037"
+                fontSize="sm"
+                fontWeight="600"
+                textAlign="center"
+              >
+                {quizNavigationMessage}
+              </Box>
+            )}
             <PageController
               currentPage={currentPage}
               totalPages={TOTAL_PAGES}
               onPrev={handlePrev}
               onNext={handleNext}
               onGoTo={goTo}
+              nextDisabled={page.type === "quiz" && !quizCompleted}
             />
           </Box>
         </Box>

@@ -6,10 +6,7 @@ import { motion } from "framer-motion";
 import { Box, HStack, SimpleGrid, Text } from "@chakra-ui/react";
 import type { PageAlertData } from "../../../data/cartilha-data";
 import { Avatar } from "../../layout/Avatar";
-import { Icon } from "@chakra-ui/react";
 import {
-  AlertTriangle,
-  CheckCircle2,
   ShieldAlert,
   ShieldCheck,
   Package,
@@ -20,6 +17,8 @@ type InvestigationCase = {
   title: string;
   description: string;
   imageSrc: string;
+  imageCredit: string;
+  mobileImageCredit?: string;
   correctAction: "block" | "allow";
   alertLabel?: string;
   status: string;
@@ -33,31 +32,34 @@ const CASES: InvestigationCase[] = [
     id: 1,
     title: "Caso 1: Carga de Carambolas",
     description:
-      "Sem documentação sanitária de origem, a carga oferece alto risco: larvas da Mosca-da-carambola poderiam se espalhar e devastar os pomares locais.",
-    imageSrc: "https://images.unsplash.com/photo-1619566636858-adf3ef46400b",
+      "PQP — a Mosca-da-Carambola está presente em áreas restritas do Amapá. A carga chega sem a documentação fitossanitária necessária para a conferência.",
+    imageSrc: "/images/cartilha/quarentenarias/mosca-carambola.jpg",
+    imageCredit: "Foto: Ken Walker / Museum Victoria / Wikimedia Commons (CC BY 3.0)",
+    mobileImageCredit: "Foto: Ken Walker / Museum Victoria (CC BY 3.0)",
     correctAction: "block",
-    alertLabel: "ALERTA: Mosca-da-carambola",
-    status: "Origem não certificada · Entrada deve ser bloqueada",
+    alertLabel: "Mosca-da-carambola",
+    status: "PQP · Controle de dispersão em área restrita",
     threat:
       "",
     blockFeedback:
-      "Uau! Se essa Mosca-da-carambola entrasse, toda a nossa produção local estaria em risco!",
+      "Uau! Decisão correta: a carga deve ser bloqueada para inspeção, pois, se essa Mosca-da-carambola entrasse, toda a nossa produção local estaria em risco.",
     allowFeedback:
-      "Atenção! Sem certificado sanitário, as frutas podem trazer uma praga perigosa. A carga deve ser bloqueada para inspeção.",
+      "Atenção! Sem certificado sanitário, as frutas podem trazer uma praga agrícola perigosa. A carga deve ser bloqueada para inspeção.",
   },
   {
     id: 2,
     title: "Caso 2: Mudas de Laranja",
     description:
-      "Mudas cítricas sem certificação de origem podem introduzir o Greening (HLB) — uma doença incurável e devastadora para os pomares de citros da região.",
-    imageSrc: "https://images.unsplash.com/photo-1590502160462-2200234771a3",
+      "PQA — mudas cítricas chegam sem certificação. A origem externa e a ausência do selo de inspeção exigem uma análise cuidadosa na alfândega.",
+    imageSrc: "/images/cartilha/quarentenarias/mudas-laranja.jpg",
+    imageCredit: "Foto: USDA / David Bartels / Wikimedia Commons (Domínio Público)",
     correctAction: "block",
-    alertLabel: "ALERTA: Doença HLB",
-    status: "Mudas suspeitas de Greening (HLB) · Entrada proibida",
+    alertLabel: "Mudas de laranja",
+    status: "PQA · Ameaça externa",
     threat:
       "",
     blockFeedback:
-      "Muito bem! Mudas sem comprovação podem espalhar o HLB e destruir pomares inteiros de laranja.",
+      "Muito bem! Decisão correta: a entrada deve ser bloqueada para inspeção. Mudas sem comprovação podem espalhar o HLB e destruir pomares inteiros de laranja.",
     allowFeedback:
       "Atenção! Sem o selo de inspeção, essa doença destruiria as laranjeiras. A entrada deve ser bloqueada.",
   },
@@ -65,17 +67,18 @@ const CASES: InvestigationCase[] = [
     id: 3,
     title: "Caso 3: Maçãs Certificadas",
     description:
-      "A presença de nota fiscal e selo de inspeção sanitária comprova a origem segura da carga proveniente de área livre de pragas..",
-    imageSrc: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6",
+      "PQA — a carga vem de área oficialmente livre e tem documentação e selo de inspeção para conferência na barreira fitossanitária.",
+    imageSrc: "/images/cartilha/quarentenarias/macas-certificadas.jpg",
+    imageCredit: "Foto: AS Photography / Wikimedia Commons (CC BY 4.0)",
     correctAction: "allow",
-    alertLabel: "SEGURO: Carga Certificada",
-    status: "Carga regularizada com certificação · Permitir entrada",
+    alertLabel: "Maçãs certificadas",
+    status: "PQA · Origem certificada e área livre",
     threat:
       "",
     blockFeedback:
       "Atenção! Esta carga está regularizada. Bloqueá-la sem motivo atrasa uma remessa segura e dificulta o trabalho de fiscalização.",
     allowFeedback:
-      "Decisão correta! A documentação confirma que a carga foi inspecionada e pode seguir com segurança.",
+      "Decisão correta: a documentação confirma que a carga foi inspecionada e a entrada pode ser permitida com segurança.",
   },
 ];
 
@@ -170,9 +173,9 @@ export default function BorderInvestigationCases({
                 Curiosidade: por que o nome “Quarentenária”?
               </Text>
               <Text fontSize="0.82rem" color="gray.900" lineHeight="1.65">
-                O termo vem de “quarentena”: um período de isolamento para
-                evitar a propagação. Na agricultura, a quarentena fitossanitária
-                protege as plantas e a produção.
+                O termo vem de “quarentena”, período de isolamento para
+                evitar a propagação de doenças. Na agricultura, a quarentena fitossanitária
+                protege as plantas.
               </Text>
             </Box>
           </HStack>
@@ -220,38 +223,63 @@ export default function BorderInvestigationCases({
         >
           <Box
             key={item.id}
-            h="220px"
             w="100%"
             position="relative"
-            overflow="hidden"
-            borderRadius="lg"
-            bg="green.50"
           >
-            <CasePhoto item={item} />
-            {item.alertLabel && (
-              <Box
-                position="absolute"
-                left={3}
-                top={3}
-                px={2.5}
-                py={1}
-                borderRadius="full"
-                bg={item.correctAction === "block" ? "red.700" : "green.700"}
-                color="white"
-                fontSize="0.68rem"
-                fontWeight="800"
-                display="flex"
-                alignItems="center"
-                gap="5px"
-              >
-                {item.correctAction === "block" ? (
-                  <AlertTriangle size={13} color="white" />
-                ) : (
-                  <CheckCircle2 size={13} color="white" />
-                )}
-                <span>{item.alertLabel}</span>
-              </Box>
-            )}
+            <Box h="220px" position="relative" overflow="hidden" borderRadius="lg" bg="green.50">
+              <CasePhoto item={item} />
+              {item.alertLabel && (
+                <Box
+                  position="absolute"
+                  left={3}
+                  top={3}
+                  px={2.5}
+                  py={1}
+                  borderRadius="full"
+                  bg="green.700"
+                  color="white"
+                  fontSize="0.68rem"
+                  fontWeight="800"
+                  display="flex"
+                  alignItems="center"
+                >
+                  <span>{item.alertLabel}</span>
+                </Box>
+              )}
+            </Box>
+            <Text
+              mt={1}
+              fontSize="xs"
+              color="gray.500"
+              textAlign="right"
+              css={{
+                "@media (max-width: 639px)": {
+                  textAlign: "left",
+                  fontSize: "8px",
+                  lineHeight: "1.25",
+                  whiteSpace: item.mobileImageCredit ? "nowrap" : "normal",
+                },
+              }}
+            >
+              {item.mobileImageCredit ? (
+                <>
+                  <Box
+                    as="span"
+                    css={{ "@media (min-width: 640px)": { display: "none" } }}
+                  >
+                    {item.mobileImageCredit}
+                  </Box>
+                  <Box
+                    as="span"
+                    css={{ "@media (max-width: 639px)": { display: "none" } }}
+                  >
+                    {item.imageCredit}
+                  </Box>
+                </>
+              ) : (
+                item.imageCredit
+              )}
+            </Text>
           </Box>
           <Box display="flex" flexDirection="column" justifyContent="center" py={4}>
             <Text fontSize="1.15rem" fontWeight="900" color="green.900">
@@ -271,7 +299,7 @@ export default function BorderInvestigationCases({
                 color="orange.800"
                 mb={1}
               >
-                Status sanitário
+                Classificação e status sanitário
               </Text>
               <Text fontSize="0.82rem" color="gray.900" fontWeight="500" lineHeight="1.55">
                 {item.status}
@@ -304,7 +332,17 @@ export default function BorderInvestigationCases({
             transition="all 0.2s"
           >
             <ShieldAlert size={20} color="white" />
-            <span>BLOQUEAR ENTRADA</span>
+            <Box
+              as="span"
+              css={{
+                "@media (max-width: 639px)": {
+                  fontSize: "14px",
+                  lineHeight: "1.25",
+                },
+              }}
+            >
+              BLOQUEAR ENTRADA
+            </Box>
           </Box>
 
           <Box
@@ -325,7 +363,17 @@ export default function BorderInvestigationCases({
             transition="all 0.2s"
           >
             <ShieldCheck size={20} color="white" />
-            <span>PERMITIR ENTRADA</span>
+            <Box
+              as="span"
+              css={{
+                "@media (max-width: 639px)": {
+                  fontSize: "14px",
+                  lineHeight: "1.25",
+                },
+              }}
+            >
+              PERMITIR ENTRADA
+            </Box>
           </Box>
         </HStack>
         {feedback && (

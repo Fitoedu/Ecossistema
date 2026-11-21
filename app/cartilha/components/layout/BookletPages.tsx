@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import {
   Box,
@@ -11,34 +11,37 @@ import {
   VStack,
   SimpleGrid,
   Icon,
+  Link,
 } from "@chakra-ui/react";
 import {
   AnimatePresence,
   motion,
-  useMotionValue,
-  useSpring,
-  useTransform,
 } from "framer-motion";
 import {
   Apple,
   BadgeCheck,
   BarChart3,
   Bug,
+  ClipboardCheck,
+  ChevronUp,
   Coins,
   Droplets,
+  Eye,
+  FlaskConical,
   Leaf,
-  RotateCw,
   Lightbulb,
   MapPin,
+  Microscope,
   ShieldCheck,
+  Search,
   Sprout,
   Sun,
+  Target,
   Telescope,
   TreePine,
   Users,
+  ExternalLink,
 } from "lucide-react";
-import LiftTheFlap from "../ui/LiftTheFlap";
-import LapbookFolder, { type PocketCard } from "../ui/LapbookFolder";
 import PestModalGallery from "../pages/pests/PestModalGallery";
 import Quiz from "../pages/quiz/Quiz";
 import { ImageDiscoveryHotspotGrid } from "../ui/ImageDiscoveryHotspot";
@@ -51,11 +54,11 @@ import type {
   PageContentData,
   PageLapbookData,
   PagePestGalleryData,
+  PageMouthpartsData,
   PageHotspotData,
   PageImpactData,
   PageAlertData,
   PageOrgaosData,
-  PageCaseData,
   PageChainData,
   PageQuizData,
   PageFindTheHeroData,
@@ -120,41 +123,6 @@ function LeadText({ children }: { children: React.ReactNode }) {
     <Text fontSize="1rem" color="gray.700" lineHeight="1.75" mb={6}>
       {children}
     </Text>
-  );
-}
-
-/** Renderiza imageSrc como <img> responsivo dentro de um container fixo */
-function IconImg({
-  src,
-  alt,
-  size = 32,
-}: {
-  src: string;
-  alt: string;
-  size?: number;
-}) {
-  return (
-    <Box
-      w={`${size}px`}
-      h={`${size}px`}
-      flexShrink={0}
-      display="flex"
-      alignItems="center"
-      justifyContent="center"
-      overflow="hidden"
-      borderRadius="8px"
-    >
-      <Image
-        src={src}
-        alt={alt}
-        width={size}
-        height={size}
-        style={{ objectFit: "contain", width: "100%", height: "100%" }}
-        onError={(e) => {
-          (e.target as HTMLImageElement).style.display = "none";
-        }}
-      />
-    </Box>
   );
 }
 
@@ -276,7 +244,7 @@ const FITOSSANIDADE_CARDS = [
     title: "Sanitas",
     subtitle: "Significado de Saúde",
     explanation:
-      "Termo latim para SAÚDE. Previne a entrada de fungos, vírus e insetos.",
+      "Termo latino para SAÚDE. Previne a entrada de fungos, vírus e insetos.",
     bg: "yellow.50",
     border: "yellow.300",
     accent: "yellow.700",
@@ -407,7 +375,15 @@ function FitossanidadeFlipCards() {
       >
         Clique em cada cartão para virar e descobrir o significado!
       </Text>
-      <SimpleGrid columns={{ base: 2, sm: 2 }} gap={{ base: 3, sm: 4 }}>
+      <SimpleGrid
+        columns={{ base: 2, sm: 2 }}
+        gap={{ base: 3, sm: 4 }}
+        css={{
+          "@media (max-width: 639px)": {
+            gap: "16px",
+          },
+        }}
+      >
         {FITOSSANIDADE_CARDS.map((card) => (
           <FitossanidadeFlipCard key={card.title} card={card} />
         ))}
@@ -505,7 +481,6 @@ function PlantProcessFlow() {
                   <Box
                     bg={step.bg}
                     border="1px solid"
-                    borderColor={step.border}
                     borderRadius="16px"
                     p={{ base: 4, md: 3 }}
                     minH={{ base: "125px", md: "145px" }}
@@ -515,11 +490,10 @@ function PlantProcessFlow() {
                     justifyContent="center"
                     textAlign="center"
                     cursor="pointer"
-                    boxShadow={isSelected ? "md" : "sm"}
-                    outline={isActive ? "3px solid" : "none"}
-                    outlineColor={step.accent}
-                    outlineOffset="2px"
-                    transition="box-shadow 0.2s ease"
+                    borderWidth="1px"
+                    borderColor={isActive ? step.accent : step.border}
+                    boxShadow={isSelected ? "0 2px 8px rgba(46,125,50,0.16)" : "sm"}
+                    transition="border-color 0.2s ease, box-shadow 0.2s ease"
                     onClick={() =>
                       setActiveStep(activeStep === index ? null : index)
                     }
@@ -609,7 +583,7 @@ function PlantProcessFlow() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.22, ease: "easeOut" }}
         >
-          <Text fontSize="0.75rem" lineHeight="1.5" color="gray.700">
+          <Text fontSize="0.75rem" lineHeight="1.5" color="gray.800" fontWeight="600">
             {selectedStep === null
               ? "Selecione uma etapa para descobrir como a planta fabrica o nosso alimento."
               : PLANT_PROCESS_STEPS[selectedStep].explanation}
@@ -759,186 +733,6 @@ function LapbookHeader({
   );
 }
 
-/* ─── PlantCard ─────────────────────────────────────── */
-interface PlantCardProps {
-  variant: "healthy" | "sick";
-  emoji: string;
-  title: string;
-  desc: string;
-  gradient: string;
-  accentColor: string;
-  textColor: string;
-  glowColor: string;
-  patternA: string;
-  patternB: string;
-}
-
-function PlantCard({
-  variant,
-  emoji,
-  title,
-  desc,
-  gradient,
-  accentColor,
-  textColor,
-  glowColor,
-  patternA,
-  patternB,
-}: PlantCardProps) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const rawX = useMotionValue(0);
-  const rawY = useMotionValue(0);
-  const springConfig = { stiffness: 260, damping: 22 };
-  const springX = useSpring(rawX, springConfig);
-  const springY = useSpring(rawY, springConfig);
-  const rotateX = useTransform(springY, [-0.5, 0.5], ["10deg", "-10deg"]);
-  const rotateY = useTransform(springX, [-0.5, 0.5], ["-10deg", "10deg"]);
-
-  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    const rect = cardRef.current?.getBoundingClientRect();
-    if (!rect) return;
-    rawX.set((e.clientX - rect.left) / rect.width - 0.5);
-    rawY.set((e.clientY - rect.top) / rect.height - 0.5);
-  }
-
-  function handleMouseLeave() {
-    rawX.set(0);
-    rawY.set(0);
-  }
-
-  return (
-    <motion.div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
-        flex: 1,
-        minWidth: "0",
-      }}
-      whileHover={{ y: -6, scale: 1.02 }}
-      transition={{ type: "spring", stiffness: 300, damping: 22 }}
-    >
-      <Box
-        h="full"
-        bg={gradient}
-        borderRadius="20px"
-        overflow="hidden"
-        position="relative"
-        boxShadow={[
-          `0 2px 0 rgba(255,255,255,0.25) inset`,
-          `0 -2px 0 rgba(0,0,0,0.08) inset`,
-          `0 8px 32px ${glowColor}`,
-          `0 2px 8px rgba(0,0,0,0.10)`,
-        ].join(", ")}
-        border="1.5px solid rgba(255,255,255,0.35)"
-        cursor="default"
-      >
-        {/* Decorative blobs */}
-        <Box
-          position="absolute"
-          w="120px"
-          h="120px"
-          borderRadius="50%"
-          bg={patternA}
-          top="-30px"
-          right="-30px"
-          aria-hidden="true"
-        />
-        <Box
-          position="absolute"
-          w="80px"
-          h="80px"
-          borderRadius="50%"
-          bg={patternB}
-          bottom="10px"
-          left="-20px"
-          aria-hidden="true"
-        />
-
-        <VStack
-          gap={3}
-          p={{ base: "20px 16px 18px", sm: "28px 20px 24px" }}
-          align="center"
-          position="relative"
-          zIndex={1}
-        >
-          {/* Emoji in a raised circle */}
-          <Box
-            w="72px"
-            h="72px"
-            borderRadius="50%"
-            bg="rgba(255,255,255,0.55)"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            boxShadow="0 4px 16px rgba(0,0,0,0.12), 0 1px 0 rgba(255,255,255,0.8) inset"
-            style={{ transform: "translateZ(20px)" }}
-          >
-            <Text
-              fontSize="38px"
-              lineHeight="1"
-              style={{
-                animation: `floatIcon ${variant === "healthy" ? "3s" : "4s"} ease-in-out infinite`,
-              }}
-            >
-              {emoji}
-            </Text>
-          </Box>
-
-          <Box textAlign="center">
-            <Text
-              fontSize="0.82rem"
-              fontWeight="800"
-              textTransform="uppercase"
-              letterSpacing="0.09em"
-              color={textColor}
-              mb="6px"
-            >
-              {title}
-            </Text>
-            <Text
-              fontSize="0.72rem"
-              lineHeight="1.55"
-              color={textColor}
-              opacity={0.82}
-            >
-              {desc}
-            </Text>
-          </Box>
-
-          {/* Status badge */}
-          <Box
-            display="inline-flex"
-            alignItems="center"
-            gap="4px"
-            bg="rgba(255,255,255,0.45)"
-            borderRadius="999px"
-            px="10px"
-            py="4px"
-            fontSize="0.65rem"
-            fontWeight="700"
-            color={accentColor}
-            border="1px solid rgba(255,255,255,0.6)"
-          >
-            <Box
-              w="6px"
-              h="6px"
-              borderRadius="50%"
-              bg={accentColor}
-              flexShrink={0}
-            />
-            {variant === "healthy" ? "Status: Saudável" : "Status: Doente"}
-          </Box>
-        </VStack>
-      </Box>
-    </motion.div>
-  );
-}
-
-/* ─── PersonaGreeting ────────────────────────────────── */
 function PersonaGreeting() {
   return (
     <motion.div
@@ -963,6 +757,12 @@ function PersonaGreeting() {
         alignItems="flex-start"
         position="relative"
         overflow="visible"
+        css={{
+          "@media (max-width: 639px)": {
+            flexDirection: "column",
+            alignItems: "center",
+          },
+        }}
       >
         {/* Subtle top-left accent stripe */}
         <Box
@@ -1002,7 +802,16 @@ function PersonaGreeting() {
         </Box>
 
         {/* Speech bubble area */}
-        <Box flex="1" position="relative">
+        <Box
+          flex="1"
+          position="relative"
+          css={{
+            "@media (max-width: 639px)": {
+              flex: "none",
+              width: "100%",
+            },
+          }}
+        >
           {/* Small pointer triangle on the left */}
           <Box
             position="absolute"
@@ -1014,6 +823,7 @@ function PersonaGreeting() {
             borderBottom="7px solid transparent"
             borderRight="12px solid #E8F5E9"
             aria-hidden="true"
+            css={{ "@media (max-width: 639px)": { display: "none" } }}
           />
           <Box
             bg="#F1F8E9"
@@ -1029,9 +839,9 @@ function PersonaGreeting() {
               letterSpacing="0.01em"
               fontStyle="normal"
             >
-              Olá, futuro cientista! Você sabia que as plantas também ficam
-              doentes? Vamos descobrir juntos como identificar, prevenir e
-              proteger nossas lavouras!
+              Olá, futuro cientista! As plantas também precisam de cuidados
+              contra doenças, insetos e invasores. Vamos descobrir juntos como
+              cuidar das nossas roças!
             </Text>
           </Box>
         </Box>
@@ -1073,19 +883,29 @@ export function PageCover({ data }: { data: PageCoverData }) {
           border="1px solid rgba(46,125,50,0.2)"
           mb={6}
         >
-          📚 Cartilha Educativa — EducaFito
+           Cartilha Educativa — EducaFito
         </Box>
       </motion.div>
 
       {/* ── BeforeAfterSlider — comparação fotográfica ── */}
       <Box w="full" maxW="480px" mx="auto" mb={8}>
         <BeforeAfterSlider
-          beforeImage="https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?q=80&w=800&auto=format&fit=crop"
-          afterImage="https://images.unsplash.com/photo-1516253593875-bd7ba052fbc5?q=80&w=800&auto=format&fit=crop"
-          beforeLabel="Planta Saudável"
-          afterLabel="Planta Doente"
-          altText="Comparação de plantação saudável versus doente"
+          beforeImage={data.imageComparison.before.imageSrc}
+          afterImage={data.imageComparison.after.imageSrc}
+          beforeLabel={data.imageComparison.before.label}
+          beforeLabelMobile="Cultivo saudável"
+          afterLabel={data.imageComparison.after.label}
+          altText={data.imageComparison.altText}
         />
+        <Text
+          mt={2}
+          fontSize="0.65rem"
+          color="gray.600"
+          textAlign="center"
+        >
+          {data.imageComparison.before.imageCredit} ·{' '}
+          {data.imageComparison.after.imageCredit}
+        </Text>
       </Box>
 
       {/* ── Title ── */}
@@ -1161,7 +981,7 @@ export function PageCover({ data }: { data: PageCoverData }) {
   );
 }
 
-/* ─── Pilares de aprendizado — grid exclusivo da Página 01 ──────────────────
+/* ─── Pilares de aprendizado — grid exclusivo da Página 02 ──────────────────
    Renderiza 4 cards semânticos com badges arredondados e título.
 ──────────────────────────────────────────────────────────────────────────── */
 
@@ -1179,21 +999,175 @@ const PILARES = [
   {
     icon: MapPin,
     label: "Casos Reais da Região Norte",
-    desc: "Pragas e doenças que já afetaram lavouras do Amapá e da Amazônia.",
+    desc: "Pragas agrícolas e doenças que já afetaram cultivos agrícolas do Amapá e da Amazônia.",
   },
   {
     icon: ShieldCheck,
     label: "Como Proteger e Evitar",
-    desc: "Técnicas e boas práticas para prevenir e controlar pragas com segurança.",
+    desc: "Técnicas e boas práticas para prevenir e controlar pragas agrícolas com segurança.",
   },
 ] as const;
+
+function MouthpartCard({
+  card,
+  isSelected,
+  onSelect,
+}: {
+  card: PageMouthpartsData["mouthparts"][number];
+  isSelected: boolean;
+  onSelect: () => void;
+}) {
+  return (
+    <motion.div
+      whileHover={{ y: -3 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: "spring", stiffness: 300, damping: 22 }}
+    >
+      <Box
+        onClick={onSelect}
+        role="button"
+        tabIndex={0}
+        aria-pressed={isSelected}
+        textAlign="left"
+        w="100%"
+        h="100%"
+        p={{ base: 3, sm: 4 }}
+        bg={isSelected ? "#E8F5E9" : "white"}
+        border="2px solid"
+        borderColor={isSelected ? "#2E7D32" : "green.100"}
+        borderRadius="18px"
+        boxShadow={isSelected ? "0 8px 22px rgba(46,125,50,0.18)" : "sm"}
+        transition="all 0.2s ease"
+        cursor="pointer"
+        _hover={{ borderColor: "green.400" }}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            onSelect();
+          }
+        }}
+      >
+        <Box
+          position="relative"
+          overflow="hidden"
+          borderRadius="14px"
+          h={{ base: "150px", sm: "175px" }}
+          bg="green.50"
+          mb={3}
+        >
+          <Image
+            src={card.imageSrc}
+            alt={card.imageAlt}
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            style={{ objectFit: "cover" }}
+          />
+          <Box
+            position="absolute"
+            inset={0}
+            bg="linear-gradient(180deg, transparent 45%, rgba(27,94,32,0.85) 100%)"
+          />
+          <Text
+            position="absolute"
+            bottom={2}
+            left={3}
+            right={3}
+            color="white"
+            fontSize="0.72rem"
+            fontWeight="700"
+          >
+            {card.id === "chewing"
+              ? "Inseto mastigador"
+              : "Pulgão sugando a seiva"}
+          </Text>
+        </Box>
+
+        <Text fontSize={{ base: "1rem", sm: "1.1rem" }} fontWeight="800" color="#1B5E20" mb={2}>
+          {card.name}
+        </Text>
+        <Text fontSize="0.82rem" color="gray.700" lineHeight="1.55" mb={2}>
+          <Text as="strong" color="#2E7D32">Como funciona: </Text>
+          {card.howItWorks}
+        </Text>
+        <Text fontSize="0.82rem" color="gray.700" lineHeight="1.55" mb={2}>
+          <Text as="strong" color="#2E7D32">Dano na planta: </Text>
+          {card.plantDamage}
+        </Text>
+        <Text fontSize="0.82rem" color="gray.700" lineHeight="1.55">
+          <Text as="strong" color="#2E7D32">Exemplos: </Text>
+          {card.examples.join(" e ")}
+        </Text>
+        <Text fontSize="11px" color="gray.500" mt={1}>
+          {card.imageCredit}
+        </Text>
+      </Box>
+    </motion.div>
+  );
+}
+
+export function PageMouthparts({ data }: { data: PageMouthpartsData }) {
+  const [selectedId, setSelectedId] =
+    useState<PageMouthpartsData["mouthparts"][number]["id"]>("chewing");
+  const selectedCard = data.mouthparts.find((card) => card.id === selectedId);
+  const tipText =
+    selectedId === "chewing"
+      ? "Viu folha cortada, com buracos ou bordas roídas? Provavelmente foi um inseto mastigador, como formigas ou lagartas!"
+      : "Viu folha amarelada, enrolada ou murcha sem nenhum buraco? Fique de olho: pode ser um picador-sugador, como pulgões ou mosca-branca!";
+
+  return (
+    <Box>
+      <SectionBadge>{data.badgeLabel}</SectionBadge>
+      <PageTitle>
+        Como os insetos se <Highlight>alimentam</Highlight> das plantas?
+      </PageTitle>
+      <LeadText>{data.leadText}</LeadText>
+
+      <Text
+        fontSize="0.78rem"
+        fontWeight="700"
+        color="green.700"
+        textAlign="center"
+        mb={3}
+      >
+        Clique em um cartão para destacar o jeito de atacar da praga agrícola.
+      </Text>
+
+      <SimpleGrid columns={{ base: 1, md: 2 }} gap={{ base: 4, md: 5 }}>
+        {data.mouthparts.map((card) => (
+          <MouthpartCard
+            key={card.id}
+            card={card}
+            isSelected={card.id === selectedId}
+            onSelect={() => setSelectedId(card.id)}
+          />
+        ))}
+      </SimpleGrid>
+
+      <AnimatePresence mode="wait">
+        {selectedCard && (
+          <motion.div
+            key={selectedCard.id}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2 }}
+          >
+            <Callout variant="yellow" title="Dica da Dona Fito" mt={5}>
+              {tipText}
+            </Callout>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </Box>
+  );
+}
 
 function PillarGrid({ onGoTo }: { onGoTo: (pageIndex: number) => void }) {
   const pageByLabel: Record<(typeof PILARES)[number]["label"], number> = {
     "O que é Fitossanidade?": 2,
     "O que são Pragas Agrícolas?": 3,
-    "Casos Reais da Região Norte": 14,
-    "Como Proteger e Evitar": 13,
+    "Casos Reais da Região Norte": 15,
+    "Como Proteger e Evitar": 14,
   };
 
   return (
@@ -1286,8 +1260,8 @@ export function PageContent({
   data: PageContentData;
   onGoTo: (pageIndex: number) => void;
 }) {
-  /* Layout especial para a Página 01 — Apresentação */
-  if (data.id === "p01") {
+  /* Layout especial para a Página 02 — Apresentação */
+  if (data.id === "p2") {
     return (
       <Box>
         <Box mt={2}>
@@ -1323,7 +1297,7 @@ export function PageContent({
   }
 
   /* Layout exclusivo para a Página 03 — O que é Fitossanidade? */
-  if (data.id === "p02") {
+  if (data.id === "p3") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -1343,8 +1317,8 @@ export function PageContent({
     );
   }
 
-  /* Layout exclusivo para a Página 04 — A fábrica de comida */
-  if (data.id === "p03") {
+  /* Layout exclusivo para a Página 05 — A fábrica de comida */
+  if (data.id === "p5") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -1372,8 +1346,8 @@ export function PageContent({
     );
   }
 
-  /* Layout exclusivo para a Página 08 — Plantas invasoras */
-  if (data.id === "p07") {
+  /* Layout exclusivo para a Página 09 — Plantas invasoras */
+  if (data.id === "p9") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -1403,8 +1377,8 @@ export function PageContent({
     );
   }
 
-  /* Layout exclusivo para a Página 09 — Aliados da lavoura */
-  if (data.id === "p08") {
+  /* Layout exclusivo para a Página 10 — Aliados da roça */
+  if (data.id === "p10") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -1471,8 +1445,8 @@ export function PageContent({
 }
 
 export function PageLapbook({ data }: { data: PageLapbookData }) {
-  /* ── Layout exclusivo da Página 13 — O Escudo Protetor ── */
-  if (data.id === "p13") {
+  /* ── Layout exclusivo da Página 15 — O Escudo Protetor ── */
+  if (data.id === "p15") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -1543,29 +1517,7 @@ export function PageLapbook({ data }: { data: PageLapbookData }) {
     );
   }
 
-  /* ── Layout padrão para todas as demais páginas do tipo lapbook ── */
-  return (
-    <Box>
-      <SectionBadge>{data.badgeLabel}</SectionBadge>
-      <LapbookHeader
-        badge={data.lapbookBadge}
-        title={data.lapbookTitle}
-        subtitle={data.lapbookSubtitle}
-      />
-      <LiftTheFlap
-        title={data.lapbookTitle}
-        flaps={data.flaps.map((f) => ({
-          id: f.id,
-          frontEmoji: "",
-          frontText: f.coverTitle,
-          backContent: f.content,
-          backAccent: f.backAccent,
-        }))}
-        columns={data.columns ?? 2}
-      />
-      {data.callouts && <CalloutList callouts={data.callouts} startMt={5} />}
-    </Box>
-  );
+  return null;
 }
 
 /**
@@ -1652,9 +1604,12 @@ export function PageHotspot({ data }: { data: PageHotspotData }) {
           flexShrink={0}
           boxShadow="0 2px 8px rgba(0,0,0,0.25)"
         >
-          <Text fontSize="1rem" fontWeight="900" color="#212121" lineHeight={1}>
-            🔬
-          </Text>
+          <Microscope
+            size={20}
+            strokeWidth={2}
+            color="#1B5E20"
+            aria-hidden="true"
+          />
         </Box>
         <Text
           fontSize="0.82rem"
@@ -1668,7 +1623,7 @@ export function PageHotspot({ data }: { data: PageHotspotData }) {
         </Text>
       </Box>
 
-      {/* Grade de Hotspots — 2 colunas */}
+      {/* Grade de grupos — 2 colunas x 3 linhas */}
       <ImageDiscoveryHotspotGrid items={data.items} />
 
       {data.callouts && <CalloutList callouts={data.callouts} startMt={4} />}
@@ -1679,13 +1634,13 @@ export function PageHotspot({ data }: { data: PageHotspotData }) {
 const PRAGA_STAT_CARDS = [
   {
     front: "Perdas Mundiais (FAO)",
-    back: "40% das colheitas perdidas por pragas",
+    back: "40% das colheitas perdidas por pragas agrícolas",
     icon: BarChart3,
     bg: "green.500",
   },
   {
     front: "Prejuízo Econômico",
-    back: "R$ Bilhões perdidos anualmente no Brasil",
+    back: "Prejuízo de bilhões de reais por ano no Brasil",
     icon: Coins,
     bg: "orange.400",
   },
@@ -1771,20 +1726,6 @@ function PragaStatRevealCard({
     </Box>
   );
 }
-
-const PRAGA_IMPACT_IMAGE_URLS = [
-  "/images/agricultura/ghabiru-plantation.webp",
-  "/images/agricultura/irrigation.webp",
-  "/images/pragas/mosca da carambola/1.webp",
-  "/images/agricultura/irrigation2.webp",
-] as const;
-
-const ATTACK_SYMPTOM_IMAGE_URLS = [
-  "/images/sintomas/necrose.webp",
-  "/images/sintomas/galhas.webp",
-  "/images/sintomas/murcha.webp",
-  "/images/encontre_herois/mosaico de virus.webp",
-] as const;
 
 function PragaImpactImage({
   imageUrl,
@@ -1926,10 +1867,22 @@ function PragaImpactAccordion({
                       >
                         {item.desc}
                       </Text>
-                      <PragaImpactImage
-                        imageUrl={PRAGA_IMPACT_IMAGE_URLS[index]}
-                        title={item.title}
-                      />
+                      <Box>
+                        <PragaImpactImage
+                          imageUrl={item.imageSrc}
+                          title={item.title}
+                        />
+                        {item.imageCredit && (
+                          <Text
+                            mt={1}
+                            fontSize="0.65rem"
+                            color="gray.600"
+                            textAlign="center"
+                          >
+                            {item.imageCredit}
+                          </Text>
+                        )}
+                      </Box>
                     </SimpleGrid>
                   </Box>
                 </motion.div>
@@ -2010,11 +1963,7 @@ function AttackTypeFlipCard({
             mt={2}
             style={{ backdropFilter: "blur(4px)" }}
           >
-            <Icon
-              as={RotateCw as React.ElementType}
-              boxSize="12px"
-              color="white"
-            />
+            <Eye size={12} className="shrink-0" aria-hidden="true" />
             <Text
               fontSize="0.7rem"
               fontWeight="bold"
@@ -2192,10 +2141,22 @@ function AttackSymptomAccordion({
                           {item.desc}
                         </Text>
                       </Box>
-                      <AttackSymptomImage
-                        imageUrl={ATTACK_SYMPTOM_IMAGE_URLS[index]}
-                        title={item.title}
-                      />
+                      <Box>
+                        <AttackSymptomImage
+                          imageUrl={item.imageSrc}
+                          title={item.title}
+                        />
+                        {item.imageCredit && (
+                          <Text
+                            mt={1}
+                            fontSize="xs"
+                            color="gray.500"
+                            textAlign="right"
+                          >
+                            {item.imageCredit}
+                          </Text>
+                        )}
+                      </Box>
                     </SimpleGrid>
                   </Box>
                 </motion.div>
@@ -2218,6 +2179,32 @@ function AttackInteractivePage({ data }: { data: PageImpactData }) {
       </PageTitle>
       <LeadText>{data.leadText}</LeadText>
 
+      {data.pestGroups && (
+        <SimpleGrid columns={{ base: 2, sm: 4 }} gap={2} mb={5}>
+          {data.pestGroups.map((group) => (
+            <Box
+              key={group}
+              bg="green.50"
+              border="1px solid"
+              borderColor="green.100"
+              borderRadius="lg"
+              px={2}
+              py={3}
+              textAlign="center"
+            >
+              <Text
+                fontSize={{ base: "0.68rem", sm: "0.75rem" }}
+                fontWeight="700"
+                color="green.800"
+                lineHeight="1.25"
+              >
+                {group}
+              </Text>
+            </Box>
+          ))}
+        </SimpleGrid>
+      )}
+
       <Text
         fontSize="0.78rem"
         fontWeight="600"
@@ -2225,7 +2212,7 @@ function AttackInteractivePage({ data }: { data: PageImpactData }) {
         textAlign="center"
         mb={3}
       >
-        Clique em cada tipo de ataque e sintoma para investigar como as pragas
+        Clique em cada tipo de ataque e sintoma para investigar como as pragas agrícolas
         danificam as plantas!
       </Text>
       <SimpleGrid columns={{ base: 1, sm: 3 }} gap={{ base: 3, sm: 4 }} mb={7}>
@@ -2273,10 +2260,10 @@ function PragaAgricolaInteractivePage({ data }: { data: PageImpactData }) {
 }
 
 export function PageImpact({ data }: { data: PageImpactData }) {
-  if (data.id === "p04") {
+  if (data.id === "p4") {
     return <PragaAgricolaInteractivePage data={data} />;
   }
-  if (data.id === "p09") {
+  if (data.id === "p11") {
     return <AttackInteractivePage data={data} />;
   }
 
@@ -2418,7 +2405,7 @@ export function PageImpact({ data }: { data: PageImpactData }) {
 }
 
 export function PageAlert({ data }: { data: PageAlertData }) {
-  if (data.id === "p10") {
+  if (data.id === "p12") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -2507,397 +2494,26 @@ export function PageAlert({ data }: { data: PageAlertData }) {
   );
 }
 
-type BorderCargo = {
-  title: string;
-  description: string;
-  imageSrc: string;
-  correctAction: "block" | "allow";
-  disease: string;
-  successFeedback: string;
-  errorFeedback: string;
-};
-
-const BORDER_CARGOS: BorderCargo[] = [
-  {
-    title: "Carga de Carambolas",
-    description: "Tentando entrar sem certificado sanitário.",
-    imageSrc: "/images/pragas/mosca da carambola/1.webp",
-    correctAction: "block",
-    disease: "Mosca-da-carambola",
-    successFeedback:
-      "Uau! Se essa Mosca-da-carambola entrasse, toda a nossa produção local estaria em risco!",
-    errorFeedback:
-      "Atenção! Sem certificado sanitário, as frutas podem trazer uma praga perigosa. Vamos bloquear para segurança?",
-  },
-  {
-    title: "Carregamento de Mudas de Laranja",
-    description: "Mudas trazidas de fora sem comprovação de saúde.",
-    imageSrc: "/images/doencas/fitoplasma.webp",
-    correctAction: "block",
-    disease: "Huanglongbing (HLB)",
-    successFeedback:
-      "Muito bem! Mudas sem comprovação podem espalhar o HLB e destruir pomares inteiros de laranja.",
-    errorFeedback:
-      "Atenção! Sem o selo de inspeção, essa doença destruiria as laranjeiras. Vamos bloquear para segurança?",
-  },
-  {
-    title: "Carregamento de Maçãs Certificadas",
-    description: "Frutas com selo de inspeção e nota fiscal.",
-    imageSrc: "/images/agricultura/ghabiru-plantation.webp",
-    correctAction: "allow",
-    disease: "Carga regularizada",
-    successFeedback:
-      "Decisão correta! A documentação confirma que a carga foi inspecionada e pode seguir com segurança.",
-    errorFeedback:
-      "Atenção! Esta carga tem selo de inspeção e nota fiscal. Com a documentação regularizada, ela pode ser permitida.",
-  },
-];
-
-function CargoImage({ cargo }: { cargo: BorderCargo }) {
-  const [hasError, setHasError] = useState(false);
-
-  if (hasError) {
-    return (
-      <Box
-        h="full"
-        w="full"
-        display="flex"
-        alignItems="center"
-        justifyContent="center"
-        bgGradient="linear(to-br, green.100, orange.100)"
-        fontSize="4rem"
-        aria-label={`Ilustração de ${cargo.title}`}
-      >
-        {cargo.correctAction === "allow" ? "📦" : "🚚"}
-      </Box>
-    );
-  }
-
-  return (
-    <Image
-      src={cargo.imageSrc}
-      alt={`Ilustração da ${cargo.title}`}
-      fill
-      sizes="(max-width: 640px) 100vw, 520px"
-      style={{ objectFit: "cover" }}
-      onError={() => setHasError(true)}
-    />
-  );
-}
-
-export function BorderRadarGame({ data }: { data: PageAlertData }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [inspected, setInspected] = useState(0);
-  const [correctAnswers, setCorrectAnswers] = useState(0);
-  const [selectedAction, setSelectedAction] = useState<
-    "block" | "allow" | null
-  >(null);
-
-  const cargo = BORDER_CARGOS[currentIndex];
-  const hasFinished = inspected === BORDER_CARGOS.length;
-  const isCorrect = selectedAction === cargo?.correctAction;
-
-  const handleAction = (action: "block" | "allow") => {
-    if (selectedAction || hasFinished) return;
-    setSelectedAction(action);
-    setInspected((value) => value + 1);
-    if (action === cargo.correctAction) {
-      setCorrectAnswers((value) => value + 1);
-    }
-  };
-
-  const handleNext = () => {
-    if (currentIndex < BORDER_CARGOS.length - 1) {
-      setCurrentIndex((value) => value + 1);
-      setSelectedAction(null);
-    }
-  };
-
-  const restart = () => {
-    setCurrentIndex(0);
-    setInspected(0);
-    setCorrectAnswers(0);
-    setSelectedAction(null);
-  };
-
-  return (
-    <Box>
-      <SectionBadge>{data.badgeLabel}</SectionBadge>
-      <PageTitle>
-        {data.title}
-        {data.titleHighlight && <Highlight>{data.titleHighlight}</Highlight>}
-      </PageTitle>
-      <LeadText>{data.leadText}</LeadText>
-
-      <Box
-        mt={5}
-        p={{ base: 3, sm: 5 }}
-        borderRadius="24px"
-        bgGradient="linear(to-br, green.950, green.800)"
-        color="white"
-        position="relative"
-        overflow="hidden"
-        boxShadow="0 12px 34px rgba(27,94,32,0.28)"
-      >
-        <Box
-          position="absolute"
-          top="-80px"
-          right="-50px"
-          w="180px"
-          h="180px"
-          borderRadius="full"
-          bg="rgba(255,152,0,0.12)"
-          aria-hidden="true"
-        />
-
-        <Flex
-          align="center"
-          justify="space-between"
-          gap={3}
-          position="relative"
-          zIndex={1}
-        >
-          <Box>
-            <Text fontSize={{ base: "1.05rem", sm: "1.3rem" }} fontWeight="900">
-              Radar de Fronteira
-            </Text>
-            <Text
-              fontSize={{ base: "0.72rem", sm: "0.8rem" }}
-              color="whiteAlpha.800"
-            >
-              Bloqueie os Invasores!
-            </Text>
-          </Box>
-          <Box
-            px={3}
-            py={2}
-            borderRadius="full"
-            bg="orange.400"
-            color="orange.950"
-            textAlign="center"
-            minW="112px"
-          >
-            <Text fontSize="0.62rem" fontWeight="800">
-              CARGAS INSPECIONADAS
-            </Text>
-            <Text fontSize="1.15rem" fontWeight="900" lineHeight="1.1">
-              {inspected}/3
-            </Text>
-          </Box>
-        </Flex>
-
-        <Box
-          mt={4}
-          p={{ base: 3, sm: 4 }}
-          borderRadius="18px"
-          bg="rgba(0,0,0,0.2)"
-          border="1px solid"
-          borderColor="whiteAlpha.300"
-          position="relative"
-          zIndex={1}
-        >
-          {!hasFinished && cargo && (
-            <>
-              <Flex align="center" gap={2} mb={3}>
-                <Text fontSize="1.2rem" aria-hidden="true">
-                  🛂
-                </Text>
-                <Text fontSize="0.72rem" fontWeight="800" color="orange.200">
-                  MESA DE INSPEÇÃO · CASO {currentIndex + 1} DE 3
-                </Text>
-              </Flex>
-
-              <Box
-                h={{ base: "180px", sm: "230px" }}
-                position="relative"
-                overflow="hidden"
-                borderRadius="14px"
-                bg="green.100"
-                border="3px solid"
-                borderColor="orange.300"
-              >
-                <CargoImage cargo={cargo} />
-                <Box
-                  position="absolute"
-                  top={3}
-                  left={3}
-                  px={2}
-                  py={1}
-                  borderRadius="full"
-                  bg="red.700"
-                  color="white"
-                  fontSize="0.6rem"
-                  fontWeight="900"
-                >
-                  CARGA SUSPEITA
-                </Box>
-              </Box>
-
-              <Text
-                mt={3}
-                fontSize={{ base: "1rem", sm: "1.15rem" }}
-                fontWeight="900"
-              >
-                {cargo.title}
-              </Text>
-              <Text
-                mt={1}
-                fontSize="0.78rem"
-                color="whiteAlpha.800"
-                lineHeight="1.5"
-              >
-                {cargo.description}
-              </Text>
-
-              {!selectedAction ? (
-                <SimpleGrid columns={{ base: 1, sm: 2 }} gap={3} mt={4}>
-                  <Box
-                    as="button"
-                    onClick={() => handleAction("block")}
-                    p={3}
-                    borderRadius="12px"
-                    bg="red.600"
-                    color="white"
-                    fontWeight="900"
-                    cursor="pointer"
-                    _hover={{ bg: "red.500", transform: "translateY(-2px)" }}
-                    transition="all 0.2s ease"
-                  >
-                    ⛔ BLOQUEAR
-                  </Box>
-                  <Box
-                    as="button"
-                    onClick={() => handleAction("allow")}
-                    p={3}
-                    borderRadius="12px"
-                    bg="green.500"
-                    color="white"
-                    fontWeight="900"
-                    cursor="pointer"
-                    _hover={{ bg: "green.400", transform: "translateY(-2px)" }}
-                    transition="all 0.2s ease"
-                  >
-                    ✅ PERMITIR
-                  </Box>
-                </SimpleGrid>
-              ) : (
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <Box
-                    mt={4}
-                    p={3}
-                    borderRadius="12px"
-                    bg={isCorrect ? "green.500" : "orange.400"}
-                    color={isCorrect ? "white" : "orange.950"}
-                  >
-                    <Text fontSize="0.85rem" fontWeight="900">
-                      {isCorrect
-                        ? "🎉 Decisão correta!"
-                        : "⚠️ Vamos aprender com esta decisão"}
-                    </Text>
-                    <Text mt={1} fontSize="0.78rem" lineHeight="1.55">
-                      {isCorrect ? cargo.successFeedback : cargo.errorFeedback}
-                    </Text>
-                  </Box>
-                  {currentIndex < BORDER_CARGOS.length - 1 && (
-                    <Box
-                      as="button"
-                      onClick={handleNext}
-                      mt={3}
-                      w="full"
-                      p={3}
-                      borderRadius="12px"
-                      bg="orange.300"
-                      color="orange.950"
-                      fontWeight="900"
-                      cursor="pointer"
-                      _hover={{ bg: "orange.200" }}
-                    >
-                      Próxima carga →
-                    </Box>
-                  )}
-                </motion.div>
-              )}
-            </>
-          )}
-
-          {hasFinished && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.85 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Box textAlign="center" py={{ base: 5, sm: 8 }}>
-                <Text fontSize="3rem" aria-hidden="true">
-                  🏅
-                </Text>
-                <Text
-                  mt={2}
-                  fontSize="1.35rem"
-                  fontWeight="900"
-                  color="orange.200"
-                >
-                  Defensor da Lavoura
-                </Text>
-                <Text mt={2} fontSize="0.82rem" color="whiteAlpha.900">
-                  Você acertou {correctAnswers} de 3 decisões e protegeu a
-                  fronteira agrícola!
-                </Text>
-                <Box
-                  as="button"
-                  onClick={restart}
-                  mt={5}
-                  px={5}
-                  py={3}
-                  borderRadius="12px"
-                  bg="white"
-                  color="green.800"
-                  fontWeight="900"
-                  cursor="pointer"
-                  _hover={{ bg: "orange.100" }}
-                >
-                  Jogar novamente
-                </Box>
-              </Box>
-            </motion.div>
-          )}
-        </Box>
-      </Box>
-
-      {data.callouts && <CalloutList callouts={data.callouts} />}
-    </Box>
-  );
-}
-
-const RESEARCH_STATION_IMAGES = [
-  "https://images.unsplash.com/photo-1574943320219-553eb213f72d",
-  "https://images.unsplash.com/photo-1532094349884-543bc11b234d",
-  "https://images.unsplash.com/photo-1523240795612-9a054b0db644",
-  "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc",
-  "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b",
-  "/assets/dona-fito/dona-fito-happy.png",
-];
-
 const RESEARCH_STATION_IMPACTS = [
-  "Ajuda agricultores a produzir mais e com segurança, usando variedades adaptadas ao clima e às pragas da Amazônia.",
+  "Ajuda agricultores a produzir mais e com segurança, usando variedades adaptadas ao clima e às pragas agrícolas da Amazônia.",
   "Forma profissionais e cria conhecimento para resolver problemas fitossanitários específicos de cada comunidade.",
-  "Prepara técnicos para reconhecer pragas no campo e aplicar práticas de manejo sustentável.",
-  "Protege a biodiversidade do Amapá ao estudar espécies nativas, pragas e aliados naturais.",
+  "Prepara técnicos para reconhecer pragas agrícolas no campo e aplicar práticas de manejo sustentável.",
+  "Protege a biodiversidade do Amapá ao estudar espécies nativas, pragas agrícolas e aliados naturais.",
   "Entrega diagnósticos confiáveis para que o agricultor escolha o tratamento correto e evite desperdícios.",
-  "A curiosidade de hoje pode virar a pesquisa que protegerá a lavoura de amanhã. Ciência também começa na escola!",
+  "Integra ensino, pesquisa e extensão em fitossanidade e produção vegetal, contribuindo para o diagnóstico, o manejo sustentável e a produção no Amapá.",
+  "A curiosidade de hoje pode virar a pesquisa que protegerá os cultivos agrícolas de amanhã. Ciência também começa na escola!",
 ];
 
 function StationPhoto({
   src,
   alt,
   isStudent,
+  imageFit = "cover",
 }: {
   src: string;
   alt: string;
   isStudent: boolean;
+  imageFit?: "cover" | "contain";
 }) {
   const [hasError, setHasError] = useState(false);
 
@@ -2913,20 +2529,26 @@ function StationPhoto({
         fontSize="3.5rem"
         aria-label={`Ilustração de ${alt}`}
       >
-        {isStudent ? "🌱" : "🔬"}
+        {isStudent ? (
+          <Sprout size={56} strokeWidth={1.5} aria-hidden="true" />
+        ) : (
+          <Microscope size={56} strokeWidth={1.5} aria-hidden="true" />
+        )}
       </Box>
     );
   }
 
   return (
-    <Image
-      src={src}
-      alt={alt}
-      fill
-      sizes="(max-width: 768px) 100vw, 50vw"
-      style={{ objectFit: "cover", width: "100%", height: "100%" }}
-      onError={() => setHasError(true)}
-    />
+    <Box position="relative" h="full" w="full">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(max-width: 768px) 100vw, 50vw"
+        style={{ objectFit: imageFit, width: "100%", height: "100%" }}
+        onError={() => setHasError(true)}
+      />
+    </Box>
   );
 }
 
@@ -2945,21 +2567,38 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
         fontSize="0.78rem"
         fontWeight="800"
         textAlign="center"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        gap={1.5}
       >
-        🔬 Clique em cada estação científica para descobrir o que os
-        pesquisadores fazem!
+        <Microscope size={14} className="shrink-0" aria-hidden="true" />
+        <Box as="span">
+          Clique em cada estação científica para descobrir o que os
+          pesquisadores fazem!
+        </Box>
       </Text>
 
       <SimpleGrid columns={{ base: 1, md: 2 }} gap={4} alignItems="start">
         {data.items.map((station, index) => {
           const isExpanded = expandedIndex === index;
           const isStudent = index === data.items.length - 1;
+          const creditParts = station.credit?.match(
+            /^(.*?)(\(CC BY(?:-SA)? [0-9.]+\))$/,
+          );
 
           return (
             <Box
               key={station.name}
-              as="button"
               onClick={() => setExpandedIndex(isExpanded ? null : index)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  setExpandedIndex(isExpanded ? null : index);
+                }
+              }}
               w="100%"
               textAlign="left"
               cursor="pointer"
@@ -2977,6 +2616,9 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
               boxShadow={isExpanded ? "0 8px 24px rgba(46,125,50,0.16)" : "sm"}
               _hover={{ transform: "translateY(-3px)", shadow: "md" }}
               transition="all 0.25s ease"
+              display="flex"
+              flexDirection="column"
+              minH={{ base: "auto", md: "268px" }}
             >
               <Box
                 h="140px"
@@ -2984,14 +2626,26 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                 position="relative"
                 overflow="hidden"
                 borderTopRadius="lg"
-                bg={isStudent ? "yellow.100" : "green.50"}
+                bg={
+                  isStudent
+                    ? "yellow.100"
+                    : station.imageFit === "contain"
+                      ? "white"
+                      : "green.50"
+                }
               >
                 {!isStudent && (
-                  <StationPhoto
-                    src={RESEARCH_STATION_IMAGES[index]}
-                    alt={station.name}
-                    isStudent={false}
-                  />
+                  <Box
+                    position="absolute"
+                    inset={station.imageFit === "contain" ? "16px 16px 42px" : 0}
+                  >
+                    <StationPhoto
+                      src={station.imageSrc}
+                      alt={station.name}
+                      isStudent={false}
+                      imageFit={station.imageFit}
+                    />
+                  </Box>
                 )}
                 {isStudent && (
                   <Box
@@ -3002,7 +2656,10 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                     justifyContent="center"
                     bg="rgba(255,193,7,0.28)"
                   >
-                    <Avatar src="/assets/dona_fito_meio_corpo.webp" />
+                    <Avatar
+                      src="/assets/dona_fito_meio_corpo.png"
+                      alt="Dona Fito"
+                    />
                   </Box>
                 )}
                 <Box
@@ -3017,13 +2674,60 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                   fontSize="0.62rem"
                   fontWeight="900"
                 >
-                  {isStudent
-                    ? "🌟 Seu futuro na ciência"
-                    : `ESTAÇÃO ${index + 1}`}
+                  {isStudent ? (
+                    <Box
+                      as="span"
+                      display="inline-flex"
+                      alignItems="center"
+                      gap={1.5}
+                    >
+                      <Sprout
+                        size={13}
+                        className="shrink-0"
+                        aria-hidden="true"
+                      />
+                      Seu futuro na ciência
+                    </Box>
+                  ) : (
+                    `ESTAÇÃO ${index + 1}`
+                  )}
                 </Box>
               </Box>
 
-              <Box p={{ base: 4, sm: 5 }}>
+              {!isStudent && station.credit && (
+                <Text
+                  px={3}
+                  mt={1}
+                  fontSize="11px"
+                  color="gray.500"
+                  lineHeight="1.35"
+                >
+                  {creditParts ? (
+                    <>
+                      {creditParts[1]}
+                      <Box
+                        as="span"
+                        css={{
+                          "@media (max-width: 639px)": {
+                            whiteSpace: "nowrap",
+                          },
+                        }}
+                      >
+                        {creditParts[2]}
+                      </Box>
+                    </>
+                  ) : (
+                    station.credit
+                  )}
+                </Text>
+              )}
+
+              <Box
+                p={{ base: 4, sm: 5 }}
+                display="flex"
+                flexDirection="column"
+                flex="1"
+              >
                 <Flex align="center" justify="space-between" gap={3}>
                   <Text
                     fontWeight="800"
@@ -3036,25 +2740,37 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                     {isExpanded ? "−" : "+"}
                   </Text>
                 </Flex>
-                {!isExpanded && (
-                  <Text
-                    mt={2}
-                    fontSize="0.78rem"
-                    color="gray.600"
-                    lineHeight="1.55"
-                  >
-                    {station.desc}
-                  </Text>
-                )}
+                <Text
+                  mt={2}
+                  fontSize="0.78rem"
+                  color="gray.600"
+                  lineHeight="1.55"
+                >
+                  {station.desc}
+                </Text>
                 <Text
                   mt={3}
-                  fontSize="0.68rem"
+                  fontSize="xs"
                   fontWeight="800"
                   color="green.700"
+                  display="inline-flex"
+                  alignItems="center"
+                  gap={1.5}
+                  whiteSpace="nowrap"
                 >
-                  🔬 Clique para explorar a estação
+                  {isExpanded ? (
+                    <ChevronUp size={13} className="shrink-0" aria-hidden="true" />
+                  ) : isStudent ? (
+                    <Search size={13} className="shrink-0" aria-hidden="true" />
+                  ) : (
+                    <Microscope size={13} className="shrink-0" aria-hidden="true" />
+                  )}
+                  {isExpanded
+                    ? "Clique para recolher"
+                    : isStudent
+                      ? "Clique para ver como participar"
+                      : "Clique para explorar a estação"}
                 </Text>
-
                 <AnimatePresence initial={false}>
                   {isExpanded && (
                     <motion.div
@@ -3074,8 +2790,17 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                           fontWeight="900"
                           color="green.800"
                           textTransform="uppercase"
+                          display="inline-flex"
+                          alignItems="center"
+                          gap={1.5}
+                          whiteSpace="nowrap"
                         >
-                          🔬 O que fazem
+                          <FlaskConical
+                            size={13}
+                            className="shrink-0"
+                            aria-hidden="true"
+                          />
+                          {isStudent ? "Como começar" : "O que fazem"}
                         </Text>
                         <Text
                           mt={1}
@@ -3083,16 +2808,41 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                           color="gray.700"
                           lineHeight="1.55"
                         >
-                          {station.desc}
+                          {station.details}
                         </Text>
+                        {station.pillars && (
+                          <VStack align="stretch" gap={2} mt={4}>
+                            {station.pillars.map((pillar) => (
+                              <Box key={pillar.title} bg="green.50" borderLeft="3px solid" borderColor="green.400" p={2.5} borderRadius="md">
+                                <Text fontSize="0.7rem" fontWeight="900" color="green.800">
+                                  {pillar.title}
+                                </Text>
+                                <Text mt={1} fontSize="0.75rem" color="gray.700" lineHeight="1.5">
+                                  {pillar.text}
+                                </Text>
+                              </Box>
+                            ))}
+                          </VStack>
+                        )}
                         <Text
                           mt={3}
                           fontSize="0.7rem"
                           fontWeight="900"
                           color="orange.800"
                           textTransform="uppercase"
+                          display="inline-flex"
+                          alignItems="center"
+                          gap={1.5}
+                          whiteSpace="nowrap"
                         >
-                          🌱 Impacto no Amapá / Lavoura
+                          <Sprout
+                            size={13}
+                            className="shrink-0"
+                            aria-hidden="true"
+                          />
+                          {isStudent
+                            ? "Seu impacto no futuro"
+                            : "Impacto no Amapá / Cultivos Agrícolas"}
                         </Text>
                         <Text
                           mt={1}
@@ -3100,8 +2850,44 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                           color="gray.700"
                           lineHeight="1.55"
                         >
-                          {RESEARCH_STATION_IMPACTS[index]}
+                          {station.impact ?? RESEARCH_STATION_IMPACTS[index]}
                         </Text>
+                        {station.links && station.links.length > 0 && (
+                          <Flex
+                            wrap="wrap"
+                            gap={2}
+                            mt={4}
+                            justify="flex-start"
+                            w="full"
+                            ml={0}
+                          >
+                            {station.links.map((link) => (
+                              <Link
+                                key={link.url}
+                                href={link.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(event) => event.stopPropagation()}
+                                display="inline-flex"
+                                alignItems="center"
+                                gap={1.5}
+                                px={3}
+                                py={1.5}
+                                borderRadius="lg"
+                                bg="green.50"
+                                color="green.700"
+                                border="1px solid"
+                                borderColor="green.200"
+                                fontSize="xs"
+                                fontWeight="semibold"
+                                _hover={{ bg: "green.100", borderColor: "green.300" }}
+                              >
+                                <ExternalLink size={13} aria-hidden="true" />
+                                {link.label}
+                              </Link>
+                            ))}
+                          </Flex>
+                        )}
                       </Box>
                     </motion.div>
                   )}
@@ -3115,22 +2901,13 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
   );
 }
 
-const GUARDIAN_IMAGES = [
-  "https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3",
-  "https://images.unsplash.com/photo-1578575437130-527eed3abbec",
-  "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d",
-  "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8",
-  "https://images.unsplash.com/photo-1595974482597-4b8da8879bc5",
-  "/assets/dona_fito_meio_corpo.webp",
-];
-
 const GUARDIAN_IMPACTS = [
-  "Cria regras nacionais e coordena ações que reduzem o risco de entrada e disseminação de pragas no país.",
-  "Interrompe cargas ou produtos suspeitos em portos, aeroportos e fronteiras antes que alcancem novas lavouras.",
+  "Cria regras nacionais e coordena ações que reduzem o risco de entrada e disseminação de pragas agrícolas no país.",
+  "Interrompe cargas ou produtos suspeitos em portos, aeroportos e fronteiras antes que cheguem às áreas de cultivo.",
   "Protege a produção do Amapá, fiscalizando o trânsito de plantas, sementes e frutos vindos de outras regiões.",
-  "Garante que sementes e mudas saudáveis cheguem ao produtor, evitando doenças desde o início da lavoura.",
+  "Garante que sementes e mudas saudáveis cheguem ao produtor, evitando doenças desde o início dos cultivos agrícolas.",
   "Ao identificar e comunicar anomalias, ajuda a interromper rapidamente focos antes que atinjam outras propriedades.",
-  "Ao não transportar plantas, frutos ou terra sem autorização, você fecha uma importante porta para as pragas.",
+  "Ao não transportar plantas, frutos ou terra sem autorização, você fecha uma importante porta para as pragas agrícolas.",
 ];
 
 function GuardianCards({ data }: { data: PageOrgaosData }) {
@@ -3148,9 +2925,20 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
         fontSize="0.78rem"
         fontWeight="800"
         textAlign="center"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        gap={1.5}
       >
-        🔍 Clique em cada guardião para entender como funciona a fiscalização
-        fitossanitária!
+        <Search
+          size={14}
+          className="shrink-0"
+          aria-hidden="true"
+        />
+        <Box as="span">
+          Clique em cada guardião para entender como funciona a fiscalização
+          fitossanitária!
+        </Box>
       </Text>
 
       <SimpleGrid columns={{ base: 1, md: 2 }} gap={4} alignItems="start">
@@ -3191,7 +2979,7 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
               >
                 {!isConsumer ? (
                   <StationPhoto
-                    src={GUARDIAN_IMAGES[index]}
+                    src={guardian.imageSrc}
                     alt={guardian.name}
                     isStudent={false}
                   />
@@ -3204,7 +2992,10 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
                     justifyContent="center"
                     bg="rgba(255,193,7,0.28)"
                   >
-                    <Avatar src="/assets/dona_fito_meio_corpo.webp" />
+                    <Avatar
+                      src="/assets/dona_fito_meio_corpo.png"
+                      alt="Dona Fito"
+                    />
                   </Box>
                 )}
                 <Box
@@ -3212,16 +3003,52 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
                   left={3}
                   bottom={3}
                   px={2}
-                  py={1}
+                  py={isConsumer ? 0.5 : 1}
                   borderRadius="full"
                   bg={isConsumer ? "yellow.500" : "green.700"}
                   color={isConsumer ? "yellow.950" : "white"}
                   fontSize="0.62rem"
                   fontWeight="900"
                 >
-                  {isConsumer ? "🌟 Faça sua parte" : `GUARDIÃO ${index + 1}`}
+                  {isConsumer ? (
+                    <Box
+                      as="span"
+                      display="inline-flex"
+                      alignItems="center"
+                      gap={1}
+                    >
+                      <Sprout
+                        size={12}
+                        strokeWidth={1.75}
+                        className="shrink-0"
+                        aria-hidden="true"
+                      />
+                      Faça sua parte
+                    </Box>
+                  ) : (
+                    `GUARDIÃO ${index + 1}`
+                  )}
                 </Box>
               </Box>
+
+              {guardian.credit && (
+                <Text
+                  mt={1}
+                  px={4}
+                  fontSize="xs"
+                  color="gray.400"
+                  fontStyle="italic"
+                  display="block"
+                  css={{
+                    "@media (max-width: 639px)": {
+                      fontStyle: "normal",
+                      textAlign: "left",
+                    },
+                  }}
+                >
+                  {guardian.credit}
+                </Text>
+              )}
 
               <Box p={{ base: 4, sm: 5 }}>
                 <Flex align="center" justify="space-between" gap={3}>
@@ -3236,23 +3063,42 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
                     {isExpanded ? "−" : "+"}
                   </Text>
                 </Flex>
-                {!isExpanded && (
-                  <Text
-                    mt={2}
-                    fontSize="0.78rem"
-                    color="gray.600"
-                    lineHeight="1.55"
-                  >
-                    {guardian.desc}
-                  </Text>
-                )}
+                <Text
+                  mt={2}
+                  fontSize="0.78rem"
+                  color="gray.600"
+                  lineHeight="1.55"
+                >
+                  {guardian.desc}
+                </Text>
                 <Text
                   mt={3}
-                  fontSize="0.68rem"
+                  fontSize="xs"
                   fontWeight="800"
                   color="green.700"
+                  display="inline-flex"
+                  alignItems="center"
+                  gap={1.5}
+                  whiteSpace="nowrap"
                 >
-                  🔍 Clique para explorar o guardião
+                  {isExpanded ? (
+                    <ChevronUp
+                      size={13}
+                      className="shrink-0"
+                      aria-hidden="true"
+                    />
+                  ) : (
+                    <Search
+                      size={13}
+                      className="shrink-0"
+                      aria-hidden="true"
+                    />
+                  )}
+                  {isExpanded
+                    ? "Clique para recolher"
+                    : isConsumer
+                      ? "Clique para ver como ajudar"
+                      : "Clique para explorar o guardião"}
                 </Text>
 
                 <AnimatePresence initial={false}>
@@ -3274,8 +3120,17 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
                           fontWeight="900"
                           color="green.800"
                           textTransform="uppercase"
+                          display="inline-flex"
+                          alignItems="center"
+                          gap={1.5}
+                          whiteSpace="nowrap"
                         >
-                          🛡️ Atuação
+                          <ClipboardCheck
+                            size={13}
+                            className="shrink-0"
+                            aria-hidden="true"
+                          />
+                          {isConsumer ? "Como ajudar" : "Atuação"}
                         </Text>
                         <Text
                           mt={1}
@@ -3283,7 +3138,7 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
                           color="gray.700"
                           lineHeight="1.55"
                         >
-                          {guardian.desc}
+                          {guardian.details}
                         </Text>
                         <Text
                           mt={3}
@@ -3291,8 +3146,17 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
                           fontWeight="900"
                           color="orange.800"
                           textTransform="uppercase"
+                          display="inline-flex"
+                          alignItems="center"
+                          gap={1.5}
+                          whiteSpace="nowrap"
                         >
-                          📍 Impacto
+                          <Target
+                            size={13}
+                            className="shrink-0"
+                            aria-hidden="true"
+                          />
+                          {isConsumer ? "Seu impacto" : "Impacto"}
                         </Text>
                         <Text
                           mt={1}
@@ -3300,7 +3164,7 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
                           color="gray.700"
                           lineHeight="1.55"
                         >
-                          {GUARDIAN_IMPACTS[index]}
+                          {guardian.impact ?? GUARDIAN_IMPACTS[index]}
                         </Text>
                       </Box>
                     </motion.div>
@@ -3316,7 +3180,7 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
 }
 
 export function PageOrgaos({ data }: { data: PageOrgaosData }) {
-  if (data.id === "p11") {
+  if (data.id === "p13") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -3331,7 +3195,7 @@ export function PageOrgaos({ data }: { data: PageOrgaosData }) {
     );
   }
 
-  if (data.id === "p12") {
+  if (data.id === "p14") {
     return (
       <Box>
         <SectionBadge>{data.badgeLabel}</SectionBadge>
@@ -3408,109 +3272,6 @@ export function PageOrgaos({ data }: { data: PageOrgaosData }) {
           </HStack>
         ))}
       </VStack>
-    </Box>
-  );
-}
-
-export function PageCase({ data }: { data: PageCaseData }) {
-  const heroGradients: Record<typeof data.heroVariant, string> = {
-    green: "linear-gradient(135deg, #2E7D32, #66BB6A)",
-    amber: "linear-gradient(135deg, #E65100, #FF8F00)",
-    teal: "linear-gradient(135deg, #00695C, #26A69A)",
-    red: "linear-gradient(135deg, #B71C1C, #C62828)",
-    purple: "linear-gradient(135deg, #4A148C, #6A1B9A)",
-  };
-  const lapbookVariants: Record<
-    typeof data.heroVariant,
-    PocketCard["variant"]
-  > = {
-    green: "green",
-    amber: "amber",
-    teal: "teal",
-    red: "red",
-    purple: "purple",
-  };
-
-  const pocketCards: PocketCard[] = data.details.map((row, i) => ({
-    id: `detail-${i}`,
-    emoji: "📋",
-    title: row.label,
-    subtitle: "Clique para ver detalhes",
-    variant: lapbookVariants[data.heroVariant],
-    details: [{ icon: "📌", label: row.label, value: row.value }],
-  }));
-
-  const calloutPockets: PocketCard[] = data.callouts.map((c, i) => ({
-    id: `callout-${i}`,
-    emoji: c.variant === "red" ? "⚠️" : "💡",
-    title: c.title,
-    subtitle: c.variant === "red" ? "⚠️ Alerta Importante" : "💡 Saiba mais",
-    variant:
-      c.variant === "red" ? "red" : c.variant === "yellow" ? "amber" : "green",
-    details: [{ icon: "📌", label: c.title, value: c.text }],
-    callout: { icon: c.variant === "red" ? "⚠️" : "💡", text: c.text },
-  }));
-
-  return (
-    <Box>
-      <SectionBadge>📍 Caso Real — Amapá</SectionBadge>
-
-      <Box borderRadius="20px" overflow="hidden" mb={6}>
-        <Box
-          p={{ base: "28px 20px", md: "40px 32px" }}
-          display="flex"
-          alignItems="center"
-          gap={6}
-          flexWrap="wrap"
-          bg={heroGradients[data.heroVariant]}
-          color="white"
-        >
-          <Box
-            w={{ base: "64px", md: "88px" }}
-            h={{ base: "64px", md: "88px" }}
-            flexShrink={0}
-            borderRadius="16px"
-            overflow="hidden"
-            style={{
-              filter: "drop-shadow(0 6px 16px rgba(0,0,0,0.25))",
-              animation: "floatIcon 4s ease-in-out infinite",
-            }}
-          >
-            <Image
-              src={data.heroImageSrc}
-              alt={data.heroTitle}
-              width={88}
-              height={88}
-              style={{ objectFit: "cover", width: "100%", height: "100%" }}
-              onError={(e) => {
-                (e.target as HTMLImageElement).style.display = "none";
-              }}
-            />
-          </Box>
-          <Box flex="1" minW="180px">
-            <Text
-              as="h1"
-              fontSize="clamp(1.2rem, 3vw, 1.6rem)"
-              fontWeight="800"
-              mb={1}
-              lineHeight="1.2"
-            >
-              {data.heroTitle}
-            </Text>
-            <Text fontSize="0.88rem" lineHeight="1.6" opacity={0.9}>
-              {data.heroSubtitle}
-            </Text>
-          </Box>
-        </Box>
-      </Box>
-
-      <LapbookFolder
-        title="Ficha Técnica — Clique para abrir"
-        subtitle="Puxe cada bolso para explorar os detalhes deste caso"
-        badge="📋 Caso Real"
-        cards={[...pocketCards, ...calloutPockets]}
-        footerNote="Fonte: Embrapa Amapá e MAPA — dados para fins educativos."
-      />
     </Box>
   );
 }
@@ -3641,6 +3402,22 @@ export function PageChain({ data }: { data: PageChainData }) {
                 {String(idx + 1).padStart(2, "0")}
               </Box>
             </Box>
+            <Text
+              mt={1}
+              px={4}
+              fontSize="xs"
+              color="gray.400"
+              fontStyle="italic"
+              display="block"
+              css={{
+                "@media (max-width: 639px)": {
+                  fontStyle: "normal",
+                  textAlign: "left",
+                },
+              }}
+            >
+              {item.credit}
+            </Text>
             <Box p={4}>
               <Text
                 fontSize="0.9rem"
@@ -3701,7 +3478,7 @@ export function PageChain({ data }: { data: PageChainData }) {
               key={index}
               variant="green"
               title={callout.title}
-              titleColor="orange.600"
+              titleColor="#1B5E20"
               titleFontWeight="extrabold"
             >
               {callout.text}
@@ -3713,11 +3490,19 @@ export function PageChain({ data }: { data: PageChainData }) {
   );
 }
 
-export function PageQuiz({ data }: { data: PageQuizData }) {
+export function PageQuiz({
+  data,
+  onComplete,
+  onReset,
+}: {
+  data: PageQuizData
+  onComplete?: () => void
+  onReset?: () => void
+}) {
   return (
     <Box>
       <SectionBadge>{data.badgeLabel}</SectionBadge>
-      <Quiz />
+      <Quiz onComplete={onComplete} onReset={onReset} />
     </Box>
   );
 }
@@ -3751,12 +3536,12 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
         fontWeight="800"
         mb={4}
       >
-        Cards Descobertos: {discoveredCount} / {data.characters.length}
+        Cartões descobertos: {discoveredCount} / {data.characters.length}
       </Box>
 
       <SimpleGrid
-        columns={{ base: 2, sm: 3 }}
-        gap={{ base: 3, sm: 4, md: 6 }}
+        columns={{ base: 2, md: 3 }}
+        gap={{ base: 4, md: 5 }}
         my={{ base: 5, sm: 8 }}
       >
         {data.characters.map((char) => {
@@ -3769,11 +3554,14 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, ease: "easeOut" }}
+              style={{ height: "100%" }}
             >
               <Box
-                h="full"
-                minH={{ base: "190px", sm: "260px" }}
-                p={4}
+                h={{ base: "360px", sm: "390px" }}
+                w="full"
+                p={{ base: 3, sm: 4 }}
+                display="flex"
+                flexDirection="column"
                 bg={isRevealed ? (isHero ? "green.50" : "red.50") : undefined}
                 bgGradient={
                   !isRevealed ? "linear(to-b, green.50, #EBF5EB)" : undefined
@@ -3796,7 +3584,7 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                     : undefined
                 }
                 _hover={{
-                  transform: "scale(1.05)",
+                  transform: "translateY(-3px)",
                   rotate: "0deg",
                   shadow: "xl",
                   cursor: "pointer",
@@ -3804,43 +3592,40 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                 }}
                 position="relative"
                 overflow="hidden"
+                css={{
+                  "@media (max-width: 639px)": {
+                    height: "280px",
+                  },
+                }}
               >
                 {isRevealed ? (
                   <motion.div
                     initial={{ opacity: 0, rotateY: -12 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.3 }}
+                    style={{
+                      minHeight: 0,
+                      flex: 1,
+                      overflowY: "auto",
+                    }}
                   >
-                    <Image
-                      src={char.imageSrc}
-                      alt={char.name}
-                      width={180}
-                      height={150}
-                      style={{
-                        display: "block",
-                        width: "100px",
-                        height: "100px",
-                        objectFit: "cover",
-                        borderRadius: "2xl",
-                        margin: "0 auto",
-                        border: "4px solid white",
-                        boxShadow: "0 4px 10px rgba(0,0,0,0.18)",
-                      }}
-                    />
-                    <Text
-                      mt={3}
-                      px={2}
-                      py={1}
-                      borderRadius="full"
-                      bg={isHero ? "green.100" : "red.100"}
-                      fontSize="0.62rem"
-                      fontWeight="extrabold"
-                      color={isHero ? "green.800" : "red.800"}
-                      textTransform="uppercase"
-                      letterSpacing="0.04em"
+                    <Box
+                      position="relative"
+                      w="full"
+                      h={{ base: "150px", sm: "190px" }}
+                      mb={3}
+                      borderRadius="lg"
+                      overflow="hidden"
+                      bg="green.100"
                     >
-                      {isHero ? " HERÓI DA LAVOURA" : " VILÃO DA LAVOURA"}
-                    </Text>
+                      <Image
+                        src={char.imageSrc}
+                        alt={char.name}
+                        fill
+                        sizes="(max-width: 640px) 50vw, 33vw"
+                        style={{ objectFit: "cover" }}
+                      />
+                    </Box>
                     <Text
                       mt={1}
                       fontWeight="800"
@@ -3851,6 +3636,20 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                     </Text>
                     <Text
                       mt={2}
+                      px={2}
+                      py={1}
+                      borderRadius="full"
+                      bg={isHero ? "green.100" : "red.100"}
+                      fontSize="0.62rem"
+                      fontWeight="extrabold"
+                      color={isHero ? "green.800" : "red.800"}
+                      textTransform="uppercase"
+                      letterSpacing="0.04em"
+                    >
+                      {isHero ? " HERÓI DOS CULTIVOS AGRÍCOLAS" : " VILÃO DOS CULTIVOS AGRÍCOLAS"}
+                    </Text>
+                    <Text
+                      mt={3}
                       fontSize={{ base: "0.65rem", sm: "0.82rem" }}
                       color={isHero ? "green.700" : "red.700"}
                       fontWeight="600"
@@ -3859,12 +3658,19 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                     </Text>
                   </motion.div>
                 ) : (
-                  <VStack h="full" justify="space-between" gap={2} py={1}>
+                  <VStack flex={1} justify="space-between" gap={2} py={1}>
                     <Text
                       color="green.800"
                       fontWeight="800"
                       fontSize="lg"
                       letterSpacing="0.08em"
+                      css={{
+                        "@media (max-width: 639px)": {
+                          fontSize: "0.72rem",
+                          letterSpacing: "0.04em",
+                          textWrap: "balance",
+                        },
+                      }}
                     >
                       QUEM SOU EU?
                     </Text>
@@ -3916,6 +3722,13 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                       fontWeight="600"
                       fontSize="sm"
                       letterSpacing="0.02em"
+                      css={{
+                        "@media (max-width: 639px)": {
+                          fontSize: "0.65rem",
+                          lineHeight: "1.25",
+                          textWrap: "balance",
+                        },
+                      }}
                     >
                       Clique para descobrir!
                     </Text>
@@ -3976,6 +3789,16 @@ export function PageClosing({ data }: { data: PageClosingData }) {
           mb={4}
           mx="auto"
           style={{ animation: "floatIcon 3s ease-in-out infinite" }}
+          css={{
+            "@media (max-width: 639px)": {
+              width: "100%",
+              height: "auto",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "8px",
+            },
+          }}
         >
           <Image
             src="/images/dona-fito.webp"
@@ -4009,6 +3832,34 @@ export function PageClosing({ data }: { data: PageClosingData }) {
             fontWeight="900"
             boxShadow="0 3px 10px rgba(0,0,0,0.2)"
             whiteSpace="nowrap"
+            css={{
+              "@media (min-width: 640px)": {
+                position: "absolute",
+                left: "50%",
+                right: "auto",
+                bottom: "-10px",
+                width: "fit-content",
+                maxWidth: "none",
+                marginInline: "0",
+                transform: "translateX(-50%)",
+                justifyContent: "center",
+                textAlign: "center",
+                whiteSpace: "nowrap",
+                paddingInline: "16px",
+                paddingBlock: "4px",
+              },
+              "@media (max-width: 639px)": {
+                position: "static",
+                width: "fit-content",
+                maxWidth: "100%",
+                marginInline: "auto",
+                justifyContent: "center",
+                textAlign: "center",
+                whiteSpace: "normal",
+                fontSize: "0.68rem",
+                paddingInline: "12px",
+              },
+            }}
           >
             <BadgeCheck size={14} strokeWidth={2.5} />
             Guardião da Fitossanidade
@@ -4115,6 +3966,15 @@ export function PageClosing({ data }: { data: PageClosingData }) {
           fontWeight="600"
           mt={4}
           letterSpacing="0.05em"
+          textAlign="center"
+          mx="auto"
+          maxW="100%"
+          css={{
+            "@media (max-width: 639px)": {
+              textAlign: "center",
+              paddingInline: 0,
+            },
+          }}
         >
           {data.footerText}
         </Text>

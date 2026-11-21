@@ -2,7 +2,32 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronLeft, ChevronRight, CheckCircle2 } from 'lucide-react'
+import type { LucideIcon } from 'lucide-react'
+import {
+  Book,
+  BookOpen,
+  Microscope,
+  Sun,
+  Sprout,
+  Bug,
+  Scissors,
+  Search,
+  Wheat,
+  Handshake,
+  Siren,
+  ShieldAlert,
+  FlaskConical,
+  Landmark,
+  ShieldCheck,
+  MapPin,
+  TrendingDown,
+  Trophy,
+  Brain,
+  GraduationCap,
+  ChevronLeft,
+  ChevronRight,
+  CheckCircle2,
+} from 'lucide-react'
 import { Box, Flex, Input, Text, HStack, VStack } from '@chakra-ui/react'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -14,25 +39,32 @@ interface PageNavigationProps {
   onPrev: () => void
   onNext: () => void
   onGoTo?: (index: number) => void
+  nextDisabled?: boolean
 }
 
 // ─── Constantes ───────────────────────────────────────────────────────────────
 
-const PAGE_EMOJIS: Record<number, string> = {
-  0:  '📗', // Capa
-  1:  '📖', // Apresentação
-  2:  '🔬', // Fitossanidade
-  3:  '🐛', // Pragas
-  4:  '📉', // Impacto
-  5:  '🚨', // Alerta
-  6:  '🏛️', // Órgãos
-  7:  '✅', // Como Evitar
-  8:  '🌿', // Vassoura
-  9:  '🫐', // Açaí
-  10: '🦟', // Mosca da Fruta
-  11: '💡', // Cadeia
-  12: '🧠', // Quiz
-  13: '🎓', // Encerramento
+const PAGE_ICONS: Record<number, LucideIcon> = {
+  0: Book,
+  1: BookOpen,
+  2: Microscope,
+  3: Sun,
+  4: Sprout,
+  5: Bug,
+  6: Scissors,
+  7: Search,
+  8: Wheat,
+  9: Handshake,
+  10: Siren,
+  11: ShieldAlert,
+  12: FlaskConical,
+  13: Landmark,
+  14: ShieldCheck,
+  15: MapPin,
+  16: TrendingDown,
+  17: Trophy,
+  18: Brain,
+  19: GraduationCap,
 }
 
 // ─── NavButton ────────────────────────────────────────────────────────────────
@@ -40,13 +72,22 @@ const PAGE_EMOJIS: Record<number, string> = {
 interface NavButtonProps {
   onClick: () => void
   disabled: boolean
+  allowDisabledClick?: boolean
   direction: 'prev' | 'next'
   isLast?: boolean
   id: string
   label: string
 }
 
-function NavButton({ onClick, disabled, direction, isLast, id, label }: NavButtonProps) {
+function NavButton({
+  onClick,
+  disabled,
+  allowDisabledClick = false,
+  direction,
+  isLast,
+  id,
+  label,
+}: NavButtonProps) {
   const isPrev = direction === 'prev'
 
   const baseStyle: React.CSSProperties = {
@@ -121,7 +162,7 @@ function NavButton({ onClick, disabled, direction, isLast, id, label }: NavButto
   return (
     <motion.button
       id={id}
-      onClick={disabled ? undefined : onClick}
+      onClick={disabled && !allowDisabledClick ? undefined : onClick}
       aria-label={label}
       aria-disabled={disabled}
       type="button"
@@ -233,7 +274,10 @@ function ProgressDots({
                 }}
                 aria-hidden="true"
               >
-                {PAGE_EMOJIS[currentPage] ?? '●'}
+                {(() => {
+                  const PageIcon = PAGE_ICONS[currentPage] ?? Search
+                  return <PageIcon size={16} color="currentColor" aria-hidden="true" />
+                })()}
               </motion.span>
             )}
           </motion.button>
@@ -259,7 +303,7 @@ function PageInfo({
   pageLabel?: string
   onGoTo?: (index: number) => void
 }) {
-  const emoji = PAGE_EMOJIS[currentPage] ?? '📄'
+  const PageIcon = PAGE_ICONS[currentPage] ?? BookOpen
   const [pageInput, setPageInput] = useState(String(currentPage + 1))
 
   const commitPageInput = () => {
@@ -298,14 +342,9 @@ function PageInfo({
           style={{ textAlign: 'center', width: '100%' }}
         >
           <HStack gap={1} justify="center" wrap="nowrap">
-            <Text
-              fontSize="14px"
-              lineHeight="1"
-              aria-hidden="true"
-              style={{ flexShrink: 0 }}
-            >
-              {emoji}
-            </Text>
+            <Box color="green.600" lineHeight="1" flexShrink={0}>
+              <PageIcon size={16} color="currentColor" aria-hidden="true" />
+            </Box>
             {pageLabel && (
               <Text
                 fontSize={{ base: '0.62rem', sm: '0.7rem' }}
@@ -405,9 +444,11 @@ export default function PageNavigation({
   onPrev,
   onNext,
   onGoTo,
+  nextDisabled = false,
 }: PageNavigationProps) {
   const isFirst = currentPage === 0
   const isLast  = currentPage === totalPages - 1
+  const isNextDisabled = isLast || nextDisabled
 
   return (
     <Box
@@ -430,6 +471,11 @@ export default function PageNavigation({
       pt={4}
       pb="max(16px, env(safe-area-inset-bottom))"
       px={{ base: 2, sm: 4 }}
+      css={{
+        "@media (max-width: 639px)": {
+          paddingInline: 0,
+        },
+      }}
     >
       {/* Barra de progresso */}
       <Box
@@ -499,9 +545,16 @@ export default function PageNavigation({
             id="nav-btn-next"
             direction="next"
             onClick={onNext}
-            disabled={isLast}
+            disabled={isNextDisabled}
+            allowDisabledClick={nextDisabled && !isLast}
             isLast={isLast}
-            label={isLast ? 'Última página — cartilha concluída' : 'Próxima página'}
+            label={
+              isLast
+                ? 'Última página — cartilha concluída'
+                : nextDisabled
+                  ? 'Responda a todas as questões para avançar'
+                  : 'Próxima página'
+            }
           />
         </Box>
       </Flex>

@@ -9,6 +9,7 @@ interface PageControllerProps {
   onPrev: () => void
   onNext: () => void
   onGoTo?: (index: number) => void
+  nextDisabled?: boolean
 }
 
 export default function PageController({
@@ -17,6 +18,7 @@ export default function PageController({
   onPrev,
   onNext,
   onGoTo,
+  nextDisabled = false,
 }: PageControllerProps) {
   const page = CARTILHA_PAGES[currentPage]
   const pageLabel = page?.label ?? `Página ${currentPage + 1}`
@@ -29,6 +31,7 @@ export default function PageController({
       onPrev={onPrev}
       onNext={onNext}
       onGoTo={onGoTo}
+      nextDisabled={nextDisabled}
     />
   )
 }

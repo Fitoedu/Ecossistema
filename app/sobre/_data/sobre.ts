@@ -22,7 +22,7 @@ export const sobreContent: SobreContent = {
     heading: 'História do Projeto',
     paragraphs: [
       'Originado como um Trabalho de Conclusão de Curso (TCC), o EducaFito foi idealizado para suprir uma lacuna histórica na comunicação de riscos e práticas agronômicas na região Norte do Brasil, com foco especial no estado do Amapá.',
-      'A barreira da linguagem técnica frequentemente afastava produtores rurais familiares, estudantes e a comunidade em geral do conhecimento vital sobre pragas e doenças vegetais. A criação da personagem "Dona Fito" e a digitalização do conteúdo através de cartilhas interativas marcaram o início de uma nova era na extensão rural digital.',
+      'A barreira da linguagem técnica frequentemente afastava produtores rurais familiares, estudantes e a comunidade em geral do conhecimento vital sobre pragas agrícolas e doenças vegetais. A criação da personagem "Dona Fito" e a digitalização do conteúdo através de cartilhas interativas marcaram o início de uma nova era na extensão rural digital.',
     ],
   },
   porqueDigital: {

@@ -8,7 +8,7 @@
  */
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   Box,
@@ -37,7 +37,6 @@ import {
   FileText,
 } from 'lucide-react'
 import type { AmapaCaseData, SymptomItem, CombatAction } from '../../../data/amapa-cases-data'
-import { getThreatLabel, getThreatColors } from '../../../data/amapa-cases-data'
 
 /* ─── Tipos ───────────────────────────────────────────────────────────────── */
 
@@ -72,6 +71,22 @@ function getModalColors(level: AmapaCaseData['threatLevel']) {
       sectionText: '#991B1B',
       indicatorGrad: 'linear-gradient(90deg, #DC2626, #EF4444)',
       iconBg: '#DC2626',
+    }
+  }
+  if (level === 'quarentenaria-ausente') {
+    return {
+      headerBg: 'linear-gradient(135deg, #A16207, #CA8A04)',
+      badgeBg: '#FFFBEB',
+      badgeBorder: '#FDE68A',
+      badgeText: '#92400E',
+      tabActive: '#CA8A04',
+      tabActiveBg: '#FFFBEB',
+      tabActiveBorder: '#FDE68A',
+      sectionBg: '#FFFBEB',
+      sectionBorder: '#FDE68A',
+      sectionText: '#92400E',
+      indicatorGrad: 'linear-gradient(90deg, #CA8A04, #EAB308)',
+      iconBg: '#CA8A04',
     }
   }
   if (level === 'alerta-critico') {
@@ -157,7 +172,7 @@ function DossierImage({ src, alt, light = false }: { src: string; alt: string; l
 }
 
 /** Imagem de detalhe do sintoma */
-function SymptomDetailImage({ src, alt }: { src: string; alt: string }) {
+function SymptomDetailImage({ src, alt, credit }: { src: string; alt: string; credit?: string }) {
   const [hasError, setHasError] = useState(false)
   if (hasError || !src) return null
 
@@ -181,6 +196,20 @@ function SymptomDetailImage({ src, alt }: { src: string; alt: string }) {
         style={{ objectFit: 'cover' }}
         onError={() => setHasError(true)}
       />
+      {credit && (
+        <Text
+          position="absolute"
+          left={2}
+          right={2}
+          bottom={1}
+          color="white"
+          fontSize="0.58rem"
+          lineHeight="1.2"
+          textShadow="0 1px 3px rgba(0,0,0,0.8)"
+        >
+          {credit}
+        </Text>
+      )}
     </Box>
   )
 }
@@ -203,30 +232,12 @@ function TabInvasor({ item, mc }: { item: AmapaCaseData; mc: ReturnType<typeof g
         bg="gray.100"
       >
         <DossierImage src={item.invasorImageSrc} alt={item.invasorImageAlt} light />
-        {/* Badge sobreposto */}
-        <Box
-          position="absolute"
-          bottom={3}
-          left={3}
-          display="flex"
-          alignItems="center"
-          gap="5px"
-          px={2.5}
-          py={1}
-          borderRadius="full"
-          bg="rgba(255,255,255,0.92)"
-          border="1px solid"
-          borderColor={mc.badgeBorder}
-          color={mc.badgeText}
-          fontSize="0.6rem"
-          fontWeight="800"
-          letterSpacing="0.07em"
-          boxShadow="0 1px 6px rgba(0,0,0,0.1)"
-        >
-          <MapPin size={9} aria-hidden="true" />
-          {getThreatLabel(item.threatLevel)} — Amapá
-        </Box>
       </Box>
+      {item.invasorCredit && (
+        <Text fontSize="0.62rem" color="gray.500" lineHeight="1.3">
+          {item.invasorCredit}
+        </Text>
+      )}
 
       {/* Headline */}
       <Box>
@@ -344,7 +355,11 @@ function TabDiagnostico({ item, mc }: { item: AmapaCaseData; mc: ReturnType<type
                 </Box>
               </HStack>
               {symptom.imageSrc && (
-                <SymptomDetailImage src={symptom.imageSrc} alt={symptom.imageAlt ?? ''} />
+                <SymptomDetailImage
+                  src={symptom.imageSrc}
+                  alt={symptom.imageAlt ?? ''}
+                  credit={symptom.credit}
+                />
               )}
             </Box>
           </motion.div>
@@ -528,6 +543,11 @@ interface AmapaDossierModalProps {
 
 export default function AmapaDossierModal({ item, onClose }: AmapaDossierModalProps) {
   const [activeTab, setActiveTab] = useState<TabId>('invasor')
+  const contentRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    contentRef.current?.scrollTo({ top: 0, behavior: 'auto' })
+  }, [activeTab])
 
   function handleOpenChange(details: { open: boolean }) {
     if (!details.open) {
@@ -580,7 +600,7 @@ export default function AmapaDossierModal({ item, onClose }: AmapaDossierModalPr
                 >
                   {/* Imagem de fundo */}
                   <Box position="absolute" inset={0} bg="gray.200">
-                    <DossierImage src={item.cardImageSrc} alt={item.cardImageAlt} light />
+                    <DossierImage src={item.imageSrc} alt={item.cardImageAlt} light />
                   </Box>
 
                   {/* Gradiente de legibilidade */}
@@ -592,7 +612,6 @@ export default function AmapaDossierModal({ item, onClose }: AmapaDossierModalPr
                     }}
                     pointerEvents="none"
                   />
-
                   {/* Faixa colorida no topo */}
                   <Box
                     position="absolute"
@@ -629,7 +648,7 @@ export default function AmapaDossierModal({ item, onClose }: AmapaDossierModalPr
                   </Box>
 
                   {/* Botão Fechar */}
-                  <DialogCloseTrigger asChild position="absolute" top={3} right={3} zIndex={10}>
+                  <DialogCloseTrigger asChild position="absolute" top={4} right={4} zIndex={10}>
                     <Box
                       as="button"
                       w="34px"
@@ -753,9 +772,11 @@ export default function AmapaDossierModal({ item, onClose }: AmapaDossierModalPr
 
                 {/* ── Conteúdo da aba ativa ── */}
                 <Box
+                  ref={contentRef}
                   overflowY="auto"
                   px={{ base: 4, sm: 5 }}
                   py={{ base: 5, sm: 6 }}
+                  pb={{ base: 8, sm: 10 }}
                   bg="gray.50"
                   flex={1}
                   css={{

@@ -6,7 +6,7 @@
  * Atividade interativa de classificação fitossanitária.
  *
  * O estudante distribui cartões de ações agrícolas em duas caixas:
- *   • Zona SEGURA  — práticas que protegem a lavoura
+ *   • Zona SEGURA  — práticas que protegem a roça
  *   • Zona de RISCO — ações que favorecem pragas e doenças
  *
  * Interação híbrida:
@@ -40,6 +40,21 @@ export interface SorterCard {
 type Zone = "safe" | "risk";
 type CardState = "pool" | Zone;
 
+function getPointerCoordinates(
+  event: MouseEvent | TouchEvent | PointerEvent,
+): { x: number; y: number } | null {
+  if ("clientX" in event && "clientY" in event) {
+    return { x: event.clientX, y: event.clientY };
+  }
+
+  if ("changedTouches" in event) {
+    const touch = event.changedTouches[0] ?? event.touches[0];
+    if (touch) return { x: touch.clientX, y: touch.clientY };
+  }
+
+  return null;
+}
+
 interface CardEntry extends SorterCard {
   state: CardState;
   /** null = não classificado ainda; true/false = acertou/errou */
@@ -60,7 +75,7 @@ const DEFAULT_CARDS: SorterCard[] = [
     text: "Usar sementes e mudas certificadas pelo MAPA",
     correct: "safe",
     explanation:
-      "Sementes certificadas garantem material livre de pragas e doenças desde o início do ciclo produtivo.",
+      "Sementes certificadas garantem material livre de pragas agrícolas e doenças desde o início do ciclo produtivo.",
   },
   {
     id: "c2",
@@ -88,11 +103,11 @@ const DEFAULT_CARDS: SorterCard[] = [
     text: "Ignorar manchas e sintomas nas folhas até a colheita",
     correct: "risk",
     explanation:
-      "Sintomas precoces não tratados permitem que a praga se reproduza e contamine toda a lavoura.",
+      "Sintomas precoces não tratados permitem que a praga agrícola se reproduza e contamine todo o cultivo agrícola.",
   },
   {
     id: "c6",
-    text: "Usar ferramentas sujas provenientes de lavouras infectadas",
+    text: "Usar ferramentas sujas provenientes de cultivos agrícolas infectados",
     correct: "risk",
     explanation:
       "Implementos sem higienização são vetores mecânicos que dispersam fungos, bactérias e vírus.",
@@ -148,6 +163,7 @@ interface SortableCardProps {
   isSelected: boolean;
   onSelect: () => void;
   onDrop: (zone: Zone) => void;
+  onDragZoneChange: (zone: Zone | null) => void;
   /** Largura da zona segura e risco (para calcular destino do drag) */
   safeRef: React.RefObject<HTMLDivElement | null>;
   riskRef: React.RefObject<HTMLDivElement | null>;
@@ -158,9 +174,11 @@ function SortableCard({
   isSelected,
   onSelect,
   onDrop,
+  onDragZoneChange,
   safeRef,
   riskRef,
 }: SortableCardProps) {
+  const hasDragged = useRef(false);
   const isDone = entry.state !== "pool";
   const isCorrect = entry.verdict === true;
   const isWrong = entry.verdict === false;
@@ -206,10 +224,24 @@ function SortableCard({
       dragSnapToOrigin
       dragMomentum={false}
       dragElastic={0.12}
-      onDragEnd={(_, info) => {
-        if (isDone) return;
-        const zone = resolveDropZone(info.point.x, info.point.y);
-        if (zone) onDrop(zone);
+      onPointerDownCapture={() => {
+        hasDragged.current = false;
+      }}
+      onDragStart={() => {
+        hasDragged.current = true;
+        onDragZoneChange(null);
+      }}
+      onDrag={(event) => {
+        const point = getPointerCoordinates(event);
+        onDragZoneChange(
+          point ? resolveDropZone(point.x, point.y) : null,
+        );
+      }}
+      onDragEnd={(event) => {
+        const point = getPointerCoordinates(event);
+        const zone = point ? resolveDropZone(point.x, point.y) : null;
+        onDragZoneChange(null);
+        if (!isDone && zone) onDrop(zone);
       }}
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
@@ -250,10 +282,15 @@ function SortableCard({
             : {}
         }
         onClick={() => {
+          if (hasDragged.current) {
+            hasDragged.current = false;
+            return;
+          }
           if (!isDone) onSelect();
         }}
         onKeyDown={(e) => {
           if (!isDone && (e.key === "Enter" || e.key === " ")) {
+            hasDragged.current = false;
             e.preventDefault();
             onSelect();
           }
@@ -280,7 +317,7 @@ function SortableCard({
             flexShrink={0}
             fontSize="xs"
             fontWeight="bold"
-            aria-label={`Cartao ${getCardNumber(entry.id)}`}
+            aria-label={`Cartão ${getCardNumber(entry.id)}`}
           >
             {getCardNumber(entry.id)}
           </Box>
@@ -539,7 +576,7 @@ function DropZone({
                 flexShrink={0}
                 fontSize="xs"
                 fontWeight="bold"
-                aria-label={`Cartao ${getCardNumber(c.id)}`}
+                aria-label={`Cartão ${getCardNumber(c.id)}`}
               >
                 {getCardNumber(c.id)}
               </Box>
@@ -783,6 +820,11 @@ export default function DragAndDropSorter({
     [classify],
   );
 
+  const handleDragZoneChange = useCallback((zone: Zone | null) => {
+    setDragOverZone(zone);
+    setSelectedId(null);
+  }, []);
+
   // ── Reiniciar ─────────────────────────────────────────────────────────────
 
   const reset = useCallback(() => {
@@ -862,6 +904,7 @@ export default function DragAndDropSorter({
                     isSelected={selectedId === entry.id}
                     onSelect={() => handleSelect(entry.id)}
                     onDrop={(zone) => handleDrop(entry.id, zone)}
+                    onDragZoneChange={handleDragZoneChange}
                     safeRef={safeRef}
                     riskRef={riskRef}
                   />

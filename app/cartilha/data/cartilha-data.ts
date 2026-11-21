@@ -1,160 +1,130 @@
 /* ══════════════════════════════════════════════════════════════════════════
    cartilha-data.ts — EducaFito
-   Refatoração completa: 21 páginas | Persona Dona Fito | imageSrc | Flaps
+   Refatoração completa: 20 páginas | Persona Dona Fito | imageSrc
    Versão: 2.0.0
 ══════════════════════════════════════════════════════════════════════════ */
 
-import { Avatar } from "@chakra-ui/react"
-import { ElementType } from "react"
-import { Droplet, Leaf, Sprout } from "lucide-react"
+import { ElementType } from "react";
+import { Droplet, Leaf, Sprout } from "lucide-react";
 
 /* ─────────────────────────────────────────────────────────────────────────
    PRIMITIVOS COMPARTILHADOS
 ───────────────────────────────────────────────────────────────────────── */
 
 /** Variantes de callout/alerta disponíveis no design system */
-export type CalloutVariant = 'green' | 'yellow' | 'red'
-
-/** Variante de acento do LiftTheFlap */
-export type FlapAccent = 'green' | 'yellow' | 'red' | 'teal'
+export type CalloutVariant = "green" | "yellow" | "red";
 
 /** Categoria de microorganismo para o hotspot */
-export type MicroorgCategory = 'fungo' | 'bacteria' | 'virus' | 'fitoplasma'
-
-/** Tipo de interação da página — usado para selecionar o layout correto */
-export type InteractionType =
-  | 'standard'       // Página de conteúdo textual clássico
-  | 'lift-the-flap'  // Abas interativas (LiftTheFlap)
-  | 'hotspot'        // Lente de Investigação (Hotspot Interativo)
-  | 'quiz'           // Quiz auto-contido
-  | 'find-the-hero'  // Mini-jogo: Encontre o Herói
-  | 'cover'          // Capa da cartilha
-  | 'closing'        // Página de encerramento
+export type MicroorgCategory =
+  | "fungo"
+  | "bacteria"
+  | "virus"
+  | "fitoplasma"
+  | "nematoide"
+  | "protozoario";
 
 /** Emoções possíveis da persona Dona Fito */
 export type PersonaEmotion =
-  | 'happy'        // Feliz e animada
-  | 'thinking'     // Pensativa / didática
-  | 'pointing'     // Apontando / chamando atenção
-  | 'alert'        // Alarmada / alertando perigo
-  | 'celebrating'  // Comemorando / parabenizando
+  | "happy" // Feliz e animada
+  | "thinking" // Pensativa / didática
+  | "pointing" // Apontando / chamando atenção
+  | "alert" // Alarmada / alertando perigo
+  | "celebrating"; // Comemorando / parabenizando
 
 /** Bloco de presença da Dona Fito em cada página */
 export interface PersonaBlock {
   /** Fala da Dona Fito com linguagem acessível (Ensino Básico) */
-  personaText: string
+  personaText: string;
   /** Emoção que define qual ilustração da Dona Fito é exibida */
-  personaEmotion: PersonaEmotion
+  personaEmotion: PersonaEmotion;
   /**
    * Caminho para a imagem da variante de emoção da Dona Fito.
    * Ex.: /assets/dona-fito/dona-fito-happy.png
    */
-  personaImageSrc: string
+  personaImageSrc: string;
 }
 
 /** Um item de callout (caixa de destaque informativo) */
 export interface CalloutData {
-  variant: CalloutVariant
-  /**
-   * Substituímos icon: string (emoji) por imageSrc: string.
-   * Recebe o caminho para ícone SVG/PNG do design system.
-   */
-  imageSrc: string
-  title: string
-  text: string
-  imageSize?: number
-  imageCircular?: boolean
-}
-
-/**
- * Uma aba do componente LiftTheFlap (Lapbook Interativo).
- * frontEmoji/frontText foram substituídos por coverTitle + coverImageSrc.
- */
-export interface FlapData {
-  id: string
-  /** Título exibido na capa da aba (frente) */
-  coverTitle: string
-  /** Imagem exibida na frente da aba (substituiu frontEmoji) */
-  coverImageSrc: string
-  /** Texto de apoio na capa da aba (ex.: "Clique para descobrir!") */
-  coverHint?: string
-  /** Conteúdo textual revelado ao "levantar" a aba */
-  content: string
-  /** Imagem opcional revelada no verso da aba */
-  contentImageSrc?: string
-  backAccent?: FlapAccent
+  variant: CalloutVariant;
+  title: string;
+  text: string;
 }
 
 /** Card de imagem do grid visual — usa imageSrc em vez de emoji */
 export interface ImageCardData {
-  imageSrc: string
-  label: string
+  imageSrc: string;
+  label: string;
   /** Texto alternativo para acessibilidade */
-  alt: string
+  alt: string;
   /** Define o estilo do card. 'icon' (default) ou 'full' para preencher. */
-  display?: 'icon' | 'full'
+  display?: "icon" | "full";
 }
 
 /** Ficha interativa de uma planta invasora */
 export interface InvasivePlantCardData extends ImageCardData {
-  whatItSteals: string
-  impact: string
+  whatItSteals: string;
+  impact: string;
+  credito: string;
 }
 
-/** Ficha interativa de um aliado natural da lavoura */
+/** Ficha interativa de um aliado natural da roça */
 export interface AllyCardData extends ImageCardData {
-  role: string
-  benefit: string
-}
-
-/** Uma tag de categoria (cover-tags, etc.) */
-export interface TagData {
-  label: string
+  role: string;
+  benefit: string;
+  credito: string;
 }
 
 /** Card de estatística para páginas de impacto */
 export interface StatCardData {
-  gradient: string
-  icon?: ElementType
-  imageSrc?: string
-  stat: string
-  label: string
-  textColor: string
+  gradient: string;
+  icon?: ElementType;
+  imageSrc?: string;
+  stat: string;
+  label: string;
+  textColor: string;
 }
 
 /** Item de impacto com imagem */
 export interface ImpactItemData {
-  imageSrc: string
-  title: string
-  desc: string
+  imageSrc: string;
+  title: string;
+  desc: string;
+  imageCredit?: string;
 }
 
 /** Item de órgão/ator */
 export interface OrgaoItemData {
-  imageSrc: string
-  name: string
-  desc: string
-}
-
-/** Detalhe de uma ficha técnica de praga */
-export interface CaseDetailData {
-  imageSrc: string
-  label: string
-  value: string
+  imageSrc: string;
+  imageFit?: "cover" | "contain";
+  name: string;
+  desc: string;
+  details: string;
+  impact?: string;
+  credit?: string;
+  links?: {
+    label: string;
+    url: string;
+  }[];
+  pillars?: {
+    title: string;
+    text: string;
+  }[];
 }
 
 /** Item da cadeia de impacto */
 export interface ChainItemData {
-  imageSrc: string
-  text: string
-  studentImpact?: string
+  imageSrc: string;
+  text: string;
+  studentImpact?: string;
+  credit: string;
 }
 
 /** Pilar da página de encerramento */
 export interface PillarData {
-  imageSrc: string
-  label: string
-  sub: string
+  imageSrc: string;
+  label: string;
+  sub: string;
 }
 
 /**
@@ -163,32 +133,29 @@ export interface PillarData {
  */
 export interface HotspotItemData {
   /** Identificador único */
-  id: string
+  id: string;
   /** Nome da doença/patógeno */
-  name: string
+  name: string;
+  /** Exemplo de doença associada ao grupo */
+  diseaseName: string;
   /** Categoria para coloração do badge */
-  category: MicroorgCategory
-  /** URL da imagem de fundo do card (foto da doença na folha/fruto) */
-  backgroundImageSrc: string
+  category: MicroorgCategory;
+  /** Imagem real do sintoma ou doença exibida no card e no modal */
+  image: string;
   /** Texto principal de explicação */
-  concept: string
+  concept: string;
+  /** Sintomas descritos em linguagem acessível */
+  symptomsText: string;
+  /** Texto alternativo da imagem do sintoma ou doença */
+  imageAlt: string;
   /** Como o agente causador se dissemina no campo */
-  spreadText: string
+  spreadText: string;
+  /** Crédito da imagem exibido no rodapé do modal */
+  credito: string;
   /** Texto de alerta/impacto (aparece em destaque vermelho) */
-  impactText?: string
+  impactText?: string;
   /** Texto de prevenção (aparece em destaque amarelo) */
-  preventionText?: string
-}
-
-/** Card de alerta de praga quarentenária */
-export interface PragaAlertCardData {
-  bg: string
-  imageSrc: string
-  title: string
-  desc: string
-  status: string
-  economicRisk: string
-  howToAct: string
+  preventionText?: string;
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -196,147 +163,135 @@ export interface PragaAlertCardData {
 ══════════════════════════════════════════════════════════════════════════ */
 
 /**
- * CAPA — Página 0
+ * CAPA — Página 1
  */
+export interface CoverComparisonImageData {
+  imageSrc: string;
+  label: string;
+  imageCredit: string;
+}
+
+export interface CoverComparisonData {
+  before: CoverComparisonImageData;
+  after: CoverComparisonImageData;
+  altText: string;
+}
+
 export interface PageCoverData extends PersonaBlock {
-  type: 'cover'
-  interactionType: 'cover'
-  id: string
-  label: string
-  title: string
-  highlight: string
-  subtitle: string
-  coverImageSrc: string
-  tags: TagData[]
+  type: "cover";
+  interactionType: "cover";
+  id: string;
+  label: string;
+  title: string;
+  highlight: string;
+  subtitle: string;
+  imageComparison: CoverComparisonData;
 }
 
 /**
  * CONTEÚDO PADRÃO — Páginas de texto com image-grid e callouts
  */
 export interface PageContentData extends PersonaBlock {
-  type: 'content'
-  interactionType: 'standard'
-  id: string
-  label: string
-  badgeLabel: string
-  title: string
-  titleHighlight?: string
-  titleSuffix?: string
-  topCallout?: CalloutData
-  leadText: string
-  imageCards?: ImageCardData[]
-  invasiveCards?: InvasivePlantCardData[]
-  allyCards?: AllyCardData[]
-  callouts?: CalloutData[]
-  midSectionHeading?: string
-  midSectionText?: string
-  heroImageSrc?: string
+  type: "content";
+  interactionType: "standard";
+  id: string;
+  label: string;
+  badgeLabel: string;
+  title: string;
+  titleHighlight?: string;
+  titleSuffix?: string;
+  topCallout?: CalloutData;
+  leadText: string;
+  imageCards?: ImageCardData[];
+  invasiveCards?: InvasivePlantCardData[];
+  allyCards?: AllyCardData[];
+  callouts?: CalloutData[];
+  midSectionHeading?: string;
+  midSectionText?: string;
 }
 
 /**
- * LAPBOOK — Página com LiftTheFlap interativo
+ * LAPBOOK — Página com abas interativas
  */
 export interface PageLapbookData extends PersonaBlock {
-  type: 'lapbook'
-  interactionType: 'lift-the-flap'
-  id: string
-  label: string
-  badgeLabel: string
-  lapbookBadge: string
-  lapbookTitle: string
-  lapbookSubtitle: string
-  flaps: FlapData[]
-  columns?: 2 | 3
-  callouts?: CalloutData[]
-  backgroundImageSrc?: string
+  type: "lapbook";
+  interactionType: "lift-the-flap";
+  id: string;
+  label: string;
+  badgeLabel: string;
+  lapbookBadge: string;
+  lapbookTitle: string;
+  lapbookSubtitle: string;
+  callouts?: CalloutData[];
 }
 
 /**
  * IMPACTO — Página com cards de estatísticas
  */
 export interface PageImpactData extends PersonaBlock {
-  type: 'impact'
-  interactionType: 'standard'
-  id: string
-  label: string
-  badgeLabel: string
-  title: string
-  titleHighlight?: string
-  leadText: string
-  statCards: StatCardData[]
-  impacts: ImpactItemData[]
-  heroImageSrc?: string
+  type: "impact";
+  interactionType: "standard";
+  id: string;
+  label: string;
+  badgeLabel: string;
+  title: string;
+  titleHighlight?: string;
+  leadText: string;
+  pestGroups?: string[];
+  statCards: StatCardData[];
+  impacts: ImpactItemData[];
 }
 
 /**
  * ALERTA — Página com alert box (pragas quarentenárias)
  */
 export interface PageAlertData extends PersonaBlock {
-  type: 'alert'
-  interactionType: 'standard'
-  id: string
-  label: string
-  badgeLabel: string
-  title: string
-  titleHighlight?: string
-  leadText: string
-  alertImageSrc: string
-  alertTitle: string
-  alertText: string
-  callouts?: CalloutData[]
-  pragaCards?: PragaAlertCardData[]
+  type: "alert";
+  interactionType: "standard";
+  id: string;
+  label: string;
+  badgeLabel: string;
+  title: string;
+  titleHighlight?: string;
+  leadText: string;
+  alertImageSrc: string;
+  alertTitle: string;
+  alertText: string;
+  callouts?: CalloutData[];
 }
 
 /**
  * LISTA DE ÓRGÃOS / ATORES — Quem cuida?
  */
 export interface PageOrgaosData extends PersonaBlock {
-  type: 'orgaos'
-  interactionType: 'standard'
-  id: string
-  label: string
-  badgeLabel: string
-  title: string
-  titleHighlight?: string
-  titleSuffix?: string
-  leadText: string
-  items: OrgaoItemData[]
-  heroImageSrc?: string
-}
-
-/**
- * CASO REAL — Fichas técnicas de pragas regionais
- */
-export interface PageCaseData extends PersonaBlock {
-  type: 'case'
-  interactionType: 'standard'
-  id: string
-  label: string
-  heroVariant: 'green' | 'amber' | 'teal' | 'red' | 'purple'
-  heroImageSrc: string
-  heroTitle: string
-  heroSubtitle: string
-  details: CaseDetailData[]
-  callouts: CalloutData[]
+  type: "orgaos";
+  interactionType: "standard";
+  id: string;
+  label: string;
+  badgeLabel: string;
+  title: string;
+  titleHighlight?: string;
+  titleSuffix?: string;
+  leadText: string;
+  items: OrgaoItemData[];
 }
 
 /**
  * IMPACTO CADEIA — "Sem Fitossanidade = menos comida na mesa"
  */
 export interface PageChainData extends PersonaBlock {
-  type: 'chain'
-  interactionType: 'standard'
-  id: string
-  label: string
-  badgeLabel: string
-  heroTitle: string
-  heroHighlight: string
-  heroSubtitle: string
-  sectionHeading: string
-  leadText: string
-  chainItems: ChainItemData[]
-  callouts?: CalloutData[]
-  heroImageSrc?: string
+  type: "chain";
+  interactionType: "standard";
+  id: string;
+  label: string;
+  badgeLabel: string;
+  heroTitle: string;
+  heroHighlight: string;
+  heroSubtitle: string;
+  sectionHeading: string;
+  leadText: string;
+  chainItems: ChainItemData[];
+  callouts?: CalloutData[];
 }
 
 /**
@@ -344,67 +299,67 @@ export interface PageChainData extends PersonaBlock {
  * Os dados do Quiz estão em Quiz.tsx pois são parte da lógica do componente.
  */
 export interface PageQuizData extends PersonaBlock {
-  type: 'quiz'
-  interactionType: 'quiz'
-  id: string
-  label: string
-  badgeLabel: string
+  type: "quiz";
+  interactionType: "quiz";
+  id: string;
+  label: string;
+  badgeLabel: string;
 }
 
 /**
  * FIND THE HERO — Mini-jogo interativo
  */
 export interface PageFindTheHeroData extends PersonaBlock {
-  type: 'find-the-hero'
-  interactionType: 'find-the-hero'
-  id: string
-  label: string
-  badgeLabel: string
-  title: string
-  subtitle: string
+  type: "find-the-hero";
+  interactionType: "find-the-hero";
+  id: string;
+  label: string;
+  badgeLabel: string;
+  title: string;
+  subtitle: string;
   characters: {
-    id: string
-    imageSrc: string
-    name: string
-    isHero: boolean
-    revealText: string
-  }[]
-  callouts?: CalloutData[]
+    id: string;
+    imageSrc: string;
+    name: string;
+    isHero: boolean;
+    revealText: string;
+  }[];
+  callouts?: CalloutData[];
 }
 
 /**
  * ENCERRAMENTO
  */
 export interface PageClosingData extends PersonaBlock {
-  type: 'closing'
-  interactionType: 'closing'
-  id: string
-  label: string
-  heroImageSrc: string
-  heroTitle: string
-  heroSubtitle: string
-  pillars: PillarData[]
-  ctaText: string
-  ctaSub: string
-  callout: CalloutData
-  footerText: string
+  type: "closing";
+  interactionType: "closing";
+  id: string;
+  label: string;
+  heroImageSrc: string;
+  heroTitle: string;
+  heroSubtitle: string;
+  pillars: PillarData[];
+  ctaText: string;
+  ctaSub: string;
+  callout: CalloutData;
+  footerText: string;
 }
 
 /**
  * HOTSPOT — Página de Lente de Investigação com imagens interativas
  */
 export interface PageHotspotData extends PersonaBlock {
-  type: 'hotspot'
-  interactionType: 'hotspot'
-  id: string
-  label: string
-  badgeLabel: string
-  title: string
-  titleHighlight?: string
-  titleSuffix?: string
-  leadText: string
-  items: HotspotItemData[]
-  callouts?: CalloutData[]
+  type: "hotspot";
+  interactionType: "hotspot";
+  id: string;
+  label: string;
+  badgeLabel: string;
+  title: string;
+  titleHighlight?: string;
+  titleSuffix?: string;
+  leadText: string;
+  items: HotspotItemData[];
+  callouts?: CalloutData[];
 }
 
 /**
@@ -412,35 +367,73 @@ export interface PageHotspotData extends PersonaBlock {
  */
 export interface PestGalleryItemData {
   /** Identificador único do item */
-  id: number
+  id: number;
   /** Nome popular da praga */
-  name: string
+  name: string;
   /** Caminho da imagem representativa */
-  imageSrc: string
+  imageSrc: string;
+  /** Crédito da imagem representativa */
+  imageCredit: string;
   /** Descrição didática exibida no modal */
-  description: string
+  description: string;
   /** Tipo de dano causado na planta */
-  damageType?: string
+  damageType?: string;
   /** Dica para identificação em campo */
-  fieldTip?: string
+  fieldTip?: string;
 }
 
 /**
- * GALERIA DE PRAGAS — Página 05 (substitui Lapbook)
+ * GALERIA DE PRAGAS — Página 06 (substitui Lapbook)
  * Grid de cards clicáveis que abrem modais informativos via Chakra UI.
  */
 export interface PagePestGalleryData extends PersonaBlock {
-  type: 'pest-gallery'
-  interactionType: 'standard'
-  id: string
-  label: string
-  badgeLabel: string
-  title: string
-  titleHighlight?: string
-  titleSuffix?: string
-  leadText: string
-  pestGalleryItems: PestGalleryItemData[]
-  callouts?: CalloutData[]
+  type: "pest-gallery";
+  interactionType: "standard";
+  id: string;
+  label: string;
+  badgeLabel: string;
+  title: string;
+  titleHighlight?: string;
+  titleSuffix?: string;
+  leadText: string;
+  pestGalleryItems: PestGalleryItemData[];
+  callouts?: CalloutData[];
+}
+
+/** PÁGINA DE APARELHOS BUCAIS — comparação interativa dos tipos de ataque */
+export interface MouthpartCardData {
+  id: "chewing" | "piercing-sucking";
+  name: string;
+  howItWorks: string;
+  plantDamage: string;
+  examples: string[];
+  imageSrc: string;
+  imageCredit: string;
+  imageAlt: string;
+}
+
+export interface PageMouthpartsData extends PersonaBlock {
+  type: "mouthparts";
+  interactionType: "mouthparts";
+  id: string;
+  label: string;
+  badgeLabel: string;
+  title: string;
+  leadText: string;
+  mouthparts: MouthpartCardData[];
+  tip: string;
+}
+
+/**
+ * AMAPA CASES — Pagina dos Casos Reais do Amapa com design Dossie Investigativo 3D.
+ * Renderiza o AmapaCasesSection (Antigravity + Glassmorphism).
+ */
+export interface PageAmapaCasesData extends PersonaBlock {
+  type: "amapa-cases";
+  interactionType: "standard";
+  id: string;
+  label: string;
+  badgeLabel: string;
 }
 
 /**
@@ -461,972 +454,1302 @@ export type CartilhaPageData =
   | PageContentData
   | PageLapbookData
   | PagePestGalleryData
+  | PageMouthpartsData
   | PageHotspotData
   | PageImpactData
   | PageAlertData
   | PageOrgaosData
-  | PageCaseData
   | PageChainData
   | PageQuizData
   | PageFindTheHeroData
   | PageClosingData
-  | PageAmapaCasesData
+  | PageAmapaCasesData;
 
 /* ══════════════════════════════════════════════════════════════════════════
-   DADOS — 22 ENTRADAS (Capa + 21 páginas)
+   DADOS — 20 ENTRADAS (Capa + 19 páginas)
 ══════════════════════════════════════════════════════════════════════════ */
 
 export const CARTILHA_PAGES: CartilhaPageData[] = [
-
   /* ─────────────────────────────────────────────────────
-     CAPA — Página 0
+     CAPA — Página 1
   ───────────────────────────────────────────────────── */
   {
-    type: 'cover',
-    interactionType: 'cover',
-    id: 'cover',
-    label: 'Capa',
-    title: 'Educação Fitossanitária\npara o Ensino Básico',
-    highlight: 'Fitossanitária',
+    type: "cover",
+    interactionType: "cover",
+    id: "p1",
+    label: "Capa",
+    title: "Educação Fitossanitária\npara o Ensino Básico",
+    highlight: "Fitossanitária",
     subtitle:
-      'Aprenda de forma fácil e divertida como proteger as plantas, garantir nossa alimentação e preservar a natureza.',
-    coverImageSrc: '/assets/cenarios/capa-planta-saudavel-vs-doente.png',
-    tags: [
-      { label: 'Fitossanidade' },
-      { label: 'Ciência' },
-      { label: 'Agricultura' },
-      { label: 'Pragas' },
-      { label: 'Amapá' },
-    ],
+      "Aprenda de forma fácil sobre fitossanidade, pragas agrícolas, aliados naturais e práticas sustentáveis para proteger nossos cultivos agrícolas.",
+    imageComparison: {
+      before: {
+        imageSrc: "/images/cartilha/capa/cultivo-saudavel.jpg",
+        label: "Cultivo agrícola saudável",
+        imageCredit: "Foto: Devi Puspita Amartha Yahya / Unsplash",
+      },
+      after: {
+        imageSrc: "/images/cartilha/capa/planta-afetada.jpg",
+        label: "Planta afetada",
+        imageCredit: "Foto: cottonbro studio / Pexels",
+      },
+      altText:
+        "Comparação entre um cultivo agrícola saudável e uma planta afetada por problemas fitossanitários",
+    },
     personaText:
-      'Olá! Eu sou a Dona Fito, sua guia nessa aventura! Seja bem-vindo a nossa cartilha! Vamos aprender juntos como cuidar das plantas e proteger nossa comida!',
-    personaEmotion: 'happy',
-    personaImageSrc: '/assets/dona-fito/dona-fito-happy.png',
+      "Olá! Eu sou a Dona Fito, sua guia nessa aventura! Seja bem-vindo à nossa cartilha! Vamos aprender juntos sobre pragas agrícolas, aliados naturais e manejo sustentável para cuidar das plantas e proteger nossa comida!",
+    personaEmotion: "happy",
+    personaImageSrc: "/assets/dona-fito/dona-fito-happy.png",
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 01 — APRESENTAÇÃO
+     PÁGINA 2 — APRESENTAÇÃO
   ───────────────────────────────────────────────────── */
   {
-    type: 'content',
-    interactionType: 'standard',
-    id: 'p01',
-    label: 'Apresentação',
-    badgeLabel: 'Apresentação',
-    title: 'Você sabia que ',
-    titleHighlight: 'plantas também ficam doentes?',
-    heroImageSrc: '/assets/cenarios/planta-saudavel-e-doente.png',
+    type: "content",
+    interactionType: "standard",
+    id: "p2",
+    label: "Apresentação",
+    badgeLabel: "Apresentação",
+    title: "Você sabia que ",
+    titleHighlight: "plantas também ficam doentes?",
     leadText:
-      'Nesta cartilha, você vai descobrir o mundo fascinante da Fitossanidade — a ciência que cuida da saúde das plantas. Vamos explorar juntos:',
+      "Nesta cartilha, você vai descobrir o mundo fascinante da Fitossanidade — a ciência que cuida da saúde das plantas. Vamos explorar juntos:",
     imageCards: [
-      { imageSrc: '/images/doencas/fitoplasma.webp', label: 'O que são pragas e doenças', alt: 'Ilustração de doença de planta causada por Fitoplasma', display: 'full' },
-      { imageSrc: '/images/agricultura/irrigation.webp', label: 'Como afetam a agricultura', alt: 'Imagem de sistema de irrigação em uma lavoura', display: 'full' },
-      { imageSrc: '/images/metodo de controle/pulverizacao correta.webp', label: 'Como nos protegemos delas', alt: 'Imagem de um agricultor aplicando defensivos corretamente', display: 'full' },
-      { imageSrc: '/images/pragas/mosca da carambola/1.webp', label: 'Casos reais do Amapá', alt: 'Imagem da Mosca da Carambola, uma praga relevante para o Amapá', display: 'full' },
+      {
+        imageSrc: "/images/doencas/fitoplasma.webp",
+        label: "O que são pragas agrícolas e doenças",
+        alt: "Ilustração de doença de planta causada por Fitoplasma",
+        display: "full",
+      },
+      {
+        imageSrc: "/images/agricultura/irrigation.webp",
+        label: "Como afetam a agricultura",
+        alt: "Imagem de sistema de irrigação em cultivos agrícolas",
+        display: "full",
+      },
+      {
+        imageSrc: "/images/metodo de controle/pulverizacao correta.webp",
+        label: "Como nos protegemos delas",
+        alt: "Imagem de um agricultor aplicando defensivos agrícolas corretamente",
+        display: "full",
+      },
+      {
+        imageSrc: "/images/pragas/mosca da carambola/1.webp",
+        label: "Casos reais do Amapá",
+        alt: "Imagem da Mosca da Carambola, uma praga agrícola relevante para o Amapá",
+        display: "full",
+      },
     ],
     topCallout: {
-      variant: 'green',
-      imageSrc: '/assets/dona_fito_meio_corpo.png',
-      title: 'Olá, futuro cientista!',
-      text: 'Assim como nós, humanos, podemos ficar gripados ou com febre, as plantas também podem ser atacadas por "vilões" que as deixam fracas, feias e improdutivas. Esses vilões se chamam pragas e doenças.',
+      variant: "green",
+      title: "Olá, futuro cientista!",
+      text: 'Assim como nós, humanos, podemos ficar gripados ou com febre, as plantas também podem ser atacadas por "vilões" que as deixam fracas, feias e improdutivas. Esses vilões se chamam pragas agrícolas e doenças.',
     },
     callouts: [
       {
-        variant: 'yellow',
-        imageSrc: '/assets/joaninha_corpo_todo.png',
-        title: 'Linguagem fácil para todos!',
-        text: 'Esta cartilha foi criada especialmente para estudantes como você. Não precisamos ser cientistas para entender e ajudar a proteger as plantas da nossa região!',
+        variant: "yellow",
+        title: "Linguagem fácil para todos!",
+        text: "Esta cartilha foi criada especialmente para estudantes como você. Não precisamos ser cientistas para entender e ajudar a proteger as plantas da nossa região!",
       },
     ],
     personaText:
-      'Olá! As plantas são como nós — elas também precisam de cuidado para crescer saudáveis. Preparado para descobrir como protegê-las?',
-    personaEmotion: 'happy',
-    personaImageSrc: '/assets/dona-fito/dona-fito-happy.png',
+      "Olá! As plantas são como nós — elas também precisam de cuidado para crescer saudáveis. Preparado para descobrir como protegê-las?",
+    personaEmotion: "happy",
+    personaImageSrc: "/assets/dona-fito/dona-fito-happy.png",
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 02 — O QUE É FITOSSANIDADE?
+     PÁGINA 3 — O QUE É FITOSSANIDADE?
   ───────────────────────────────────────────────────── */
   {
-    type: 'content',
-    interactionType: 'standard',
-    id: 'p02',
-    label: 'O que é Fitossanidade?',
-    badgeLabel: 'Conceito Base',
-    title: 'O que é ',
-    titleHighlight: 'Fitossanidade?',
-    heroImageSrc: '/assets/cenarios/cientista-observando-planta.png',
+    type: "content",
+    interactionType: "standard",
+    id: "p3",
+    label: "Fitossanidade",
+    badgeLabel: "Conceito Base",
+    title: "O que é ",
+    titleHighlight: "Fitossanidade?",
     leadText:
-      'A palavra Fitossânidade vem do grego phyton (planta) e do latim sanitas (saúde). É a área da ciência que cuida da saúde das plantas e garante que elas cresçam fortes e produtivas.',
+      "A palavra Fitossanidade vem do grego phyton (planta) e do latim sanitas (saúde). É a área da ciência que cuida da saúde das plantas e garante que elas cresçam fortes e produtivas.",
     imageCards: [
-      { imageSrc: '/assets/icones/lupa-icone.png', label: 'Estuda pragas e doenças', alt: 'Lupa de pesquisa' },
-      { imageSrc: '/assets/icones/escudo-icone.png', label: 'Previne e controla infestações', alt: 'Escudo de proteção' },
-      { imageSrc: '/assets/icones/fronteira-icone.png', label: 'Protege fronteiras do comércio', alt: 'Símbolo de fronteira' },
-      { imageSrc: '/assets/icones/ciencia-icone.png', label: 'Une ciência e agricultura', alt: 'Frasco de laboratorio' },
-      { imageSrc: '/assets/icones/prato-icone.png', label: 'Garante alimentos saudáveis', alt: 'Prato com comida' },
-      { imageSrc: '/assets/icones/biodiversidade-icone.png', label: 'Preserva a biodiversidade', alt: 'Folha verde' },
+      {
+        imageSrc: "/assets/icones/lupa-icone.png",
+        label: "Estuda pragas agrícolas e doenças",
+        alt: "Lupa de pesquisa",
+      },
+      {
+        imageSrc: "/assets/icones/escudo-icone.png",
+        label: "Previne e controla infestações",
+        alt: "Escudo de proteção",
+      },
+      {
+        imageSrc: "/assets/icones/fronteira-icone.png",
+        label: "Protege fronteiras do comércio",
+        alt: "Símbolo de fronteira",
+      },
+      {
+        imageSrc: "/assets/icones/ciencia-icone.png",
+        label: "Une ciência e agricultura",
+        alt: "Frasco de laboratorio",
+      },
+      {
+        imageSrc: "/assets/icones/prato-icone.png",
+        label: "Garante alimentos saudáveis",
+        alt: "Prato com comida",
+      },
+      {
+        imageSrc: "/assets/icones/biodiversidade-icone.png",
+        label: "Preserva a biodiversidade",
+        alt: "Folha verde",
+      },
     ],
-    midSectionHeading: 'Por que é importante?',
+    midSectionHeading: "Por que é importante?",
     midSectionText:
-      'Sem Fitossanidade, pragas e doenças se espalhariam livremente pelas lavouras, destruindo colheitas inteiras. Isso significaria menos comida, aumento de preços e danos ao meio ambiente.',
+      "Sem Fitossanidade, pragas agrícolas e doenças se espalhariam livremente pelos cultivos agrícolas, destruindo colheitas inteiras. Isso significaria menos comida, aumento de preços e danos ao meio ambiente.",
     callouts: [
       {
-        variant: 'green',
-        imageSrc: '/assets/dona_fito_meio_corpo.png',
-        title: 'Curiosidade!',
-        text: 'O Brasil é um dos maiores exportadores agrícolas do mundo. Por isso, cuidar da saúde das plantas é também cuidar da economia de milhões de famílias brasileiras!',
+        variant: "green",
+        title: "Curiosidade!",
+        text: "O Brasil é um dos maiores exportadores agrícolas do mundo. Por isso, cuidar da saúde das plantas é também cuidar da economia de milhões de famílias brasileiras!",
       },
     ],
     personaText:
       'Fito vem de "planta" e sanidade vem de "saúde"! Então Fitossanidade é literalmente a saúde das plantas. Pense em mim como a médica das plantas — e esse é meu nome mesmo!',
-    personaEmotion: 'thinking',
-    personaImageSrc: '/assets/dona-fito/dona-fito-thinking.png',
+    personaEmotion: "thinking",
+    personaImageSrc: "/assets/dona-fito/dona-fito-thinking.png",
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 03 — A FÁBRICA DE COMIDA
+     PÁGINA 4 — O QUE É UMA PRAGA AGRÍCOLA?
   ───────────────────────────────────────────────────── */
   {
-    type: 'content',
-    interactionType: 'standard',
-    id: 'p03',
-    label: 'A Fábrica de Comida',
-    badgeLabel: 'Agricultura',
-    title: 'As plantas são a nossa ',
-    titleHighlight: 'fábrica de comida!',
-    heroImageSrc: '/assets/cenarios/lavoura-produtiva-amapa.png',
+    type: "impact",
+    interactionType: "standard",
+    id: "p4",
+    label: "Praga Agrícola",
+    badgeLabel: "Conceito de Praga Agrícola",
+    title: "O que é uma ",
+    titleHighlight: "Praga Agrícola?",
     leadText:
-      'Tudo o que comemos — arroz, feijão, fruta, farinha — começou como uma semente ou muda numa lavoura. As plantas transformam água, luz do sol e nutrientes do solo em alimento para nós. Por isso, cuidar delas é cuidar de nós mesmos!',
-    imageCards: [
-      { imageSrc: '/assets/icones/sol-icone.png', label: 'Luz do sol gera energia', alt: 'Sol brilhante' },
-      { imageSrc: '/assets/icones/agua-icone.png', label: 'Água nutre as raízes', alt: 'Gota de água' },
-      { imageSrc: '/assets/icones/solo-icone.png', label: 'Solo rico em minerais', alt: 'Solo fértil' },
-      { imageSrc: '/assets/icones/fruta-icone.png', label: 'Resultado: alimento gostoso!', alt: 'Frutas frescas' },
+      "Pragas agrícolas incluem insetos, ácaros, microrganismos fitopatogênicos e plantas invasoras. Esses organismos podem causar danos às plantas e prejuízos econômicos à produção agrícola.",
+    pestGroups: [
+      "Insetos",
+      "Ácaros",
+      "Microrganismos fitopatogênicos",
+      "Plantas invasoras",
     ],
-    midSectionHeading: 'E o que acontece quando a fábrica é atacada?',
+    statCards: [
+      {
+        gradient: "linear-gradient(135deg, #2E7D32, #388E3C)",
+        stat: "40%",
+        label:
+          "das colheitas mundiais são perdidas por pragas agrícolas, segundo a FAO.",
+        textColor: "white",
+      },
+      {
+        gradient: "linear-gradient(135deg, #F57F17, #FBC02D)",
+        stat: "R$ Bilhões",
+        label: "de prejuízo anual para o agronegócio brasileiro.",
+        textColor: "#212121",
+      },
+      {
+        gradient: "linear-gradient(135deg, #37474F, #546E7A)",
+        stat: "Ecossistema",
+        label: "em risco por introdução de espécies invasoras exóticas.",
+        textColor: "white",
+      },
+    ],
+    impacts: [
+      {
+        imageSrc: "/images/cartilha/impactos/reducao-producao.jpg",
+        title: "Redução da produção",
+        desc: "As pragas destroem partes da plantação ou a plantação inteira, reduzindo drasticamente o volume colhido.",
+        imageCredit: "Foto: Karl Wiggers / Unsplash",
+      },
+      {
+        imageSrc: "/images/cartilha/impactos/aumento-custos.jpg",
+        title: "Aumento de custos",
+        desc: "Agricultores gastam mais com defensivos agrícolas, replantio e trabalho para combater as pragas agrícolas.",
+        imageCredit: "Foto: Teo Sticea / Unsplash",
+      },
+      {
+        imageSrc: "/images/cartilha/impactos/bloqueio-exportacoes.jpg",
+        title: "Bloqueio de exportações",
+        desc: "Produtos com pragas agrícolas podem ser barrados na alfândega, gerando prejuízos aos produtores.",
+        imageCredit: "Foto: Timelab / Unsplash",
+      },
+      {
+        imageSrc: "/images/cartilha/impactos/mudancas-climaticas.jpg",
+        title: "Mudanças climáticas agravam",
+        desc: "O aquecimento global favorece a proliferação e expansão geográfica de novas pragas agrícolas.",
+        imageCredit: "Foto: 1 1 / Unsplash",
+      },
+    ],
+    personaText:
+      "Praga é qualquer ser vivo que cause prejuízo à nossa roça! Mas atenção: nem todo inseto é vilão! A joaninha, por exemplo, é uma heroína — ela come outros insetos que atacam as plantas!",
+    personaEmotion: "alert",
+    personaImageSrc: "/assets/dona-fito/dona-fito-alert.png",
+  },
+
+  /* ─────────────────────────────────────────────────────
+     PÁGINA 5 — A FÁBRICA DE COMIDA
+  ───────────────────────────────────────────────────── */
+  {
+    type: "content",
+    interactionType: "standard",
+    id: "p5",
+    label: "A Fábrica de Comida",
+    badgeLabel: "Agricultura",
+    title: "As plantas são a nossa ",
+    titleHighlight: "fábrica de comida!",
+    leadText:
+      "Tudo o que comemos — arroz, feijão, fruta, farinha — começou como uma semente ou muda numa roça. As plantas transformam água, luz do sol e nutrientes do solo em alimento para nós. Por isso, cuidar delas é cuidar de nós mesmos!",
+    imageCards: [
+      {
+        imageSrc: "/assets/icones/sol-icone.png",
+        label: "Luz do sol gera energia",
+        alt: "Sol brilhante",
+      },
+      {
+        imageSrc: "/assets/icones/agua-icone.png",
+        label: "Água nutre as raízes",
+        alt: "Gota de água",
+      },
+      {
+        imageSrc: "/assets/icones/solo-icone.png",
+        label: "Solo rico em minerais",
+        alt: "Solo fértil",
+      },
+      {
+        imageSrc: "/assets/icones/fruta-icone.png",
+        label: "Resultado: alimento gostoso!",
+        alt: "Frutas frescas",
+      },
+    ],
+    midSectionHeading: "E o que acontece quando a fábrica é atacada?",
     midSectionText:
-      'Quando pragas invadem a lavoura, é como se alguém danificasse as máquinas da fábrica. A produção cai, os alimentos ficam escassos e mais caros. E é por isso que a Fitossanidade é tão importante para nós, consumidores!',
+      "Quando pragas agrícolas invadem a roça, é como se alguém danificasse as máquinas da fábrica. A produção cai, os alimentos ficam escassos e mais caros. E é por isso que a Fitossanidade é tão importante para nós, consumidores!",
     callouts: [
       {
-        variant: 'yellow',
-        imageSrc: '/assets/joaninha_corpo_todo.png',
-        title: 'Sabia que...',
+        variant: "yellow",
+        title: "Sabia que...",
         text: 'A mandioca e o açaí são duas das principais "fábricas de comida" do Amapá! Milhares de famílias dependem dessas plantas para viver e para vender seus produtos.',
       },
     ],
     personaText:
-      'Imagina a lavoura como uma grande fábrica. Cada planta é uma máquina que produz comida para a gente. Se uma praga atacar, a fábrica para! E aí, o que acontece com a nossa comida?',
-    personaEmotion: 'pointing',
-    personaImageSrc: '/assets/dona-fito/dona-fito-pointing.png',
+      "Imagina a roça como uma grande fábrica. Cada planta é uma máquina que produz comida para a gente. Se uma praga agrícola atacar, a fábrica para! E aí, o que acontece com a nossa comida?",
+    personaEmotion: "pointing",
+    personaImageSrc: "/assets/dona-fito/dona-fito-pointing.png",
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 04 — O QUE É UMA PRAGA AGRÍCOLA?
+     PÁGINA 6 — INSETOS E ÁCAROS (GALERIA DE CARDS COM MODAIS)
   ───────────────────────────────────────────────────── */
   {
-    type: 'impact',
-    interactionType: 'standard',
-    id: 'p04',
-    label: 'O que é uma Praga Agrícola?',
-    badgeLabel: 'Conceito de Praga',
-    title: 'O que é uma ',
-    titleHighlight: 'Praga Agrícola?',
-    heroImageSrc: '/assets/pragas/praga-agricola-visao-geral.png',
+    type: "pest-gallery",
+    interactionType: "standard",
+    id: "p6",
+    label: "Insetos e Ácaros",
+    badgeLabel: "Galeria Interativa",
+    title: "Insetos e Ácaros: ",
+    titleHighlight: "Os Pequenos Vilões dos Cultivos Agrícolas",
     leadText:
-      'Uma praga agrícola é qualquer organismo vivo — inseto, fungo, bactéria, vírus, planta invasora — que cause dano econômico a uma lavoura. Nem todo bichinho é uma praga! Só é praga quando causa prejuízo real ao agricultor.',
-    statCards: [
-      { gradient: 'linear-gradient(135deg, #2E7D32, #388E3C)', stat: '40%', label: 'das colheitas mundiais são perdidas por pragas, segundo a FAO.', textColor: 'white' },
-      { gradient: 'linear-gradient(135deg, #F57F17, #FBC02D)', stat: 'R$ Bilhões', label: 'de prejuízo anual para o agronegócio brasileiro.', textColor: '#212121' },
-      { gradient: 'linear-gradient(135deg, #37474F, #546E7A)', stat: 'Ecossistema', label: 'em risco por introdução de espécies invasoras exóticas.', textColor: 'white' },
-    ],
-    impacts: [
-      { imageSrc: '/assets/icones/caixa-icone.png', title: 'Redução da produção', desc: 'Pragas destroem partes ou toda a plantação, reduzindo drasticamente o volume colhido.' },
-      { imageSrc: '/assets/icones/custo-icone.png', title: 'Aumento de custos', desc: 'Agricultores gastam mais com defensivos, replantio e trabalho para combater as pragas.' },
-      { imageSrc: '/assets/icones/bloqueio-icone.png', title: 'Bloqueio de exportações', desc: 'Produtos com pragas podem ser barrados na alfândega, gerando prejuízos aos produtores.' },
-      { imageSrc: '/assets/icones/clima-icone.png', title: 'Mudanças climáticas agravam', desc: 'O aquecimento global favorece a proliferação e expansão geográfica de novas pragas.' },
-    ],
-    personaText:
-      'Praga é qualquer ser vivo que cause prejuízo à nossa lavoura! Mas atenção: nem todo inseto é vilão! A joaninha, por exemplo, é uma heroína — ela come outros insetos que atacam as plantas!',
-    personaEmotion: 'alert',
-    personaImageSrc: '/assets/dona-fito/dona-fito-alert.png',
-  },
-
-  /* ─────────────────────────────────────────────────────
-     PÁGINA 05 — INSETOS E ÁCAROS (GALERIA DE CARDS COM MODAIS)
-  ───────────────────────────────────────────────────── */
-  {
-    type: 'pest-gallery',
-    interactionType: 'standard',
-    id: 'p05',
-    label: 'Insetos e Ácaros',
-    badgeLabel: 'Galeria Interativa',
-    title: 'Insetos e Ácaros: ',
-    titleHighlight: 'Os Pequenos Vilões da Lavoura',
-    leadText:
-      'Clique em qualquer card para conhecer de perto esses organismos que causam grandes prejuízos nas lavouras. Identificar o invasor é o primeiro passo para combatê-lo.',
+      "Clique em qualquer card para conhecer de perto esses organismos que causam grandes prejuízos nos cultivos agrícolas. Identificar o invasor é o primeiro passo para combatê-lo.",
     pestGalleryItems: [
       {
         id: 1,
-        name: 'Gafanhoto',
-        imageSrc: 'https://images.unsplash.com/photo-1533318087102-b3ad366ed041',
-        damageType: 'Desfolha folhas, caules e frutos ao se alimentar em grandes quantidades.',
-        fieldTip: 'Procure folhas mastigadas e a presença de adultos ou ninfas saltadoras.',
+        name: "Gafanhoto",
+        imageSrc: "/images/cartilha/pragas/gafanhoto.jpg",
+        imageCredit: "Foto: daksu / iNaturalist (CC BY)",
+        damageType:
+          "Desfolha folhas, caules e frutos ao se alimentar em grandes quantidades.",
+        fieldTip:
+          "Procure folhas mastigadas e a presença de adultos ou ninfas saltadoras.",
         description:
-          'O gafanhoto é um inseto que voa em enxames gigantes e pode destruir campos inteiros de cultivo em poucas horas. Quando milhoes deles voam juntos, chamamos de praga de gafanhotos — um dos maiores pesadelos dos agricultores. Seu aparato bucal mastigador devasta folhas, caules e frutos de forma extremamente rapida.',
+          "O gafanhoto é um inseto que voa em enxames gigantes e pode destruir campos inteiros de cultivo em poucas horas. Quando milhões deles voam juntos, chamamos de praga agrícola de gafanhotos — um dos maiores pesadelos dos agricultores. Seu aparato bucal mastigador devasta folhas, caules e frutos de forma extremamente rápida.",
       },
       {
         id: 2,
-        name: 'Pulgão',
-        imageSrc: '/images/ameacas/pulgoes/pulgao.webp',
-        damageType: 'Suga a seiva e pode transmitir vírus entre plantas.',
-        fieldTip: 'Observe colônias pequenas na face inferior das folhas e brotos novos.',
+        name: "Pulgão",
+        imageSrc: "/images/cartilha/pragas/pulgao.jpg",
+        imageCredit: "Foto: Jesse Rorabaugh / iNaturalist (CC0)",
+        damageType: "Suga a seiva e pode transmitir vírus entre plantas.",
+        fieldTip:
+          "Observe colônias pequenas na face inferior das folhas e brotos novos.",
         description:
-          'O pulgão é um inseto minúsculo que suga a seiva das plantas, enfraquecendo-as progressivamente. Ele se reproduz com velocidade impressionante e pode cobrir toda uma planta em poucos dias. Além do dano direto, atua como vetor de vírus fitopatogênicos, transmitindo doenças de planta para planta durante a alimentação.',
+          "O pulgão é um inseto minúsculo que suga a seiva das plantas, enfraquecendo-as progressivamente. Ele se reproduz com velocidade impressionante e pode cobrir toda uma planta em poucos dias. Além do dano direto, atua como vetor de vírus fitopatogênicos, transmitindo doenças de planta para planta durante a alimentação.",
       },
       {
         id: 3,
-        name: 'Mosca-branca',
-        imageSrc: '/images/ameacas/mosca branca/1.webp',
-        damageType: 'Suga a seiva, causa clorose e favorece a fumagina nas folhas.',
-        fieldTip: 'Toque a planta e observe pequenos insetos brancos levantando voo.',
+        name: "Mosca-branca",
+        imageSrc: "/images/cartilha/pragas/mosca-branca.jpg",
+        imageCredit: "Foto: Mihajlo Tomić / iNaturalist (CC BY)",
+        damageType:
+          "Suga a seiva, causa clorose e favorece a fumagina nas folhas.",
+        fieldTip:
+          "Toque a planta e observe pequenos insetos brancos levantando voo.",
         description:
-          'A mosca-branca é um inseto de pequeno porte que coloniza a face abaxial das folhas. Ela suga a seiva, provoca clorose foliar e excreta honeydew, favorecendo o desenvolvimento de fumagina. Sua alta capacidade de transmissão de geminiviruses representa uma das maiores ameaças fitossanitárias para culturas como tomate, feijão e mandioca.',
+          "A mosca-branca é um inseto de pequeno porte que coloniza a parte inferior das folhas. Ela suga a seiva, provoca clorose foliar e excreta uma substância açucarada (melada), favorecendo o desenvolvimento de fumagina. Sua alta capacidade de transmissão de geminivírus representa uma das maiores ameaças fitossanitárias para culturas como tomate, feijão e mandioca.",
       },
       {
         id: 4,
-        name: 'Broca',
-        imageSrc: '/images/pragas/mosca negra dos citros/1.webp',
-        damageType: 'Perfura caules, frutos ou raízes, comprometendo os tecidos por dentro.',
-        fieldTip: 'Procure orifícios, serragem e galerias em caules, frutos ou raízes.',
+        name: "Broca",
+        imageSrc: "/images/cartilha/pragas/broca.jpg",
+        imageCredit: "Foto: Julia Moning / iNaturalist (CC BY)",
+        damageType:
+          "Perfura caules, frutos ou raízes, comprometendo os tecidos por dentro.",
+        fieldTip:
+          "Procure orifícios, serragem e galerias em caules, frutos ou raízes.",
         description:
-          'A broca é a larva de diversas espécies de insetos das ordens Coleoptera e Lepidoptera. Ela perfura e escava o interior do caule, fruto ou raiz da planta, tornando os danos internos invisíveis até que o estrago já seja irreversível. O controle é especialmente difícil porque o inseto fica protegido dentro do tecido vegetal.',
+          "A broca é a larva de diversas espécies de insetos das ordens Coleoptera e Lepidoptera. Ela perfura e escava o interior do caule, fruto ou raiz da planta, tornando os danos internos invisíveis até que o estrago já seja irreversível. O controle é especialmente difícil porque o inseto fica protegido dentro do tecido vegetal.",
       },
       {
         id: 5,
-        name: 'Ácaro',
-        imageSrc: '/images/ameacas/acaro/1.webp',
-        damageType: 'Suga o conteúdo das células e provoca bronzeamento e queda das folhas.',
-        fieldTip: 'Verifique pontilhado amarelado, teias finas e folhas bronzeadas em tempo seco.',
+        name: "Ácaro",
+        imageSrc: "/images/cartilha/pragas/acaro.jpg",
+        imageCredit: "Foto: Wynand Uys / iNaturalist (CC BY)",
+        damageType:
+          "Suga o conteúdo das células e provoca bronzeamento e queda das folhas.",
+        fieldTip:
+          "Verifique pontilhado amarelado, teias finas e folhas bronzeadas em tempo seco.",
         description:
-          'Os ácaros são artropodes aracnídeos de dimensões microscópicas, difíceis de visualizar a olho nu. Eles vivem na epiderme foliar e sugam o conteudo celular, causando bronzeamento, manchas amareladas e queda precoce de folhas. Em periodos de seca e calor intenso, sua velocidade de reproducao aumenta drasticamente, agravando as infestacoes.',
+          "Os ácaros são artrópodes aracnídeos de dimensões microscópicas, difíceis de visualizar a olho nu. Eles vivem na epiderme foliar e sugam o conteúdo celular, causando bronzeamento, manchas amareladas e queda precoce de folhas. Em períodos de seca e calor intenso, sua velocidade de reprodução aumenta drasticamente, agravando as infestações.",
       },
       {
         id: 6,
-        name: 'Trips',
-        imageSrc: '/images/ameacas/mosca branca/2.webp',
-        damageType: 'Raspa e suga células, causando estrias prateadas e transmitindo vírus.',
-        fieldTip: 'Observe estrias prateadas em folhas e frutos e insetos muito pequenos e estreitos.',
+        name: "Trips",
+        imageSrc: "/images/cartilha/pragas/trips.jpg",
+        imageCredit: "Foto: Trevor Van Loon / iNaturalist (CC BY)",
+        damageType:
+          "Raspa e suga células, causando estrias prateadas e transmitindo vírus.",
+        fieldTip:
+          "Observe estrias prateadas em folhas e frutos e insetos muito pequenos e estreitos.",
         description:
-          'O trips é um inseto da ordem Thysanoptera de tamanho diminuto, quase imperceptível a olho nu. Ele raspa e suga as células epidérmicas das plantas, provocando estrias prateadas ou douradas características em folhas e frutos. Adicionalmente, é vetor de tospovirus altamente agressivos, como o Tomato spotted wilt virus (TSWV), que não tem cura nas plantas infectadas.',
+          "O trips é um inseto da ordem Thysanoptera de tamanho diminuto, quase imperceptível a olho nu. Ele raspa e suga as células epidérmicas das plantas, provocando estrias prateadas ou douradas características em folhas e frutos. Adicionalmente, é vetor de tospovirus altamente agressivos, como o Tomato spotted wilt virus (TSWV), que não tem cura nas plantas infectadas.",
       },
     ],
     callouts: [
       {
-        variant: 'yellow',
-        imageSrc: '/assets/joaninha_corpo_todo.png',
-        title: 'Atenção!',
-        text: 'Nem todo inseto é praga! Abelhas, joaninhas e vespinhas parasitoides são aliadas da lavoura. Conhecer os benefícios e os prejudiciais é essencial para um manejo agrícola responsável.',
+        variant: "yellow",
+        title: "Atenção!",
+        text: "Nem todo inseto é praga agrícola! Abelhas, joaninhas e vespinhas parasitoides são aliadas da roça. Distinguir as espécies benéficas das prejudiciais é essencial para um manejo agrícola responsável.",
       },
     ],
     personaText:
-      'Que turma! Insetos e ácaros são os mais diversos vilões da lavoura. Clique em cada card para conhecê-los de perto e aprender como nos defendemos deles.',
-    personaEmotion: 'pointing',
-    personaImageSrc: '/assets/dona-fito/dona-fito-pointing.png',
+      "Que turma! Insetos e ácaros são os mais diversos vilões da roça. Clique em cada card para conhecê-los de perto e aprender como nos defendemos deles.",
+    personaEmotion: "pointing",
+    personaImageSrc: "/assets/dona-fito/dona-fito-pointing.png",
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 06 — FUNGOS, BACTÉRIAS E VÍRUS (HOTSPOT INTERATIVO)
+     PÁGINA 7 — APARELHOS BUCAIS
   ───────────────────────────────────────────────────── */
   {
-    type: 'hotspot',
-    interactionType: 'hotspot',
-    id: 'p06',
-    label: 'Fungos, Bactérias e Vírus',
-    badgeLabel: 'Lente de Investigação',
-    title: 'Os Invasores ',
-    titleHighlight: 'Invisíveis',
-    titleSuffix: ' das Plantas',
+    type: "mouthparts",
+    interactionType: "mouthparts",
+    id: "p7",
+    label: "Aparelhos Bucais",
+    badgeLabel: "APARELHOS BUCAIS",
+    title: "Como os insetos se alimentam das plantas?",
     leadText:
-      'Fungos, bactérias e vírus são micro-organismos que adoecem as plantas. Clique em cada imagem para investigar o que está acontecendo com essa folha ou fruto!',
+      'O formato da "boca" de cada inseto, chamado aparelho bucal, define como ele ataca a planta e qual tipo de dano deixa nas roças e cultivos agrícolas. Conhecer esses sinais ajuda a identificar a praga mais rápido!',
+    mouthparts: [
+      {
+        id: "chewing",
+        name: "Aparelho Mastigador",
+        howItWorks:
+          "Possui mandíbulas fortes que cortam, raspam e trituram folhas, caules, flores ou frutos.",
+        plantDamage:
+          "Deixa buracos, bordas roídas ou folhas totalmente cortadas (desfolha).",
+        examples: ["Formigas", "Lagartas"],
+        imageSrc: "/images/cartilha/aparelhos/mastigador.jpg",
+        imageCredit: "Foto: Rodolfo Salinas Villarreal / iNaturalist (CC BY)",
+        imageAlt:
+          "Gafanhoto com aparelho mastigador sobre uma folha com partes roídas",
+      },
+      {
+        id: "piercing-sucking",
+        name: "Aparelho Picador-Sugador",
+        howItWorks:
+          "Funciona como um “canudinho” ou agulha fina (estilete) que perfura a planta para sugar a seiva nutritiva.",
+        plantDamage:
+          "Deixa as folhas amareladas, enroladas ou murchas, além de poder transmitir doenças, como vírus.",
+        examples: ["Mosca-branca", "Pulgões"],
+        imageSrc: "/images/cartilha/aparelhos/picador-sugador.jpg",
+        imageCredit: "Foto: Jorge Íñiguez / iNaturalist (CC BY)",
+        imageAlt:
+          "Pulgão sugando a seiva na parte inferior de uma folha com sintoma amarelado",
+      },
+    ],
+    tip: "Viu folha cortada? Provavelmente foi um mastigador. Viu folha enrolada e amarelada? Pode ser um picador-sugador!",
+    personaText:
+      "Se a folha parece ter passado por uma tesourinha, procure um mastigador. Se ficou enrolada ou amarelada, pode haver um inseto sugando a seiva. O formato da boca dá uma pista importante!",
+    personaEmotion: "thinking",
+    personaImageSrc: "/assets/dona-fito/dona-fito-thinking.png",
+  },
+
+  /* ─────────────────────────────────────────────────────
+     PÁGINA 8 — INVASORES INVISÍVEIS (HOTSPOT INTERATIVO)
+  ───────────────────────────────────────────────────── */
+  {
+    type: "hotspot",
+    interactionType: "hotspot",
+    id: "p8",
+    label: "Invasores Invisíveis",
+    badgeLabel: "Lente de Investigação",
+    title: "Os Invasores ",
+    titleHighlight: "Invisíveis",
+    titleSuffix: " das Plantas",
+    leadText:
+      "Vários microrganismos — como bactérias, fungos, vírus, fitoplasmas, nematoides e protozoários — podem causar doenças nas plantas. Clique na lupa de cada grupo para investigar!",
     items: [
       {
-        id: 'fungo-ferrugem',
-        name: 'Ferrugem',
-        category: 'fungo',
-        backgroundImageSrc: '/images/sintomas/clorose.webp',
+        id: "bacterias",
+        name: "Bactérias",
+        diseaseName: "Cancro Cítrico",
+        category: "bacteria",
+        image: "/images/cartilha/patogenos/bacterias.jpg",
+        credito: "Foto: USDA / APHIS (Domínio Público)",
+        imageAlt: "Fruto cítrico com lesões do cancro cítrico",
         concept:
-          'A ferrugem é uma doença causada por fungos que deixam manchas alaranjadas ou marrons nas folhas, semelhantes à ferrugem de metal. Ela se espalha pelo vento e pode destruir lavouras de soja ou trigo em poucos dias!',
+          "As bactérias são seres muito pequenos que podem entrar por ferimentos e aberturas da planta. O cancro cítrico é um exemplo conhecido em laranjeiras e limoeiros.",
+        symptomsText:
+          "Aparecem lesões elevadas, ásperas e amarronzadas nas folhas, nos frutos e nos galhos. As folhas podem cair e os frutos ficam com aparência ruim.",
         spreadText:
-          'Os esporos são carregados pelo vento e também podem viajar em respingos de chuva e ferramentas contaminadas.',
-        impactText:
-          'Pode causar perdas de até 70% da colheita de soja. Uma das doenças fúngicas mais destrutivas do agronegócio brasileiro.',
+          "Respingos de chuva, vento, insetos e ferramentas contaminadas podem transportar bactérias de uma planta para outra.",
+        impactText: "Frutos com sintomas perdem valor e podem ser descartados.",
         preventionText:
-          'Use variedades resistentes e fungicidas preventivos. O monitoramento precoce é fundamental!',
+          "Use mudas certificadas, higienize ferramentas e evite trabalhar com folhas molhadas.",
       },
       {
-        id: 'fungo-antracnose',
-        name: 'Antracnose',
-        category: 'fungo',
-        backgroundImageSrc: '/images/sintomas/podridao.webp',
+        id: "fungos",
+        name: "Fungos",
+        diseaseName: "Ferrugem",
+        category: "fungo",
+        image: "/images/cartilha/patogenos/fungos.jpg",
+        credito:
+          "Foto: bjoerns / iNaturalist / Wikimedia Commons (CC BY-SA 4.0)",
+        imageAlt: "Folha com manchas alaranjadas causadas por ferrugem",
         concept:
-          'A antracnose é causada por fungos do gênero Colletotrichum. Provoca manchas escuras e afundadas nos frutos de manga, mamão e tomate. Os frutos apodrecem antes de amadurecer, ficando impróprios para venda.',
+          "Os fungos podem crescer sobre ou dentro da planta. A ferrugem deixa manchas que lembram a cor da ferrugem de metal.",
+        symptomsText:
+          "A folha fica com pontos ou manchas alaranjadas e marrons. Com o tempo, ela pode amarelar, secar e cair.",
         spreadText:
-          'A chuva e a irrigação espalham os esporos entre folhas e frutos; restos de plantas e ferramentas contaminadas também transportam o fungo.',
-        impactText:
-          'Muito comum no clima úmido da Amazônia. Frutos infectados perdem completamente o valor comercial.',
+          "Esporos são carregados pelo vento e por respingos de chuva.",
+        impactText: "A doença reduz a fotossíntese e pode diminuir a colheita.",
         preventionText:
-          'Evite excesso de umidade, faça colheita no tempo certo e aplique fungicidas cúpricos como medida preventiva.',
+          "Evite excesso de umidade e plante variedades resistentes quando possível.",
       },
       {
-        id: 'fungo-requeima',
-        name: 'Requeima',
-        category: 'fungo',
-        backgroundImageSrc: '/images/sintomas/necrose.webp',
+        id: "virus",
+        name: "Vírus",
+        diseaseName: "Vírus do Mosaico",
+        category: "virus",
+        image: "/images/cartilha/patogenos/virus.jpg",
+        credito: "Foto: Plant pests and diseases / Wikimedia Commons (CC0 1.0)",
+        imageAlt: "Folha com sintomas do vírus do mosaico",
         concept:
-          'A requeima, causada pelo oomiceto Phytophthora infestans, foi responsável pela Grande Fome da Irlanda no século XIX! Ela ataca batata, tomate e pimenta, provocando o apodrecimento rápido e total das plantas.',
+          "Os vírus são agentes minúsculos que usam as células da planta para se multiplicar. O vírus do mosaico é um exemplo comum em várias culturas.",
+        symptomsText:
+          "As folhas ficam com desenhos de manchas claras e escuras, como um mosaico. A planta pode crescer menos e produzir frutos menores.",
         spreadText:
-          'Esporos são levados pelo vento e por respingos de chuva, especialmente em períodos frios e muito úmidos.',
-        impactText:
-          'Em condições ideais de umidade e frio, pode destruir uma lavoura de batata em apenas 10 dias. É considerada emergência fitossanitária.',
+          "Pulgões, moscas-brancas, mãos e ferramentas contaminadas podem transmitir o vírus.",
+        impactText: "Não há cura para a planta infectada.",
         preventionText:
-          'Plante variedades resistentes, faça rotação de culturas e aplique fungicidas sistêmicos de forma preventiva.',
+          "Use mudas sadias, controle os insetos vetores e retire plantas muito doentes.",
       },
       {
-        id: 'bacteria-cancro',
-        name: 'Cancro Cítrico',
-        category: 'bacteria',
-        backgroundImageSrc: '/images/sintomas/frutos com lesoes.webp',
+        id: "fitoplasmas",
+        name: "Fitoplasmas",
+        diseaseName: "Enfezamento / Superbrotamento",
+        category: "fitoplasma",
+        image: "/images/cartilha/patogenos/fitoplasmas.jpg",
+        credito:
+          "Foto: Whitney Cranshaw / Bugwood / Wikimedia Commons (CC BY 3.0)",
+        imageAlt: "Planta com sintomas de enfezamento e superbrotamento",
         concept:
-          'O cancro cítrico é uma doença bacteriana causada por Xanthomonas citri. Ataca laranjas, limões e outras frutas cítricas, causando lesões elevadas nas folhas, frutos e caules. Frutos infectados não podem ser exportados.',
+          "Fitoplasmas são microrganismos que vivem nos vasos que transportam alimento dentro da planta. Eles podem causar enfezamento e superbrotamento.",
+        symptomsText:
+          "A planta fica menor e fraca, com folhas amareladas, galhos muito finos ou muitos brotos pequenos juntos.",
         spreadText:
-          'Respingos de chuva, vento, insetos e ferramentas contaminadas levam a bactéria de uma planta para outra.',
-        impactText:
-          'Prejuízo enorme para produtores: frutos com sintomas são descartados e a planta infectada deve ser erradicada por lei.',
-        preventionText:
-          'Utilize mudas certificadas, higienize ferramentas e evite trabalhar na lavoura com folhas molhadas. É de notificação obrigatória ao MAPA.',
+          "Cigarrinhas e outros insetos vetores levam o fitoplasma de uma planta doente para outra.",
+        impactText: "A planta pode perder a produção e não se recuperar.",
+        preventionText: "Use mudas sadias e controle os insetos vetores.",
       },
       {
-        id: 'virus-mosaico',
-        name: 'Vírus do Mosaico',
-        category: 'virus',
-        backgroundImageSrc: '/images/sintomas/murcha.webp',
+        id: "nematoides",
+        name: "Nematoides",
+        diseaseName: "Nematoides das Galhas",
+        category: "nematoide",
+        image: "/images/cartilha/patogenos/nematoides.jpg",
+        credito:
+          "Foto: Jeffrey W. Lotz / Bugwood / Wikimedia Commons (CC BY 3.0)",
+        imageAlt:
+          "Raízes de planta com caroços e galhas causadas por nematoides",
         concept:
-          'O vírus do mosaico (TMV, CMV e outros) deixa as folhas com padrão de manchas claras e escuras, parecendo um mosaico colorido. É transmitido por insetos vetores como pulgões. Afeta tomate, feijão, mandioca e muitas outras culturas.',
+          "Nematoides são vermes microscópicos que vivem no solo e atacam as raízes. Alguns formam galhas, que são como caroços nas raízes.",
+        symptomsText:
+          "A planta fica fraca, murcha e cresce pouco mesmo quando é regada. Ao retirar a planta, podem aparecer galhas nas raízes.",
         spreadText:
-          'Insetos vetores, como pulgões e moscas-brancas, transmitem o vírus; mãos e ferramentas contaminadas também podem espalhá-lo.',
-        impactText:
-          'Não existe cura para vírus em plantas. Uma vez infectada, a planta deve ser removida para evitar a disseminação para as vizinhas.',
+          "Solo, água, ferramentas e mudas contaminadas podem transportar nematoides.",
+        impactText: "Raízes machucadas absorvem menos água e nutrientes.",
         preventionText:
-          'Controle os insetos vetores (pulgões, moscas-brancas), use mudas sadias e elimine imediatamente plantas sintomáticas.',
+          "Faça rotação de culturas, use mudas sadias e evite levar solo contaminado.",
       },
       {
-        id: 'fitoplasma',
-        name: 'Fitoplasma',
-        category: 'fitoplasma',
-        backgroundImageSrc: '/images/doencas/fitoplasma.webp',
+        id: "protozoarios",
+        name: "Protozoários",
+        diseaseName: "Murcha-de-Phytomonas",
+        category: "protozoario",
+        image: "/images/cartilha/patogenos/protozoarios.jpg",
+        credito:
+          "Foto: Jaskowska et al. (2015) / Wikimedia Commons (CC BY-SA 4.0)",
+        imageAlt:
+          "Planta com folhas murchas, representação de doença associada a protozoários",
         concept:
-          'O fitoplasma é um micro-organismo que vive dentro dos vasos condutores da planta (floema). Causa o amarelecimento letal de palmeiras como açaí, coco e dendê — sem cura conhecida! É transmitido por cigarrinhas e outros insetos vetores.',
+          "Protozoários são organismos microscópicos. Alguns vivem nos vasos da planta e podem causar doenças como a murcha-de-Phytomonas em coqueiros e cafeeiros.",
+        symptomsText:
+          "As folhas perdem a força, ficam amareladas e murcham. A planta pode secar aos poucos porque a água não circula bem.",
         spreadText:
-          'Cigarrinhas e outros insetos vetores adquirem o fitoplasma de plantas doentes e o transmitem ao se alimentarem de plantas saudáveis.',
+          "Insetos vetores podem carregar o organismo de uma planta doente para outra.",
         impactText:
-          'O amarelecimento fatal do coqueiro já destruiu milhões de palmeiras no Brasil. A doença é irreversível e a planta morre em poucos meses após a infecção.',
+          "A doença pode comprometer a produção e levar a planta à morte.",
         preventionText:
-          'Controle rigoroso dos insetos vetores e erradicação imediata de palmeiras sintomáticas. Não existe tratamento curativo.',
+          "Observe as plantas, controle os vetores e retire partes ou plantas muito doentes conforme a orientação técnica.",
       },
     ],
     callouts: [
       {
-        variant: 'green',
-        imageSrc: '/assets/dona_fito_meio_corpo.png',
-        title: 'A prevenção é sempre melhor!',
-        text: 'Fungos e bactérias se espalham pela água, pelo vento e por ferramentas contaminadas. Higienizar os instrumentos agrícolas, usar sementes certificadas e evitar o excesso de água são formas simples de prevenir essas doenças!',
+        variant: "green",
+        title: "A prevenção é sempre melhor!",
+        text: "Esses invasores se espalham pela água, pelo vento, por insetos, pelo solo ou por ferramentas contaminadas. Higienizar instrumentos, usar mudas sadias e observar as plantas são formas simples de prevenção!",
       },
     ],
     personaText:
-      'Esses inimigos são invisíveis a olho nu, mas causam estragos enormes! Fungos, bactérias e vírus são os "germes das plantas". Clique em cada imagem para investigar o que está acontecendo!',
-    personaEmotion: 'alert',
-    personaImageSrc: '/assets/dona-fito/dona-fito-alert.png',
+      "Esses inimigos são invisíveis a olho nu, mas causam estragos enormes! Bactérias, fungos, vírus, fitoplasmas, nematoides e protozoários podem adoecer as plantas. Clique em cada grupo para investigar!",
+    personaEmotion: "alert",
+    personaImageSrc: "/assets/dona-fito/dona-fito-alert.png",
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 07 — PLANTAS INVASORAS
+     PÁGINA 8 — PLANTAS INVASORAS
   ───────────────────────────────────────────────────── */
   {
-    type: 'content',
-    interactionType: 'standard',
-    id: 'p07',
-    label: 'Plantas Invasoras',
-    badgeLabel: 'Ervas Daninhas',
-    title: 'As plantas que ',
-    titleHighlight: 'roubam espaço',
-    titleSuffix: ' das outras!',
-    heroImageSrc: '/assets/pragas/plantas-invasoras/erva-daninha-lavoura.png',
+    type: "content",
+    interactionType: "standard",
+    id: "p9",
+    label: "Plantas Invasoras",
+    badgeLabel: "Ervas Daninhas",
+    title: "As plantas que ",
+    titleHighlight: "roubam espaço",
+    titleSuffix: " das outras!",
     leadText:
-      'Plantas invasoras (ou ervas daninhas) são plantas que crescem onde não são desejadas e competem com as plantas cultivadas por água, luz e nutrientes do solo. E uma disputa por recursos — e a planta da lavoura quem perde!',
+      "Plantas invasoras (ou ervas daninhas) são plantas que crescem onde não são desejadas e competem com as plantas cultivadas por água, luz e nutrientes do solo. É uma disputa por recursos — e a planta da roça é quem costuma perder!",
     invasiveCards: [
       {
-        imageSrc: '/images/ameacas/plantas invasoras/1.webp',
-        label: 'Tiririca',
-        alt: 'Tiririca invasora',
-        whatItSteals: 'Água, luz e nutrientes, graças às raízes e estruturas subterrâneas que ocupam o solo.',
-        impact: 'Forma manchas densas e compete diretamente com a cultura, reduzindo o crescimento e a produtividade.',
+        imageSrc: "/images/cartilha/invasoras/tiririca.jpg",
+        label: "Tiririca",
+        alt: "Tiririca invasora",
+        credito: "Foto: Macleay Grass Man / Wikimedia Commons (CC BY 2.0)",
+        whatItSteals:
+          "Água, luz e nutrientes, graças às raízes e estruturas subterrâneas que ocupam o solo.",
+        impact:
+          "Forma manchas densas e compete diretamente com a cultura, reduzindo o crescimento e a produtividade.",
       },
       {
-        imageSrc: '/images/ameacas/plantas invasoras/2.webp',
-        label: 'Capim-colônia',
-        alt: 'Capim-colônia invasor',
-        whatItSteals: 'Água, luz e nutrientes da lavoura e das pastagens ao formar touceiras muito fechadas.',
-        impact: 'Sufoca plantas jovens, dificulta o manejo e reduz o espaço disponível para a cultura se desenvolver.',
+        imageSrc: "/images/cartilha/invasoras/capim-colonia.jpg",
+        label: "Capim-colônia",
+        alt: "Capim-colônia invasor",
+        credito: "Foto: Forest & Kim Starr / Wikimedia Commons (CC BY 3.0)",
+        whatItSteals:
+          "Água, luz e nutrientes dos cultivos agrícolas e das pastagens ao formar touceiras muito fechadas.",
+        impact:
+          "Sufoca plantas jovens, dificulta o manejo e reduz o espaço disponível para a cultura se desenvolver.",
       },
       {
-        imageSrc: '/images/ameacas/plantas invasoras/1.webp',
-        label: 'Picão-preto',
-        alt: 'Picão-preto invasor',
-        whatItSteals: 'Água, luz e nutrientes, além de espaço para suas raízes e folhas se espalharem.',
-        impact: 'Pode liberar substâncias que atrapalham outras plantas e competir com diversas culturas anuais.',
+        imageSrc: "/images/cartilha/invasoras/picao-preto.jpg",
+        label: "Picão-preto",
+        alt: "Picão-preto invasor",
+        credito:
+          "Foto: Juan Carlos Fonseca Mata / Wikimedia Commons (CC BY-SA 4.0)",
+        whatItSteals:
+          "Água, luz e nutrientes, além de espaço para suas raízes e folhas se espalharem.",
+        impact:
+          "Pode liberar substâncias que atrapalham outras plantas e competir com diversas culturas anuais.",
       },
       {
-        imageSrc: '/images/ameacas/plantas invasoras/2.webp',
-        label: 'Buva',
-        alt: 'Buva invasora resistente',
-        whatItSteals: 'Água, luz e nutrientes durante todo o ciclo da lavoura, especialmente quando cresce cedo.',
-        impact: 'É difícil de controlar em algumas áreas e pode produzir muitas sementes, comprometendo a colheita.',
+        imageSrc: "/images/cartilha/invasoras/buva.jpg",
+        label: "Buva",
+        alt: "Buva invasora resistente",
+        credito: "Foto: Josep Gesti / Wikimedia Commons (CC BY-SA 4.0)",
+        whatItSteals:
+          "Água, luz e nutrientes durante todo o ciclo dos cultivos agrícolas, especialmente quando cresce cedo.",
+        impact:
+          "É difícil de controlar em algumas áreas e pode produzir muitas sementes, comprometendo a colheita.",
       },
     ],
-    midSectionHeading: 'Por que são um problema sério?',
+    midSectionHeading: "Por que são um problema sério?",
     midSectionText:
-      'Uma única planta invasora pode produzir milhares de sementes que ficam no solo por anos! Além de roubar nutrientes, algumas liberam substâncias químicas que inibem o crescimento das plantas ao redor. O controle precoce é fundamental!',
+      "Uma única planta invasora pode produzir milhares de sementes que ficam no solo por anos! Além de roubar nutrientes, algumas liberam substâncias químicas que inibem o crescimento das plantas ao redor. O controle precoce é fundamental!",
     callouts: [
       {
-        variant: 'yellow',
-        imageSrc: '/assets/joaninha_corpo_todo.png',
-        title: 'Curiosidade!',
-        text: 'O aguapé (jacinto-d’água) é uma planta invasora aquática que bloqueia rios e lagos no Amapá, prejudicando a pesca e a navegação. Até plantas podem ser pragas em locais errados!',
+        variant: "yellow",
+        title: "Curiosidade!",
+        text: "O aguapé (jacinto-d’água) é uma planta invasora aquática que bloqueia rios e lagos no Amapá, prejudicando a pesca e a navegação. Até plantas podem ser pragas agrícolas em locais errados!",
       },
     ],
     personaText:
-      'As plantas invasoras não são malvadas — elas só estão crescendo no lugar errado! Mas quando competem com nossa mandioca ou nosso feijão, viram um grande problema. Por isso precisamos conhecê-las e controlá-las!',
-    personaEmotion: 'thinking',
-    personaImageSrc: '/assets/dona-fito/dona-fito-thinking.png',
+      "As plantas invasoras não são malvadas — elas só estão crescendo no lugar errado! Mas quando competem com nossa mandioca ou nosso feijão, viram um grande problema. Por isso precisamos conhecê-las e controlá-las!",
+    personaEmotion: "thinking",
+    personaImageSrc: "/assets/dona-fito/dona-fito-thinking.png",
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 08 — TODO MUNDO TEM UM PAPEL!
+     PÁGINA 9 — TODO MUNDO TEM UM PAPEL!
   ───────────────────────────────────────────────────── */
   {
-    type: 'content',
-    interactionType: 'standard',
-    id: 'p08',
-    label: 'O Lado Bom da Natureza',
-    badgeLabel: 'Aliados da Lavoura',
-    title: 'Na natureza, todo mundo tem ',
-    titleHighlight: 'um papel!',
-    heroImageSrc: '/assets/cenarios/ecossistema-agricola-equilibrado.png',
+    type: "content",
+    interactionType: "standard",
+    id: "p10",
+    label: "Aliados da Planta",
+    badgeLabel: "Aliados da Roça",
+    title: "Na natureza, todo mundo tem ",
+    titleHighlight: "um papel!",
     leadText:
-      'Nem tudo é vilão na natureza! Existem seres vivos incríveis que ajudam a lavoura ao se alimentar das pragas ou ao polinizar as flores das plantas. São os nossos heróis naturais!',
+      "Nem tudo é vilão na natureza! Existem seres vivos incríveis que ajudam a roça ao se alimentar das pragas agrícolas ou ao polinizar as flores das plantas. São os nossos heróis naturais!",
     allyCards: [
       {
-        imageSrc: '/images/encontre_herois/joaninha.webp',
-        label: 'Joaninha',
-        alt: 'Joaninha predadora de pulgões',
-        role: 'Alimenta-se de pulgões e outros pequenos insetos que sugam a seiva das plantas.',
-        benefit: 'Ajuda a controlar pragas naturalmente, reduzindo a necessidade de inseticidas.',
+        imageSrc: "/images/cartilha/aliados/joaninha.jpg",
+        label: "Joaninha",
+        alt: "Joaninha predadora de pulgões",
+        credito: "Foto: Zsolt BRNA / Wikimedia Commons (CC BY-SA 3.0)",
+        role: "Preda pulgões e pequenos insetos que sugam a seiva das plantas.",
+        benefit:
+          "Faz controle biológico natural e reduz a necessidade de inseticidas.",
       },
       {
-        imageSrc: '/images/aliados/abelha.webp',
-        label: 'Abelha',
-        alt: 'Abelha polinizando uma flor',
-        role: 'Transporta pólen entre as flores e favorece a formação de frutos e sementes.',
-        benefit: 'Melhora a polinização e a produtividade de culturas, sem depender de produtos químicos.',
+        imageSrc: "/images/cartilha/aliados/abelha.jpg",
+        label: "Abelha",
+        alt: "Abelha polinizando uma flor",
+        credito: "Foto: Ivar Leidus / Wikimedia Commons (CC BY-SA 4.0)",
+        role: "Faz a polinização das flores, transportando o pólen entre elas.",
+        benefit:
+          "Ajuda as plantas a formar frutos e sementes e melhora a produção dos cultivos.",
       },
       {
-        imageSrc: '/images/aliados/vespa.webp',
-        label: 'Vespinha',
-        alt: 'Vespinha parasitoide',
-        role: 'Parasita ovos e larvas de pragas, impedindo que elas cheguem à fase adulta.',
-        benefit: 'Faz o controle biológico de forma específica e ajuda a preservar a lavoura.',
+        imageSrc: "/images/cartilha/aliados/vespa.jpg",
+        label: "Vespa",
+        alt: "Vespinha parasitoide",
+        credito: "Foto: Muhammad Mahdi Karim / Wikimedia Commons (CC BY 1.0)",
+        role: "Parasita ovos e lagartas de pragas agrícolas, impedindo seu desenvolvimento.",
+        benefit:
+          "Faz controle biológico específico e ajuda a proteger os cultivos agrícolas.",
       },
       {
-        imageSrc: '/images/aliados/larva.webp',
-        label: 'Aranha',
-        alt: 'Aranha predadora de insetos',
-        role: 'Captura e come diversos insetos que circulam entre as folhas e o solo.',
-        benefit: 'Reduz a população de pragas sem custo para o agricultor e sem contaminar o ambiente.',
+        imageSrc: "/images/cartilha/aliados/crisopideo.jpg",
+        label: "Crisopídeo",
+        alt: "Larva de crisopídeo, conhecida como bicho-lixeiro",
+        credito:
+          "Foto: Didier Descouens / Muséum de Toulouse / Wikimedia Commons (CC BY-SA 4.0)",
+        role: "A larva, conhecida como bicho-lixeiro, alimenta-se de pulgões, ácaros e cochonilhas.",
+        benefit:
+          "Ajuda no controle biológico de várias pragas agrícolas sem contaminar o ambiente.",
       },
       {
-        imageSrc: '/images/agricultura/ghabiru-plantation.webp',
-        label: 'Gavião',
-        alt: 'Gavião predador de roedores',
-        role: 'Preda roedores e outros animais que podem danificar sementes, raízes e frutos.',
-        benefit: 'Ajuda a manter o equilíbrio da área e diminui perdas sem o uso de venenos.',
+        imageSrc: "/images/cartilha/aliados/metarhizium.jpg",
+        label: "Fungo Metarhizium",
+        alt: "Fungo benéfico Metarhizium usado no controle biológico",
+        credito: "Foto: CSIRO / Wikimedia Commons (CC BY 3.0)",
+        role: "É um fungo benéfico que infecta e controla pragas como cigarrinhas e percevejos.",
+        benefit:
+          "Combate pragas naturalmente e pode reduzir o uso de agrotóxicos nas plantações.",
       },
       {
-        imageSrc: '/images/fungos/vassoura-da-bruxa-mandioca.webp',
-        label: 'Fungos Bons',
-        alt: 'Fungo benéfico usado no controle biológico',
-        role: 'Infectam algumas pragas e interrompem seu desenvolvimento, sem atacar a cultura.',
-        benefit: 'Podem substituir parte dos agrotóxicos e tornar o manejo mais seguro e sustentável.',
+        imageSrc: "/images/cartilha/aliados/bacillus.jpg",
+        label: "Bactéria Bacillus",
+        alt: "Bactéria benéfica Bacillus usada no controle biológico",
+        credito: "Foto: Dr. Sahay / Wikimedia Commons (CC BY-SA 3.0)",
+        role: "É uma bactéria benéfica, como o Bacillus thuringiensis, que combate lagartas na roça.",
+        benefit:
+          "Ajuda a controlar lagartas sem atacar a cultura e torna o manejo mais sustentável.",
       },
     ],
-    midSectionHeading: 'O que é Controle Biológico?',
+    midSectionHeading: "EQUILÍBRIO NOS AGROECOSSISTEMAS",
     midSectionText:
-      'Controle biológico é usar esses seres naturais para combater as pragas! Em vez de usar agrotoxicos, os agricultores podem criar e soltar joaninhas, vespinhas ou fungos bons na lavoura. É sustentável, barato e não polui o ambiente!',
+      "Esses aliados mantêm o equilíbrio dos agroecossistemas de duas formas essenciais: pelo controle biológico, quando joaninhas, vespas, crisopídeos, fungos e bactérias benéficas combatem as pragas naturalmente, e pela polinização, feita pelas abelhas para que as plantas produzam frutos e sementes. Com esse equilíbrio, a roça fica saudável e reduz a necessidade de agrotóxicos!",
     callouts: [
       {
-        variant: 'green',
-        imageSrc: '/assets/dona_fito_meio_corpo.png',
-        title: 'A natureza é sábia!',
-        text: 'Quando preservamos a biodiversidade ao redor das lavouras — matas, rios, bosques — estamos protegendo o lar dos nossos aliados naturais. Fazenda sustentavel e fazenda saudavel!',
+        variant: "green",
+        title: "A natureza é sábia!",
+        text: "Quando preservamos a biodiversidade ao redor das roças — matas, rios, bosques — estamos protegendo o lar dos nossos aliados naturais. Uma fazenda sustentável também é uma fazenda saudável!",
       },
     ],
     personaText:
-      'Você sabia que a joaninha é uma super-heroína da lavoura? Ela pode comer até 50 pulgões por dia! Cada ser vivo tem um papel importante na natureza. Vamos respeitar e valorizar nossos aliados!',
-    personaEmotion: 'happy',
-    personaImageSrc: '/assets/dona-fito/dona-fito-happy.png',
+      "Você sabia que a joaninha é uma super-heroína da roça? Ela pode comer até 50 pulgões por dia! Cada ser vivo tem um papel importante na natureza. Vamos respeitar e valorizar nossos aliados!",
+    personaEmotion: "happy",
+    personaImageSrc: "/assets/dona-fito/dona-fito-happy.png",
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 09 — O ATAQUE NA LAVOURA
+     PÁGINA 10 — O ATAQUE NOS CULTIVOS AGRÍCOLAS
   ───────────────────────────────────────────────────── */
   {
-    type: 'impact',
-    interactionType: 'standard',
-    id: 'p09',
-    label: 'O Ataque na Lavoura',
-    badgeLabel: 'Como as Pragas Atacam',
-    title: 'Como as pragas ',
-    titleHighlight: 'atacam a lavoura?',
-    heroImageSrc: '/assets/cenarios/lavoura-atacada-por-praga.png',
+    type: "impact",
+    interactionType: "standard",
+    id: "p11",
+    label: "Ataque aos Cultivos",
+    badgeLabel: "Como as Pragas Atacam",
+    title: "Como as pragas agrícolas ",
+    titleHighlight: "atacam os cultivos?",
     leadText:
-      'Cada tipo de praga tem uma forma diferente de atacar as plantas. Conhecer essas estratégias nos ajuda a identificar o problema cedo e agir rapidamente, salvando a colheita!',
+      "Cada tipo de praga agrícola tem uma forma diferente de atacar as plantas. Conhecer essas estratégias nos ajuda a identificar o problema cedo e agir rapidamente, salvando a colheita!",
     statCards: [
-  { 
-    gradient: 'linear-gradient(135deg, #2E7D32, #388E3C)', 
-    icon: Leaf, 
-    stat: 'Folhas', 
-    label: 'Insetos desfolhadores destroem a capacidade da planta de fazer fotossíntese.', 
-    textColor: 'white' 
-  },
-  { 
-    gradient: 'linear-gradient(135deg, #E65100, #EF6C00)', 
-    icon: Sprout, 
-    stat: 'Raiz', 
-    label: 'Nematoides e larvas subterrâneas atacam as raízes, impedindo a absorção de água.', 
-    textColor: 'white' 
-  },
-  { 
-    gradient: 'linear-gradient(135deg, #37474F, #546E7A)', 
-    icon: Droplet, 
-    stat: 'Seiva', 
-    label: 'Pulgões, ácaros e moscas sugam a seiva, enfraquecendo gradativamente a planta.', 
-    textColor: 'white' 
-  },
-],
+      {
+        gradient: "linear-gradient(135deg, #2E7D32, #388E3C)",
+        icon: Leaf,
+        stat: "Folhas",
+        label:
+          "Insetos desfolhadores destroem a capacidade da planta de fazer fotossíntese.",
+        textColor: "white",
+      },
+      {
+        gradient: "linear-gradient(135deg, #E65100, #EF6C00)",
+        icon: Sprout,
+        stat: "Raiz",
+        label:
+          "Nematoides e larvas subterrâneas atacam as raízes, impedindo a absorção de água.",
+        textColor: "white",
+      },
+      {
+        gradient: "linear-gradient(135deg, #0F766E, #0D9488)",
+        icon: Droplet,
+        stat: "Seiva",
+        label:
+          "Pulgões, ácaros e moscas sugam a seiva, enfraquecendo gradativamente a planta.",
+        textColor: "white",
+      },
+    ],
     impacts: [
-      { imageSrc: '/assets/icones/manchas-icone.png', title: 'Manchas e lesões', desc: 'Fungos e bactérias causam manchas que reduzem a fotossíntese e desvalorizam o produto no mercado.' },
-      { imageSrc: '/assets/icones/galha-icone.png', title: 'Deformações e galhas', desc: 'Alguns insetos injetam substâncias que deformam folhas, caules e frutos, inviabilizando a sua comercialização.' },
-      { imageSrc: '/assets/icones/murcha-icone.png', title: 'Murcha e morte subita', desc: 'Doenças vasculares bloqueiam o transporte de água dentro da planta, causando murcha repentina.' },
-      { imageSrc: '/assets/icones/virus-transmissao.png', title: 'Transmissão de vírus', desc: 'Insetos como pulgões e moscas-brancas são vetores de vírus que enfraquecem ou matam as plantas.' },
+      {
+        imageSrc: "/images/cartilha/sintomas/manchas-lesoes.jpg",
+        title: "Manchas e lesões",
+        desc: "Fungos e bactérias causam manchas que reduzem a fotossíntese e desvalorizam o produto no mercado.",
+        imageCredit: "Foto: Scot Nelson / Wikimedia Commons (CC0 1.0)",
+      },
+      {
+        imageSrc: "/images/cartilha/sintomas/deformacoes-galhas.jpg",
+        title: "Deformações e galhas",
+        desc: "Alguns insetos injetam substâncias que deformam folhas, caules e frutos, inviabilizando a sua comercialização.",
+        imageCredit:
+          "Foto: Didier Descouens / Muséum de Toulouse / Wikimedia Commons (CC BY-SA 4.0)",
+      },
+      {
+        imageSrc: "/images/cartilha/sintomas/murcha-morte-subita.jpg",
+        title: "Murcha e morte súbita",
+        desc: "Doenças vasculares bloqueiam o transporte de água dentro da planta, causando murcha repentina.",
+        imageCredit:
+          "Foto: Ed Kurtz / Bugwood.org / Wikimedia Commons (CC BY 3.0)",
+      },
+      {
+        imageSrc: "/images/cartilha/sintomas/transmissao-virus.jpg",
+        title: "Transmissão de vírus",
+        desc: "Insetos como pulgões e moscas-brancas são vetores de vírus que enfraquecem ou matam as plantas.",
+        imageCredit:
+          "Foto: Plant pests and diseases / Wikimedia Commons (CC0 / Domínio Público)",
+      },
     ],
     personaText:
-      'Cada praga tem sua própria "arma" para atacar as plantas. Por isso é tão importante monitorar a lavoura constantemente! Quanto mais cedo identificarmos o problema, mais fácil será controlá-lo!',
-    personaEmotion: 'alert',
-    personaImageSrc: '/assets/dona-fito/dona-fito-alert.png',
+      'Cada praga agrícola tem sua própria "arma" para atacar as plantas. Por isso é tão importante monitorar a roça constantemente! Quanto mais cedo identificarmos o problema, mais fácil será controlá-lo!',
+    personaEmotion: "alert",
+    personaImageSrc: "/assets/dona-fito/dona-fito-alert.png",
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 10 — PRAGAS QUARENTENÁRIAS
+     PÁGINA 11 — PRAGAS QUARENTENÁRIAS
   ───────────────────────────────────────────────────── */
   {
-    type: 'alert',
-    interactionType: 'standard',
-    id: 'p10',
-    label: 'Pragas Quarentenárias',
-    badgeLabel: 'Alerta Especial',
-    title: 'O que são ',
-    titleHighlight: 'Pragas Quarentenárias?',
+    type: "alert",
+    interactionType: "standard",
+    id: "p12",
+    label: "Quarentenárias",
+    badgeLabel: "Alerta Especial",
+    title: "O que são ",
+    titleHighlight: "Pragas Quarentenárias?",
     leadText:
-      'Imagine uma praga tão perigosa que poderia destruir toda a agricultura de um país se entrasse em suas fronteiras. É exatamente isso que define uma Praga Quarentenária — um inimigo externo que não podemos deixar entrar!',
-    alertImageSrc: '/assets/icones/alerta-quarentena-icone.png',
-    alertTitle: 'Definição Oficial (MAPA)',
+      "Pragas quarentenárias são organismos de importância econômica que exigem medidas oficiais para proteger a agricultura. Elas podem estar ausentes do país, exigindo bloqueio rigoroso nas fronteiras, ou presentes apenas em áreas restritas, exigindo controle da dispersão e erradicação oficial.",
+    alertImageSrc: "/assets/icones/alerta-quarentena-icone.png",
+    alertTitle: "Definição Oficial (MAPA)",
     alertText:
-      'Praga quarentenária é aquela de importância econômica potencial para o país ameaçado, ainda não presente no território ou presente em área limitada, e sujeita ao controle oficial.',
+      "Praga Quarentenária Ausente (PQA): praga que não ocorre no país e representa uma ameaça externa imediata nas fronteiras. Praga Quarentenária Presente (PQP): praga presente apenas em áreas limitadas do território nacional e sujeita a controle rigoroso e à erradicação oficial.",
     callouts: [
       {
-        variant: 'yellow',
-        imageSrc: '/assets/joaninha_corpo_todo.png',
+        variant: "yellow",
         title: 'Por que o nome "Quarentenária"?',
-        text: 'O termo vem de "quarentena" — o periodo de isolamento usado para evitar a propagação de doenças. Assim como fazemos quarentena para proteger as pessoas, fazemos quarentena fitossanitária para proteger as plantas!',
-      },
-    ],
-    pragaCards: [
-      {
-        bg: 'linear-gradient(135deg,#B71C1C,#C62828)',
-        imageSrc: '/images/pragas/mosca da carambola/1.webp',
-        title: 'Mosca-da-carambola',
-        desc: 'Detectada no Amapá, ameaça frutas em todo o território nacional.',
-        status: 'Presente no Amapá — Quarentena A1.',
-        economicRisk: 'Ataca diversas frutas e pode provocar perdas de produção e bloqueios de exportação.',
-        howToAct: 'Não transporte frutas sem origem comprovada. Denuncie suspeitas e aguarde a fiscalização sanitária.',
-      },
-      {
-        bg: 'linear-gradient(135deg,#8B1E1E,#C62828)',
-        imageSrc: '/images/doencas/fitoplasma.webp',
-        title: 'Huanglongbing (HLB)',
-        desc: 'Doença bacteriana devastadora para citros, sem cura conhecida.',
-        status: 'Monitorado no Brasil — risco quarentenário para novas áreas.',
-        economicRisk: 'Reduz a produção de citros, compromete pomares e pode impedir a comercialização e exportação.',
-        howToAct: 'Use mudas certificadas, comunique sintomas e siga as orientações dos órgãos de defesa agropecuária.',
-      },
-      {
-        bg: 'linear-gradient(135deg,#B71C1C,#E65100)',
-        imageSrc: '/images/pragas/vespa velutina/1.webp',
-        title: 'Vespa Velutina',
-        desc: 'Predadora de abelhas nativas, com risco à polinização e à apicultura.',
-        status: 'Alerta de vigilância — ocorrência deve ser comunicada às autoridades.',
-        economicRisk: 'Reduz colônias de abelhas, ameaça a polinização e pode afetar a produção de mel e frutas.',
-        howToAct: 'Não manipule ninhos. Registre o local, mantenha distância e denuncie para a fiscalização sanitária.',
+        text: 'O termo vem de "quarentena" — o período de isolamento usado para evitar a propagação de doenças. Assim como fazemos quarentena para proteger as pessoas, fazemos quarentena fitossanitária para proteger as plantas!',
       },
     ],
     personaText:
-      'Algumas pragas são tão perigosas que o Brasil tem regras rígidas para impedir sua entrada no país! Aeroportos, portos e fronteiras são fiscalizados para isso. Nunca traga frutas ou plantas de outros países sem verificar!',
-    personaEmotion: 'alert',
-    personaImageSrc: '/assets/dona-fito/dona-fito-alert.png',
+      "Algumas pragas agrícolas são tão perigosas que o Brasil tem regras rígidas para impedir sua entrada no país! Aeroportos, portos e fronteiras são fiscalizados para isso. Nunca traga frutas ou plantas de outros países sem verificar!",
+    personaEmotion: "alert",
+    personaImageSrc: "/assets/dona-fito/dona-fito-alert.png",
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 11 — QUEM CUIDA? PESQUISADORES
+     PÁGINA 12 — QUEM CUIDA? PESQUISADORES
   ───────────────────────────────────────────────────── */
   {
-    type: 'orgaos',
-    interactionType: 'standard',
-    id: 'p11',
-    label: 'Quem Cuida? Pesquisadores',
-    badgeLabel: 'Heróis da Ciencia',
-    title: 'Os Cientistas que ',
-    titleHighlight: 'protegem',
-    titleSuffix: ' nossas plantas!',
-    heroImageSrc: '/assets/cenarios/pesquisador-laboratorio.png',
+    type: "orgaos",
+    interactionType: "standard",
+    id: "p13",
+    label: "Pesquisadores",
+    badgeLabel: "Heróis da Ciência",
+    title: "Os Cientistas que ",
+    titleHighlight: "protegem",
+    titleSuffix: " nossas plantas!",
     leadText:
-      'Por trás de cada solução fitossanitária existe um pesquisador dedicado! Essas pessoas estudam pragas, desenvolvem novas variedades de plantas resistentes e criam métodos de controle sustentáveis.',
+      "Por trás de cada solução fitossanitária há pesquisadores dedicados. Eles estudam pragas agrícolas, desenvolvem novas variedades de plantas resistentes e criam métodos de controle sustentáveis.",
     items: [
-      { imageSrc: '/assets/icones/embrapa-icone.png', name: 'Embrapa — Empresa Brasileira de Pesquisa Agropecuária', desc: 'Desenvolveu variedades de mandioca resistentes a vassoura-de-bruxa e tecnicas de controle biologico para a Amazonia.' },
-      { imageSrc: '/assets/icones/universidade-icone.png', name: 'Universidades e Institutos Federais', desc: 'Formam biologos, agronomos e engenheiros florestais que pesquisam pragas locais e desenvolvem solucoes regionais.' },
-      { imageSrc: '/assets/icones/ifap-icone.png', name: 'IFAP — Instituto Federal do Amapá', desc: 'Pesquisa e forma técnicos agrícolas com foco nas pragas e desafios específicos da região amazônica.' },
-      { imageSrc: '/assets/icones/iepa-icone.png', name: 'IEPA — Instituto de Pesquisas Científicas do Amapá', desc: 'Estuda a biodiversidade amazônica, identificando novas pragas e aliados naturais da lavoura amapaense.' },
-      { imageSrc: '/assets/icones/laboratorio-icone.png', name: 'Laboratórios de Diagnóstico Fitossanitário', desc: 'Identificam com precisão qual praga ou doença está atacando uma lavoura, permitindo o tratamento correto.' },
-      { imageSrc: '/assets/icones/estudante-icone.png', name: 'Você pode ser o próximo!', desc: 'Cada estudante curioso é um futuro pesquisador em potencial. A ciência precisa de você para proteger nossas plantas!' },
+      {
+        imageSrc: "/images/cartilha/pesquisadores/embrapa-amapa.jpg",
+        imageFit: "cover",
+        name: "Embrapa — Empresa Brasileira de Pesquisa Agropecuária",
+        desc: "Pesquisa soluções para fortalecer a agricultura amazônica.",
+        credit: "Foto: Divulgação / Embrapa",
+        details:
+          "Desenvolveu variedades de mandioca resistentes à vassoura-de-bruxa e técnicas de controle biológico para a Amazônia.",
+        links: [
+          { label: "Site oficial da Embrapa", url: "https://www.embrapa.br" },
+        ],
+      },
+      {
+        imageSrc: "/images/cartilha/pesquisadores/logo-unifap.png",
+        imageFit: "contain",
+        name: "Universidades Públicas do Amapá (UNIFAP e UEAP)",
+        desc: "Formam profissionais e pesquisam soluções para proteger os cultivos do Amapá.",
+        credit:
+          "Logo institucional: Deivid França 96 / Wikimedia Commons (CC BY 4.0)",
+        details:
+          "A UNIFAP e a UEAP formam biólogos, agrônomos e pesquisadores que estudam pragas agrícolas e desenvolvem soluções sustentáveis para a Amazônia.",
+        links: [
+          {
+            label: "UNIFAP — Universidade Federal do Amapá",
+            url: "https://www.unifap.br",
+          },
+          {
+            label: "UEAP — Universidade do Estado do Amapá",
+            url: "https://www.ueap.edu.br",
+          },
+        ],
+      },
+      {
+        imageSrc: "/images/cartilha/pesquisadores/logo-ifap.svg",
+        imageFit: "contain",
+        name: "IFAP — Instituto Federal do Amapá",
+        desc: "Capacita profissionais para os desafios da agricultura amazônica.",
+        credit:
+          "Marca oficial: Setec/MEC (Domínio público)",
+        details:
+          "Pesquisa e forma técnicos agrícolas e profissionais com foco nas pragas e desafios da agricultura amazônica.",
+        links: [
+          { label: "Site oficial do IFAP", url: "https://www.ifap.edu.br" },
+        ],
+      },
+      {
+        imageSrc: "/images/cartilha/pesquisadores/iepa-biodiversidade.jpg",
+        imageFit: "cover",
+        name: "IEPA — Instituto de Pesquisas Científicas e Tecnológicas do Estado do Amapá",
+        desc: "Investiga a biodiversidade amazônica e sua relação com a fitossanidade.",
+        credit: "Foto: Adrien Olichon / Unsplash",
+        details:
+          "Estuda a biodiversidade amazônica, identificando pragas agrícolas e aliados naturais nos cultivos amapaenses.",
+        links: [
+          { label: "Site oficial do IEPA", url: "https://iepa.ap.gov.br" },
+        ],
+      },
+      {
+        imageSrc: "/images/cartilha/pesquisadores/labfito-pesquis.jpg",
+        imageFit: "cover",
+        name: "LABFITO — Laboratório de Fitossanidade e Produção Vegetal",
+        desc: "Contribui para a formação e a produção vegetal no Amapá.",
+        credit:
+          "Foto: Fred Miller / Wikimedia Commons (CC BY-SA 2.0)",
+        details:
+          "Vinculado à UNIFAP (Campus Mazagão), atua em ensino, pesquisa e extensão nas áreas de fitossanidade e produção vegetal.",
+        links: [
+          {
+            label: "UNIFAP — Campus Mazagão (LABFITO)",
+            url: "https://www2.unifap.br/mazagao/",
+          },
+        ],
+        pillars: [
+          {
+            title: "Ensino",
+            text: "Forma estudantes em fitossanidade e produção vegetal, conectando teoria e prática para a realidade do Amapá.",
+          },
+          {
+            title: "Pesquisa",
+            text: "Investiga diagnóstico e manejo sustentável de pragas e doenças, buscando soluções adequadas aos cultivos amapaenses.",
+          },
+          {
+            title: "Extensão",
+            text: "Compartilha conhecimentos e orientações com produtores e comunidades para fortalecer a produção vegetal no Amapá.",
+          },
+        ],
+      },
+      {
+        imageSrc: "/assets/icones/estudante-icone.png",
+        name: "Você pode ser o próximo!",
+        desc: "A curiosidade pode ser o primeiro passo para uma carreira científica.",
+        details:
+          "Participe de feiras de ciências, projetos escolares de iniciação científica júnior e observe as plantas ao seu redor com olhar investigador.",
+        impact:
+          "Novos pesquisadores trazem ideias criativas para identificar pragas cedo, proteger os cultivos agrícolas e fortalecer a agricultura sustentável no Amapá.",
+      },
     ],
     personaText:
-      'Os pesquisadores são os verdadeiros super-heróis da fitossanidade! Eles passam anos estudando para nos ajudar. Quem sabe um dia você não vai trabalhar na Embrapa ou numa universidade pesquisando pragas do Amapá?',
-    personaEmotion: 'happy',
-    personaImageSrc: '/assets/dona_fito_meio_corpo.png',
+      "Os pesquisadores são os verdadeiros super-heróis da fitossanidade! Eles passam anos estudando para nos ajudar. Quem sabe um dia você não vai trabalhar na Embrapa ou numa universidade pesquisando pragas agrícolas do Amapá?",
+    personaEmotion: "happy",
+    personaImageSrc: "/dona_fito_meio_corpo.png",
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 12 — QUEM CUIDA? FISCALIZAÇÃO
+     PÁGINA 13 — QUEM CUIDA? FISCALIZAÇÃO
   ───────────────────────────────────────────────────── */
   {
-    type: 'orgaos',
-    interactionType: 'standard',
-    id: 'p12',
-    label: 'Quem Cuida? Fiscalização',
-    badgeLabel: 'Guardioes das Fronteiras',
-    title: 'Os guardiões que ',
-    titleHighlight: 'fiscalizam',
-    titleSuffix: ' e protegem!',
-    heroImageSrc: '/assets/cenarios/fiscal-aeroporto-fitossanitario.png',
+    type: "orgaos",
+    interactionType: "standard",
+    id: "p14",
+    label: "Fiscalização",
+    badgeLabel: "Guardiões das Fronteiras",
+    title: "Os guardiões que ",
+    titleHighlight: "fiscalizam",
+    titleSuffix: " e protegem!",
     leadText:
-      'Além dos pesquisadores, existe uma rede de fiscalização que trabalha 24 horas por dia para impedir que pragas perigosas entrem no Brasil ou se espalhem entre os estados.',
+      "Além dos pesquisadores, existe uma rede de fiscalização que trabalha 24 horas por dia para impedir que pragas agrícolas perigosas entrem no Brasil ou se espalhem entre os estados.",
     items: [
-      { imageSrc: '/assets/icones/mapa-ministerio-icone.png', name: 'MAPA — Ministerio da Agricultura', desc: 'Define as normas fitossanitarias nacionais e coordena toda a rede de proteção das plantas do Brasil.' },
-      { imageSrc: '/assets/icones/vigiagro-icone.png', name: 'VIGIAGRO — Vigilancia Agropecuaria', desc: 'Fiscaliza portos, aeroportos e fronteiras terrestres, inspecionando malas, caixas e cargas em busca de pragas.' },
-      { imageSrc: '/assets/icones/adap-icone.png', name: 'ADAP — Agencia de Defesa Agropecuaria do Amapa', desc: 'Fiscaliza o comercio de plantas, sementes e frutas dentro do Amapa, evitando a entrada de pragas de outros estados.' },
-      { imageSrc: '/assets/icones/sementes-certificadas.png', name: 'Inspeção de Sementes e Mudas', desc: 'Antes de ser vendida, toda semente precisa passar por inspeção oficial para garantir que esta livre de doencas.' },
-      { imageSrc: '/assets/icones/produtor-rural-icone.png', name: 'Produtor Rural', desc: 'São os primeiros a perceber algo errado na lavoura! Cada produtor é um fiscal em campo, reportando anomalias.' },
-      { imageSrc: '/assets/icones/consumidor-icone.png', name: 'E você, consumidor!', desc: 'Não transporte frutas, plantas ou terra de regiões desconhecidas. Essa atitude simples ajuda a proteger nossa agricultura!' },
+      {
+        imageSrc: "/images/cartilha/guardioes/guardiao-mapa.jpg",
+        name: "MAPA — Ministério da Agricultura",
+        desc: "Coordena as normas e a rede nacional de proteção fitossanitária.",
+        details:
+          "Define as normas fitossanitárias nacionais e coordena toda a rede de proteção das plantas do Brasil.",
+        credit: "Foto: Land O'Lakes, Inc. / Unsplash",
+      },
+      {
+        imageSrc: "/images/cartilha/guardioes/guardiao-vigiagro.png",
+        name: "VIGIAGRO — Vigilância Agropecuária",
+        desc: "Fiscaliza cargas e bagagens que entram no país.",
+        details:
+          "Fiscaliza portos, aeroportos e fronteiras terrestres, inspecionando malas, caixas e cargas em busca de pragas agrícolas.",
+        credit: "Foto: Divulgação / MAPA (gov.br)",
+      },
+      {
+        imageSrc: "/images/cartilha/guardioes/guardiao-adap.jpg",
+        name: "ADAP – Defesa Agropecuária do Amapá",
+        desc: "Fiscaliza a circulação de produtos vegetais no Amapá.",
+        details:
+          "Fiscaliza o trânsito de plantas, sementes e frutas no Amapá, impedindo a entrada de pragas de outros estados.",
+        credit: "Foto: Aldward Castillo / Unsplash",
+      },
+      {
+        imageSrc: "/images/cartilha/guardioes/guardiao-sementes-mudas.jpg",
+        name: "Inspeção de Sementes e Mudas",
+        desc: "Inspeciona sementes e mudas antes da venda.",
+        details:
+          "Antes de ser vendida, toda semente precisa passar por inspeção oficial para garantir que está livre de doenças.",
+        credit: "Foto: Vitor Monthay / Unsplash",
+      },
+      {
+        imageSrc: "/images/cartilha/guardioes/guardiao-produtor-rural.jpg",
+        name: "Produtor Rural",
+        desc: "Ajuda a identificar e comunicar problemas nos cultivos.",
+        details:
+          "Percebe primeiro alterações na roça e atua como fiscal no campo, relatando anomalias.",
+        credit: "Foto: Dương Trí / Unsplash",
+      },
+      {
+        imageSrc: "/assets/icones/consumidor-icone.png",
+        name: "E você, consumidor!",
+        desc: "Você também pode ajudar a impedir a disseminação de pragas.",
+        details:
+          "Não transporte frutas, plantas ou terra de regiões desconhecidas em viagens e compre mudas apenas de viveiros certificados.",
+        impact:
+          "Com atitudes simples no dia a dia, você evita a entrada de novas pragas e ajuda a proteger toda a nossa agricultura.",
+      },
     ],
     personaText:
-      'Imagina o trabalho desses fiscais! Eles inspecionam cada bagagem, cada caixa de fruta, cada muda de planta que chega ao Amapá. É um trabalho de heroi — silencioso mas muito importante para nossa segurança alimentar!',
-    personaEmotion: 'pointing',
-    personaImageSrc: '/assets/dona_fito_meio_corpo.png',
+      "Imagina o trabalho desses fiscais! Eles inspecionam cada bagagem, cada caixa de fruta, cada muda de planta que chega ao Amapá. É um trabalho de herói — silencioso, mas muito importante para nossa segurança alimentar!",
+    personaEmotion: "pointing",
+    personaImageSrc: "/dona_fito_meio_corpo.png",
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 13 — O ESCUDO PROTETOR (BOAS PRÁTICAS — LIFT-THE-FLAP)
+     PÁGINA 14 — O ESCUDO PROTETOR (BOAS PRÁTICAS)
   ───────────────────────────────────────────────────── */
   {
-    type: 'lapbook',
-    interactionType: 'lift-the-flap',
-    id: 'p13',
-    label: 'O Escudo Protetor',
-    badgeLabel: 'Boas Práticas',
-    lapbookBadge: 'PREVENÇÃO E MANEJO',
-    lapbookTitle: 'Como Evitar e Controlar as Pragas Agrícolas?',
-    lapbookSubtitle: 'Arraste ou clique nos cartões para classificar as atitudes de proteção da lavoura!',
-    backgroundImageSrc: '/assets/cenarios/fundo-lapbook-teal.png',
-    flaps: [
-      {
-        id: 'sementes-certificadas',
-        coverTitle: 'Sementes Certificadas',
-        coverImageSrc: '/assets/boas-praticas/semente-certificada-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'Sementes inspecionadas e aprovadas pelo MAPA garantem que estão livres de pragas, doenças e com alta capacidade de germinação. Começar com boas sementes é a base de uma lavoura saudável!',
-        contentImageSrc: '/assets/boas-praticas/semente-certificada-detalhe.png',
-        backAccent: 'green',
-      },
-      {
-        id: 'rotacao-culturas',
-        coverTitle: 'Rotação de Culturas',
-        coverImageSrc: '/assets/boas-praticas/rotacao-culturas-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'Alternar diferentes especies de plantas numa mesma area entre as safras quebra o ciclo de reproducao das pragas e melhora a saude do solo. E simples, barato e muito eficaz!',
-        contentImageSrc: '/assets/boas-praticas/rotacao-culturas-detalhe.png',
-        backAccent: 'teal',
-      },
-      {
-        id: 'controle-biologico',
-        coverTitle: 'Controle Biológico',
-        coverImageSrc: '/assets/boas-praticas/controle-biologico-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'Usar inimigos naturais das pragas — joaninhas, vespinhas parasitoides e fungos entomopatogênicos — para controlá-las de forma sustentável, sem agrotóxicos. A natureza trabalhando para nós!',
-        contentImageSrc: '/assets/boas-praticas/controle-biologico-detalhe.png',
-        backAccent: 'green',
-      },
-      {
-        id: 'mip',
-        coverTitle: 'MIP — Manejo Integrado de Pragas',
-        coverImageSrc: '/assets/boas-praticas/mip-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'O MIP combina metodos biologicos, culturais e quimicos de forma equilibrada, usando o minimo de agrotoxico possivel. E a abordagem mais moderna e sustentavel da fitossanidade!',
-        contentImageSrc: '/assets/boas-praticas/mip-diagrama.png',
-        backAccent: 'yellow',
-      },
-      {
-        id: 'monitoramento',
-        coverTitle: 'Monitoramento Constante',
-        coverImageSrc: '/assets/boas-praticas/monitoramento-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'Visitar a lavoura regularmente, usar armadilhas para insetos e registrar o que se observa permite identificar problemas cedo. Problema identificado cedo e problema resolvido com menor custo e dano!',
-        contentImageSrc: '/assets/boas-praticas/monitoramento-armadilha.png',
-        backAccent: 'teal',
-      },
-      {
-        id: 'voce-pode-ajudar',
-        coverTitle: 'Você também pode ajudar!',
-        coverImageSrc: '/assets/boas-praticas/cidadao-ajuda-capa.png',
-        coverHint: 'Levante para descobrir!',
-        content: 'Não transporte plantas, frutas ou terra sem verificar a origem. Compre produtos com selos de qualidade. Denuncie pragas desconhecidas ao MAPA. Compartilhe o que aprendeu. Cada atitude conta!',
-        contentImageSrc: '/assets/boas-praticas/cidadao-ajuda-detalhe.png',
-        backAccent: 'yellow',
-      },
-    ],
+    type: "lapbook",
+    interactionType: "lift-the-flap",
+    id: "p15",
+    label: "Escudo Protetor",
+    badgeLabel: "Boas Práticas",
+    lapbookBadge: "PREVENÇÃO E MANEJO",
+    lapbookTitle: "Como Evitar e Controlar as Pragas Agrícolas?",
+    lapbookSubtitle:
+      "Arraste ou clique nos cartões para classificar as atitudes de proteção dos cultivos agrícolas!",
     callouts: [
       {
-        variant: 'green',
-        imageSrc: '/assets/icones/prevencao-icone.png',
-        title: 'A prevenção sempre vence o combate!',
-        text: 'Investir em boas práticas fitossanitárias custa muito menos do que tratar uma lavoura infestada. Agricultor informado é agricultor protegido — e isso vale para toda a família rural!',
+        variant: "green",
+        title: "A prevenção sempre vence o combate!",
+        text: "Investir em boas práticas fitossanitárias custa muito menos do que tratar cultivos agrícolas infestados. Agricultor informado é agricultor protegido — e isso vale para toda a família rural!",
       },
     ],
     personaText:
-      'Aqui estão as "armas" dos heróis da lavoura! Cada uma dessas práticas é um escudo que protege nossas plantas. Levante as abas e descubra qual você já conhecia!',
-    personaEmotion: 'celebrating',
-    personaImageSrc: '/assets/dona-fito/dona-fito-celebrating.png',
+      'Aqui estão as "armas" dos heróis da roça! Cada uma dessas práticas é um escudo que protege nossas plantas. Levante as abas e descubra qual você já conhecia!',
+    personaEmotion: "celebrating",
+    personaImageSrc: "/assets/dona-fito/dona-fito-celebrating.png",
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 13.5 — CASOS REAIS DO AMAPÁ (DOSSIE 3D)
+     PÁGINA 15 — CASOS REAIS DO AMAPÁ (DOSSIE 3D)
   ───────────────────────────────────────────────────── */
   {
-    type: 'amapa-cases',
-    interactionType: 'standard',
-    id: 'p13b',
-    label: 'Casos Reais do Amapá',
-    badgeLabel: 'Dossie Fitossanitário',
-    personaText: 'Investigue os detalhes de cada ameaça acima e veja como podemos defender o nosso Amapá!',
-    personaEmotion: 'alert',
-    personaImageSrc: '/assets/dona_fito_meio_corpo.png',
+    type: "amapa-cases",
+    interactionType: "standard",
+    id: "p16",
+    label: "Casos no Amapá",
+    badgeLabel: "Dossie Fitossanitário",
+    personaText:
+      "Investigue os detalhes de cada ameaça acima e veja como podemos defender o nosso Amapá!",
+    personaEmotion: "alert",
+    personaImageSrc: "/assets/dona_fito_meio_corpo.png",
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 18 — O IMPACTO NA SUA VIDA
+     PÁGINA 16 — O IMPACTO NA SUA VIDA
   ───────────────────────────────────────────────────── */
   {
-    type: 'chain',
-    interactionType: 'standard',
-    id: 'p18',
-    label: 'O Impacto na Sua Vida',
-    badgeLabel: 'Conexão com a vida real',
-    heroImageSrc: '/assets/cenarios/familia-mesa-comida.png',
-    heroTitle: 'Sem Fitossanidade = Menos Comida na Mesa',
-    heroHighlight: '',
+    type: "chain",
+    interactionType: "standard",
+    id: "p17",
+    label: "Na Sua Vida",
+    badgeLabel: "Conexão com a vida real",
+    heroTitle: "Sem Fitossanidade = Menos Comida na Mesa",
+    heroHighlight: "",
     heroSubtitle:
-      'Entender a fitossanidade não é só para cientistas. É para qualquer pessoa que come, que compra e que se preocupa com o futuro do planeta.',
-    sectionHeading: 'Como isso chega até você?',
-    leadText: 'Veja a cadeia de impactos quando pragas não são controladas:',
+      "Entender a fitossanidade não é só para cientistas: interessa a todos que comem, compram alimentos e se preocupam com o futuro do planeta.",
+    sectionHeading: "Como isso chega até você?",
+    leadText:
+      "Veja a cadeia de impactos quando pragas agrícolas não são controladas:",
     chainItems: [
-      { imageSrc: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec', text: 'Uma praga entra no país sem controle fitossanitário', studentImpact: 'A fiscalização protege as plantas que chegam à nossa região e evita que novas pragas alcancem as lavouras.' },
-      { imageSrc: 'https://images.unsplash.com/photo-1595974482597-4b8da8879bc5', text: 'Ela se espalha pelas lavouras de mandioca, açaí e frutas', studentImpact: 'Quando a lavoura é atingida, os alimentos que fazem parte da sua rotina podem ficar mais difíceis de produzir.' },
-      { imageSrc: 'https://images.unsplash.com/photo-1574943320219-553eb213f72d', text: 'A produção cai drasticamente e os agricultores perdem renda', studentImpact: 'Menos colheita significa mais preocupação para as famílias produtoras e menos produtos disponíveis.' },
-      { imageSrc: 'https://images.unsplash.com/photo-1533900298318-6b8da08a523e', text: 'Os alimentos ficam escassos e mais caros nos mercados', studentImpact: 'A queda na oferta pode aumentar os preços dos alimentos que sua família compra.' },
-      { imageSrc: 'https://images.unsplash.com/photo-1547592180-85f173990554', text: 'Famílias têm menos acesso a alimentos nutritivos e acessíveis', studentImpact: 'Cuidar da saúde das plantas ajuda a manter refeições variadas e nutritivas na mesa.' },
-      { imageSrc: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc', text: 'O meio ambiente sofre com o desequilíbrio ecológico', studentImpact: 'Proteger a fitossanidade também preserva os seres vivos e os ambientes que você conhece.' },
+      {
+        imageSrc: "/images/cartilha/consequencias/impacto-porto.jpg",
+        text: "Uma praga agrícola entra no país sem controle fitossanitário",
+        studentImpact:
+          "A fiscalização protege os cultivos da região e evita a chegada de novas pragas.",
+        credit: "Foto: Unsplash / Acervo Educativo",
+      },
+      {
+        imageSrc: "/images/cartilha/consequencias/impacto-roca.jpg",
+        text: "Ela se espalha pelas roças de mandioca, açaí e frutas",
+        studentImpact:
+          "Quando a roça é atingida, os alimentos que fazem parte da sua rotina podem ficar mais difíceis de produzir.",
+        credit: "Foto: Unsplash / Acervo Educativo",
+      },
+      {
+        imageSrc: "/images/cartilha/consequencias/impacto-agricultor.jpg",
+        text: "A produção cai drasticamente e os agricultores perdem renda",
+        studentImpact:
+          "Menos colheita significa mais preocupação para as famílias produtoras e menos produtos disponíveis.",
+        credit: "Foto: Unsplash / Acervo Educativo",
+      },
+      {
+        imageSrc: "/images/cartilha/consequencias/impacto-mercado.jpg",
+        text: "Os alimentos ficam escassos e mais caros nos mercados",
+        studentImpact:
+          "Com menos alimentos disponíveis, sua família pode ter mais dificuldade para encontrar os produtos de que precisa.",
+        credit: "Foto: Unsplash / Acervo Educativo",
+      },
+      {
+        imageSrc: "/images/cartilha/consequencias/impacto-refeicao.jpg",
+        text: "Famílias têm menos acesso a alimentos nutritivos e acessíveis",
+        studentImpact:
+          "Cuidar da saúde das plantas ajuda a manter refeições variadas e nutritivas na mesa.",
+        credit: "Foto: Unsplash / Acervo Educativo",
+      },
+      {
+        imageSrc: "/images/cartilha/consequencias/impacto-ambiente.jpg",
+        text: "O meio ambiente sofre com o desequilíbrio ecológico",
+        studentImpact:
+          "Proteger a fitossanidade também preserva os seres vivos e os ambientes que você conhece.",
+        credit: "Foto: Unsplash / Acervo Educativo",
+      },
     ],
     callouts: [
       {
-        variant: 'yellow',
-        imageSrc: '/assets/joaninha_corpo_todo.webp',
-        title: 'Você quer fazer a diferença?',
-        text: 'Não transporte plantas ou frutas de regiões desconhecidas. Compre produtos com selos de qualidade. Apoie agricultores locais. Essas atitudes simples ajudam a manter a fitossanidade da nossa região!',
+        variant: "yellow",
+        title: "Você quer fazer a diferença?",
+        text: "Não transporte plantas ou frutas de regiões desconhecidas. Compre produtos com selos de qualidade. Apoie agricultores locais. Essas atitudes simples ajudam a manter a fitossanidade da nossa região!",
       },
     ],
     personaText:
-      'Cada vez que você compra uma fruta saudável e barata no mercado, é porque alguém trabalhou duro para proteger a lavoura! A fitossanidade está na sua mesa todo dia — só que você não sabia disso. Agora sabe!',
-    personaEmotion: 'pointing',
-    personaImageSrc: '/assets/dona-fito/dona-fito-pointing.png',
+      "Cada vez que você compra uma fruta saudável e barata no mercado, é porque alguém trabalhou duro para proteger a roça! A fitossanidade está na sua mesa todo dia — só que você não sabia disso. Agora sabe!",
+    personaEmotion: "pointing",
+    personaImageSrc: "/assets/dona-fito/dona-fito-pointing.png",
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 19 — JOGO RÁPIDO: ENCONTRE O HERÓI!
+     PÁGINA 17 — JOGO RÁPIDO: ENCONTRE O HERÓI!
   ───────────────────────────────────────────────────── */
   {
-    type: 'find-the-hero',
-    interactionType: 'find-the-hero',
-    id: 'p19',
-    label: 'Jogo: Encontre o Herói!',
-    badgeLabel: 'ATIVIDADE INTERATIVA',
-    title: 'Descubra os Heróis e Vilões!',
-    subtitle: 'Todo ser vivo tem um papel. Clique nos cards e descubra as características dos nossos heróis e vilões na natureza.',
+    type: "find-the-hero",
+    interactionType: "find-the-hero",
+    id: "p18",
+    label: "Encontre o Herói!",
+    badgeLabel: "ATIVIDADE INTERATIVA",
+    title: "Descubra os Heróis e Vilões!",
+    subtitle:
+      "Todo ser vivo tem um papel. Clique nos cards e descubra as características dos nossos heróis e vilões na natureza.",
     characters: [
       {
-        id: 'joaninha',
-        imageSrc: '/images/encontre_herois/joaninha.webp',
-        name: 'Joaninha',
+        id: "joaninha",
+        imageSrc: "/images/cartilha/aliados/joaninha.jpg",
+        name: "Joaninha",
         isHero: true,
-        revealText: 'A joaninha come pulgões e outros insetos praga. Ela é uma das melhores aliadas da lavoura!',
+        revealText:
+          "A joaninha come pulgões e outros insetos considerados pragas agrícolas. Ela é uma das melhores aliadas da roça!",
       },
       {
-        id: 'pulgao',
-        imageSrc: '/images/ameacas/pulgoes/4.webp',
-        name: 'Pulgão',
+        id: "pulgao",
+        imageSrc: "/images/cartilha/pragas/pulgao.jpg",
+        name: "Pulgão",
         isHero: false,
-        revealText: 'O pulgão suga a seiva das plantas e transmite vírus. Um dos mais comuns inimigos da lavoura!',
+        revealText:
+          "O pulgão suga a seiva das plantas e transmite vírus. É um dos inimigos mais comuns da roça!",
       },
       {
-        id: 'abelha',
-        imageSrc: '/images/encontre_herois/abelha.webp',
-        name: 'Abelha',
+        id: "abelha",
+        imageSrc: "/images/cartilha/aliados/abelha.jpg",
+        name: "Abelha",
         isHero: true,
-        revealText: 'A abelha poliniza as flores das plantas, garantindo que elas produzam frutos. Sem abelhas, sem frutas!',
+        revealText:
+          "A abelha poliniza as flores das plantas, garantindo que elas produzam frutos. Sem abelhas, sem frutas!",
       },
       {
-        id: 'gafanhoto',
-        imageSrc: '/images/ameacas/gafanhoto/gafanhoto.webp',
-        name: 'Gafanhoto',
+        id: "gafanhoto",
+        imageSrc: "/images/cartilha/pragas/gafanhoto.jpg",
+        name: "Gafanhoto",
         isHero: false,
-        revealText: 'Em enxames, os gafanhotos podem destruir campos inteiros de plantação em poucas horas!',
+        revealText:
+          "Em enxames, os gafanhotos podem destruir campos inteiros de plantação em poucas horas!",
       },
       {
-        id: 'minhoca',
-        imageSrc: '/images/encontre_herois/minhoca.webp',
-        name: 'Minhoca',
+        id: "crisopideo",
+        imageSrc: "/images/cartilha/aliados/crisopideo.jpg",
+        name: "Bicho-lixeiro / crisopídeo",
         isHero: true,
-        revealText: 'A minhoca aerifica o solo e produz húmus, melhorando a saúde do solo e ajudando as raízes das plantas!',
+        revealText:
+          "As larvas de crisopídeos devoram pulgões e outras pragas, protegendo os cultivos agrícolas de forma natural!",
       },
       {
-        id: 'fungo-ferrugem',
-        imageSrc: '/images/encontre_herois/fungo-ferrugem.webp',
-        name: 'Fungo da Ferrugem',
+        id: "fungo-ferrugem",
+        imageSrc: "/images/cartilha/patogenos/fungos.jpg",
+        name: "Fungo da Ferrugem",
         isHero: false,
-        revealText: 'A ferrugem é um fungo que deixa manchas alaranjadas nas folhas e pode destruir lavouras inteiras de soja e trigo!',
+        revealText:
+          "A ferrugem é um fungo que deixa manchas alaranjadas nas folhas e pode destruir roças inteiras de soja e trigo!",
       },
     ],
     callouts: [
       {
-        variant: 'green',
-        imageSrc: '/assets//trofeu-icone.png',
-        title: 'Parabéns por aprender!',
-        text: 'Distinguir heróis de vilões na natureza é o primeiro passo para um manejo sustentável da lavoura. Agricultores que conhecem seus aliados naturais usam menos agrotoxicos e tem melhores colheitas!',
+        variant: "green",
+        title: "Parabéns por aprender!",
+        text: "Distinguir heróis de vilões na natureza é o primeiro passo para um manejo sustentável da roça. Agricultores que conhecem seus aliados naturais usam menos agrotóxicos e têm colheitas melhores!",
       },
     ],
     personaText:
-      'Você consegue separar os heróis dos vilões? Cada ser vivo tem um papel na natureza — cabe a nós entender esse papel! Clique em cada personagem e descubra se ele é aliado ou inimigo da lavoura!',
-    personaEmotion: 'happy',
-    personaImageSrc: '/assets/dona-fito/dona-fito-happy.png',
+      "Você consegue separar os heróis dos vilões? Cada ser vivo tem um papel na natureza — cabe a nós entender esse papel! Clique em cada personagem e descubra se ele é aliado ou inimigo da roça!",
+    personaEmotion: "happy",
+    personaImageSrc: "/assets/dona-fito/dona-fito-happy.png",
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 20 — QUIZ FINAL
+     PÁGINA 18 — QUIZ FINAL
   ───────────────────────────────────────────────────── */
   {
-    type: 'quiz',
-    interactionType: 'quiz',
-    id: 'p20',
-    label: 'Quiz Final',
-    badgeLabel: 'Avaliação de Aprendizagem',
+    type: "quiz",
+    interactionType: "quiz",
+    id: "p19",
+    label: "Quiz Final",
+    badgeLabel: "Avaliação de Aprendizagem",
     personaText:
-      'É hora de colocar tudo que você aprendeu a prova! Não se preocupe se errar — cada erro é uma nova chance de aprender. Você já chegou até aqui, isso por si só é uma grande conquista!',
-    personaEmotion: 'celebrating',
-    personaImageSrc: '/assets/dona-fito/dona-fito-celebrating.png',
+      "É hora de colocar à prova tudo que você aprendeu! Não se preocupe se errar — cada erro é uma nova chance de aprender. Você já chegou até aqui, isso por si só é uma grande conquista!",
+    personaEmotion: "celebrating",
+    personaImageSrc: "/assets/dona-fito/dona-fito-celebrating.png",
   },
 
   /* ─────────────────────────────────────────────────────
-     PÁGINA 21 — MENSAGEM FINAL
+     PÁGINA 19 — MENSAGEM FINAL
   ───────────────────────────────────────────────────── */
   {
-    type: 'closing',
-    interactionType: 'closing',
-    id: 'p21',
-    label: 'Mensagem Final',
-    heroImageSrc: '/assets/cenarios/paisagem-amapa-sustentavel.png',
-    heroTitle: 'Ciencia, Sustentabilidade\ne Você!',
+    type: "closing",
+    interactionType: "closing",
+    id: "p20",
+    label: "Mensagem Final",
+    heroImageSrc: "/assets/cenarios/paisagem-amapa-sustentavel.png",
+    heroTitle: "Ciencia, Sustentabilidade\ne Você!",
     heroSubtitle:
-      'Você chegou ao final desta jornada pelo mundo da Fitossanidade! Cada conhecimento adquirido aqui é uma semente plantada para um futuro mais sustentável e seguro para todos nós.',
+      "Você chegou ao final desta jornada pelo mundo da Fitossanidade! Cada conhecimento adquirido aqui é uma semente plantada para um futuro mais sustentável e seguro para todos nós.",
     pillars: [
-      { imageSrc: '/assets/icones/ciencia-pilar-icone.png', label: 'Ciencia', sub: 'Pesquisa que protege a vida' },
-      { imageSrc: '/assets/icones/sustentabilidade-pilar-icone.png', label: 'Sustentabilidade', sub: 'Usar sem destruir' },
-      { imageSrc: '/assets/icones/comunidade-pilar-icone.png', label: 'Comunidade', sub: 'Unidos pela natureza' },
-      { imageSrc: '/assets/icones/futuro-pilar-icone.png', label: 'Futuro', sub: 'Sementes de esperanca' },
+      {
+        imageSrc: "/assets/icones/ciencia-pilar-icone.png",
+        label: "Ciência",
+        sub: "Pesquisa que protege a vida",
+      },
+      {
+        imageSrc: "/assets/icones/sustentabilidade-pilar-icone.png",
+        label: "Sustentabilidade",
+        sub: "Usar sem destruir",
+      },
+      {
+        imageSrc: "/assets/icones/comunidade-pilar-icone.png",
+        label: "Comunidade",
+        sub: "Unidos pela natureza",
+      },
+      {
+        imageSrc: "/assets/icones/futuro-pilar-icone.png",
+        label: "Futuro",
+        sub: "Sementes de esperança",
+      },
     ],
-    ctaText: 'Fitossanidade e responsabilidade de todos!',
-    ctaSub: 'Compartilhe o que aprendeu. Cada pessoa informada é um guardião das nossas plantas.',
+    ctaText: "Fitossanidade é responsabilidade de todos!",
+    ctaSub:
+      "Compartilhe o que aprendeu. Cada pessoa informada é um guardião das nossas plantas.",
     callout: {
-      variant: 'green',
-      imageSrc: '/assets/icones/livro-icone.png',
-      title: 'Continue sua jornada de aprendizagem!',
-      text: 'Explore os outros modulos do EducaFito, converse com agricultores da sua região, visite a Embrapa Amapá e descubra como a ciência está trabalhando para proteger nossas lavouras e nossa biodiversidade amazônica.',
+      variant: "green",
+      title: "Continue sua jornada de aprendizagem!",
+      text: "Explore os outros módulos do EducaFito, converse com agricultores da sua região, visite a Embrapa Amapá e descubra como a ciência está trabalhando para proteger nossos cultivos agrícolas e nossa biodiversidade amazônica.",
     },
-    footerText: 'EducaFito — Aprendendo com a natureza, crescendo com o conhecimento.',
+    footerText:
+      "EducaFito — Aprendendo com a natureza, crescendo com o conhecimento.",
     personaText:
-      'Parabéns, jovem cientista! Você completou a cartilha EducaFito! Agora você é parte da rede de proteção das nossas plantas. Lembre-se: cada atitude nossa conta para proteger a natureza e garantir comida na mesa de todos!',
-    personaEmotion: 'celebrating',
-    personaImageSrc: '/assets/dona_fito_meio_corpo.png',
+      "Parabéns, jovem cientista! Você completou a cartilha EducaFito! Agora você é parte da rede de proteção das nossas plantas. Lembre-se: cada atitude nossa conta para proteger a natureza e garantir comida na mesa de todos!",
+    personaEmotion: "celebrating",
+    personaImageSrc: "/assets/dona_fito_meio_corpo.png",
   },
-]
+];
 
 /* ══════════════════════════════════════════════════════════════════════════
    HELPERS
 ══════════════════════════════════════════════════════════════════════════ */
 
 /** Total de paginas — use em CartilhaPage para o PageController */
-export const TOTAL_PAGES = CARTILHA_PAGES.length
+export const TOTAL_PAGES = CARTILHA_PAGES.length;
 
 /** Retorna a pagina pelo indice, com tipo seguro */
 export function getPage(index: number): CartilhaPageData {
-  const page = CARTILHA_PAGES[index]
-  if (!page) throw new RangeError(`Pagina ${index} não existe. Total: ${TOTAL_PAGES}`)
-  return page
-}
-
-/** Retorna apenas paginas com LiftTheFlap para pre-renderizacao */
-export function getLapbookPages(): PageLapbookData[] {
-  return CARTILHA_PAGES.filter((p): p is PageLapbookData => p.type === 'lapbook')
-}
-
-/** Retorna o indice de uma pagina pelo seu id */
-export function getPageIndexById(id: string): number {
-  const index = CARTILHA_PAGES.findIndex((p) => p.id === id)
-  if (index === -1) throw new Error(`Pagina com id "${id}" não encontrada.`)
-  return index
+  const page = CARTILHA_PAGES[index];
+  if (!page)
+    throw new RangeError(`Pagina ${index} não existe. Total: ${TOTAL_PAGES}`);
+  return page;
 }

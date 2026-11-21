@@ -1,9 +1,27 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { motion, AnimatePresence, useAnimationControls } from 'framer-motion'
 import { Box, Text, VStack, HStack } from '@chakra-ui/react'
-import { CheckCircle, XCircle, ChevronRight, Trophy, RotateCcw, Lightbulb } from 'lucide-react'
+import {
+  Brain,
+  BookOpen,
+  Building2,
+  CheckCircle,
+  ChevronRight,
+  Leaf,
+  Lightbulb,
+  Microscope,
+  RotateCcw,
+  ShieldCheck,
+  Siren,
+  Sparkles,
+  Sprout,
+  Star,
+  Trophy,
+  XCircle,
+  type LucideIcon,
+} from 'lucide-react'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -14,7 +32,7 @@ interface Question {
   options: Option[]
   correctId: string
   explanation: string
-  emoji: string
+  icon: LucideIcon
 }
 
 // ─── Dados das perguntas ──────────────────────────────────────────────────────
@@ -22,34 +40,34 @@ interface Question {
 const QUESTIONS: Question[] = [
   {
     id: 1,
-    emoji: '🔬',
+    icon: Microscope,
     text: 'O que é Fitossanidade?',
     options: [
       { id: 'a', text: 'A ciência que estuda apenas os remédios naturais.' },
-      { id: 'b', text: 'A área responsável pela saúde e proteção das plantas contra pragas e doenças.' },
-      { id: 'c', text: 'Um tipo de plantação orgânica sem uso de qualquer produto.' },
+      { id: 'b', text: 'A área responsável pela saúde e proteção das plantas contra pragas agrícolas e doenças.' },
+      { id: 'c', text: 'Um tipo de cultivo orgânico sem uso de qualquer produto.' },
       { id: 'd', text: 'O processo de irrigação dos campos agrícolas.' },
     ],
     correctId: 'c',
-    explanation: 'Fitossanidade zela pela saúde das plantas, prevenindo e controlando pragas, doenças e plantas invasoras para garantir colheitas saudáveis.',
+    explanation: 'Fitossanidade zela pela saúde das plantas, prevenindo e controlando pragas agrícolas, doenças e plantas invasoras para garantir colheitas saudáveis.',
   },
   {
     id: 2,
-    emoji: '🚨',
+    icon: Siren,
     text: 'O que é uma Praga Quarentenária?',
     options: [
       { id: 'a', text: 'Um inseto comum encontrado em jardins residenciais.' },
-      { id: 'b', text: 'Uma praga muito pequena, invisível a olho nu.' },
-      { id: 'c', text: 'Uma praga de alto risco econômico, ausente ou com distribuição limitada no país, sujeita a controle oficial.' },
-      { id: 'd', text: 'Qualquer planta que cresce entre as lavouras.' },
+      { id: 'b', text: 'Uma praga agrícola muito pequena, invisível a olho nu.' },
+      { id: 'c', text: 'Uma praga agrícola de alto risco econômico, ausente ou com distribuição limitada no país, sujeita a controle oficial.' },
+      { id: 'd', text: 'Qualquer planta que cresce entre os cultivos agrícolas.' },
     ],
     correctId: 'c',
-    explanation: 'Pragas quarentenárias têm alto impacto econômico e sofrem controle rigoroso para impedir sua entrada e dispersão no Brasil.',
+    explanation: 'Pragas quarentenárias têm alto impacto econômico e são submetidas a controle rigoroso para impedir sua entrada e dispersão no Brasil.',
   },
   {
     id: 3,
-    emoji: '🌿',
-    text: 'Qual praga representa um caso real no Amapá / Região Norte?',
+    icon: Sprout,
+    text: 'Qual praga agrícola representa um caso real no Amapá ou na Região Norte?',
     options: [
       { id: 'a', text: 'A ferrugem do café no sul de Minas Gerais.' },
       { id: 'b', text: 'A vassoura-de-bruxa na mandioca.' },
@@ -57,11 +75,11 @@ const QUESTIONS: Question[] = [
       { id: 'd', text: 'A podridão-seca da soja no Cerrado.' },
     ],
     correctId: 'b',
-    explanation: 'A vassoura-de-bruxa (fungo Moniliophthora perniciosa) é uma praga relevante que afeta a mandioca na Região Norte, podendo reduzir até 90% da produção.',
+    explanation: 'A vassoura-de-bruxa (fungo Moniliophthora perniciosa) é uma praga agrícola relevante que afeta a mandioca na Região Norte, podendo reduzir até 90% da produção.',
   },
   {
     id: 4,
-    emoji: '🏛️',
+    icon: Building2,
     text: 'Qual órgão federal é responsável pela fiscalização fitossanitária no Brasil?',
     options: [
       { id: 'a', text: 'IBAMA' },
@@ -70,20 +88,20 @@ const QUESTIONS: Question[] = [
       { id: 'd', text: 'INPE' },
     ],
     correctId: 'c',
-    explanation: 'O MAPA, por meio do VIGIAGRO, fiscaliza a entrada e dispersão de pragas em portos, aeroportos e fronteiras terrestres do Brasil.',
+    explanation: 'O MAPA, por meio do VIGIAGRO, fiscaliza a entrada e dispersão de pragas agrícolas em portos, aeroportos e fronteiras terrestres do Brasil.',
   },
   {
     id: 5,
-    emoji: '🛡️',
+    icon: ShieldCheck,
     text: 'Qual das práticas abaixo NÃO é uma boa prática fitossanitária?',
     options: [
       { id: 'a', text: 'Usar sementes certificadas e sadias.' },
       { id: 'b', text: 'Fazer rotação de culturas.' },
       { id: 'c', text: 'Transportar plantas sem verificar sua procedência.' },
-      { id: 'd', text: 'Monitorar regularmente a lavoura.' },
+      { id: 'd', text: 'Monitorar regularmente a roça.' },
     ],
     correctId: 'c',
-    explanation: 'Transportar plantas sem verificar a origem facilita a disseminação de pragas e doenças entre regiões — o risco mais simples de evitar.',
+    explanation: 'Transportar plantas sem verificar a origem facilita a disseminação de pragas agrícolas e doenças entre regiões — o risco mais simples de evitar.',
   },
 ]
 
@@ -91,11 +109,11 @@ const QUESTIONS: Question[] = [
 
 function getResultTier(score: number, total: number) {
   const pct = score / total
-  if (pct === 1)   return { emoji: '🏆', grade: 'A+', label: 'Expert em Fitossanidade!',        color: '#2E7D32', bg: 'linear-gradient(135deg,#1B5E20,#2E7D32)', stars: 5 }
-  if (pct >= 0.8)  return { emoji: '🌟', grade: 'A',  label: 'Excelente! Quase perfeito.',       color: '#00695C', bg: 'linear-gradient(135deg,#004D40,#00897B)', stars: 4 }
-  if (pct >= 0.6)  return { emoji: '🌱', grade: 'B',  label: 'Muito bem! No caminho certo.',     color: '#F57F17', bg: 'linear-gradient(135deg,#E65100,#F57C00)', stars: 3 }
-  if (pct >= 0.4)  return { emoji: '📖', grade: 'C',  label: 'Continue estudando!',              color: '#1565C0', bg: 'linear-gradient(135deg,#0D47A1,#1565C0)', stars: 2 }
-  return             { emoji: '🌿', grade: 'D',  label: 'Todo especialista foi iniciante!', color: '#C62828', bg: 'linear-gradient(135deg,#B71C1C,#C62828)', stars: 1 }
+  if (pct === 1)   return { icon: Trophy, grade: 'A+', label: 'Especialista em Fitossanidade!',        color: '#2E7D32', bg: 'linear-gradient(135deg,#1B5E20,#2E7D32)', stars: 5 }
+  if (pct >= 0.8)  return { icon: Sparkles, grade: 'A',  label: 'Excelente! Quase perfeito.',       color: '#00695C', bg: 'linear-gradient(135deg,#004D40,#00897B)', stars: 4 }
+  if (pct >= 0.6)  return { icon: Sprout, grade: 'B',  label: 'Muito bem! No caminho certo.',     color: '#F57F17', bg: 'linear-gradient(135deg,#E65100,#F57C00)', stars: 3 }
+  if (pct >= 0.4)  return { icon: BookOpen, grade: 'C',  label: 'Continue estudando!',              color: '#1565C0', bg: 'linear-gradient(135deg,#0D47A1,#1565C0)', stars: 2 }
+  return             { icon: Leaf, grade: 'D',  label: 'Todo especialista foi iniciante!', color: '#C62828', bg: 'linear-gradient(135deg,#B71C1C,#C62828)', stars: 1 }
 }
 
 // ─── QuizProgress ─────────────────────────────────────────────────────────────
@@ -271,6 +289,12 @@ function ResultScreen({
   onRetry: () => void
 }) {
   const tier = getResultTier(score, total)
+  const TierIcon = tier.icon
+  const resultTopRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    resultTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [])
 
   return (
     <motion.div
@@ -278,7 +302,12 @@ function ResultScreen({
       animate={{ opacity: 1, y: 0,  scale: 1 }}
       transition={{ type: 'spring', stiffness: 220, damping: 24 }}
     >
-      <VStack gap={5} pb={6}>
+      <VStack
+        ref={resultTopRef}
+        scrollMarginTop={{ base: '80px', md: '24px' }}
+        gap={5}
+        pb={6}
+      >
         {/* Card de resultado */}
         <Box
           w="full"
@@ -303,10 +332,10 @@ function ResultScreen({
             <motion.div
               animate={{ y: [0, -8, 0], rotate: [0, 4, -4, 0] }}
               transition={{ repeat: Infinity, duration: 3.5, ease: 'easeInOut' }}
-              style={{ fontSize: '56px', lineHeight: 1, marginBottom: '16px', display: 'block' }}
+              style={{ lineHeight: 1, marginBottom: '16px', display: 'block' }}
               aria-hidden="true"
             >
-              {tier.emoji}
+              <TierIcon size={56} color="white" strokeWidth={1.8} />
             </motion.div>
 
             <HStack justify="center" gap="4px" mb={3}>
@@ -316,10 +345,15 @@ function ResultScreen({
                   initial={{ opacity: 0, scale: 0, rotate: -30 }}
                   animate={{ opacity: i < tier.stars ? 1 : 0.2, scale: 1, rotate: 0 }}
                   transition={{ delay: 0.3 + i * 0.1, type: 'spring', stiffness: 300, damping: 18 }}
-                  style={{ fontSize: '22px', display: 'inline-block' }}
+                  style={{ display: 'inline-flex' }}
                   aria-hidden="true"
                 >
-                  ⭐
+                  <Star
+                    size={22}
+                    color={i < tier.stars ? '#FBBF24' : 'rgba(255,255,255,0.42)'}
+                    fill={i < tier.stars ? '#FBBF24' : 'none'}
+                    strokeWidth={1.8}
+                  />
                 </motion.span>
               ))}
             </HStack>
@@ -457,21 +491,35 @@ function ResultScreen({
 
 // ─── QuizGamificado (exportação padrão) ───────────────────────────────────────
 
-export default function QuizGamificado() {
+export default function QuizGamificado({
+  onComplete,
+  onReset,
+}: {
+  onComplete?: () => void
+  onReset?: () => void
+}) {
   const [currentQ,  setCurrentQ]  = useState(0)
   const [selected,  setSelected]  = useState<string | null>(null)
   const [revealed,  setRevealed]  = useState(false)
   const [answers,   setAnswers]   = useState<(string | null)[]>(Array(QUESTIONS.length).fill(null))
   const [finished,  setFinished]  = useState(false)
-  const [wrongAnim, setWrongAnim] = useState(false)
+  const quizTopRef = useRef<HTMLDivElement>(null)
+  const previousQuestionRef = useRef(currentQ)
 
   const question = QUESTIONS[currentQ]
+  const QuestionIcon = question.icon
   const isLast   = currentQ === QUESTIONS.length - 1
 
   const score = answers.reduce<number>(
     (acc, ans, idx) => (ans === QUESTIONS[idx].correctId ? acc + 1 : acc),
     0,
   )
+
+  useEffect(() => {
+    if (previousQuestionRef.current === currentQ) return
+    previousQuestionRef.current = currentQ
+    quizTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [currentQ])
 
   const handleSelect = useCallback((optId: string) => {
     if (revealed) return
@@ -485,21 +533,19 @@ export default function QuizGamificado() {
     setAnswers(newAnswers)
     setRevealed(true)
     if (selected !== question.correctId) {
-      setWrongAnim(true)
-      setTimeout(() => setWrongAnim(false), 600)
     }
   }, [selected, answers, currentQ, question.correctId])
 
   const handleNext = useCallback(() => {
     if (isLast) {
       setFinished(true)
+      onComplete?.()
     } else {
       setCurrentQ(q => q + 1)
       setSelected(null)
       setRevealed(false)
-      setWrongAnim(false)
     }
-  }, [isLast])
+  }, [isLast, onComplete])
 
   const handleRetry = useCallback(() => {
     setCurrentQ(0)
@@ -507,8 +553,8 @@ export default function QuizGamificado() {
     setRevealed(false)
     setAnswers(Array(QUESTIONS.length).fill(null))
     setFinished(false)
-    setWrongAnim(false)
-  }, [])
+    onReset?.()
+  }, [onReset])
 
   if (finished) {
     return (
@@ -522,7 +568,10 @@ export default function QuizGamificado() {
   }
 
   return (
-    <Box>
+    <Box
+      ref={quizTopRef}
+      scrollMarginTop={{ base: '80px', md: '24px' }}
+    >
       {/* Cabeçalho do Quiz */}
       <VStack textAlign="center" gap={2} mb={{ base: 5, sm: 7 }}>
         <Box
@@ -536,7 +585,7 @@ export default function QuizGamificado() {
           borderRadius="999px"
           mb={1}
         >
-          <Text fontSize="16px" aria-hidden="true">🧠</Text>
+          <Brain size={16} color="#2E7D32" aria-hidden="true" />
           <Text fontSize="0.68rem" fontWeight="700" textTransform="uppercase"
             letterSpacing="0.08em" color="#1B5E20">
             Quiz de Aprendizagem
@@ -600,11 +649,10 @@ export default function QuizGamificado() {
                 display="flex"
                 alignItems="center"
                 justifyContent="center"
-                fontSize={{ base: '18px', sm: '22px' }}
                 flexShrink={0}
                 aria-hidden="true"
               >
-                {question.emoji}
+                <QuestionIcon size={20} color="white" strokeWidth={2} />
               </Box>
               <Box>
                 <Text fontSize="0.6rem" fontWeight="700" textTransform="uppercase"
