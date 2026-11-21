@@ -122,6 +122,13 @@ function CardImage({ item }: { item: AmapaCaseData }) {
 
 function ThreatBadge({ item }: { item: AmapaCaseData }) {
   const lc = getLightColors(item.threatLevel)
+  const mobileThreatLabels: Record<AmapaCaseData['threatLevel'], string> = {
+    quarentenaria: 'PQP · PRESENTE',
+    'quarentenaria-ausente': 'PQA · AUSENTE',
+    'alerta-critico': 'ALERTA CRÍTICO',
+    monitorada: 'MONITORADA',
+    'praga-regional': 'ALERTA REGIONAL',
+  }
 
   return (
     <Box
@@ -141,7 +148,29 @@ function ThreatBadge({ item }: { item: AmapaCaseData }) {
       textTransform="uppercase"
     >
       <ShieldAlert size={11} aria-hidden="true" />
-      <span>{getThreatLabel(item.threatLevel)}</span>
+      <Box
+        as="span"
+        css={{
+          "@media (min-width: 640px)": {
+            display: "none",
+          },
+          "@media (max-width: 639px)": {
+            whiteSpace: "nowrap",
+          },
+        }}
+      >
+        {mobileThreatLabels[item.threatLevel]}
+      </Box>
+      <Box
+        as="span"
+        css={{
+          "@media (max-width: 639px)": {
+            display: "none",
+          },
+        }}
+      >
+        {getThreatLabel(item.threatLevel)}
+      </Box>
     </Box>
   )
 }
@@ -236,6 +265,17 @@ export default function AmapaCaseCard({
               onOpenDossier(item)
             }
           }}
+          css={{
+            "@media (max-width: 639px)": {
+              "& .amapa-case-dossier-button": {
+                fontSize: "0.68rem !important",
+                lineHeight: "1.2 !important",
+                padding: "8px 10px !important",
+                gap: "6px !important",
+                letterSpacing: "0.03em !important",
+              },
+            },
+          }}
           _focusVisible={{
             outline: '3px solid',
             outlineColor: lc.cardHoverBorder,
@@ -247,31 +287,36 @@ export default function AmapaCaseCard({
             <CardImage item={item} />
 
             {/* Badges sobrepostos — sem overlay de texto sobre a imagem */}
-            <Box position="absolute" top={3} left={3}>
-              <ThreatBadge item={item} />
-            </Box>
-
             <Box
               position="absolute"
               top={3}
+              left={3}
               right={3}
               display="flex"
-              alignItems="center"
-              gap="4px"
-              px={2}
-              py={1}
-              borderRadius="8px"
-              bg="rgba(255,255,255,0.88)"
-              border="1px solid rgba(0,0,0,0.06)"
-              color="gray.700"
-              fontSize="0.58rem"
-              fontWeight="800"
-              letterSpacing="0.08em"
-              textTransform="uppercase"
-              boxShadow="0 1px 4px rgba(0,0,0,0.08)"
+              alignItems="flex-start"
+              justifyContent="space-between"
+              gap={2}
             >
-              <MapPin size={9} color="#2E7D32" aria-hidden="true" />
-              Amapá
+              <ThreatBadge item={item} />
+              <Box
+                display="flex"
+                alignItems="center"
+                gap="4px"
+                px={2}
+                py={1}
+                borderRadius="8px"
+                bg="rgba(255,255,255,0.88)"
+                border="1px solid rgba(0,0,0,0.06)"
+                color="gray.700"
+                fontSize="0.58rem"
+                fontWeight="800"
+                letterSpacing="0.08em"
+                textTransform="uppercase"
+                boxShadow="0 1px 4px rgba(0,0,0,0.08)"
+              >
+                <MapPin size={9} color="#2E7D32" aria-hidden="true" />
+                Amapá
+              </Box>
             </Box>
           </Box>
           <Text px={4} pt={2} fontSize="0.62rem" color="gray.500" lineHeight="1.3">
@@ -323,6 +368,7 @@ export default function AmapaCaseCard({
                 cursor: 'pointer',
                 boxShadow: '0 2px 8px rgba(0,0,0,0.14)',
               }}
+              className="amapa-case-dossier-button"
               onClick={() => onOpenDossier(item)}
               aria-label={`Abrir dossiê de ${item.name}`}
             >

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useRef } from 'react'
 import { motion, AnimatePresence, useAnimationControls } from 'framer-motion'
 import { Box, Text, VStack, HStack } from '@chakra-ui/react'
 import {
@@ -290,6 +290,11 @@ function ResultScreen({
 }) {
   const tier = getResultTier(score, total)
   const TierIcon = tier.icon
+  const resultTopRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    resultTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [])
 
   return (
     <motion.div
@@ -297,7 +302,12 @@ function ResultScreen({
       animate={{ opacity: 1, y: 0,  scale: 1 }}
       transition={{ type: 'spring', stiffness: 220, damping: 24 }}
     >
-      <VStack gap={5} pb={6}>
+      <VStack
+        ref={resultTopRef}
+        scrollMarginTop={{ base: '80px', md: '24px' }}
+        gap={5}
+        pb={6}
+      >
         {/* Card de resultado */}
         <Box
           w="full"
@@ -493,6 +503,8 @@ export default function QuizGamificado({
   const [revealed,  setRevealed]  = useState(false)
   const [answers,   setAnswers]   = useState<(string | null)[]>(Array(QUESTIONS.length).fill(null))
   const [finished,  setFinished]  = useState(false)
+  const quizTopRef = useRef<HTMLDivElement>(null)
+  const previousQuestionRef = useRef(currentQ)
 
   const question = QUESTIONS[currentQ]
   const QuestionIcon = question.icon
@@ -502,6 +514,12 @@ export default function QuizGamificado({
     (acc, ans, idx) => (ans === QUESTIONS[idx].correctId ? acc + 1 : acc),
     0,
   )
+
+  useEffect(() => {
+    if (previousQuestionRef.current === currentQ) return
+    previousQuestionRef.current = currentQ
+    quizTopRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [currentQ])
 
   const handleSelect = useCallback((optId: string) => {
     if (revealed) return
@@ -550,7 +568,10 @@ export default function QuizGamificado({
   }
 
   return (
-    <Box>
+    <Box
+      ref={quizTopRef}
+      scrollMarginTop={{ base: '80px', md: '24px' }}
+    >
       {/* Cabeçalho do Quiz */}
       <VStack textAlign="center" gap={2} mb={{ base: 5, sm: 7 }}>
         <Box

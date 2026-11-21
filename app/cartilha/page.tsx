@@ -125,7 +125,7 @@ export default function CartilhaPage() {
       setDirection(clamped >= currentPage ? "next" : "prev");
       setCurrentPage(clamped);
       setAnimKey((k) => k + 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: "auto" });
     },
     [currentPage, quizCompleted],
   );
@@ -174,7 +174,8 @@ export default function CartilhaPage() {
         minH="100vh"
         position="relative"
         overflow="hidden"
-        py={8}
+        pt={{ base: 12, md: 8 }}
+        pb={8}
         px={4}
       >
         <Box
@@ -207,9 +208,33 @@ export default function CartilhaPage() {
           overflow="hidden"
           boxSizing="border-box"
           w="100%"
-          p={{ base: 4, md: 8 }}
+          py={{ base: 4, md: 8 }}
+          px={{ base: 4, sm: 6, md: 8 }}
           minW={0}
           id="main-content"
+          css={
+            page.id === "p7" ||
+            page.id === "p8" ||
+            page.id === "p9" ||
+            page.id === "p10" ||
+            page.id === "p11" ||
+            page.id === "p12" ||
+            page.id === "p13" ||
+            page.id === "p14" ||
+            page.id === "p15" ||
+            page.id === "p16" ||
+            page.id === "p17" ||
+            page.id === "p18" ||
+            page.id === "p19" ||
+            page.id === "p20"
+              ? {
+                  "@media (max-width: 639px)": {
+                    width: "calc(100% - 16px)",
+                    marginInline: "auto",
+                  },
+                }
+              : undefined
+          }
         >
           <Box
             w="100%"

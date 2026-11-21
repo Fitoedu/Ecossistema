@@ -471,6 +471,11 @@ export default function PageNavigation({
       pt={4}
       pb="max(16px, env(safe-area-inset-bottom))"
       px={{ base: 2, sm: 4 }}
+      css={{
+        "@media (max-width: 639px)": {
+          paddingInline: 0,
+        },
+      }}
     >
       {/* Barra de progresso */}
       <Box

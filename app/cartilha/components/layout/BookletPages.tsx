@@ -375,7 +375,15 @@ function FitossanidadeFlipCards() {
       >
         Clique em cada cartão para virar e descobrir o significado!
       </Text>
-      <SimpleGrid columns={{ base: 2, sm: 2 }} gap={{ base: 3, sm: 4 }}>
+      <SimpleGrid
+        columns={{ base: 2, sm: 2 }}
+        gap={{ base: 3, sm: 4 }}
+        css={{
+          "@media (max-width: 639px)": {
+            gap: "16px",
+          },
+        }}
+      >
         {FITOSSANIDADE_CARDS.map((card) => (
           <FitossanidadeFlipCard key={card.title} card={card} />
         ))}
@@ -751,6 +759,12 @@ function PersonaGreeting() {
         alignItems="flex-start"
         position="relative"
         overflow="visible"
+        css={{
+          "@media (max-width: 639px)": {
+            flexDirection: "column",
+            alignItems: "center",
+          },
+        }}
       >
         {/* Subtle top-left accent stripe */}
         <Box
@@ -790,7 +804,16 @@ function PersonaGreeting() {
         </Box>
 
         {/* Speech bubble area */}
-        <Box flex="1" position="relative">
+        <Box
+          flex="1"
+          position="relative"
+          css={{
+            "@media (max-width: 639px)": {
+              flex: "none",
+              width: "100%",
+            },
+          }}
+        >
           {/* Small pointer triangle on the left */}
           <Box
             position="absolute"
@@ -802,6 +825,7 @@ function PersonaGreeting() {
             borderBottom="7px solid transparent"
             borderRight="12px solid #E8F5E9"
             aria-hidden="true"
+            css={{ "@media (max-width: 639px)": { display: "none" } }}
           />
           <Box
             bg="#F1F8E9"
@@ -871,6 +895,7 @@ export function PageCover({ data }: { data: PageCoverData }) {
           beforeImage={data.imageComparison.before.imageSrc}
           afterImage={data.imageComparison.after.imageSrc}
           beforeLabel={data.imageComparison.before.label}
+          beforeLabelMobile="Cultivo saudável"
           afterLabel={data.imageComparison.after.label}
           altText={data.imageComparison.altText}
         />
@@ -2557,6 +2582,9 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
         {data.items.map((station, index) => {
           const isExpanded = expandedIndex === index;
           const isStudent = index === data.items.length - 1;
+          const creditParts = station.credit?.match(
+            /^(.*?)(\(CC BY(?:-SA)? [0-9.]+\))$/,
+          );
 
           return (
             <Box
@@ -2673,7 +2701,23 @@ function ResearchStations({ data }: { data: PageOrgaosData }) {
                   color="gray.500"
                   lineHeight="1.35"
                 >
-                  {station.credit}
+                  {creditParts ? (
+                    <>
+                      {creditParts[1]}
+                      <Box
+                        as="span"
+                        css={{
+                          "@media (max-width: 639px)": {
+                            whiteSpace: "nowrap",
+                          },
+                        }}
+                      >
+                        {creditParts[2]}
+                      </Box>
+                    </>
+                  ) : (
+                    station.credit
+                  )}
                 </Text>
               )}
 
@@ -2994,6 +3038,12 @@ function GuardianCards({ data }: { data: PageOrgaosData }) {
                   color="gray.400"
                   fontStyle="italic"
                   display="block"
+                  css={{
+                    "@media (max-width: 639px)": {
+                      fontStyle: "normal",
+                      textAlign: "left",
+                    },
+                  }}
                 >
                   {guardian.credit}
                 </Text>
@@ -3354,6 +3404,12 @@ export function PageChain({ data }: { data: PageChainData }) {
               color="gray.400"
               fontStyle="italic"
               display="block"
+              css={{
+                "@media (max-width: 639px)": {
+                  fontStyle: "normal",
+                  textAlign: "left",
+                },
+              }}
             >
               {item.credit}
             </Text>
@@ -3479,8 +3535,8 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
       </Box>
 
       <SimpleGrid
-        columns={3}
-        gap={{ base: 3, md: 5 }}
+        columns={{ base: 2, md: 3 }}
+        gap={{ base: 4, md: 5 }}
         my={{ base: 5, sm: 8 }}
       >
         {data.characters.map((char) => {
@@ -3531,6 +3587,11 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                 }}
                 position="relative"
                 overflow="hidden"
+                css={{
+                  "@media (max-width: 639px)": {
+                    height: "280px",
+                  },
+                }}
               >
                 {isRevealed ? (
                   <motion.div
@@ -3598,6 +3659,13 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                       fontWeight="800"
                       fontSize="lg"
                       letterSpacing="0.08em"
+                      css={{
+                        "@media (max-width: 639px)": {
+                          fontSize: "0.72rem",
+                          letterSpacing: "0.04em",
+                          textWrap: "balance",
+                        },
+                      }}
                     >
                       QUEM SOU EU?
                     </Text>
@@ -3649,6 +3717,13 @@ export function PageFindTheHero({ data }: { data: PageFindTheHeroData }) {
                       fontWeight="600"
                       fontSize="sm"
                       letterSpacing="0.02em"
+                      css={{
+                        "@media (max-width: 639px)": {
+                          fontSize: "0.65rem",
+                          lineHeight: "1.25",
+                          textWrap: "balance",
+                        },
+                      }}
                     >
                       Clique para descobrir!
                     </Text>
@@ -3709,6 +3784,16 @@ export function PageClosing({ data }: { data: PageClosingData }) {
           mb={4}
           mx="auto"
           style={{ animation: "floatIcon 3s ease-in-out infinite" }}
+          css={{
+            "@media (max-width: 639px)": {
+              width: "100%",
+              height: "auto",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: "8px",
+            },
+          }}
         >
           <Image
             src="/images/dona-fito.webp"
@@ -3742,6 +3827,19 @@ export function PageClosing({ data }: { data: PageClosingData }) {
             fontWeight="900"
             boxShadow="0 3px 10px rgba(0,0,0,0.2)"
             whiteSpace="nowrap"
+            css={{
+              "@media (max-width: 639px)": {
+                position: "static",
+                width: "fit-content",
+                maxWidth: "100%",
+                marginInline: "auto",
+                justifyContent: "center",
+                textAlign: "center",
+                whiteSpace: "normal",
+                fontSize: "0.68rem",
+                paddingInline: "12px",
+              },
+            }}
           >
             <BadgeCheck size={14} strokeWidth={2.5} />
             Guardião da Fitossanidade
@@ -3848,6 +3946,15 @@ export function PageClosing({ data }: { data: PageClosingData }) {
           fontWeight="600"
           mt={4}
           letterSpacing="0.05em"
+          textAlign="center"
+          mx="auto"
+          maxW="100%"
+          css={{
+            "@media (max-width: 639px)": {
+              textAlign: "center",
+              paddingInline: 0,
+            },
+          }}
         >
           {data.footerText}
         </Text>

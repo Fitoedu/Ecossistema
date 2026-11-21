@@ -137,6 +137,14 @@ export default function AmapaCasesSection() {
         boxShadow:
           '0 4px 24px rgba(46, 125, 50, 0.07), 0 1px 4px rgba(0,0,0,0.04)',
       }}
+      css={{
+        "@media (max-width: 639px)": {
+          background: "white",
+          "& .amapa-cases-bg-glow": {
+            display: "none",
+          },
+        },
+      }}
     >
       {/* Partículas botânicas decorativas */}
       <BotanicParticles />
@@ -144,6 +152,7 @@ export default function AmapaCasesSection() {
       {/* Brilhos de fundo suaves */}
       <Box
         position="absolute"
+        className="amapa-cases-bg-glow"
         top="-30%"
         left="-15%"
         w="55%"
@@ -158,6 +167,7 @@ export default function AmapaCasesSection() {
       />
       <Box
         position="absolute"
+        className="amapa-cases-bg-glow"
         bottom="-25%"
         right="-10%"
         w="45%"

@@ -18,6 +18,7 @@ type InvestigationCase = {
   description: string;
   imageSrc: string;
   imageCredit: string;
+  mobileImageCredit?: string;
   correctAction: "block" | "allow";
   alertLabel?: string;
   status: string;
@@ -34,6 +35,7 @@ const CASES: InvestigationCase[] = [
       "PQP — a Mosca-da-Carambola está presente em áreas restritas do Amapá. A carga chega sem a documentação fitossanitária necessária para a conferência.",
     imageSrc: "/images/cartilha/quarentenarias/mosca-carambola.jpg",
     imageCredit: "Foto: Ken Walker / Museum Victoria / Wikimedia Commons (CC BY 3.0)",
+    mobileImageCredit: "Foto: Ken Walker / Museum Victoria (CC BY 3.0)",
     correctAction: "block",
     alertLabel: "Mosca-da-carambola",
     status: "PQP · Controle de dispersão em área restrita",
@@ -245,8 +247,38 @@ export default function BorderInvestigationCases({
                 </Box>
               )}
             </Box>
-            <Text mt={1} fontSize="xs" color="gray.500" textAlign="right">
-              {item.imageCredit}
+            <Text
+              mt={1}
+              fontSize="xs"
+              color="gray.500"
+              textAlign="right"
+              css={{
+                "@media (max-width: 639px)": {
+                  textAlign: "left",
+                  fontSize: "8px",
+                  lineHeight: "1.25",
+                  whiteSpace: item.mobileImageCredit ? "nowrap" : "normal",
+                },
+              }}
+            >
+              {item.mobileImageCredit ? (
+                <>
+                  <Box
+                    as="span"
+                    css={{ "@media (min-width: 640px)": { display: "none" } }}
+                  >
+                    {item.mobileImageCredit}
+                  </Box>
+                  <Box
+                    as="span"
+                    css={{ "@media (max-width: 639px)": { display: "none" } }}
+                  >
+                    {item.imageCredit}
+                  </Box>
+                </>
+              ) : (
+                item.imageCredit
+              )}
             </Text>
           </Box>
           <Box display="flex" flexDirection="column" justifyContent="center" py={4}>
@@ -300,7 +332,17 @@ export default function BorderInvestigationCases({
             transition="all 0.2s"
           >
             <ShieldAlert size={20} color="white" />
-            <span>BLOQUEAR ENTRADA</span>
+            <Box
+              as="span"
+              css={{
+                "@media (max-width: 639px)": {
+                  fontSize: "14px",
+                  lineHeight: "1.25",
+                },
+              }}
+            >
+              BLOQUEAR ENTRADA
+            </Box>
           </Box>
 
           <Box
@@ -321,7 +363,17 @@ export default function BorderInvestigationCases({
             transition="all 0.2s"
           >
             <ShieldCheck size={20} color="white" />
-            <span>PERMITIR ENTRADA</span>
+            <Box
+              as="span"
+              css={{
+                "@media (max-width: 639px)": {
+                  fontSize: "14px",
+                  lineHeight: "1.25",
+                },
+              }}
+            >
+              PERMITIR ENTRADA
+            </Box>
           </Box>
         </HStack>
         {feedback && (

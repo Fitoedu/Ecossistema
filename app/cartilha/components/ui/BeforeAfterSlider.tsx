@@ -25,6 +25,7 @@ export interface BeforeAfterSliderProps {
   beforeImage: string
   afterImage: string
   beforeLabel?: string
+  beforeLabelMobile?: string
   afterLabel?: string
   altText: string
 }
@@ -46,9 +47,11 @@ function getRelativeX(clientX: number, container: HTMLElement): number {
 
 function SliderLabel({
   children,
+  mobileLabel,
   side,
 }: {
   children: string
+  mobileLabel?: string
   side: 'left' | 'right'
 }) {
   return (
@@ -63,6 +66,11 @@ function SliderLabel({
       borderRadius="6px"
       px="10px"
       py="4px"
+      css={{
+        "@media (max-width: 639px)": {
+          paddingInline: "8px",
+        },
+      }}
       pointerEvents="none"
       userSelect="none"
     >
@@ -73,8 +81,32 @@ function SliderLabel({
         letterSpacing="0.07em"
         textTransform="uppercase"
         lineHeight="1"
+        css={{
+          "@media (max-width: 639px)": {
+            fontSize: "10px",
+            letterSpacing: "0.04em",
+            whiteSpace: "nowrap",
+          },
+        }}
       >
-        {children}
+        {mobileLabel ? (
+          <>
+            <Box
+              as="span"
+              css={{ "@media (min-width: 640px)": { display: "none" } }}
+            >
+              {mobileLabel}
+            </Box>
+            <Box
+              as="span"
+              css={{ "@media (max-width: 639px)": { display: "none" } }}
+            >
+              {children}
+            </Box>
+          </>
+        ) : (
+          children
+        )}
       </Text>
     </Box>
   )
@@ -175,6 +207,7 @@ export default function BeforeAfterSlider({
   beforeImage,
   afterImage,
   beforeLabel = 'Antes',
+  beforeLabelMobile,
   afterLabel = 'Depois',
   altText,
 }: BeforeAfterSliderProps) {
@@ -320,7 +353,9 @@ export default function BeforeAfterSlider({
             draggable={false}
             priority
           />
-          <SliderLabel side="left">{beforeLabel}</SliderLabel>
+          <SliderLabel side="left" mobileLabel={beforeLabelMobile}>
+            {beforeLabel}
+          </SliderLabel>
         </Box>
         </Box>
 
