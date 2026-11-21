@@ -19,7 +19,7 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react'
-import { Search } from 'lucide-react'
+import { Search, X } from 'lucide-react'
 import type { HotspotItemData, MicroorgCategory } from '../../data/cartilha-data'
 
 const CATEGORY_META: Record<
@@ -110,13 +110,15 @@ function InvestigationModal({
                   color="gray.800"
                   borderRadius="full"
                   shadow="md"
-                  fontSize="1.35rem"
-                  fontWeight="800"
-                  lineHeight="1"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  p={0}
+                  m={0}
                   _hover={{ bg: 'gray.100' }}
                   _focusVisible={{ outline: '3px solid', outlineColor: 'green.300' }}
                 >
-                  ×
+                  <X size={18} strokeWidth={2.5} aria-hidden="true" />
                 </DialogCloseTrigger>
                 <DialogBody px={{ base: 4, sm: 6 }} pb={{ base: 6, sm: 8 }}>
                   <VStack align="stretch" gap={3}>

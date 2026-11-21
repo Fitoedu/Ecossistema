@@ -491,11 +491,10 @@ function PlantProcessFlow() {
                     justifyContent="center"
                     textAlign="center"
                     cursor="pointer"
-                    boxShadow={isSelected ? "md" : "sm"}
-                    outline={isActive ? "3px solid" : "none"}
-                    outlineColor={step.accent}
-                    outlineOffset="2px"
-                    transition="box-shadow 0.2s ease"
+                    borderWidth="1px"
+                    borderColor={isActive ? step.accent : step.border}
+                    boxShadow={isSelected ? "0 2px 8px rgba(46,125,50,0.16)" : "sm"}
+                    transition="border-color 0.2s ease, box-shadow 0.2s ease"
                     onClick={() =>
                       setActiveStep(activeStep === index ? null : index)
                     }
@@ -585,7 +584,7 @@ function PlantProcessFlow() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.22, ease: "easeOut" }}
         >
-          <Text fontSize="0.75rem" lineHeight="1.5" color="gray.700">
+          <Text fontSize="0.75rem" lineHeight="1.5" color="gray.800" fontWeight="600">
             {selectedStep === null
               ? "Selecione uma etapa para descobrir como a planta fabrica o nosso alimento."
               : PLANT_PROCESS_STEPS[selectedStep].explanation}
@@ -1606,9 +1605,12 @@ export function PageHotspot({ data }: { data: PageHotspotData }) {
           flexShrink={0}
           boxShadow="0 2px 8px rgba(0,0,0,0.25)"
         >
-          <Text fontSize="1rem" fontWeight="900" color="#212121" lineHeight={1}>
-            🔬
-          </Text>
+          <Microscope
+            size={20}
+            strokeWidth={2}
+            color="#1B5E20"
+            aria-hidden="true"
+          />
         </Box>
         <Text
           fontSize="0.82rem"
@@ -3828,6 +3830,21 @@ export function PageClosing({ data }: { data: PageClosingData }) {
             boxShadow="0 3px 10px rgba(0,0,0,0.2)"
             whiteSpace="nowrap"
             css={{
+              "@media (min-width: 640px)": {
+                position: "absolute",
+                left: "50%",
+                right: "auto",
+                bottom: "-10px",
+                width: "fit-content",
+                maxWidth: "none",
+                marginInline: "0",
+                transform: "translateX(-50%)",
+                justifyContent: "center",
+                textAlign: "center",
+                whiteSpace: "nowrap",
+                paddingInline: "16px",
+                paddingBlock: "4px",
+              },
               "@media (max-width: 639px)": {
                 position: "static",
                 width: "fit-content",

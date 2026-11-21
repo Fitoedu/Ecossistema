@@ -23,3 +23,84 @@ sintomas/transmissao-virus.jpg -> Foto: Plant pests and diseases / Wikimedia Com
 quarentenarias/mosca-carambola.jpg -> Foto: Ken Walker / Museum Victoria / Wikimedia Commons (CC BY 3.0)
 quarentenarias/mudas-laranja.jpg -> Foto: USDA / David Bartels / Wikimedia Commons (Domínio Público)
 quarentenarias/macas-certificadas.jpg -> Foto: AS Photography / Wikimedia Commons (CC BY 4.0)
+capa/planta-afetada.jpg -> Foto: cottonbro studio / Pexels
+pragas/gafanhoto.jpg -> Foto: daksu / iNaturalist (CC BY)
+pragas/pulgao.jpg -> Foto: Jesse Rorabaugh / iNaturalist (CC0)
+pragas/mosca-branca.jpg -> Foto: Mihajlo Tomić / iNaturalist (CC BY)
+pragas/broca.jpg -> Foto: Julia Moning / iNaturalist (CC BY)
+pragas/acaro.jpg -> Foto: Wynand Uys / iNaturalist (CC BY)
+pragas/trips.jpg -> Foto: Trevor Van Loon / iNaturalist (CC BY)
+aparelhos/mastigador.jpg -> Foto: Rodolfo Salinas Villarreal / iNaturalist (CC BY)
+aparelhos/picador-sugador.jpg -> Foto: Jorge Íñiguez / iNaturalist (CC BY)
+impactos/reducao-producao.jpg -> Foto: Karl Wiggers / Unsplash
+impactos/aumento-custos.jpg -> Foto: Teo Sticea / Unsplash
+impactos/bloqueio-exportacoes.jpg -> Foto: Timelab / Unsplash
+impactos/mudancas-climaticas.jpg -> Foto: 1 1 / Unsplash
+consequencias/impacto-porto.jpg -> Foto: Unsplash / Acervo Educativo [VERIFICAR FONTE / URL - Unsplash ou acervo do projeto]
+consequencias/impacto-roca.jpg -> Foto: Unsplash / Acervo Educativo [VERIFICAR FONTE / URL - Unsplash ou acervo do projeto]
+consequencias/impacto-agricultor.jpg -> Foto: Unsplash / Acervo Educativo [VERIFICAR FONTE / URL - Unsplash ou acervo do projeto]
+consequencias/impacto-mercado.jpg -> Foto: Unsplash / Acervo Educativo [VERIFICAR FONTE / URL - Unsplash ou acervo do projeto]
+consequencias/impacto-refeicao.jpg -> Foto: Unsplash / Acervo Educativo [VERIFICAR FONTE / URL - Unsplash ou acervo do projeto]
+consequencias/impacto-ambiente.jpg -> Foto: Unsplash / Acervo Educativo [VERIFICAR FONTE / URL - Unsplash ou acervo do projeto]
+pesquisadores/embrapa-amapa.jpg -> Foto: Divulgação / Embrapa
+pesquisadores/logo-unifap.png -> Logo institucional: Deivid França 96 / Wikimedia Commons (CC BY 4.0)
+pesquisadores/logo-ifap.svg -> Marca oficial: Setec/MEC (Domínio público)
+pesquisadores/iepa-biodiversidade.jpg -> Foto: Adrien Olichon / Unsplash
+pesquisadores/labfito-pesquis.jpg -> Foto: Fred Miller / Wikimedia Commons (CC BY-SA 2.0)
+guardioes/guardiao-mapa.jpg -> Foto: Land O'Lakes, Inc. / Unsplash
+guardioes/guardiao-vigiagro.png -> Foto: Divulgação / MAPA (gov.br)
+guardioes/guardiao-adap.jpg -> Foto: Aldward Castillo / Unsplash
+guardioes/guardiao-sementes-mudas.jpg -> Foto: Vitor Monthay / Unsplash
+guardioes/guardiao-produtor-rural.jpg -> Foto: Dương Trí / Unsplash
+casos-reais/mosca-carambola.jpg -> Foto: Ken Walker / Museum Victoria
+casos-reais/mosca-carambola-campo.jpg -> Foto: Lenny Worthington / Wikimedia Commons [VERIFICAR LICENÇA]
+casos-reais/sintoma-picada.jpg -> Foto: Cristiane Ramos de Jesus / Embrapa Amapá
+casos-reais/sintoma-larvas.jpg -> Foto: Cristiane Ramos de Jesus / Embrapa Amapá
+casos-reais/vassoura-cupuacu.jpg -> Foto: Scott Bauer / ARS-USDA
+casos-reais/cupuacu-invasor.jpg -> Foto: Ronaldo Rosa / Embrapa Amapá Oriental
+casos-reais/sintoma-cupuacu-ramos.jpg -> Foto: Ronaldo Rosa / Embrapa Amapá Oriental
+casos-reais/sintoma-cupuacu-frutos.jpg -> Foto: Brantlee Spakes Richter / University of Florida / Bugwood.org
+casos-reais/amarelamento-palmeiras.jpg -> Foto: USDA Forest Service
+casos-reais/palmeiras-invasor.jpg -> Foto: USDA Forest Service / Bugwood.org
+casos-reais/sintoma-palmeiras-folhas.jpg -> Foto: USDA Forest Service / Bugwood.org
+casos-reais/vassoura-mandioca.jpg -> Foto: Antônio Carlos Pereira de Góes / Embrapa Amapá
+casos-reais/mandioca-invasor.jpg -> Foto: Antônio Carlos Pereira / Embrapa Amapá
+casos-reais/sintoma-mandioca-necrose.jpg -> Foto: Adilson Lima / Embrapa Amapá
+dona-fito.webp -> Figura / mascote EducaFito [VERIFICAR FONTE / AUTORIA - arquivo interno do projeto]
+fundo-floresta.jpg -> Foto: acervo EducaFito [VERIFICAR FONTE / URL - fundo ilustrativo do projeto]
+assets/dona_fito_meio_corpo.png -> Ilustração / mascote EducaFito [VERIFICAR AUTORIA - arquivo interno do projeto]
+assets/joaninha_corpo_todo.png -> Ilustração EducaFito [VERIFICAR AUTORIA - arquivo interno do projeto]
+assets/avatars/avatar1.webp -> Foto: equipe EducaFito [VERIFICAR AUTORIA / URL - fotografia de participante]
+assets/avatars/avatar2.webp -> Foto: equipe EducaFito [VERIFICAR AUTORIA / URL - fotografia de participante]
+assets/avatars/avatar3.webp -> Foto: equipe EducaFito [VERIFICAR AUTORIA / URL - fotografia de participante]
+assets/midia/g1-amapa.webp -> Imagem da publicação G1 Amapá [VERIFICAR FONTE / URL - G1 Amapá]
+assets/midia/techagro-rural.webp -> Imagem da publicação TechAgro Rural [VERIFICAR FONTE / URL - TechAgro Rural]
+assets/midia/radio-universitaria.webp -> Imagem da publicação Rádio Universitária [VERIFICAR FONTE / URL - Rádio Universitária]
+assets/midia/video-1-thumb.webp -> Miniatura de vídeo EducaFito [VERIFICAR FONTE / URL - projeto EducaFito]
+assets/midia/video-2-thumb.webp -> Miniatura de vídeo EducaFito [VERIFICAR FONTE / URL - projeto EducaFito]
+assets/icones/lupa-icone.png -> Ícone gráfico EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
+assets/icones/escudo-icone.png -> Ícone gráfico EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
+assets/icones/fronteira-icone.png -> Ícone gráfico EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
+assets/icones/ciencia-icone.png -> Ícone gráfico EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
+assets/icones/prato-icone.png -> Ícone gráfico EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
+assets/icones/biodiversidade-icone.png -> Ícone gráfico EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
+assets/icones/sol-icone.png -> Ícone gráfico EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
+assets/icones/agua-icone.png -> Ícone gráfico EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
+assets/icones/solo-icone.png -> Ícone gráfico EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
+assets/icones/fruta-icone.png -> Ícone gráfico EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
+assets/icones/estudante-icone.png -> Ícone gráfico EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
+assets/icones/consumidor-icone.png -> Ícone gráfico EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
+assets/cenarios/paisagem-amapa-sustentavel.png -> Ilustração / paisagem EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
+assets/icones/ciencia-pilar-icone.png -> Ícone gráfico EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
+assets/icones/sustentabilidade-pilar-icone.png -> Ícone gráfico EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
+assets/icones/comunidade-pilar-icone.png -> Ícone gráfico EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
+assets/icones/futuro-pilar-icone.png -> Ícone gráfico EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
+assets/dona-fito/dona-fito-happy.png -> Ilustração / mascote EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / AUTORIA]
+assets/dona-fito/dona-fito-thinking.png -> Ilustração / mascote EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / AUTORIA]
+assets/dona-fito/dona-fito-alert.png -> Ilustração / mascote EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / AUTORIA]
+assets/dona-fito/dona-fito-pointing.png -> Ilustração / mascote EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / AUTORIA]
+assets/dona-fito/dona-fito-celebrating.png -> Ilustração / mascote EducaFito [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / AUTORIA]
+images/doencas/fitoplasma.webp -> Imagem ilustrativa de fitoplasma [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
+images/agricultura/irrigation.webp -> Imagem ilustrativa de irrigação [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
+images/metodo de controle/pulverizacao correta.webp -> Ilustração de pulverização [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
+images/pragas/mosca da carambola/1.webp -> Imagem da Mosca-da-Carambola [ARQUIVO NÃO ENCONTRADO EM public/ - VERIFICAR FONTE / URL]
