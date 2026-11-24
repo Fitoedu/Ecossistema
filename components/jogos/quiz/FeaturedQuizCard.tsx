@@ -2,7 +2,7 @@
 
 import {Badge, Box, Flex, Icon, Stack, Text} from '@chakra-ui/react'
 import Link from 'next/link'
-import {LuArrowRight, LuCircleHelp, LuClock} from 'react-icons/lu'
+import {ArrowRight, CircleHelp, Clock} from 'lucide-react'
 import type {FeaturedQuiz} from '@/app/jogos/quiz/_data'
 
 interface FeaturedQuizCardProps {
@@ -70,13 +70,13 @@ export function FeaturedQuizCard({quiz}: FeaturedQuizCardProps) {
 
                         <Flex gap={4} mt={1} wrap="wrap">
                             <Flex align="center" gap={1.5}>
-                                <Icon as={LuCircleHelp} boxSize={3.5} color="rgba(255,255,255,0.6)"/>
+                                <Icon as={CircleHelp} boxSize={3.5} color="rgba(255,255,255,0.6)"/>
                                 <Text fontSize="xs" color="rgba(255,255,255,0.72)" fontWeight={600}>
                                     {quiz.questionCount} questões
                                 </Text>
                             </Flex>
                             <Flex align="center" gap={1.5}>
-                                <Icon as={LuClock} boxSize={3.5} color="rgba(255,255,255,0.6)"/>
+                                <Icon as={Clock} boxSize={3.5} color="rgba(255,255,255,0.6)"/>
                                 <Text fontSize="xs" color="rgba(255,255,255,0.72)" fontWeight={600}>
                                     {quiz.estimatedTime}
                                 </Text>
@@ -105,7 +105,7 @@ export function FeaturedQuizCard({quiz}: FeaturedQuizCardProps) {
                         transition="background 0.2s"
                     >
                         Jogar agora
-                        <Icon as={LuArrowRight} boxSize={4}/>
+                        <Icon as={ArrowRight} boxSize={4}/>
                     </Flex>
                 </Flex>
             </Box>

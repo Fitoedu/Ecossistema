@@ -436,6 +436,18 @@ export interface PageAmapaCasesData extends PersonaBlock {
   badgeLabel: string;
 }
 
+/**
+ * AMAPA CASES — Pagina dos Casos Reais do Amapa com design Dossie Investigativo 3D.
+ * Renderiza o AmapaCasesSection (Antigravity + Glassmorphism).
+ */
+export interface PageAmapaCasesData extends PersonaBlock {
+  type: 'amapa-cases'
+  interactionType: 'standard'
+  id: string
+  label: string
+  badgeLabel: string
+}
+
 /** Union type de todos os tipos de página */
 export type CartilhaPageData =
   | PageCoverData

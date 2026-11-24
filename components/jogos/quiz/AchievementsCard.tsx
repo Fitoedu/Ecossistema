@@ -1,7 +1,7 @@
 'use client'
 
 import {Box, Icon, SimpleGrid, Text} from '@chakra-ui/react'
-import {LuLock, LuTrophy} from 'react-icons/lu'
+import {Lock, Trophy} from 'lucide-react'
 import {SectionCard} from '@/components/ui/SectionCard'
 import type {Achievement} from '@/app/jogos/quiz/_data'
 
@@ -33,7 +33,7 @@ function AchievementBadge({
             </Text>
             {!unlocked && (
                 <Box position="absolute" top={1.5} right={1.5}>
-                    <Icon as={LuLock} boxSize={2.5} color="#9ab0a2"/>
+                    <Icon as={Lock} boxSize={2.5} color="#9ab0a2"/>
                 </Box>
             )}
             <Text
@@ -56,7 +56,7 @@ interface AchievementsCardProps {
 
 export function AchievementsCard({achievements, unlockedIds = []}: AchievementsCardProps) {
     return (
-        <SectionCard title="Conquistas" icon={LuTrophy} accentColor="#d97706">
+        <SectionCard title="Conquistas" icon={Trophy} accentColor="#d97706">
             <SimpleGrid columns={3} gap={2} mt={3}>
                 {achievements.map((a) => (
                     <AchievementBadge

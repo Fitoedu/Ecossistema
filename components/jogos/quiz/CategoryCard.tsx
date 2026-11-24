@@ -2,7 +2,7 @@
 
 import {Badge, Box, Flex, Icon, Stack, Text} from '@chakra-ui/react'
 import Link from 'next/link'
-import {LuArrowRight} from 'react-icons/lu'
+import {ArrowRight} from 'lucide-react'
 import type {QuizCategory} from '@/app/jogos/quiz/_data'
 
 interface CategoryCardProps {
@@ -89,7 +89,7 @@ export function CategoryCard({category}: CategoryCardProps) {
                 {category.available && (
                     <Flex align="center" gap={1} color={category.accentColor}>
                         <Text fontSize="xs" fontWeight={700}>Começar</Text>
-                        <Icon as={LuArrowRight} boxSize={3}/>
+                        <Icon as={ArrowRight} boxSize={3}/>
                     </Flex>
                 )}
             </Stack>

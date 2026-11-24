@@ -491,7 +491,6 @@ function PlantProcessFlow() {
                   <Box
                     bg={step.bg}
                     border="1px solid"
-                    borderColor={step.border}
                     borderRadius="16px"
                     p={{ base: 4, md: 3 }}
                     minH={{ base: "125px", md: "145px" }}
@@ -3300,6 +3299,10 @@ export function PageOrgaos({ data }: { data: PageOrgaosData }) {
     </Box>
   );
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────────────
+   AMAPA CASES — Dossie Investigativo 3D
+───────────────────────────────────────────────────────────────────────────────────── */
 
 export function PageAmapaCases({ data }: { data: PageAmapaCasesData }) {
   return (
