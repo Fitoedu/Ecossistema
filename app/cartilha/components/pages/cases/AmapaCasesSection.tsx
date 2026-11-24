@@ -123,7 +123,8 @@ export default function AmapaCasesSection() {
   return (
     <Box
       position="relative"
-      py={{ base: 6, sm: 8 }}
+      pt={{ base: 6, sm: 8 }}
+      pb={{ base: 3, sm: 8 }}
       px={{ base: 3, sm: 4 }}
       borderRadius="24px"
       overflow="hidden"

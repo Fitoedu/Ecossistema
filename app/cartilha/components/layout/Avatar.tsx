@@ -10,9 +10,11 @@ const AVATAR_BOX_SHADOW = [
 export function Avatar({
   src,
   alt = "Avatar",
+  objectPosition = "center 20%",
 }: {
   src: string;
   alt?: string;
+  objectPosition?: string;
 }) {
   return (
     <Box
@@ -33,7 +35,12 @@ export function Avatar({
         alt={alt}
         fill
         sizes="60px"
-        style={{ objectFit: "cover", objectPosition: "center 20%" }}
+        style={{
+          width: "100%",
+          height: "100%",
+          objectFit: "cover",
+          objectPosition,
+        }}
       />
     </Box>
   );

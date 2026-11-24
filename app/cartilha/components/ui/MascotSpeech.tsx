@@ -33,6 +33,7 @@ export interface MascotSpeechProps {
   avatarSide?: 'left' | 'right'
   variant?: MascotSpeechVariant
   delay?: number
+  integratedOnMobile?: boolean
 }
 
 // ─── Design tokens por variante ───────────────────────────────────────────────
@@ -118,6 +119,7 @@ export default function MascotSpeech({
   avatarSide = 'left',
   variant = 'default',
   delay = 0,
+  integratedOnMobile = false,
 }: MascotSpeechProps) {
   const styles = VARIANT_STYLES[variant]
   const isRight = avatarSide === 'right'
@@ -137,12 +139,25 @@ export default function MascotSpeech({
       <Box
         display="flex"
         flexDirection={{
-          base: 'column',
+          base: integratedOnMobile ? 'row' : 'column',
           sm: isRight ? 'row-reverse' : 'row',
         }}
-        alignItems={{ base: 'flex-start', sm: 'center' }}
+        alignItems={{
+          base: integratedOnMobile ? 'center' : 'flex-start',
+          sm: 'center',
+        }}
         gap={{ base: 3, sm: 4 }}
         position="relative"
+        bg={{
+          base: integratedOnMobile ? styles.bubbleBg : 'transparent',
+          sm: 'transparent',
+        }}
+        border={{
+          base: integratedOnMobile ? `1px solid ${styles.bubbleBorder}` : 'none',
+          sm: 'none',
+        }}
+        borderRadius={{ base: integratedOnMobile ? '18px' : 'none', sm: 'none' }}
+        p={{ base: integratedOnMobile ? 3 : 0, sm: 0 }}
       >
         {/* ── Avatar + name tag ─────────────────────────────────────────────── */}
         <Box
@@ -151,17 +166,18 @@ export default function MascotSpeech({
           flexDirection="row"
           alignItems="center"
           gap={2}
-          /* Em mobile ficam avatar e nome lado a lado na mesma linha */
-          w={{ base: 'auto', sm: 'auto' }}
         >
           {/* Wrapper que agrupa avatar + nome verticalmente em ≥ sm */}
           <Box
             display="flex"
-            flexDirection={{ base: 'row', sm: 'column' }}
+            flexDirection={{
+              base: integratedOnMobile ? 'column' : 'row',
+              sm: 'column',
+            }}
             alignItems="center"
-            gap={{ base: 2, sm: '6px' }}
+            gap={{ base: integratedOnMobile ? '6px' : 2, sm: '6px' }}
           >
-            <Avatar src={avatarSrc} />
+            <Avatar src={avatarSrc} alt={avatarName} />
 
             {/* Name tag */}
             <Box
@@ -197,14 +213,26 @@ export default function MascotSpeech({
           </Box>
 
           <Box
-            bg={styles.bubbleBg}
-            border={`1px solid ${styles.bubbleBorder}`}
+            bg={{
+              base: integratedOnMobile ? 'transparent' : styles.bubbleBg,
+              sm: styles.bubbleBg,
+            }}
+            border={{
+              base: integratedOnMobile ? 'none' : `1px solid ${styles.bubbleBorder}`,
+              sm: `1px solid ${styles.bubbleBorder}`,
+            }}
             borderRadius="18px"
-            overflow="hidden"
-            boxShadow="0 4px 20px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04)"
+            overflow={integratedOnMobile ? 'visible' : 'hidden'}
+            boxShadow={{
+              base: integratedOnMobile
+                ? 'none'
+                : '0 4px 20px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04)',
+              sm: '0 4px 20px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04)',
+            }}
           >
             {/* Faixa de acento superior */}
             <Box
+              display={{ base: integratedOnMobile ? 'none' : 'block', sm: 'block' }}
               h="3px"
               bg={styles.topAccentGradient}
               aria-hidden="true"

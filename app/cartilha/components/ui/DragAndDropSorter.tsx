@@ -701,64 +701,77 @@ function CompletionBanner({
           aria-hidden="true"
         />
 
-        <Box display="flex" alignItems="center" gap={3} mb={3}>
-          {allCorrect && (
-            <motion.div
-              initial={{ scale: 0.7, rotate: -8 }}
-              animate={{ scale: [1, 1.08, 1], rotate: [0, 4, 0] }}
-              transition={{ duration: 1.4, ease: "easeInOut", repeat: 1 }}
-              style={{ flexShrink: 0 }}
-            >
-              <Avatar src="/assets/dona-fito/dona-fito-celebrating.png" />
-            </motion.div>
-          )}
-          <Box w="100%" maxW="100%" minW={0} boxSizing="border-box">
-            <Text
-              fontSize={{ base: "1rem", sm: "1.1rem" }}
-              fontWeight="800"
-              mb={1}
-              letterSpacing="-0.01em"
-            >
-              {allCorrect
-                ? "Atividade concluída com sucesso!"
-                : "Quase lá — revise os itens em vermelho"}
-            </Text>
-            <Text
-              fontSize={{ base: "0.82rem", sm: "0.86rem" }}
-              opacity={0.9}
-              lineHeight="1.65"
-            >
-              {allCorrect
-                ? "A prevenção sempre vence o combate! Você classificou corretamente todas as práticas fitossanitárias."
-                : "Alguns cartões foram classificados na zona incorreta. Leia as explicações em vermelho e tente novamente."}
-            </Text>
+        <Box
+          display="flex"
+          flexDirection={{ base: "column", md: "row" }}
+          alignItems={{ base: "stretch", md: "center" }}
+          justifyContent="space-between"
+          gap={{ base: 4, md: 5 }}
+        >
+          <Box
+            display="flex"
+            alignItems="center"
+            gap={3}
+            w="100%"
+            minW={0}
+          >
+            {allCorrect && (
+              <motion.div
+                initial={{ scale: 0.7, rotate: -8 }}
+                animate={{ scale: [1, 1.08, 1], rotate: [0, 4, 0] }}
+                transition={{ duration: 1.4, ease: "easeInOut", repeat: 1 }}
+                style={{ flexShrink: 0 }}
+              >
+                <Avatar
+                  src="/assets/dona_fito_meio_corpo.png"
+                  alt="Dona Fito"
+                />
+              </motion.div>
+            )}
+            <Box w="100%" maxW="100%" minW={0} boxSizing="border-box">
+              <Text
+                fontSize={{ base: "1rem", sm: "1.1rem" }}
+                fontWeight="800"
+                mb={1}
+                letterSpacing="-0.01em"
+              >
+                {allCorrect
+                  ? "Atividade concluída com sucesso!"
+                  : "Quase lá — revise os itens em vermelho"}
+              </Text>
+              <Text
+                fontSize={{ base: "0.82rem", sm: "0.86rem" }}
+                opacity={0.9}
+                lineHeight="1.65"
+              >
+                {allCorrect
+                  ? "A prevenção sempre vence o combate! Você classificou corretamente todas as práticas fitossanitárias."
+                  : "Alguns cartões foram classificados na zona incorreta. Leia as explicações em vermelho e tente novamente."}
+              </Text>
+            </Box>
+          </Box>
+          <Box
+            as="button"
+            onClick={onReset}
+            bg="rgba(255,255,255,0.18)"
+            border="1.5px solid rgba(255,255,255,0.35)"
+            borderRadius="10px"
+            color="white"
+            fontWeight="700"
+            fontSize="0.8rem"
+            letterSpacing="0.04em"
+            px="20px"
+            py="8px"
+            cursor="pointer"
+            transition="background 0.2s"
+            flexShrink={0}
+            whiteSpace="nowrap"
+            w={{ base: "100%", md: "auto" }}
+            _hover={{ bg: "rgba(255,255,255,0.28)" }}
+          >
+            Reiniciar atividade
           </Box>
         </Box>
-        <button
-          onClick={onReset}
-          style={{
-            background: "rgba(255,255,255,0.18)",
-            border: "1.5px solid rgba(255,255,255,0.35)",
-            borderRadius: "10px",
-            color: "white",
-            fontWeight: 700,
-            fontSize: "0.8rem",
-            letterSpacing: "0.04em",
-            padding: "8px 20px",
-            cursor: "pointer",
-            transition: "background 0.2s",
-          }}
-          onMouseEnter={(e) =>
-            ((e.target as HTMLButtonElement).style.background =
-              "rgba(255,255,255,0.28)")
-          }
-          onMouseLeave={(e) =>
-            ((e.target as HTMLButtonElement).style.background =
-              "rgba(255,255,255,0.18)")
-          }
-        >
-          Reiniciar atividade
-        </button>
       </Box>
     </motion.div>
   );
@@ -855,9 +868,9 @@ export default function DragAndDropSorter({
           boxSizing="border-box"
         >
           <Box
-            bg="blue.50"
+            bg={isDone && allCorrect ? "green.50" : "blue.50"}
             border="1px solid"
-            borderColor="blue.200"
+            borderColor={isDone && allCorrect ? "green.200" : "blue.200"}
             borderRadius="999px"
             px="14px"
             py="5px"
@@ -865,7 +878,7 @@ export default function DragAndDropSorter({
             <Text
               fontSize="0.72rem"
               fontWeight="800"
-              color="blue.800"
+              color={isDone && allCorrect ? "green.800" : "blue.800"}
               lineHeight="1.4"
             >
               Progresso: {entries.length - poolCards.length}/{entries.length}{" "}
