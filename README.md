@@ -80,3 +80,10 @@ npm run dev
 ```
 
 A aplicação ficará disponível em `http://localhost:3000`.
+
+# .env.local
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=https://seu-projeto.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=sua-chave-anon-publica
+```
