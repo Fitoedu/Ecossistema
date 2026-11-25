@@ -1,0 +1,54 @@
+@startuml
+title EducaFito - Casos de uso de visitantes e estudantes
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Visitante" as Visitante
+actor "Estudante autenticado" as Estudante
+actor "Supabase" as Supabase <<serviço externo>>
+
+Estudante --|> Visitante
+
+rectangle "EducaFito" {
+  usecase "Explorar a página inicial\ne informações institucionais" as UC_Inicio
+  usecase "Consultar módulos\ne aulas educativas" as UC_Conteudo
+  usecase "Consultar cartilha\ninterativa" as UC_Cartilha
+  usecase "Consultar publicações\ne vídeos" as UC_Midia
+  usecase "Criar conta" as UC_Cadastro
+  usecase "Autenticar-se" as UC_Login
+  usecase "Encerrar sessão" as UC_Logout
+  usecase "Acompanhar progresso\nde estudos" as UC_Progresso
+  usecase "Marcar aula como\nconcluída" as UC_ConcluirAula
+  usecase "Realizar avaliação\ndo módulo" as UC_Avaliacao
+  usecase "Consultar certificado\ndo módulo aprovado" as UC_Certificado
+  usecase "Acessar quiz e consultar\nhistórico de tentativas" as UC_Quiz
+  usecase "Consultar e atualizar\nperfil e preferências" as UC_Perfil
+}
+
+Visitante --> UC_Inicio
+Visitante --> UC_Conteudo
+Visitante --> UC_Cartilha
+Visitante --> UC_Midia
+Visitante --> UC_Cadastro
+Visitante --> UC_Login
+
+Estudante --> UC_Logout
+Estudante --> UC_Progresso
+Estudante --> UC_ConcluirAula
+Estudante --> UC_Avaliacao
+Estudante --> UC_Certificado
+Estudante --> UC_Quiz
+Estudante --> UC_Perfil
+
+Supabase --> UC_Cadastro
+Supabase --> UC_Login
+Supabase --> UC_Logout
+Supabase --> UC_Progresso
+Supabase --> UC_ConcluirAula
+Supabase --> UC_Avaliacao
+Supabase --> UC_Quiz
+Supabase --> UC_Perfil
+
+UC_Certificado ..> UC_Avaliacao : <<extend>>\n(após aprovação)
+UC_ConcluirAula ..> UC_Progresso : <<include>>
+@enduml

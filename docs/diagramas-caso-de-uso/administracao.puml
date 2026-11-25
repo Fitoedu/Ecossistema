@@ -1,0 +1,50 @@
+@startuml
+title EducaFito - Casos de uso administrativos
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Administrador autenticado" as Admin
+actor "Supabase" as Supabase <<serviço externo>>
+
+rectangle "EducaFito - Administração" {
+  usecase "Acessar painel\nadministrativo" as UC_Painel
+  usecase "Gerenciar tópicos\ne aulas" as UC_Educacao
+  usecase "Criar, editar e excluir\ntópicos" as UC_Topicos
+  usecase "Criar, editar e excluir\naulas" as UC_Aulas
+  usecase "Gerenciar perguntas\ne alternativas do quiz" as UC_Quiz
+  usecase "Criar, editar e excluir\nperguntas" as UC_Perguntas
+  usecase "Gerenciar publicações\ne vídeos" as UC_Midia
+  usecase "Criar, editar e excluir\npublicações" as UC_Publicacoes
+  usecase "Criar, editar e excluir\nvídeos" as UC_Videos
+  usecase "Consultar logs e métricas\nde auditoria" as UC_Logs
+  usecase "Filtrar e pesquisar logs" as UC_Filtrar
+  usecase "Consultar detalhes de evento" as UC_Detalhes
+  usecase "Exportar logs em JSON" as UC_Exportar
+  usecase "Limpar logs com mais\nde 7 dias" as UC_Limpar
+}
+
+Admin --> UC_Painel
+Admin --> UC_Educacao
+Admin --> UC_Quiz
+Admin --> UC_Midia
+Admin --> UC_Logs
+Admin --> UC_Filtrar
+Admin --> UC_Detalhes
+Admin --> UC_Exportar
+Admin --> UC_Limpar
+
+UC_Educacao ..> UC_Topicos : <<include>>
+UC_Educacao ..> UC_Aulas : <<include>>
+UC_Quiz ..> UC_Perguntas : <<include>>
+UC_Midia ..> UC_Publicacoes : <<include>>
+UC_Midia ..> UC_Videos : <<include>>
+UC_Logs ..> UC_Filtrar : <<include>>
+UC_Logs ..> UC_Detalhes : <<include>>
+UC_Logs ..> UC_Exportar : <<extend>>
+UC_Logs ..> UC_Limpar : <<extend>>
+
+Supabase --> UC_Educacao
+Supabase --> UC_Quiz
+Supabase --> UC_Midia
+Supabase --> UC_Logs
+@enduml
