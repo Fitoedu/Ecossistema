@@ -1,5 +1,5 @@
 // EducaFito Service Worker
-const CACHE_NAME = 'educafito-cache-v1'
+const CACHE_NAME = 'educafito-cache-v2'
 const STATIC_ASSETS = [
   '/',
   '/home',
@@ -9,6 +9,10 @@ const STATIC_ASSETS = [
   '/midia',
   '/manifest.json',
   '/favicon.ico',
+  '/images/fundo-floresta.jpg',
+  '/images/dona-fito.webp',
+  '/assets/joaninha_corpo_todo.png',
+  '/assets/dona_fito_meio_corpo.png',
 ]
 
 // Instalação: Pré-cache do shell da aplicação
