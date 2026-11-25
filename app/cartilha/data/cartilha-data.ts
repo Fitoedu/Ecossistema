@@ -39,7 +39,7 @@ export interface PersonaBlock {
   personaEmotion: PersonaEmotion;
   /**
    * Caminho para a imagem da variante de emoção da Dona Fito.
-   * Ex.: /assets/dona-fito/dona-fito-happy.png
+   * Ex.: /assets/dona_fito_meio_corpo.png
    */
   personaImageSrc: string;
 }
@@ -499,7 +499,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       "Olá! Eu sou a Dona Fito, sua guia nessa aventura! Seja bem-vindo à nossa cartilha! Vamos aprender juntos sobre pragas agrícolas, aliados naturais e manejo sustentável para cuidar das plantas e proteger nossa comida!",
     personaEmotion: "happy",
-    personaImageSrc: "/assets/dona-fito/dona-fito-happy.png",
+    personaImageSrc: "/assets/dona_fito_meio_corpo.png",
   },
 
   /* ─────────────────────────────────────────────────────
@@ -517,25 +517,25 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       "Nesta cartilha, você vai descobrir o mundo fascinante da Fitossanidade — a ciência que cuida da saúde das plantas. Vamos explorar juntos:",
     imageCards: [
       {
-        imageSrc: "/images/doencas/fitoplasma.webp",
+        imageSrc: "/images/Doenças/Fitoplasma.webp",
         label: "O que são pragas agrícolas e doenças",
         alt: "Ilustração de doença de planta causada por Fitoplasma",
         display: "full",
       },
       {
-        imageSrc: "/images/agricultura/irrigation.webp",
+        imageSrc: "/images/Agricultura/irrigation.webp",
         label: "Como afetam a agricultura",
         alt: "Imagem de sistema de irrigação em cultivos agrícolas",
         display: "full",
       },
       {
-        imageSrc: "/images/metodo de controle/pulverizacao correta.webp",
+        imageSrc: "/images/Método de Controle/Pulverizacao correta.webp",
         label: "Como nos protegemos delas",
         alt: "Imagem de um agricultor aplicando defensivos agrícolas corretamente",
         display: "full",
       },
       {
-        imageSrc: "/images/pragas/mosca da carambola/1.webp",
+        imageSrc: "/images/pragas/Mosca da Carambola/1.webp",
         label: "Casos reais do Amapá",
         alt: "Imagem da Mosca da Carambola, uma praga agrícola relevante para o Amapá",
         display: "full",
@@ -556,7 +556,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       "Olá! As plantas são como nós — elas também precisam de cuidado para crescer saudáveis. Preparado para descobrir como protegê-las?",
     personaEmotion: "happy",
-    personaImageSrc: "/assets/dona-fito/dona-fito-happy.png",
+    personaImageSrc: "/assets/dona_fito_meio_corpo.png",
   },
 
   /* ─────────────────────────────────────────────────────
@@ -574,32 +574,32 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       "A palavra Fitossanidade vem do grego phyton (planta) e do latim sanitas (saúde). É a área da ciência que cuida da saúde das plantas e garante que elas cresçam fortes e produtivas.",
     imageCards: [
       {
-        imageSrc: "/assets/icones/lupa-icone.png",
+        imageSrc: "/assets/joaninha_corpo_todo.png",
         label: "Estuda pragas agrícolas e doenças",
         alt: "Lupa de pesquisa",
       },
       {
-        imageSrc: "/assets/icones/escudo-icone.png",
+        imageSrc: "/assets/joaninha_corpo_todo.png",
         label: "Previne e controla infestações",
         alt: "Escudo de proteção",
       },
       {
-        imageSrc: "/assets/icones/fronteira-icone.png",
+        imageSrc: "/assets/joaninha_corpo_todo.png",
         label: "Protege fronteiras do comércio",
         alt: "Símbolo de fronteira",
       },
       {
-        imageSrc: "/assets/icones/ciencia-icone.png",
+        imageSrc: "/assets/joaninha_corpo_todo.png",
         label: "Une ciência e agricultura",
         alt: "Frasco de laboratorio",
       },
       {
-        imageSrc: "/assets/icones/prato-icone.png",
+        imageSrc: "/assets/joaninha_corpo_todo.png",
         label: "Garante alimentos saudáveis",
         alt: "Prato com comida",
       },
       {
-        imageSrc: "/assets/icones/biodiversidade-icone.png",
+        imageSrc: "/assets/joaninha_corpo_todo.png",
         label: "Preserva a biodiversidade",
         alt: "Folha verde",
       },
@@ -617,7 +617,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       'Fito vem de "planta" e sanidade vem de "saúde"! Então Fitossanidade é literalmente a saúde das plantas. Pense em mim como a médica das plantas — e esse é meu nome mesmo!',
     personaEmotion: "thinking",
-    personaImageSrc: "/assets/dona-fito/dona-fito-thinking.png",
+    personaImageSrc: "/assets/dona_fito_meio_corpo.png",
   },
 
   /* ─────────────────────────────────────────────────────
@@ -689,7 +689,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       "Praga é qualquer ser vivo que cause prejuízo à nossa roça! Mas atenção: nem todo inseto é vilão! A joaninha, por exemplo, é uma heroína — ela come outros insetos que atacam as plantas!",
     personaEmotion: "alert",
-    personaImageSrc: "/assets/dona-fito/dona-fito-alert.png",
+    personaImageSrc: "/assets/dona_fito_meio_corpo.png",
   },
 
   /* ─────────────────────────────────────────────────────
@@ -707,22 +707,22 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       "Tudo o que comemos — arroz, feijão, fruta, farinha — começou como uma semente ou muda numa roça. As plantas transformam água, luz do sol e nutrientes do solo em alimento para nós. Por isso, cuidar delas é cuidar de nós mesmos!",
     imageCards: [
       {
-        imageSrc: "/assets/icones/sol-icone.png",
+        imageSrc: "/assets/joaninha_corpo_todo.png",
         label: "Luz do sol gera energia",
         alt: "Sol brilhante",
       },
       {
-        imageSrc: "/assets/icones/agua-icone.png",
+        imageSrc: "/assets/joaninha_corpo_todo.png",
         label: "Água nutre as raízes",
         alt: "Gota de água",
       },
       {
-        imageSrc: "/assets/icones/solo-icone.png",
+        imageSrc: "/assets/joaninha_corpo_todo.png",
         label: "Solo rico em minerais",
         alt: "Solo fértil",
       },
       {
-        imageSrc: "/assets/icones/fruta-icone.png",
+        imageSrc: "/assets/joaninha_corpo_todo.png",
         label: "Resultado: alimento gostoso!",
         alt: "Frutas frescas",
       },
@@ -740,7 +740,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       "Imagina a roça como uma grande fábrica. Cada planta é uma máquina que produz comida para a gente. Se uma praga agrícola atacar, a fábrica para! E aí, o que acontece com a nossa comida?",
     personaEmotion: "pointing",
-    personaImageSrc: "/assets/dona-fito/dona-fito-pointing.png",
+    personaImageSrc: "/assets/dona_fito_meio_corpo.png",
   },
 
   /* ─────────────────────────────────────────────────────
@@ -839,7 +839,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       "Que turma! Insetos e ácaros são os mais diversos vilões da roça. Clique em cada card para conhecê-los de perto e aprender como nos defendemos deles.",
     personaEmotion: "pointing",
-    personaImageSrc: "/assets/dona-fito/dona-fito-pointing.png",
+    personaImageSrc: "/assets/dona_fito_meio_corpo.png",
   },
 
   /* ─────────────────────────────────────────────────────
@@ -886,7 +886,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       "Se a folha parece ter passado por uma tesourinha, procure um mastigador. Se ficou enrolada ou amarelada, pode haver um inseto sugando a seiva. O formato da boca dá uma pista importante!",
     personaEmotion: "thinking",
-    personaImageSrc: "/assets/dona-fito/dona-fito-thinking.png",
+    personaImageSrc: "/assets/dona_fito_meio_corpo.png",
   },
 
   /* ─────────────────────────────────────────────────────
@@ -1029,7 +1029,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       "Esses inimigos são invisíveis a olho nu, mas causam estragos enormes! Bactérias, fungos, vírus, fitoplasmas, nematoides e protozoários podem adoecer as plantas. Clique em cada grupo para investigar!",
     personaEmotion: "alert",
-    personaImageSrc: "/assets/dona-fito/dona-fito-alert.png",
+    personaImageSrc: "/assets/dona_fito_meio_corpo.png",
   },
 
   /* ─────────────────────────────────────────────────────
@@ -1102,7 +1102,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       "As plantas invasoras não são malvadas — elas só estão crescendo no lugar errado! Mas quando competem com nossa mandioca ou nosso feijão, viram um grande problema. Por isso precisamos conhecê-las e controlá-las!",
     personaEmotion: "thinking",
-    personaImageSrc: "/assets/dona-fito/dona-fito-thinking.png",
+    personaImageSrc: "/assets/dona_fito_meio_corpo.png",
   },
 
   /* ─────────────────────────────────────────────────────
@@ -1188,7 +1188,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       "Você sabia que a joaninha é uma super-heroína da roça? Ela pode comer até 50 pulgões por dia! Cada ser vivo tem um papel importante na natureza. Vamos respeitar e valorizar nossos aliados!",
     personaEmotion: "happy",
-    personaImageSrc: "/assets/dona-fito/dona-fito-happy.png",
+    personaImageSrc: "/assets/dona_fito_meio_corpo.png",
   },
 
   /* ─────────────────────────────────────────────────────
@@ -1262,7 +1262,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       'Cada praga agrícola tem sua própria "arma" para atacar as plantas. Por isso é tão importante monitorar a roça constantemente! Quanto mais cedo identificarmos o problema, mais fácil será controlá-lo!',
     personaEmotion: "alert",
-    personaImageSrc: "/assets/dona-fito/dona-fito-alert.png",
+    personaImageSrc: "/assets/dona_fito_meio_corpo.png",
   },
 
   /* ─────────────────────────────────────────────────────
@@ -1278,7 +1278,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     titleHighlight: "Pragas Quarentenárias?",
     leadText:
       "Pragas quarentenárias são organismos de importância econômica que exigem medidas oficiais para proteger a agricultura. Elas podem estar ausentes do país, exigindo bloqueio rigoroso nas fronteiras, ou presentes apenas em áreas restritas, exigindo controle da dispersão e erradicação oficial.",
-    alertImageSrc: "/assets/icones/alerta-quarentena-icone.png",
+    alertImageSrc: "/assets/joaninha_corpo_todo.png",
     alertTitle: "Definição Oficial (MAPA)",
     alertText:
       "Praga Quarentenária Ausente (PQA): praga que não ocorre no país e representa uma ameaça externa imediata nas fronteiras. Praga Quarentenária Presente (PQP): praga presente apenas em áreas limitadas do território nacional e sujeita a controle rigoroso e à erradicação oficial.",
@@ -1292,7 +1292,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       "Algumas pragas agrícolas são tão perigosas que o Brasil tem regras rígidas para impedir sua entrada no país! Aeroportos, portos e fronteiras são fiscalizados para isso. Nunca traga frutas ou plantas de outros países sem verificar!",
     personaEmotion: "alert",
-    personaImageSrc: "/assets/dona-fito/dona-fito-alert.png",
+    personaImageSrc: "/assets/dona_fito_meio_corpo.png",
   },
 
   /* ─────────────────────────────────────────────────────
@@ -1398,7 +1398,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         ],
       },
       {
-        imageSrc: "/assets/icones/estudante-icone.png",
+        imageSrc: "/assets/joaninha_corpo_todo.png",
         name: "Você pode ser o próximo!",
         desc: "A curiosidade pode ser o primeiro passo para uma carreira científica.",
         details:
@@ -1469,7 +1469,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
         credit: "Foto: Dương Trí / Unsplash",
       },
       {
-        imageSrc: "/assets/icones/consumidor-icone.png",
+        imageSrc: "/assets/joaninha_corpo_todo.png",
         name: "E você, consumidor!",
         desc: "Você também pode ajudar a impedir a disseminação de pragas.",
         details:
@@ -1507,7 +1507,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       'Aqui estão as "armas" dos heróis da roça! Cada uma dessas práticas é um escudo que protege nossas plantas. Levante as abas e descubra qual você já conhecia!',
     personaEmotion: "celebrating",
-    personaImageSrc: "/assets/dona-fito/dona-fito-celebrating.png",
+    personaImageSrc: "/assets/dona_fito_meio_corpo.png",
   },
 
   /* ─────────────────────────────────────────────────────
@@ -1595,7 +1595,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       "Cada vez que você compra uma fruta saudável e barata no mercado, é porque alguém trabalhou duro para proteger a roça! A fitossanidade está na sua mesa todo dia — só que você não sabia disso. Agora sabe!",
     personaEmotion: "pointing",
-    personaImageSrc: "/assets/dona-fito/dona-fito-pointing.png",
+    personaImageSrc: "/assets/dona_fito_meio_corpo.png",
   },
 
   /* ─────────────────────────────────────────────────────
@@ -1670,7 +1670,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       "Você consegue separar os heróis dos vilões? Cada ser vivo tem um papel na natureza — cabe a nós entender esse papel! Clique em cada personagem e descubra se ele é aliado ou inimigo da roça!",
     personaEmotion: "happy",
-    personaImageSrc: "/assets/dona-fito/dona-fito-happy.png",
+    personaImageSrc: "/assets/dona_fito_meio_corpo.png",
   },
 
   /* ─────────────────────────────────────────────────────
@@ -1685,7 +1685,7 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
     personaText:
       "É hora de colocar à prova tudo que você aprendeu! Não se preocupe se errar — cada erro é uma nova chance de aprender. Você já chegou até aqui, isso por si só é uma grande conquista!",
     personaEmotion: "celebrating",
-    personaImageSrc: "/assets/dona-fito/dona-fito-celebrating.png",
+    personaImageSrc: "/assets/dona_fito_meio_corpo.png",
   },
 
   /* ─────────────────────────────────────────────────────
@@ -1702,22 +1702,22 @@ export const CARTILHA_PAGES: CartilhaPageData[] = [
       "Você chegou ao final desta jornada pelo mundo da Fitossanidade! Cada conhecimento adquirido aqui é uma semente plantada para um futuro mais sustentável e seguro para todos nós.",
     pillars: [
       {
-        imageSrc: "/assets/icones/ciencia-pilar-icone.png",
+        imageSrc: "/assets/joaninha_corpo_todo.png",
         label: "Ciência",
         sub: "Pesquisa que protege a vida",
       },
       {
-        imageSrc: "/assets/icones/sustentabilidade-pilar-icone.png",
+        imageSrc: "/assets/joaninha_corpo_todo.png",
         label: "Sustentabilidade",
         sub: "Usar sem destruir",
       },
       {
-        imageSrc: "/assets/icones/comunidade-pilar-icone.png",
+        imageSrc: "/assets/joaninha_corpo_todo.png",
         label: "Comunidade",
         sub: "Unidos pela natureza",
       },
       {
-        imageSrc: "/assets/icones/futuro-pilar-icone.png",
+        imageSrc: "/assets/joaninha_corpo_todo.png",
         label: "Futuro",
         sub: "Sementes de esperança",
       },
@@ -1753,3 +1753,4 @@ export function getPage(index: number): CartilhaPageData {
     throw new RangeError(`Pagina ${index} não existe. Total: ${TOTAL_PAGES}`);
   return page;
 }
+

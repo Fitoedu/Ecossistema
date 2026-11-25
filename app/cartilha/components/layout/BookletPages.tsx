@@ -133,6 +133,9 @@ export function Callout({
   mt,
   titleColor,
   titleFontWeight,
+  avatarSrc,
+  avatarAlt,
+  avatarObjectPosition,
 }: {
   variant?: CalloutData["variant"];
   title: string;
@@ -140,6 +143,9 @@ export function Callout({
   mt?: number | string;
   titleColor?: string;
   titleFontWeight?: string;
+  avatarSrc?: string;
+  avatarAlt?: string;
+  avatarObjectPosition?: string;
 }) {
   const styles = {
     green: {
@@ -177,7 +183,11 @@ export function Callout({
       boxSizing="border-box"
     >
       <Box flexShrink={0}>
-        <Avatar src={s.src} />
+        <Avatar
+          src={avatarSrc ?? s.src}
+          alt={avatarAlt}
+          objectPosition={avatarObjectPosition}
+        />
       </Box>
       <Box flex="1" minW={0}>
         <Text
@@ -647,9 +657,15 @@ function IconCardsGrid({ cards }: { cards: ImageCardData[] }) {
 function CalloutList({
   callouts,
   startMt = 0,
+  avatarSrc,
+  avatarAlt,
+  avatarObjectPosition,
 }: {
   callouts: CalloutData[];
   startMt?: number;
+  avatarSrc?: string;
+  avatarAlt?: string;
+  avatarObjectPosition?: string;
 }) {
   return (
     <>
@@ -659,6 +675,9 @@ function CalloutList({
           variant={c.variant}
           title={c.title}
           mt={i === 0 ? startMt : 4}
+          avatarSrc={avatarSrc}
+          avatarAlt={avatarAlt}
+          avatarObjectPosition={avatarObjectPosition}
         >
           {c.text}
         </Callout>
@@ -1507,10 +1526,15 @@ export function PageLapbook({ data }: { data: PageLapbookData }) {
           riskLabel="Riscos Fitossanitários"
         />
 
-        {/* Callout final — Dona Fito reforça a mensagem */}
+        {/* Callout final — Joaninha reforça a mensagem */}
         {data.callouts && (
           <Box mt={5}>
-            <CalloutList callouts={data.callouts} />
+            <CalloutList
+              callouts={data.callouts}
+              avatarSrc="/assets/joaninha_corpo_todo.png"
+              avatarAlt="Joaninha"
+              avatarObjectPosition="50% 18%"
+            />
           </Box>
         )}
       </Box>
@@ -3285,8 +3309,12 @@ export function PageAmapaCases({ data }: { data: PageAmapaCasesData }) {
     <Box>
       <AmapaCasesSection />
       {/* Fala da Dona Fito */}
-      <Box mt={6}>
-        <MascotSpeech speech={data.personaText} avatarSrc={data.personaImageSrc} />
+      <Box mt={{ base: 3, sm: 6 }}>
+        <MascotSpeech
+          speech={data.personaText}
+          avatarSrc={data.personaImageSrc}
+          integratedOnMobile
+        />
       </Box>
     </Box>
   );
